@@ -1,0 +1,182 @@
+/* Fonts ------------------------------------------------------------------- */
+/* main body text */
+body {
+  font-family: "Arial", sans-serif;
+  font-size: 19px;
+  margin-bottom: 20px;
+}
+
+p {
+  font-family: "Arial", sans-serif;
+  font-size: 19px;
+  margin-bottom: 20px;
+}
+
+/* heading text */
+.govuk-header__link--service-name {
+  font-size: 30px;
+}
+
+.h1,
+h1 {
+  font-family: "Arial", sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.0416666667;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.h2,
+h2 {
+  font-family: "Arial", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.0416666667;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.h3,
+h3 {
+  font-family: "Arial", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.0416666667;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* feedback banner */
+.govuk-phase-banner__content {
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  color: #000000;
+}
+
+/* well text */
+label {
+  font-family: "Arial", sans-serif;
+  font-size: 19px;
+}
+
+
+/* Bullet point formatting ------------------------------------------------- */
+li {
+  margin-bottom: 5px;
+  display: list-item;
+  text-align: -webkit-match-parent;
+  unicode-bidi: isolate;
+}
+
+ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+/* Link text styling ------------------------------------------------------- */
+a {
+  font-family: arial, sans-serif;
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, .0625rem);
+  text-underline-offset: .1578em;
+  word-break: break-word;
+  background-color: transparent;
+}
+
+a:visited {
+  color: #4C2C92;
+}
+
+a:focus {
+  outline: 3px solid rgba(0, 0, 0, 0);
+  color: #0b0c0c;
+  background-color: #fd0;
+  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+  text-decoration: none;
+}
+
+/* GOV.UK containers ------------------------------------------------------- */
+/* force things like beta banner to full width */
+.govuk-width-container {
+  max-width: 100% !important;
+}
+
+/*removing white gutters on govheader container */
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+  --bs-gutter-x: 0;
+  --bs-gutter-y: 0;
+}
+
+.container-fluid {
+  padding: 0px;
+}
+
+.row {
+  margin-right: 0px;
+}
+
+/* This line sets the main area width. Originally set to 66.667% in the GDS 
+template. 80% works well here to reduce white space on the right hand side.*/
+.col-sm-8 {
+  width: 80%
+}
+
+/* GOV.UK footer ----------------------------------------------------------- */
+/* footer padding */
+.govuk-footer {
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+/* This makes it look like the footer extends on shorter pages  */
+html {
+  background-color: #f3f2f1;
+}
+
+/* Custom disconnect CSS --------------------------------------------------- */
+#ss-connect-dialog {
+  display: none !important;
+}
+
+#shiny-disconnected-overlay {
+  display: none !important;
+}
+
+#ss-overlay {
+  background-color: #000000 !important;
+  opacity: 0.6 !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  z-index: 99998 !important;
+  overflow: hidden !important;
+  cursor: not-allowed !important;
+}
+
+#custom-disconnect-dialog {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  width: full !important;
+  transform: translateX(-50%) translateY(-50%) !important;
+  font-size: 16px !important;
+  top: 50% !important;
+  position: fixed !important;
+  bottom: auto !important;
+  left: 50% !important;
+  padding: 0.8em 1.5em !important;
+  text-align: center !important;
+  height: auto !important;
+  opacity: 1 !important;
+  z-index: 99999 !important;
+  border-radius: 3px !important;
+  box-shadow: rgba(0, 0, 0, 0.3) 3px 3px 10px !important;
+}

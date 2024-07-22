@@ -50,7 +50,7 @@ h3 {
 /* feedback banner */
 .govuk-phase-banner__content {
   font-family: "Arial", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   color: #000000;
 }
 
@@ -131,8 +131,8 @@ template. 80% works well here to reduce white space on the right hand side.*/
 /* GOV.UK footer ----------------------------------------------------------- */
 /* footer padding */
 .govuk-footer {
-  padding-right: 50px;
-  padding-left: 50px;
+  padding-right: 5rem;
+  padding-left: 5rem;
 }
 
 /* This makes it look like the footer extends on shorter pages  */

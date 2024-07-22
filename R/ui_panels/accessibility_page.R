@@ -1,7 +1,7 @@
 accessibility_page <- function() {
   layout_columns(
-    col_widths = c(-1, 8, -3),
-    actionLink(class = "govuk-back-link", "accessibility_to_dashboard", "Back to dashboard"),
+    col_widths = c(-2, 8, -2),
+    actionLink(class = "govuk-back-link", style = "margin: 0", "accessibility_to_dashboard", "Back to dashboard"),
     h1("Accessibility statement for Apprenticeships provider dashboard"),
     p(
       paste("This accessibility statement applies to the", site_primary, "website and overflow sites. This

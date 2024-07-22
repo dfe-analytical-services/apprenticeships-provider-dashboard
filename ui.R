@@ -21,9 +21,9 @@
 ui <- function(input, output, session) {
   page_fluid(
     # Set app metadata --------------------------------------------------------
+    tags$html(lang = "en"),
     tags$head(HTML("<title>Apprenticeships provider dashboard</title>")),
     tags$head(tags$link(rel = "shortcut icon", href = "dfefavicon.png")),
-    tags$html(lang = "en"),
     # Add meta description for search engines
     meta() %>%
       meta_general(
@@ -74,20 +74,22 @@ ui <- function(input, output, session) {
 
     # Page navigation ---------------------------------------------------------
     # This switches between the supporting pages in the footer and the main dashboard
-    bslib::navset_hidden(
-      id = "pages",
-      nav_panel(
-        "dashboard",
-        # Main dashboard ----------------------------------------------------------
-        gov_main_layout(
+    gov_main_layout(
+      bslib::navset_hidden(
+        id = "pages",
+        nav_panel(
+          "dashboard",
+          # Main dashboard ----------------------------------------------------------
           layout_columns(
-            col_widths = c(2, 8),
+            # Override default wrapping breakpoints to avoid text overlap
+            col_widths = breakpoints(sm = c(4, 8), md = c(3, 8), lg = c(2, 8)),
             # Left navigation -------------------------------------------------------
             tags$div(
-              style = "position: sticky; top: 1rem",
+              # Make it stick!
+              style = "position: sticky; top: 0.5rem",
               h2(style = "margin-left: 1rem", "Contents"),
               tags$ul(
-                style = "list-style-type: none",
+                style = "list-style-type: none", # remove the circle bullets
                 tags$li(actionLink("example_panel", "Example panel")),
                 tags$li(actionLink("user_guide", "User guide")),
                 tags$li(actionLink("footnotes", "Footnotes")),
@@ -103,11 +105,11 @@ ui <- function(input, output, session) {
               nav_panel("support", support_panel())
             )
           )
-        )
-      ),
-      # Pages linked from the footer ------------------------------------------
-      nav_panel("accessibility", accessibility_page()),
-      nav_panel("cookies", cookies_page())
+        ),
+        # Pages linked from the footer ------------------------------------------
+        nav_panel("accessibility", accessibility_page()),
+        nav_panel("cookies", cookies_page())
+      )
     ),
 
     # Footer ------------------------------------------------------------------

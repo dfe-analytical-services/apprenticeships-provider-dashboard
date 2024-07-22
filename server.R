@@ -49,7 +49,11 @@ server <- function(input, output, session) {
   })
 
   # Back links to main dashboard ----------------------------------------------
-  observeEvent(input$cookies_to_dashboard || input$accessibility_to_dashboard, {
+  observeEvent(input$cookies_to_dashboard, {
+    nav_select("pages", "dashboard")
+  })
+
+  observeEvent(input$accessibility_to_dashboard, {
     nav_select("pages", "dashboard")
   })
 

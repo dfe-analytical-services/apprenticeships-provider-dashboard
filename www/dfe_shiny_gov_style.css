@@ -102,6 +102,12 @@ a:focus {
   max-width: 100% !important;
 }
 
+/* reduce the excess padding around the gov_main_layout() function 
+.govuk-main-wrapper {
+ padding-top: 10px !important; 
+}
+*/
+
 /*removing white gutters on govheader container */
 .container,
 .container-fluid,

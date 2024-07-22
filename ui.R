@@ -19,16 +19,10 @@
 #
 # -----------------------------------------------------------------------------
 ui <- function(input, output, session) {
-  fluidPage(
+  page_fluid(
     # Set app metadata --------------------------------------------------------
-    title = tags$head(
-      tags$link(
-        rel = "shortcut icon",
-        href = "dfefavicon.png"
-      ),
-      # Add title for browser tabs
-      tags$head(HTML("<title>Apprenticeships provider dashboard</title>"))
-    ),
+    tags$head(HTML("<title>Apprenticeships provider dashboard</title>")),
+    tags$head(tags$link(rel = "shortcut icon", href = "dfefavicon.png")),
     tags$html(lang = "en"),
     # Add meta description for search engines
     meta() %>%
@@ -78,20 +72,45 @@ ui <- function(input, output, session) {
       )
     ),
 
-    # Nav panels --------------------------------------------------------------
-    shiny::navlistPanel(
-      "",
-      id = "navlistPanel",
-      widths = c(2, 8),
-      well = FALSE,
-      # Content for these panels is defined in the R/ui_panels/ folder
-      example_tab_1_panel(),
-      user_guide_panel(),
-      a11y_panel(),
-      support_panel()
+    # Page navigation ---------------------------------------------------------
+    # This switches between the supporting pages in the footer and the main dashboard
+    bslib::navset_hidden(
+      id = "pages",
+      nav_panel(
+        "dashboard",
+        # Main dashboard ----------------------------------------------------------
+        gov_main_layout(
+          layout_columns(
+            col_widths = c(2, 8),
+            # Left navigation -------------------------------------------------------
+            tags$div(
+              style = "position: sticky; top: 1rem",
+              h2(style = "margin-left: 1rem", "Contents"),
+              tags$ul(
+                style = "list-style-type: none",
+                tags$li(actionLink("example_panel", "Example panel")),
+                tags$li(actionLink("user_guide", "User guide")),
+                tags$li(actionLink("footnotes", "Footnotes")),
+                tags$li(actionLink("support", "Support and feedback"))
+              )
+            ),
+            # Dashboard panels ------------------------------------------------------
+            bslib::navset_hidden(
+              id = "left_nav",
+              nav_panel("example_panel", example_panel()),
+              nav_panel("user_guide", user_guide_panel()),
+              nav_panel("footnotes", footnotes_panel()),
+              nav_panel("support", support_panel())
+            )
+          )
+        )
+      ),
+      # Pages linked from the footer ------------------------------------------
+      nav_panel("accessibility", accessibility_page()),
+      nav_panel("cookies", cookies_page())
     ),
 
     # Footer ------------------------------------------------------------------
-    footer(full = TRUE)
+    custom_footer() # set in utils.R
   )
 }

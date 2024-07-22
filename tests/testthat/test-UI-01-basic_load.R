@@ -23,12 +23,8 @@ app <- AppDriver$new(
 # Wait until Shiny is not busy for 5ms so we know any processes are complete
 app$wait_for_idle(5)
 
-# Test that the app will start up without error
-# Checks that the first heading level 1 (title) is as expected
+# Test that the app will start up without error and the app title is as expected
 test_that("App loads and title of app appears as expected", {
-  expect_equal(
-    app$get_text("h1")[1],
-    # This matches what is set in example_tab_1.R for the first panel
-    "Overall content title for this dashboard page"
-  )
+  # This matches the title as set in the ui.R script
+  expect_equal(app$get_text("title")[1], "Apprenticeships provider dashboard")
 })

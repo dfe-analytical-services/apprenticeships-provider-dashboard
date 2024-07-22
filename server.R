@@ -18,6 +18,41 @@
 #
 # -----------------------------------------------------------------------------
 server <- function(input, output, session) {
+  # Page navigation ------------------------------------------------------------
+  observeEvent(input$dashboard, {
+    nav_select("pages", "dashboard")
+  })
+
+  observeEvent(input$accessibility, {
+    nav_select("pages", "accessibility")
+  })
+
+  observeEvent(input$cookies, {
+    nav_select("pages", "cookies")
+  })
+
+  # Main content left navigation ----------------------------------------------
+  observeEvent(input$example_panel, {
+    nav_select("left_nav", "example_panel")
+  })
+
+  observeEvent(input$user_guide, {
+    nav_select("left_nav", "user_guide")
+  })
+
+  observeEvent(input$footnotes, {
+    nav_select("left_nav", "footnotes")
+  })
+
+  observeEvent(input$support, {
+    nav_select("left_nav", "support")
+  })
+
+  # Back links to main dashboard ----------------------------------------------
+  observeEvent(input$cookies_to_dashboard || input$accessibility_to_dashboard, {
+    nav_select("pages", "dashboard")
+  })
+
   # Stop app ------------------------------------------------------------------
   session$onSessionEnded(function() {
     stopApp()

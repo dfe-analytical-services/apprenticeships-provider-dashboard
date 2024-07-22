@@ -1,17 +1,5 @@
 # Department for Education template R Shiny application
 
-**Before using this template, please contact the Explore education statistics platforms team (explore.statistics@education.gov.uk) to discuss your plans for setting up a DfE dashboard.**
-
-This template repository is for making accessible apps for published statistics in DfE. It includes a basic accessible shiny app with DfE styling, as well as templates for additional best practice documents like this README script, pull request templates and codes of conduct for contributing.
-
-There is a version of this template hosted for you to preview at https://department-for-education.shinyapps.io/dfe-shiny-template/.
-
-To use this template, click the green "use this template" button at the top of the repo. This will create a copy for you to work off of. 
-
-Please delete this header section and all commented lines when you are writing up the README file for your own app.
-
-Please contact explore.statistics@education.gov.uk if you have any questions, or raise an issue on here if you have spotted something specific that we should change.
-
 ---
 
 ## Introduction 
@@ -24,8 +12,8 @@ This application is deployed in the following places:
 
 <!-- Update this list as appropriate for your app -->
 
-- Public production - https://department-for-education.shinyapps.io/dfe-shiny-template/
-- Public overflow - https://department-for-education.shinyapps.io/dfe-shiny-template-overflow/
+- Public production - TBC
+- Public overflow - TBC
 
 ---
 

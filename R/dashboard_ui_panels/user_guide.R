@@ -1,4 +1,4 @@
-user_guide_panel <- function() {
+user_guide <- function() {
   div(
     h1("User guide and definitions"),
     h2("User guide"),

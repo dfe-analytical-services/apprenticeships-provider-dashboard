@@ -43,6 +43,22 @@ custom_footer <- function() {
               class = "govuk-footer__inline-list-item",
               actionLink(
                 class = "govuk-link govuk-footer__link",
+                inputId = "footnotes",
+                label = "Footnotes"
+              )
+            ),
+            shiny::tags$li(
+              class = "govuk-footer__inline-list-item",
+              actionLink(
+                class = "govuk-link govuk-footer__link",
+                inputId = "support",
+                label = "Support"
+              )
+            ),
+            shiny::tags$li(
+              class = "govuk-footer__inline-list-item",
+              actionLink(
+                class = "govuk-link govuk-footer__link",
                 inputId = "cookies",
                 label = "Cookies"
               )

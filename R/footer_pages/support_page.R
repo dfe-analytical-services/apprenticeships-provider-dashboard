@@ -1,5 +1,7 @@
-support_panel <- function() {
-  div(
+support_page <- function() {
+  layout_columns(
+    col_widths = c(-2, 8, -2),
+    actionLink(class = "govuk-back-link", style = "margin: 0", "support_to_dashboard", "Back to dashboard"),
     h1("Support and feedback"),
     h2("Give us feedback"),
     p(

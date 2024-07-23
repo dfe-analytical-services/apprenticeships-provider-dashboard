@@ -1,5 +1,7 @@
-footnotes_panel <- function() {
-  div(
+footnotes_page <- function() {
+  layout_columns(
+    col_widths = c(-2, 8, -2),
+    actionLink(class = "govuk-back-link", style = "margin: 0", "footnotes_to_dashboard", "Back to dashboard"),
     h1("Footnotes"),
     h2("All pages"),
     tags$ol(

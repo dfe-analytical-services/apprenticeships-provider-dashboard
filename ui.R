@@ -90,23 +90,29 @@ ui <- function(input, output, session) {
               h2(style = "margin-left: 1rem", "Contents"),
               tags$ul(
                 style = "list-style-type: none", # remove the circle bullets
-                tags$li(actionLink("example_panel", "Example panel")),
-                tags$li(actionLink("user_guide", "User guide")),
-                tags$li(actionLink("footnotes", "Footnotes")),
-                tags$li(actionLink("support", "Support and feedback"))
+                tags$li(actionLink("provider_breakdowns", "Provider breakdowns")),
+                tags$li(actionLink("local_authority_district", "Local authority district")),
+                tags$li(actionLink("subjects_and_standards", "Subjects and standards")),
+                tags$li(actionLink("learner_characteristics", "Learner characteristics")),
+                tags$li(actionLink("national_provider_summary", "National provider summary")),
+                tags$li(actionLink("user_guide", "User guide"))
               )
             ),
             # Dashboard panels ------------------------------------------------------
             bslib::navset_hidden(
               id = "left_nav",
-              nav_panel("example_panel", example_panel()),
-              nav_panel("user_guide", user_guide_panel()),
-              nav_panel("footnotes", footnotes_panel()),
-              nav_panel("support", support_panel())
+              nav_panel("provider_breakdowns", provider_breakdowns()),
+              nav_panel("local_authority_district", local_authority_district()),
+              nav_panel("subjects_and_standards", subjects_and_standards()),
+              nav_panel("learner_characteristics", learner_characteristics()),
+              nav_panel("national_provider_summary", national_provider_summary()),
+              nav_panel("user_guide", user_guide()),
             )
           )
         ),
         # Pages linked from the footer ------------------------------------------
+        nav_panel("footnotes", footnotes_page()),
+        nav_panel("support", support_page()),
         nav_panel("accessibility", accessibility_page()),
         nav_panel("cookies", cookies_page())
       )

@@ -23,6 +23,14 @@ server <- function(input, output, session) {
     nav_select("pages", "dashboard")
   })
 
+  observeEvent(input$footnotes, {
+    nav_select("pages", "footnotes")
+  })
+
+  observeEvent(input$support, {
+    nav_select("pages", "support")
+  })
+
   observeEvent(input$accessibility, {
     nav_select("pages", "accessibility")
   })
@@ -32,23 +40,39 @@ server <- function(input, output, session) {
   })
 
   # Main content left navigation ----------------------------------------------
-  observeEvent(input$example_panel, {
-    nav_select("left_nav", "example_panel")
+  observeEvent(input$provider_breakdowns, {
+    nav_select("left_nav", "provider_breakdowns")
+  })
+
+  observeEvent(input$local_authority_district, {
+    nav_select("left_nav", "local_authority_district")
+  })
+
+  observeEvent(input$subjects_and_standards, {
+    nav_select("left_nav", "subjects_and_standards")
+  })
+
+  observeEvent(input$learner_characteristics, {
+    nav_select("left_nav", "learner_characteristics")
+  })
+
+  observeEvent(input$national_provider_summary, {
+    nav_select("left_nav", "national_provider_summary")
   })
 
   observeEvent(input$user_guide, {
     nav_select("left_nav", "user_guide")
   })
 
-  observeEvent(input$footnotes, {
-    nav_select("left_nav", "footnotes")
-  })
-
-  observeEvent(input$support, {
-    nav_select("left_nav", "support")
-  })
-
   # Back links to main dashboard ----------------------------------------------
+  observeEvent(input$footnotes_to_dashboard, {
+    nav_select("pages", "dashboard")
+  })
+
+  observeEvent(input$support_to_dashboard, {
+    nav_select("pages", "dashboard")
+  })
+
   observeEvent(input$cookies_to_dashboard, {
     nav_select("pages", "dashboard")
   })
@@ -56,6 +80,8 @@ server <- function(input, output, session) {
   observeEvent(input$accessibility_to_dashboard, {
     nav_select("pages", "dashboard")
   })
+
+
 
   # Stop app ------------------------------------------------------------------
   session$onSessionEnded(function() {

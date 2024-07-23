@@ -109,7 +109,7 @@ a:focus {
   padding: 1rem;
 }
 
-/*removing white gutters on govheader container */
+/* removing white gutters on govheader container */
 .container,
 .container-fluid,
 .container-xxl,
@@ -129,7 +129,7 @@ a:focus {
   margin-right: 0px;
 }
 
-/* This line sets the main area width. Originally set to 66.667% in the GDS 
+/* sets the main area width. Originally set to 66.667% in the GDS 
 template. 80% works well here to reduce white space on the right hand side.*/
 .col-sm-8 {
   width: 80%
@@ -173,7 +173,6 @@ html {
   color: #FFFFFF !important;
   width: full !important;
   transform: translateX(-50%) translateY(-50%) !important;
-  font-size: 16px !important;
   top: 50% !important;
   position: fixed !important;
   bottom: auto !important;

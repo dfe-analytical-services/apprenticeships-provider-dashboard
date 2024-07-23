@@ -56,8 +56,10 @@ source("R/read_data.R")
 # Source custom functions script
 source("R/utils.R")
 
-# Source all files in the ui_panels folder
-lapply(list.files("R/ui_panels/", full.names = TRUE), source)
+# Source all files in the ui panels and footer pages folders
+lapply(list.files("R/dashboard_ui_panels/", full.names = TRUE), source)
+lapply(list.files("R/footer_pages/", full.names = TRUE), source)
+
 
 # Set global variables --------------------------------------------------------
 site_title <- "Apprenticeships provider dashboard" # name of app

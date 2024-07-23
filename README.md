@@ -65,11 +65,14 @@ The following requirements are necessarily for running the application yourself 
 
 ### Folder structure
 
-All R code outside of the core `global.R`, `server.R`, and `ui.R` files is stored in the `R/` folder. There is a `utils.R` file for common custom functions, and scripts for the different UI panels in the `R/ui_panels/` folder.
+All R code outside of the core `global.R`, `server.R`, and `ui.R` files is stored in the `R/` folder. 
 
-<!-- Include any other detail as appropriate to help guide others around your repo -->
+- `R/utils.R` file for common custom functions.
+- `R/read_data.R` creates the functions used in the `global.R` script to read data into the app.
+- Scripts for the different UI panels in the `R/dashboard_ui_panels/` folder. 
+- Scripts for the pages linked from the footer in the `R/footer_pages/` folder.
 
-...
+There is a `R/data-prep/` folder, this contains scripts not used by the app, that are used separately to prepare the data saved in the `data/` folder.
 
 ### Packages
 
@@ -103,9 +106,11 @@ You should also run `lintr::lint_dir()` regularly as lintr will check all pull r
 
 ## How to contribute
 
-<!-- Add any other ways to contribute to your application here -->
+Always run the following commands before raising changes:
 
-...
+- `styler::style_dir()` - to format the code neatly
+- `lintr::lint_dir()` - to check for any potential issues with code formatting
+- `shinytest2::test_app()` - to run automated tests again the app
 
 ### Flagging issues
 
@@ -119,6 +124,4 @@ You can also use the "Issues" tab in GitHub to suggest new features, changes or 
 
 ## Contact
 
-<!-- Add contact details of how to get in touch with your team. -->
-
-...
+fe.officialstatistics@education.gov.uk and explore.statistics@education.gov.uk

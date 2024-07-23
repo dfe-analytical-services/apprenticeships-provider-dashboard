@@ -22,7 +22,7 @@ ui <- function(input, output, session) {
   page_fluid(
     # Set app metadata --------------------------------------------------------
     tags$html(lang = "en"),
-    tags$head(HTML("<title>Apprenticeships provider dashboard</title>")),
+    tags$head(HTML(paste0("<title>", site_title, "</title>"))), # set in global.R
     tags$head(tags$link(rel = "shortcut icon", href = "dfefavicon.png")),
     # Add meta description for search engines
     meta() %>%
@@ -65,8 +65,8 @@ ui <- function(input, output, session) {
 
     # Beta banner -------------------------------------------------------------
     shinyGovstyle::banner(
-      "beta banner",
-      "Beta",
+      "gds_phase_banner",
+      "Alpha",
       paste0(
         "This dashboard is being actively developed, contact explore.statistics@education.gov.uk with any feedback"
       )
@@ -82,11 +82,11 @@ ui <- function(input, output, session) {
           # Main dashboard ----------------------------------------------------------
           layout_columns(
             # Override default wrapping breakpoints to avoid text overlap
-            col_widths = breakpoints(sm = c(4, 8), md = c(3, 8), lg = c(2, 8)),
+            col_widths = breakpoints(sm = c(4, 8), md = c(3, 9), lg = c(2, 9)),
             # Left navigation -------------------------------------------------------
             tags$div(
               # Make it stick!
-              style = "position: sticky; top: 0.5rem",
+              style = "position: sticky; top: 0.5rem; padding: 0.25rem;",
               h2(style = "margin-left: 1rem", "Contents"),
               tags$ul(
                 style = "list-style-type: none", # remove the circle bullets

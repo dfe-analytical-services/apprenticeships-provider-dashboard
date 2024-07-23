@@ -41,9 +41,7 @@ The following requirements are necessarily for running the application yourself 
 
 ### iii. Access requirements
 
-<!-- Detail any access requirements, e.g. database access for source data, including what level of access is required and how to request it.-->
-
-...
+No additional requirements - all data needed to run the app and dependencies are available in the repo.
   
 ---
 
@@ -72,7 +70,7 @@ All R code outside of the core `global.R`, `server.R`, and `ui.R` files is store
 - Scripts for the different UI panels in the `R/dashboard_ui_panels/` folder. 
 - Scripts for the pages linked from the footer in the `R/footer_pages/` folder.
 
-There is a `R/data-prep/` folder, this contains scripts not used by the app, that are used separately to prepare the data saved in the `data/` folder.
+There is a `R/data-prep/` folder, this contains scripts not used by the app, that are used separately to prepare the data saved in the `data/` folder, the original SQL scripts are saved in the `sql/` folder.
 
 ### Packages
 

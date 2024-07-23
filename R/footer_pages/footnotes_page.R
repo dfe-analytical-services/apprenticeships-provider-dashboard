@@ -1,7 +1,12 @@
 footnotes_page <- function() {
+  # Set up column layout to center it -----------------------------------------
   layout_columns(
     col_widths = c(-2, 8, -2),
+
+    # Add in back link
     actionLink(class = "govuk-back-link", style = "margin: 0", "footnotes_to_dashboard", "Back to dashboard"),
+
+    # Main text content -------------------------------------------------------
     h1("Footnotes"),
     h2("All pages"),
     tags$ol(

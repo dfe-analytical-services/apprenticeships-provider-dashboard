@@ -1,7 +1,12 @@
 accessibility_page <- function() {
+  # Set up column layout to center it -----------------------------------------
   layout_columns(
     col_widths = c(-2, 8, -2),
+
+    # Add in back link
     actionLink(class = "govuk-back-link", style = "margin: 0", "accessibility_to_dashboard", "Back to dashboard"),
+
+    # Main text content -------------------------------------------------------
     h1("Accessibility statement for Apprenticeships provider dashboard"),
     p(
       paste("This accessibility statement applies to the", site_primary, "website and overflow sites. This

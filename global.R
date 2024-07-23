@@ -21,9 +21,11 @@ shhh(library(dfeshiny))
 shhh(library(shinyGovstyle))
 
 # Creating charts and tables
-
+shhh(library(reactable))
+shhh(library(readr))
 
 # Data and string manipulation
+shhh(library(arrow))
 shhh(library(dplyr))
 
 # Shiny extensions
@@ -43,7 +45,7 @@ if (FALSE) {
   shhh(library(styler))
 }
 
-# Source scripts --------------------------------------------------------------
+# Source R scripts ------------------------------------------------------------
 #
 # Source any scripts here. Scripts may be needed to process data before it gets
 # to the server file or to hold custom functions to keep the main files shorter
@@ -58,15 +60,13 @@ source("R/utils.R")
 
 # Source all files in the ui panels and footer pages folders
 lapply(list.files("R/dashboard_ui_panels/", full.names = TRUE), source)
+lapply(list.files("R/dashboard_modules/", full.names = TRUE, recursive = TRUE), source)
 lapply(list.files("R/footer_pages/", full.names = TRUE), source)
-
 
 # Set global variables --------------------------------------------------------
 site_title <- "Apprenticeships provider dashboard" # name of app
-parent_pub_name <- "Apprenticeships" # name of source publication
-parent_publication <- # link to source publication
-  "https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships"
-
+parent_pub_name <- "Apprenticeships"
+parent_publication <- "https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships"
 team_email <- "fe.officialstatistics@education.gov.uk"
 repo_name <- "https://github.com/dfe-analytical-services/apprenticeships-provider-dashboard"
 feedback_form_url <- "" # TODO
@@ -79,6 +79,20 @@ sites_list <- c(site_primary, site_overflow)
 # Set the key for Google Analytics tracking
 google_analytics_key <- "XXXXXXXXXX"
 
-# End of global variables -----------------------------------------------------
-
 # Read in the data ------------------------------------------------------------
+# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table in
+nps_parquet <- arrow::read_parquet("data/national_provider_summary_0.parquet") %>%
+  select(-c(`order_ref`, `order_detailed`))
+
+provider_choices <- nps_parquet %>%
+  distinct(`Provider name`) %>%
+  collect() %>%
+  pull()
+year_choices <- nps_parquet %>%
+  distinct(`Academic Year`) %>%
+  collect() %>%
+  pull()
+characteristic_choices <- nps_parquet %>%
+  distinct(`Learner characteristic`) %>%
+  collect() %>%
+  pull()

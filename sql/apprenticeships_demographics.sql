@@ -75,4 +75,4 @@ age_group,
 sex,
 ethnicity_major,
 lldd,
-provider_name) ;
+provider_name);

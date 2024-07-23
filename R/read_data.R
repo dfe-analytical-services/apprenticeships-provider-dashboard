@@ -12,3 +12,5 @@
 # to either add the file to .gitignore or add an entry for the file into
 # datafiles_log.csv.
 # -----------------------------------------------------------------------------
+
+# All data file reading is done via global.R currently

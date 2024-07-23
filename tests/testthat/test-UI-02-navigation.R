@@ -13,7 +13,7 @@ app$wait_for_idle(5)
 
 # These match what is set in the ui.R file for the different panels
 test_that("Tab titles load when switching", {
-  expect_equal(app$get_text("h1")[1], "Overall content title for this dashboard page")
+  expect_equal(app$get_text("h1")[1], "Provider breakdowns")
 
   # Something like this app$set_inputs(navPanel = "?")
 })

@@ -106,7 +106,7 @@ ui <- function(input, output, session) {
               nav_panel("subjects_and_standards", subjects_and_standards()),
               nav_panel("learner_characteristics", learner_characteristics()),
               nav_panel("national_provider_summary", national_provider_summary()),
-              nav_panel("user_guide", user_guide()),
+              nav_panel("user_guide", user_guide())
             )
           )
         ),

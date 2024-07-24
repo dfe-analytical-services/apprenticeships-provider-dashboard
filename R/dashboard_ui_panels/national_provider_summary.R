@@ -36,7 +36,8 @@ national_provider_summary <- function() {
     ),
 
     # Main table --------------------------------------------------------------
-    navset_card_tab(
+    suppressWarnings(navset_card_tab( # supress due to bug
+      id = "provider_table_tabs",
       nav_panel(
         "Table",
         reactable::reactableOutput("nps_table")
@@ -60,11 +61,11 @@ national_provider_summary <- function() {
         )
       ),
       card_footer(
-        style = "font-size: 16px",
+        style = "font-size: 16px; background: #1d70b8; color: white;",
         "The Index of Multiple deprivation (IMD) is a measure of relative deprivation. The IMD shown here has been
         split into quintiles, with a value of one indicating the 20% most deprived neighbourhoods and five the 20%
         least deprived. IMD is derived from the learner postcode recorded on the Individualised Learner Record."
       )
-    )
+    ))
   )
 }

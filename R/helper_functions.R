@@ -1,11 +1,11 @@
-# -----------------------------------------------------------------------------
-# This is the utils.R file, short for 'utilities'
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# This is the helper functions file, full of helpful functions for reusing!
 #
 # It is commonly used as an R script to store custom functions used through the
 # app to keep the rest of the app code easier to read.
-# -----------------------------------------------------------------------------
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# GSS colours -----------------------------------------------------------------
+# GSS colours =================================================================
 # Current GSS colours for use in charts. These are taken from the current
 # guidance here:
 # https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-colours-in-charts/
@@ -16,7 +16,7 @@ suppressMessages(
 )
 
 
-# Custom footer ---------------------------------------------------------------
+# Custom footer ===============================================================
 # This is hardcoded from shinygovstyle
 # The section lined off early on is the custom bit where links are set
 
@@ -27,7 +27,7 @@ custom_footer <- function() {
     shiny::div(
       class = "govuk-width-container ",
       shiny::div(
-        # =====================================================================
+        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Add custom links in
         shiny::div(
           class = "govuk-footer__meta-item govuk-footer__meta-item--grow",
@@ -74,8 +74,7 @@ custom_footer <- function() {
           )
         ),
 
-        # =====================================================================
-
+        # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Back to copied code from shinyGovstyle
         shiny::div(
           class = "govuk-footer__meta",
@@ -135,5 +134,17 @@ custom_footer <- function() {
         )
       )
     )
+  )
+}
+
+# dfe reactable ===============================================================
+dfe_reactable <- function(data) {
+  reactable(
+    data,
+    highlight = TRUE,
+    borderless = TRUE,
+    showSortIcon = FALSE,
+    style = list(fontSize = "16px"),
+    defaultColDef = colDef(headerClass = "bar-sort-header")
   )
 }

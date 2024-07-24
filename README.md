@@ -65,9 +65,9 @@ No additional requirements - all data needed to run the app and dependencies are
 
 All R code outside of the core `global.R`, `server.R`, and `ui.R` files is stored in the `R/` folder. 
 
-- `R/utils.R` file for common custom functions.
+- `R/helper_functions.R` file for common custom functions.
 - `R/read_data.R` creates the functions used in the `global.R` script to read data into the app.
-- Scripts for the different UI panels in the `R/dashboard_ui_panels/` folder. 
+- Scripts for the different UI panels in the `R/dashboard_modules/` folder. 
 - Scripts for the pages linked from the footer in the `R/footer_pages/` folder.
 
 There is a `R/data-prep/` folder, this contains scripts not used by the app, that are used separately to prepare the data saved in the `data/` folder, the original SQL scripts are saved in the `sql/` folder.

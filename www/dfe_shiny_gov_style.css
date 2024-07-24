@@ -177,6 +177,9 @@ html {
   background-color: #f3f2f1;
 }
 
+/* Well for user selection ------------------------------------------------- */
+
+
 /* Card tabs CSS ----------------------------------------------------------- */
 /* Fairly sure none of this works yet */
 .card-header-tabs>li>a {
@@ -253,7 +256,7 @@ html {
     padding: 8px 10px 7px;
     border: 2px solid transparent;
     border-radius: 0;
-    color: #fff;
+    color: #fff !important;
     background-color: #00703c;
     box-shadow: 0 2px 0 #002d18;
     text-align: center;

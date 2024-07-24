@@ -22,7 +22,6 @@ shhh(library(shinyGovstyle))
 
 # Creating charts and tables
 shhh(library(reactable))
-shhh(library(readr))
 
 # Data and string manipulation
 shhh(library(arrow))

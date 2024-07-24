@@ -5,7 +5,7 @@ national_provider_summary <- function() {
     # User selection area -----------------------------------------------------
     div(
       class = "well",
-      style = "min-height: 100%; height: 100%; overflow-y: visible; margin-bottom: 1rem; padding-bottom: 0;",
+      style = "min-height: 100%; height: 100%; overflow-y: visible;",
       bslib::layout_column_wrap(
         width = "15rem", # Minimum width for each input box before wrapping
         # Dropdowns -----------------------------------------------------------
@@ -61,7 +61,7 @@ national_provider_summary <- function() {
         )
       ),
       card_footer(
-        style = "font-size: 16px; background: #1d70b8; color: white;",
+        style = "font-size: 16px; background: #f7f7f7;",
         "The Index of Multiple deprivation (IMD) is a measure of relative deprivation. The IMD shown here has been
         split into quintiles, with a value of one indicating the 20% most deprived neighbourhoods and five the 20%
         least deprived. IMD is derived from the learner postcode recorded on the Individualised Learner Record."

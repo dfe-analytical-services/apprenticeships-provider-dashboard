@@ -177,6 +177,26 @@ html {
   background-color: #f3f2f1;
 }
 
+/* Card tabs CSS ----------------------------------------------------------- */
+/* Fairly sure none of this works yet */
+.card-header-tabs>li>a {
+}
+
+.card-header-tabs>li.active>a {
+  box-shadow: 0 0px #fd0, 0 4px #1d70b8 !important;
+}
+
+.card-header-tabs>li>a:focus {
+  background-color: #fd0 !important;
+  box-shadow: 0 0px #fd0, 0 4px #1d70b8 !important;
+}
+
+.card-header-tabs>li>a:hover {
+  color: #000;
+  font-weight: bold;
+  background-color: #b1b4b6;
+}
+
 /* Custom disconnect CSS --------------------------------------------------- */
 #ss-connect-dialog {
   display: none !important;
@@ -240,4 +260,40 @@ html {
     vertical-align: top;
     cursor: pointer;
     -webkit-appearance: none
+}
+
+/* custom sort indicators -------------------------------------------------- */
+.bar-sort-header:hover,
+.bar-sort-header:focus {
+  background: #fd0;
+}
+
+/* Add a top bar on ascending sort */
+.bar-sort-header[aria-sort="ascending"] {
+  box-shadow: inset 0 3px 0 0 #1d70b8;
+}
+
+/* Add a bottom bar on descending sort */
+.bar-sort-header[aria-sort="descending"] {
+  box-shadow: inset 0 -3px 0 0 #1d70b8;
+}
+
+/* Add an animation when toggling between ascending and descending sort */
+.bar-sort-header {
+  transition: box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Highlight on the page button indicators --------------------------------- */
+.rt-page-button:hover,
+.rt-page-button:active,
+.rt-page-button:focus {
+    background: #fd0;
+    box-shadow: inset 0 -3px 0 0 #1d70b8;
+}
+
+.selectize-input:hover,
+.selectize-input:active,
+.selectize-input:focus {
+  border: #fd0 !important;
+  box-shadow: inset 0 -3px 0 0 #1d70b8;
 }

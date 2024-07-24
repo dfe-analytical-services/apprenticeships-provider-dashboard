@@ -64,7 +64,8 @@ server <- function(input, output, session) {
       highlight = TRUE,
       borderless = TRUE,
       showSortIcon = FALSE,
-      style = list(fontSize = "16px")
+      style = list(fontSize = "16px"),
+      defaultColDef = colDef(headerClass = "bar-sort-header")
     )
   })
 

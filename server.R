@@ -29,7 +29,7 @@ server <- function(input, output, session) {
   observeEvent(input$dashboard, nav_select("pages", "dashboard"))
   observeEvent(input$footnotes, nav_select("pages", "footnotes"))
   observeEvent(input$support, nav_select("pages", "support"))
-  observeEvent(input$accessibility, nav_select("pages", "accessibility"))
+  observeEvent(input$accessibility, nav_select("pages", "accessibility_statement"))
   observeEvent(input$cookies, nav_select("pages", "cookies"))
 
   ## Back links to main dashboard ---------------------------------------------
@@ -37,6 +37,17 @@ server <- function(input, output, session) {
   observeEvent(input$support_to_dashboard, nav_select("pages", "dashboard"))
   observeEvent(input$cookies_to_dashboard, nav_select("pages", "dashboard"))
   observeEvent(input$accessibility_to_dashboard, nav_select("pages", "dashboard"))
+
+  # Update title ==============================================================
+  # This changes the title based on the tab selections and is important for accessibility
+  # If on the main dashboard it uses the active tab from left_nav, else it uses the page input
+  observe({
+    if (input$pages == "dashboard") {
+      change_window_title(title = paste0(site_title, " - ", gsub("_", " ", input$left_nav)))
+    } else {
+      change_window_title(title = paste0(site_title, " - ", gsub("_", " ", input$pages)))
+    }
+  })
 
   # Module calls ==============================================================
   nps_server(id = "nps")

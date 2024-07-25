@@ -32,7 +32,7 @@ if (ncol(ign_files) > 1) {
   }
 }
 
-suffixes <- "xlsx$|dat$|csv$|tex$|pdf$"
+suffixes <- "xlsx$|dat$|csv$|parquet$|tex$|pdf$"
 
 current_files <- data.frame(files = list.files("./", recursive = TRUE)) %>%
   filter(grepl(suffixes, files), !grepl("renv|datafiles_log.csv", files))

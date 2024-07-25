@@ -35,6 +35,7 @@ shhh(library(data.table))
 ## Shiny extensions -----------------------------------------------------------
 shhh(library(shinytitle))
 shhh(library(metathis))
+shhh(library(shinytitle))
 
 ## Testing dependencies not need for the app itself ---------------------------
 # Including them here keeps them in renv but avoids the app needlessly loading
@@ -56,10 +57,9 @@ if (FALSE) {
 #
 # It's best to do this here instead of the server file, to improve performance.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-source("R/read_data.R")
 source("R/helper_functions.R")
 
-# Source all files in the ui panels and footer pages folders
+# Source all files in the dashboard modules and footer pages folders
 lapply(list.files("R/dashboard_modules/", full.names = TRUE, recursive = TRUE), source)
 lapply(list.files("R/footer_pages/", full.names = TRUE), source)
 
@@ -77,34 +77,7 @@ site_overflow <- "https://department-for-education.shinyapps.io/apprenticeships-
 sites_list <- c(site_primary, site_overflow) # used for custom disconnect function
 
 ## Google Analytics tracking
-google_analytics_key <- "XXXXXXXXXX"
+google_analytics_key <- "XXXXXXXXXX" # TODO
 
 # Load data ===================================================================
-
-## Apps data ------------------------------------------------------------------
-
-
-
-## App demographics -----------------------------------------------------------
-
-
-## National provider summary --------------------------------------------------
-# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
-nps_parquet <- arrow::read_parquet("data/national_provider_summary_0.parquet") %>%
-  select(-c(`order_ref`, `order_detailed`))
-
-### Lists of options use in the dropdowns -------------------------------------
-provider_choices <- nps_parquet %>%
-  distinct(`Provider name`) %>%
-  collect() %>%
-  pull()
-
-year_choices <- nps_parquet %>%
-  distinct(`Academic Year`) %>%
-  collect() %>%
-  pull()
-
-characteristic_choices <- nps_parquet %>%
-  distinct(`Learner characteristic`) %>%
-  collect() %>%
-  pull()
+source("R/read_data.R")

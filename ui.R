@@ -37,6 +37,9 @@ ui <- function(input, output, session) {
         referrer = "no-referrer"
       ),
 
+    # Required to make the title update based on tab changes
+    shinytitle::use_shiny_title(),
+
     ## Custom CSS -------------------------------------------------------------
     tags$head(
       tags$link(
@@ -113,7 +116,7 @@ ui <- function(input, output, session) {
         ## Footer pages -------------------------------------------------------
         nav_panel("footnotes", footnotes_page()),
         nav_panel("support", support_page()),
-        nav_panel("accessibility", accessibility_page()),
+        nav_panel("accessibility_statement", accessibility_page()),
         nav_panel("cookies", cookies_page())
       )
     ),

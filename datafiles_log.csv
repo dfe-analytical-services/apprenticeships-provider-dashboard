@@ -2,3 +2,6 @@ filename,status
 data/national_provider_summary.csv,unpublished
 data/apprenticeships_demographics.csv,unpublished
 data/apprenticeships_data.csv,unpublished
+data/apprenticeships_data_0.parquet,unpublished
+data/apprenticeships_demographics_0.parquet,unpublished
+data/national_provider_summary_0.parquet,unpublished

@@ -17,12 +17,12 @@ nps_ui <- function(id) {
         selectInput(
           inputId = NS(id, "year"),
           label = "Select academic year",
-          choices = c("All years", year_choices)
+          choices = c("All years", nps_year_choices)
         ),
         selectInput(
           inputId = NS(id, "characteristic"),
           label = "Select learner characteristic",
-          choices = c("All characteristics", characteristic_choices)
+          choices = c("All characteristics", nps_characteristic_choices)
         )
       )
     ),
@@ -57,7 +57,7 @@ nps_ui <- function(id) {
         )
       )
     ),
-    ## Footer ---------------------------------------------------------------
+    ## Footer -----------------------------------------------------------------
     div(
       class = "well",
       style = "font-size: 16px; background: #f7f7f7;",
@@ -76,7 +76,7 @@ nps_server <- function(id) {
       session = session,
       inputId = "provider",
       label = "Search for provider",
-      choices = c("All providers", provider_choices),
+      choices = c("All providers", nps_provider_choices),
       server = TRUE
     )
 
@@ -106,8 +106,8 @@ nps_server <- function(id) {
     })
 
     # Data download ===========================================================
-    # TODO: Worth making a separate download module to reuse?
     output$download_data <- downloadHandler(
+      ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$provider, "-", input$year, "-", input$characteristic, "-provider_summary")
         extension <- if (input$file_type == "CSV (Up to 5.22 MB)") {
@@ -115,8 +115,9 @@ nps_server <- function(id) {
         } else {
           ".xlsx"
         }
-        paste0(raw_name, extension)
+        paste0(tolower(gsub(" ", "", raw_name)), extension)
       },
+      ## Generate downloaded file ---------------------------------------------
       content = function(file) {
         if (input$file_type == "CSV (Up to 5.22 MB)") {
           data.table::fwrite(nps_reactive_table(), file)

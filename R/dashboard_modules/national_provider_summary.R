@@ -11,15 +11,15 @@ nps_ui <- function(id) {
         width = "15rem", # Minimum width for each input box before wrapping
         selectizeInput(
           inputId = NS(id, "provider"),
-          label = "Search for provider",
-          choices = c("All providers", provider_choices)
+          label = NULL,
+          choices = NULL
         ),
-        selectizeInput(
+        selectInput(
           inputId = NS(id, "year"),
           label = "Select academic year",
           choices = c("All years", year_choices)
         ),
-        selectizeInput(
+        selectInput(
           inputId = NS(id, "characteristic"),
           label = "Select learner characteristic",
           choices = c("All characteristics", characteristic_choices)
@@ -28,7 +28,7 @@ nps_ui <- function(id) {
     ),
 
     # Main table ==============================================================
-    suppressWarnings(navset_card_tab( # suppress due to bug
+    navset_card_tab(
       id = "provider_table_tabs",
       ## Table tab ------------------------------------------------------------
       nav_panel(
@@ -40,7 +40,7 @@ nps_ui <- function(id) {
         "Download data",
         shinyGovstyle::radio_button_Input(
           inputId = NS(id, "download_radios"),
-          choices = c("CSV (20 MB)", "XSLX (18 MB)", "JSON (30 MB)"),
+          choices = c("CSV (Maximum 20 MB)", "XSLX (Maximum 18 MB)"),
           label = h2("Choose download file format")
         ),
         # Bit of a hack to force the button not to be full width
@@ -53,31 +53,36 @@ nps_ui <- function(id) {
             icon = NULL
           )
         )
-      ),
-      ## Footer ---------------------------------------------------------------
-      card_footer(
-        style = "font-size: 16px; background: #f7f7f7;",
-        "The Index of Multiple deprivation (IMD) is a measure of relative deprivation. The IMD shown here has been
+      )
+    ),
+    ## Footer ---------------------------------------------------------------
+    div(
+      class = "well",
+      style = "font-size: 16px; background: #f7f7f7;",
+      "The Index of Multiple deprivation (IMD) is a measure of relative deprivation. The IMD shown here has been
         split into quintiles, with a value of one indicating the 20% most deprived neighbourhoods and five the 20%
         least deprived. IMD is derived from the learner postcode recorded on the Individualised Learner Record."
-      )
-    ))
+    )
   )
 }
 
 nps_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
-    # Dropdowns ===============================================================
-    # updateSelectInput(
-    #    session,
-    #    inputId = "provider",
-    #    choices = provider_choices,
-    #    selected = "All providers",
-    #    server = TRUE
-    # )
+    # Drop downs ==============================================================
+    # Using the server to power to the provider dropdown for increased speed
+    updateSelectizeInput(
+      session = session,
+      inputId = "provider",
+      label = "Search for provider",
+      choices = c("All providers", provider_choices),
+      server = TRUE
+    )
 
+    # TODO: do we make all dropdowns server side by default and create our own mini module for dropdowns?
 
     # Reactive data set =======================================================
+
+    # TODO: more efficient way to filter this, I don't like the 'in everything' style
     nps_reactive_table <- reactive({
       provider_chosen <- if (input$provider == "All providers") {
         provider_choices
@@ -110,7 +115,7 @@ nps_server <- function(id) {
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       filename = function() {
-        paste0(input$year, "-", input$characteristic, "-national_provider_summary.csv")
+        paste0(input$provider, "-", input$year, "-", input$characteristic, "-national_provider_summary.csv")
       },
       content = function(file) {
         write.csv(nps_reactive_table(), file, row.names = FALSE)

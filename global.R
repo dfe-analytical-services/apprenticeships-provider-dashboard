@@ -85,7 +85,7 @@ google_analytics_key <- "XXXXXXXXXX"
 
 
 ## National provider summary --------------------------------------------------
-# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table in
+# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
 nps_parquet <- arrow::read_parquet("data/national_provider_summary_0.parquet") %>%
   select(-c(`order_ref`, `order_detailed`))
 

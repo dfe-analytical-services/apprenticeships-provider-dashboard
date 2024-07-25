@@ -28,6 +28,10 @@ shhh(library(reactable))
 shhh(library(arrow))
 shhh(library(dplyr))
 
+## Data downloads -------------------------------------------------------------
+shhh(library(openxlsx))
+shhh(library(data.table))
+
 ## Shiny extensions -----------------------------------------------------------
 shhh(library(shinytitle))
 shhh(library(metathis))

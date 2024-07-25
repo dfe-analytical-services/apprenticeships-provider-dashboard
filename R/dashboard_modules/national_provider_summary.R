@@ -39,9 +39,11 @@ nps_ui <- function(id) {
       nav_panel(
         "Download data",
         shinyGovstyle::radio_button_Input(
-          inputId = NS(id, "download_radios"),
-          choices = c("CSV (Maximum 20 MB)", "XSLX (Maximum 18 MB)"),
-          label = h2("Choose download file format")
+          inputId = NS(id, "file_type"),
+          label = h2("Choose download file format"),
+          hint_label = "The XLSX format is designed for use in Microsoft Excel",
+          choices = c("CSV (Up to 5.22 MB)", "XLSX (Up to 1.76 MB)"),
+          selected = "CSV (Up to 5.22 MB)"
         ),
         # Bit of a hack to force the button not to be full width
         layout_columns(
@@ -114,11 +116,24 @@ nps_server <- function(id) {
 
     # Data download ===========================================================
     output$download_data <- downloadHandler(
-      filename = function() {
-        paste0(input$provider, "-", input$year, "-", input$characteristic, "-national_provider_summary.csv")
+      filename = function(name) {
+        raw_name <- paste0(input$provider, "-", input$year, "-", input$characteristic, "-provider_summary")
+        extension <- if (input$file_type == "CSV (Up to 5.22 MB)") {
+          ".csv"
+        } else {
+          ".xlsx"
+        }
+        paste0(raw_name, extension)
       },
       content = function(file) {
-        write.csv(nps_reactive_table(), file, row.names = FALSE)
+        if (input$file_type == "CSV (Up to 5.22 MB)") {
+          data.table::fwrite(nps_reactive_table(), file)
+        } else {
+          # Added a basic pop up notification as the Excel file can take time to generate
+          pop_up <- showNotification("Generating download file", duration = NULL)
+          openxlsx::write.xlsx(nps_reactive_table(), file, colWidths = "Auto")
+          on.exit(removeNotification(pop_up), add = TRUE)
+        }
       }
     )
   })

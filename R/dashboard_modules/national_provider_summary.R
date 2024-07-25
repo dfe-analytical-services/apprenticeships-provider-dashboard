@@ -1,6 +1,6 @@
-national_provider_summary_ui <- function(id) {
+nps_ui <- function(id) {
   div(
-    # Tab header ================================================================
+    # Tab header ==============================================================
     h1("National provider summary"),
 
     # User selection area =====================================================
@@ -9,29 +9,26 @@ national_provider_summary_ui <- function(id) {
       style = "min-height: 100%; height: 100%; overflow-y: visible;",
       bslib::layout_column_wrap(
         width = "15rem", # Minimum width for each input box before wrapping
-        selectInput(
+        selectizeInput(
           inputId = NS(id, "provider"),
           label = "Search for provider",
-          choices = provider_choices,
-          selectize = TRUE
-        ), # Look at swapping this out for a crosstalk filter search
-        selectInput(
+          choices = c("All providers", provider_choices)
+        ),
+        selectizeInput(
           inputId = NS(id, "year"),
           label = "Select academic year",
-          choices = year_choices,
-          selectize = TRUE
+          choices = c("All years", year_choices)
         ),
-        selectInput(
+        selectizeInput(
           inputId = NS(id, "characteristic"),
           label = "Select learner characteristic",
-          choices = characteristic_choices,
-          selectize = TRUE
+          choices = c("All characteristics", characteristic_choices)
         )
       )
     ),
 
     # Main table ==============================================================
-    suppressWarnings(navset_card_tab( # supress due to bug
+    suppressWarnings(navset_card_tab( # suppress due to bug
       id = "provider_table_tabs",
       ## Table tab ------------------------------------------------------------
       nav_panel(
@@ -68,24 +65,40 @@ national_provider_summary_ui <- function(id) {
   )
 }
 
-national_provider_summary_server <- function(id) {
+nps_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     # Dropdowns ===============================================================
-    # updateSelectizeInput(
-    #   session,
-    #   inputId = "provider",
-    #   choices = provider_choices,
-    #   selected = NULL,
-    #   server = TRUE
-    #   )
+    # updateSelectInput(
+    #    session,
+    #    inputId = "provider",
+    #    choices = provider_choices,
+    #    selected = "All providers",
+    #    server = TRUE
+    # )
 
 
     # Reactive data set =======================================================
     nps_reactive_table <- reactive({
+      provider_chosen <- if (input$provider == "All providers") {
+        provider_choices
+      } else {
+        input$provider
+      }
+      year_chosen <- if (input$year == "All years") {
+        year_choices
+      } else {
+        input$year
+      }
+      characteristic_chosen <- if (input$characteristic == "All characteristics") {
+        characteristic_choices
+      } else {
+        input$characteristic
+      }
+
       nps_parquet %>%
-        filter(`Academic Year` == input$year) %>%
-        filter(`Learner characteristic` == input$characteristic) %>%
-        # filter(`Provider name` == input$provider) %>%
+        filter(`Academic Year` %in% year_chosen) %>%
+        filter(`Learner characteristic` %in% characteristic_chosen) %>%
+        filter(`Provider name` %in% provider_chosen) %>%
         collect()
     })
 

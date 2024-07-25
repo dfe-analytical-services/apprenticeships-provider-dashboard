@@ -39,7 +39,7 @@ server <- function(input, output, session) {
   observeEvent(input$accessibility_to_dashboard, nav_select("pages", "dashboard"))
 
   # Module calls ==============================================================
-  national_provider_summary_server(id = "nps")
+  nps_server(id = "nps")
 
   # Stop app when tab closes ==================================================
   session$onSessionEnded(function() {

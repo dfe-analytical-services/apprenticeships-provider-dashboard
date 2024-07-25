@@ -1,6 +1,12 @@
-# Using this script to test the data files for the app
+# Using this script to create the data files for the app
 #
-# Ideally would want to amend the current queries to save the tables in SQL ready to read in
+# 1. Run the SQL scripts in the sql/ folder
+# 2. Save the outputs as CSV in the data/ folder
+# 3. Then run this script to generate parquet format versions of the files
+#
+# Using parquet format as it's compressed to a smaller size and is faster to load
+#
+# Could amend the current SQL queries to save the tables in SQL ready to read in using a SQL connection
 #
 # Dependencies ----------------------------------------------------------------
 library(data.table)
@@ -9,27 +15,21 @@ library(dplyr)
 
 # Read in files saved from SQL scripts ----------------------------------------
 national_provider_summary <- data.table::fread("data/national_provider_summary.csv")
-apprenticeships_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
-apprenticeships_data <- data.table::fread("data/apprenticeships_data.csv")
+apps_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
+apps_data <- data.table::fread("data/apprenticeships_data.csv")
 
-# Write out parquet versions
+# Write out parquet versions --------------------------------------------------
 arrow::write_dataset(national_provider_summary, "data/",
   format = "parquet",
   basename_template = "national_provider_summary_{i}.parquet"
 )
 
-arrow::write_dataset(apprenticeships_demographics, "data/",
+arrow::write_dataset(apps_demographics, "data/",
   format = "parquet",
   basename_template = "apprenticeships_demographics_{i}.parquet"
 )
 
-arrow::write_dataset(apprenticeships_data, "data/",
+arrow::write_dataset(apps_data, "data/",
   format = "parquet",
   basename_template = "apprenticeships_data_{i}.parquet"
 )
-
-read_parquet_lazy <- function() {
-  national_provider_summary_pqt <- arrow::read_parquet("data/national_provider_summary_0.parquet")
-  apprenticeships_demographics_pqt <- arrow::read_parquet("data/apprenticeships_demographics_0.parquet")
-  apprenticeships_data_pqt <- arrow::read_parquet("data/apprenticeships_data_0.parquet")
-}

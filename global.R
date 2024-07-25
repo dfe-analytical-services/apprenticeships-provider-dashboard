@@ -76,19 +76,30 @@ sites_list <- c(site_primary, site_overflow) # used for custom disconnect functi
 google_analytics_key <- "XXXXXXXXXX"
 
 # Load data ===================================================================
+
+## Apps data ------------------------------------------------------------------
+
+
+
+## App demographics -----------------------------------------------------------
+
+
+## National provider summary --------------------------------------------------
 # Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table in
 nps_parquet <- arrow::read_parquet("data/national_provider_summary_0.parquet") %>%
   select(-c(`order_ref`, `order_detailed`))
 
-# Lists of options use in the dropdowns
+### Lists of options use in the dropdowns -------------------------------------
 provider_choices <- nps_parquet %>%
   distinct(`Provider name`) %>%
   collect() %>%
   pull()
+
 year_choices <- nps_parquet %>%
   distinct(`Academic Year`) %>%
   collect() %>%
   pull()
+
 characteristic_choices <- nps_parquet %>%
   distinct(`Learner characteristic`) %>%
   collect() %>%

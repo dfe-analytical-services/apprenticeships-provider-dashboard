@@ -83,30 +83,21 @@ nps_server <- function(id) {
     # TODO: do we make all dropdowns server side by default and create our own mini module for dropdowns?
 
     # Reactive data set =======================================================
-
-    # TODO: more efficient way to filter this, I don't like the 'in everything' style
     nps_reactive_table <- reactive({
-      provider_chosen <- if (input$provider == "All providers") {
-        provider_choices
-      } else {
-        input$provider
+      nps_filtered <- nps_parquet
+
+      if (input$provider != "All providers") {
+        nps_filtered <- nps_filtered %>% filter(`Provider name` == input$provider)
       }
-      year_chosen <- if (input$year == "All years") {
-        year_choices
-      } else {
-        input$year
+      if (input$year != "All years") {
+        nps_filtered <- nps_filtered %>% filter(`Academic Year` == input$year)
       }
-      characteristic_chosen <- if (input$characteristic == "All characteristics") {
-        characteristic_choices
-      } else {
-        input$characteristic
+      if (input$characteristic != "All characteristics") {
+        nps_filtered <- nps_filtered %>% filter(`Learner characteristic` == input$characteristic)
       }
 
-      nps_parquet %>%
-        filter(`Academic Year` %in% year_chosen) %>%
-        filter(`Learner characteristic` %in% characteristic_chosen) %>%
-        filter(`Provider name` %in% provider_chosen) %>%
-        collect()
+      # Pull the lazy loaded and now filtered data into memory
+      nps_filtered %>% collect()
     })
 
     # Table ===================================================================
@@ -115,6 +106,7 @@ nps_server <- function(id) {
     })
 
     # Data download ===========================================================
+    # TODO: Worth making a separate download module to reuse?
     output$download_data <- downloadHandler(
       filename = function(name) {
         raw_name <- paste0(input$provider, "-", input$year, "-", input$characteristic, "-provider_summary")

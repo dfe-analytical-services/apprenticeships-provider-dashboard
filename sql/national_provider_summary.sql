@@ -1,5 +1,3 @@
--- Sql.Database("T1PRANMSQL\SQLPROD,60125", "MA_FEDU_S_DATADEV")
-
 --National Provider Summary for Apprenticeships and Education & Training and community learning
 --Years: 2021/22 to 202324
 --Snapshot: Q3 2023/24
@@ -328,6 +326,7 @@ from #PROVIDER_TIDY_ORDER
 --Produce final output
 --Rounded and suppressed:
 --replace values of 0,1,2,3,4 and 5 with 'low' and round remaining values to nearest 10.
+--removing unknown characteristics that are not shown in dashboard
 SELECT
 order_ref,
 order_detailed,
@@ -340,4 +339,10 @@ case when apps in (0,1,2,3,4) then 0 else round(apps,-1) end as Apprenticeships,
 case when et   in (0,1,2,3,4) then 0 else round(et,-1)   end as 'Education and Training',
 case when cl   in (0,1,2,3,4) then 0 else round(cl ,-1)  end as 'Community Learning'
 FROM #ALL_TIDY
-ORDER BY [year] desc, order_ref, provider_name, order_detailed;
+
+where category not in ('IMD - unknown','LLDD - unknown','Ethnicity - unknown') 
+ORDER BY [year] desc, order_ref, provider_name, order_detailed
+
+
+
+

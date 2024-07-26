@@ -24,9 +24,9 @@ extends:
     appName: apprenticeships-provider-dashboard
     environments:
     - name: Pre-Production
-      appId: 
+      appId: None
     - name: Production
-      appId: 
+      appId: None
     approvers: |
      cameron.race@education.gov.uk
      richard.bielby@education.gov.uk

@@ -3345,10 +3345,10 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "597f09b2a51a136cddcdc7c9d6cccde3"
+      "checksum": "00fa9894b6bfba7347391d0f5e11af48"
     },
     "azure-pipelines.yml": {
-      "checksum": "5b800afe1145e57727f265c0f702f6ed"
+      "checksum": "c61c64ea76da2823ebd51d556ed25338"
     },
     "data/apprenticeships_data.csv": {
       "checksum": "19029e217dd00c02ea1024399062830d"
@@ -3450,7 +3450,7 @@
       "checksum": "1fd753be5bbff3a1b07b6b6983483ca1"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "9428a26d4d8a199bac9edc32f71d6227"
+      "checksum": "cdeb5f78799f6762f5db3e6da436c5b4"
     },
     "tests/testthat/test-UI-05-nps_downloads.R": {
       "checksum": "11182359dc88004d31610b4978e3ce40"

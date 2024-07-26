@@ -49,22 +49,30 @@ test_that("Tab titles load when switching", {
 # Footer links and backlinks work =============================================
 test_that("Footer link and back links work", {
   app$set_inputs(pages = "footnotes")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - footnotes")
   app$click("footnotes_to_dashboard")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 
   app$set_inputs(pages = "support")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - support")
   app$click("support_to_dashboard")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 
   app$set_inputs(pages = "accessibility_statement")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - accessibility statement")
   app$click("accessibility_to_dashboard")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 
   app$set_inputs(pages = "cookies")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - cookies")
   app$click("cookies_to_dashboard")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 })

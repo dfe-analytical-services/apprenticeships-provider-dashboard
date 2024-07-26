@@ -16,10 +16,6 @@
 # Read in the data to test against
 source("../../R/read_data.R")
 test_data <- read_nps("../../data/national_provider_summary_0.parquet")
-# Create static lists of options for dropdowns
-nps_provider_choices <- data_choices(data = test_data, column = "Provider name")
-nps_year_choices <- data_choices(data = test_data, column = "Academic Year")
-nps_characteristic_choices <- data_choices(data = test_data, column = "Learner characteristic")
 
 # Test the server file  =======================================================
 shiny::testServer(nps_server, expr = {

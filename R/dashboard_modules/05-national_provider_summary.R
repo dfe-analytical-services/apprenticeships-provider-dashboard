@@ -1,3 +1,14 @@
+# Load data ===================================================================
+# Functions used here are created in the R/read_data.R file
+nps_parquet <- read_nps("data/national_provider_summary_0.parquet")
+
+# Create static lists of options for dropdowns
+nps_provider_choices <- data_choices(data = nps_parquet, column = "Provider name")
+nps_year_choices <- data_choices(data = nps_parquet, column = "Academic Year")
+nps_characteristic_choices <- data_choices(data = nps_parquet, column = "Learner characteristic")
+
+# Main module code ============================================================
+
 nps_ui <- function(id) {
   div(
     # Tab header ==============================================================

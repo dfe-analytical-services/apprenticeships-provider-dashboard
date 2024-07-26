@@ -3345,7 +3345,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "3254848baefc15af09167f4c91b33faa"
+      "checksum": "597f09b2a51a136cddcdc7c9d6cccde3"
     },
     "azure-pipelines.yml": {
       "checksum": "5b800afe1145e57727f265c0f702f6ed"
@@ -3372,7 +3372,7 @@
       "checksum": "398a532ecd8bf1ea54ba7612848ccaa7"
     },
     "global.R": {
-      "checksum": "1765a45e0b009cc78eb3119dd01c15de"
+      "checksum": "08b5d9c885b3720b42590f2db9ac5d53"
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
@@ -3390,7 +3390,7 @@
       "checksum": "75454e0ebffa6406deb970b743b59168"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
-      "checksum": "c112de84c959aace491438050eef984d"
+      "checksum": "7b29a0a21528b69f57e33a5c529aec12"
     },
     "R/dashboard_modules/06-user_guide.R": {
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
@@ -3447,7 +3447,7 @@
       "checksum": "f475d5b60fbf1352d2fad7a04ab30551"
     },
     "tests/testthat/test-Server-05-nps_server.R": {
-      "checksum": "b496895e3fa54644450a8c8b95686bc7"
+      "checksum": "1fd753be5bbff3a1b07b6b6983483ca1"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
       "checksum": "9428a26d4d8a199bac9edc32f71d6227"

@@ -52,7 +52,7 @@ ui <- function(input, output, session) {
     ## Custom disconnect function ---------------------------------------------
     # Variables used here are set in the global.R file
     dfeshiny::custom_disconnect_message(
-      links = sites_list,
+      links = site_primary,
       publication_name = parent_pub_name,
       publication_link = parent_publication
     ),

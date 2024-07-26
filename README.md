@@ -12,8 +12,10 @@ This application is deployed in the following places:
 
 <!-- Update this list as appropriate for your app -->
 
-- Public production - TBC
-- Public overflow - TBC
+- shinyapps.io testing - https://department-for-education.shinyapps.io/apprenticeships-provider-dashboard/
+
+- Internal testing (production) - https://rsconnect/rsc/apprenticeships-provider-dashboard/
+- Internal testing (pre-production) - https://rsconnect-pp/rsc/apprenticeships-provider-dashboard/
 
 ---
 

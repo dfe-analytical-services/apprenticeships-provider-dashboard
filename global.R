@@ -78,8 +78,6 @@ feedback_form_url <- "" # TODO
 
 ## Set the URLs that the site will be published to
 site_primary <- "https://department-for-education.shinyapps.io/apprenticeships-provider-dashboard/"
-site_overflow <- "https://department-for-education.shinyapps.io/apprenticeships-provider-dashboard-overflow/"
-sites_list <- c(site_primary, site_overflow) # used for custom disconnect function
 
 ## Google Analytics tracking
 google_analytics_key <- "XXXXXXXXXX" # TODO

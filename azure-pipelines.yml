@@ -24,7 +24,7 @@ extends:
     appName: apprenticeships-provider-dashboard
     environments:
     - name: Pre-Production
-      appId: None
+      appId: 948
     - name: Production
       appId: None
     approvers: |

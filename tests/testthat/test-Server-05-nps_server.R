@@ -14,8 +14,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Read in the data to test against
-test_data <- arrow::read_parquet("../../data/national_provider_summary_0.parquet") %>%
-  select(-c(`order_ref`, `order_detailed`))
+source("../../R/read_data.R")
+test_data <- read_nps("../../data/national_provider_summary_0.parquet")
 
 # Test the server file  =======================================================
 shiny::testServer(nps_server, expr = {

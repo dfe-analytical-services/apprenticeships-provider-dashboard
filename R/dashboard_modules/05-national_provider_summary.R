@@ -80,8 +80,6 @@ nps_server <- function(id) {
       server = TRUE
     )
 
-    # TODO: do we make all dropdowns server side by default and create our own mini module for dropdowns?
-
     # Reactive data set =======================================================
     nps_reactive_table <- reactive({
       nps_filtered <- nps_parquet

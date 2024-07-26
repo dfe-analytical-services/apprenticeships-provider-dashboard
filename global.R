@@ -37,9 +37,9 @@ shhh(library(shinytitle))
 shhh(library(metathis))
 shhh(library(shinytitle))
 
-## Testing dependencies not need for the app itself ---------------------------
-# Including them here keeps them in renv but avoids the app needlessly loading
-# them, saving on load time.
+## Testing dependencies -------------------------------------------------------
+# These are not needed for the app itself but including them here keeps them in
+# renv but avoids the app needlessly loading them, saving on load time.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if (FALSE) {
   # Automated testing
@@ -58,6 +58,7 @@ if (FALSE) {
 # It's best to do this here instead of the server file, to improve performance.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 source("R/helper_functions.R")
+source("R/read_data.R")
 
 # Source all files in the dashboard modules and footer pages folders
 lapply(list.files("R/dashboard_modules/", full.names = TRUE, recursive = TRUE), source)
@@ -80,4 +81,12 @@ sites_list <- c(site_primary, site_overflow) # used for custom disconnect functi
 google_analytics_key <- "XXXXXXXXXX" # TODO
 
 # Load data ===================================================================
-source("R/read_data.R")
+# Functions used here are created in the R/read_data.R file
+
+## NPS ------------------------------------------------------------------------
+nps_parquet <- read_nps("data/national_provider_summary_0.parquet")
+
+# Create static lists of options for dropdowns
+nps_provider_choices <- data_choices(data = nps_parquet, column = "Provider name")
+nps_year_choices <- data_choices(data = nps_parquet, column = "Academic Year")
+nps_characteristic_choices <- data_choices(data = nps_parquet, column = "Learner characteristic")

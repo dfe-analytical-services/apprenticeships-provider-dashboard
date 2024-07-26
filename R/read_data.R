@@ -1,6 +1,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Script where we provide code to read in the data file(s).
 #
+# We create functions in this script then reuse elsewhere in the code explicitly
+#
 # IMPORTANT: Data files pushed to GitHub repositories are immediately public.
 # You should not be pushing unpublished data to the repository prior to your
 # publication date. You should use dummy data or already-published data during
@@ -17,21 +19,15 @@
 
 ## National provider summary --------------------------------------------------
 # Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
-nps_parquet <- arrow::read_parquet("data/national_provider_summary_0.parquet") %>%
-  select(-c(`order_ref`, `order_detailed`))
+read_nps <- function(file_path) {
+  arrow::read_parquet(file_path) %>%
+    select(-c(`order_ref`, `order_detailed`)) # unused columns
+}
 
-### Lists of options use in the dropdowns -------------------------------------
-nps_provider_choices <- nps_parquet %>%
-  distinct(`Provider name`) %>%
-  collect() %>%
-  pull()
-
-nps_year_choices <- nps_parquet %>%
-  distinct(`Academic Year`) %>%
-  collect() %>%
-  pull()
-
-nps_characteristic_choices <- nps_parquet %>%
-  distinct(`Learner characteristic`) %>%
-  collect() %>%
-  pull()
+# Create options lists for use in the dropdowns ===============================
+data_choices <- function(data, column) {
+  data %>%
+    distinct(!!sym(column)) %>% # adding the !!sym() to convert string to column name
+    collect() %>%
+    pull()
+}

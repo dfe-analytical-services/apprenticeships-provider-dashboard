@@ -15,6 +15,7 @@ app <- AppDriver$new(
   name = "basic_load_nav",
   load_timeout = 45 * 1000,
   timeout = 20 * 1000,
+  wait = TRUE,
   expect_values_screenshot_args = FALSE # Turn off as we don't need screenshots
 )
 

@@ -3333,7 +3333,7 @@
       "checksum": "0632a61c292184d1246e61f385b0274c"
     },
     ".github/workflows/deploy-shiny.yaml": {
-      "checksum": "45fba8f354cb22b2b6c98d683487f3c0"
+      "checksum": "1d5e1555f60760c3b71d8bde77883198"
     },
     ".github/workflows/lintr.yml": {
       "checksum": "21cd29b42da3fde8a759e602a8c59683"
@@ -3345,25 +3345,16 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "4070c544cae792737dc5df0aadd62308"
+      "checksum": "03af9b70e23c88203e85c70a1fd69e5e"
     },
     "azure-pipelines.yml": {
       "checksum": "c61c64ea76da2823ebd51d556ed25338"
     },
-    "data/apprenticeships_data.csv": {
-      "checksum": "19029e217dd00c02ea1024399062830d"
-    },
     "data/apprenticeships_data_0.parquet": {
       "checksum": "2f33fbdc88f41225932c55a6441d7404"
     },
-    "data/apprenticeships_demographics.csv": {
-      "checksum": "a7d9b41f62da0ec1c5d7846a3550533f"
-    },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "9f8f4178aae1ed79ca6eb57296b4d1c1"
-    },
-    "data/national_provider_summary.csv": {
-      "checksum": "a0064193ae482f55418c7e47ea27d724"
     },
     "data/national_provider_summary_0.parquet": {
       "checksum": "05cbcc1201a16f97d4919345e05cdaf0"

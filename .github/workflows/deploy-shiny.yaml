@@ -30,6 +30,9 @@ jobs:
         run: |
           echo "SHINYAPP_NAME='apprenticeships-provider-dashboard'">> $GITHUB_ENV
           echo "SHINYAPP_OVERFLOW_NAME='apprenticeships-provider-dashboard'">> $GITHUB_ENV
+
+      - name: Install git2r dependencies
+        run: sudo apt-get install -y libgit2-dev
         
       - name: Restore renv snapshot
         shell: Rscript {0}

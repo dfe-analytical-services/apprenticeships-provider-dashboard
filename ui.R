@@ -1,4 +1,4 @@
-# -----------------------------------------------------------------------------
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This is the ui file. Use it to call elements created in your server file into
 # the app, and define where they are placed, and define any user inputs.
 #
@@ -17,13 +17,14 @@
 #
 #    https://github.com/moj-analytical-services/shinyGovstyle
 #
-# -----------------------------------------------------------------------------
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 ui <- function(input, output, session) {
   page_fluid(
-    # Set app metadata --------------------------------------------------------
-    tags$head(HTML("<title>Apprenticeships provider dashboard</title>")),
-    tags$head(tags$link(rel = "shortcut icon", href = "dfefavicon.png")),
+    # Metadata for app ========================================================
     tags$html(lang = "en"),
+    tags$head(HTML(paste0("<title>", site_title, "</title>"))), # set in global.R
+    tags$head(tags$link(rel = "shortcut icon", href = "dfefavicon.png")),
     # Add meta description for search engines
     meta() %>%
       meta_general(
@@ -36,7 +37,10 @@ ui <- function(input, output, session) {
         referrer = "no-referrer"
       ),
 
-    # Custom CSS --------------------------------------------------------------
+    # Required to make the title update based on tab changes
+    shinytitle::use_shiny_title(),
+
+    ## Custom CSS -------------------------------------------------------------
     tags$head(
       tags$link(
         rel = "stylesheet",
@@ -45,7 +49,7 @@ ui <- function(input, output, session) {
       )
     ),
 
-    # Custom disconnect function ----------------------------------------------
+    ## Custom disconnect function ---------------------------------------------
     # Variables used here are set in the global.R file
     dfeshiny::custom_disconnect_message(
       links = sites_list,
@@ -53,7 +57,7 @@ ui <- function(input, output, session) {
       publication_link = parent_publication
     ),
 
-    # Header ------------------------------------------------------------------
+    ## Header -----------------------------------------------------------------
     shinyGovstyle::header(
       main_text = "",
       main_link = "https://www.gov.uk/government/organisations/department-for-education",
@@ -63,54 +67,61 @@ ui <- function(input, output, session) {
       logo_height = 32
     ),
 
-    # Beta banner -------------------------------------------------------------
+    ## Beta banner ------------------------------------------------------------
     shinyGovstyle::banner(
-      "beta banner",
-      "Beta",
+      "gds_phase_banner",
+      "Alpha",
       paste0(
         "This dashboard is being actively developed, contact explore.statistics@education.gov.uk with any feedback"
       )
     ),
 
-    # Page navigation ---------------------------------------------------------
+    # Page navigation =========================================================
     # This switches between the supporting pages in the footer and the main dashboard
-    bslib::navset_hidden(
-      id = "pages",
-      nav_panel(
-        "dashboard",
-        # Main dashboard ----------------------------------------------------------
-        gov_main_layout(
+    gov_main_layout(
+      bslib::navset_hidden(
+        id = "pages",
+        nav_panel(
+          "dashboard",
+          ## Main dashboard ---------------------------------------------------
           layout_columns(
-            col_widths = c(2, 8),
-            # Left navigation -------------------------------------------------------
+            # Override default wrapping breakpoints to avoid text overlap
+            col_widths = breakpoints(sm = c(4, 8), md = c(3, 9), lg = c(2, 9)),
+            ## Left navigation ------------------------------------------------
             tags$div(
-              style = "position: sticky; top: 1rem",
+              style = "position: sticky; top: 0.5rem; padding: 0.25rem;", # Make it stick!
               h2(style = "margin-left: 1rem", "Contents"),
               tags$ul(
-                style = "list-style-type: none",
-                tags$li(actionLink("example_panel", "Example panel")),
-                tags$li(actionLink("user_guide", "User guide")),
-                tags$li(actionLink("footnotes", "Footnotes")),
-                tags$li(actionLink("support", "Support and feedback"))
+                style = "list-style-type: none", # remove the circle bullets
+                tags$li(actionLink("provider_breakdowns", "Provider breakdowns")),
+                tags$li(actionLink("local_authority_district", "Local authority district")),
+                tags$li(actionLink("subjects_and_standards", "Subjects and standards")),
+                tags$li(actionLink("learner_characteristics", "Learner characteristics")),
+                tags$li(actionLink("national_provider_summary", "National provider summary")),
+                tags$li(actionLink("user_guide", "User guide"))
               )
             ),
-            # Dashboard panels ------------------------------------------------------
+            ## Dashboard panels -----------------------------------------------
             bslib::navset_hidden(
               id = "left_nav",
-              nav_panel("example_panel", example_panel()),
-              nav_panel("user_guide", user_guide_panel()),
-              nav_panel("footnotes", footnotes_panel()),
-              nav_panel("support", support_panel())
+              nav_panel("provider_breakdowns", provider_breakdowns()),
+              nav_panel("local_authority_district", local_authority_district()),
+              nav_panel("subjects_and_standards", subjects_and_standards()),
+              nav_panel("learner_characteristics", learner_characteristics()),
+              nav_panel("national_provider_summary", nps_ui(id = "nps")),
+              nav_panel("user_guide", user_guide())
             )
           )
-        )
-      ),
-      # Pages linked from the footer ------------------------------------------
-      nav_panel("accessibility", accessibility_page()),
-      nav_panel("cookies", cookies_page())
+        ),
+        ## Footer pages -------------------------------------------------------
+        nav_panel("footnotes", footnotes_page()),
+        nav_panel("support", support_page()),
+        nav_panel("accessibility_statement", accessibility_page()),
+        nav_panel("cookies", cookies_page())
+      )
     ),
 
-    # Footer ------------------------------------------------------------------
-    custom_footer() # set in utils.R
+    # Footer ==================================================================
+    custom_footer() # set in helper_functions.R
   )
 }

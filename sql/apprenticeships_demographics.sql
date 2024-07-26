@@ -58,6 +58,8 @@ OR
 
 --Calculate measures and group data, and format year*
 --*ie place a /(solidus) after the first 4 characters, so that date appears as, for example, 2022/23 rather than 202223
+
+IF OBJECT_ID('tempdb..#APPS2') IS NOT NULL DROP TABLE #APPS2
 SELECT 
 substring([year],1,4) + '/' + substring([year],5,22) as [year],
 coalesce(age_group,'Total') as age_group,
@@ -67,12 +69,16 @@ coalesce(lldd,'Total') as lldd,
 coalesce(provider_name,'Total') as provider_name,
 round(sum(starts), -1) as starts,
 round(sum(achievements), -1) as achievements
+into #APPS2
 FROM #APPS 
-group by 
-[year],
-cube(
-age_group,
-sex,
-ethnicity_major,
-lldd,
-provider_name) ;
+group by [year],cube(age_group,sex,ethnicity_major,lldd,provider_name) 
+
+--ensures there is only one breakdown of the data, so not disclosive
+select * 
+from #apps2
+where
+(age_group not IN ('Total') and sex = 'Total' and ethnicity_major = 'Total' and lldd = 'Total') or 
+(age_group = 'Total' and sex  not IN ('Total') and ethnicity_major = 'Total' and lldd = 'Total') or 
+(age_group = 'Total' and sex = 'Total' and ethnicity_major  not IN ('Total') and lldd = 'Total') or 
+(age_group = 'Total' and sex = 'Total' and ethnicity_major = 'Total' and lldd  not IN ('Total')) 
+

@@ -1,4 +1,4 @@
-# -----------------------------------------------------------------------------
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # This is the server file.
 #
 # Use it to create interactive elements like tables, charts and text for your
@@ -12,48 +12,47 @@
 # examples of render calls you can use:
 # https://shiny.rstudio.com/images/shiny-cheatsheet.pdf
 #
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-# -----------------------------------------------------------------------------
+# Find out more about building Shiny applications: http://shiny.rstudio.com/
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 server <- function(input, output, session) {
-  # Page navigation ------------------------------------------------------------
-  observeEvent(input$dashboard, {
-    nav_select("pages", "dashboard")
+  # Navigation ================================================================
+  ## Main content left navigation ---------------------------------------------
+  observeEvent(input$provider_breakdowns, nav_select("left_nav", "provider_breakdowns"))
+  observeEvent(input$local_authority_district, nav_select("left_nav", "local_authority_district"))
+  observeEvent(input$subjects_and_standards, nav_select("left_nav", "subjects_and_standards"))
+  observeEvent(input$learner_characteristics, nav_select("left_nav", "learner_characteristics"))
+  observeEvent(input$national_provider_summary, nav_select("left_nav", "national_provider_summary"))
+  observeEvent(input$user_guide, nav_select("left_nav", "user_guide"))
+
+  ## Footer links -------------------------------------------------------------
+  observeEvent(input$dashboard, nav_select("pages", "dashboard"))
+  observeEvent(input$footnotes, nav_select("pages", "footnotes"))
+  observeEvent(input$support, nav_select("pages", "support"))
+  observeEvent(input$accessibility, nav_select("pages", "accessibility_statement"))
+  observeEvent(input$cookies, nav_select("pages", "cookies"))
+
+  ## Back links to main dashboard ---------------------------------------------
+  observeEvent(input$footnotes_to_dashboard, nav_select("pages", "dashboard"))
+  observeEvent(input$support_to_dashboard, nav_select("pages", "dashboard"))
+  observeEvent(input$cookies_to_dashboard, nav_select("pages", "dashboard"))
+  observeEvent(input$accessibility_to_dashboard, nav_select("pages", "dashboard"))
+
+  # Update title ==============================================================
+  # This changes the title based on the tab selections and is important for accessibility
+  # If on the main dashboard it uses the active tab from left_nav, else it uses the page input
+  observe({
+    if (input$pages == "dashboard") {
+      change_window_title(title = paste0(site_title, " - ", gsub("_", " ", input$left_nav)))
+    } else {
+      change_window_title(title = paste0(site_title, " - ", gsub("_", " ", input$pages)))
+    }
   })
 
-  observeEvent(input$accessibility, {
-    nav_select("pages", "accessibility")
-  })
+  # Module calls ==============================================================
+  nps_server(id = "nps")
 
-  observeEvent(input$cookies, {
-    nav_select("pages", "cookies")
-  })
-
-  # Main content left navigation ----------------------------------------------
-  observeEvent(input$example_panel, {
-    nav_select("left_nav", "example_panel")
-  })
-
-  observeEvent(input$user_guide, {
-    nav_select("left_nav", "user_guide")
-  })
-
-  observeEvent(input$footnotes, {
-    nav_select("left_nav", "footnotes")
-  })
-
-  observeEvent(input$support, {
-    nav_select("left_nav", "support")
-  })
-
-  # Back links to main dashboard ----------------------------------------------
-  observeEvent(input$cookies_to_dashboard || input$accessibility_to_dashboard, {
-    nav_select("pages", "dashboard")
-  })
-
-  # Stop app ------------------------------------------------------------------
+  # Stop app when tab closes ==================================================
   session$onSessionEnded(function() {
     stopApp()
   })

@@ -1,0 +1,32 @@
+name: apprenticehsips-provider-dashboard-$(rev:r)
+
+pool:
+  name: RSConnect
+  
+trigger:
+  branches:
+    include:
+    - main
+
+  paths:
+    exclude:
+    - azure-pipelines.yml
+    
+resources:
+  repositories:
+    - repository: posit-deploy
+      type: git
+      name: ESFA-Data-Science/posit-deploy
+      
+extends:
+  template: deploy.yml@posit-deploy
+  parameters:
+    appName: apprenticeships-provider-dashboard
+    environments:
+    - name: Pre-Production
+      appId: 
+    - name: Production
+      appId: 
+    approvers: |
+     cameron.race@education.gov.uk
+     richard.bielby@education.gov.uk

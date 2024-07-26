@@ -115,6 +115,28 @@
       ],
       "Hash": "2f2912ff398384ab8b2d7e1256019894"
     },
+    "arrow": {
+      "Package": "arrow",
+      "Version": "16.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "assertthat",
+        "bit64",
+        "cpp11",
+        "glue",
+        "methods",
+        "purrr",
+        "rlang",
+        "stats",
+        "tidyselect",
+        "utils",
+        "vctrs"
+      ],
+      "Hash": "d9cb18a8fc53895548150650cadde3a6"
+    },
     "askpass": {
       "Package": "askpass",
       "Version": "1.2.0",
@@ -124,6 +146,16 @@
         "sys"
       ],
       "Hash": "cad6cf7f1d5f6e906700b9d3e718c796"
+    },
+    "assertthat": {
+      "Package": "assertthat",
+      "Version": "0.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "tools"
+      ],
+      "Hash": "50c838a310445e954bc13f26f26a6ecf"
     },
     "backports": {
       "Package": "backports",
@@ -144,6 +176,30 @@
         "R"
       ],
       "Hash": "543776ae6848fde2f48ff3816d0628bc"
+    },
+    "bit": {
+      "Package": "bit",
+      "Version": "4.0.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "d242abec29412ce988848d0294b208fd"
+    },
+    "bit64": {
+      "Package": "bit64",
+      "Version": "4.0.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "bit",
+        "methods",
+        "stats",
+        "utils"
+      ],
+      "Hash": "9fe98599ca456d6552421db0d6772d8f"
     },
     "bitops": {
       "Package": "bitops",
@@ -314,6 +370,17 @@
       ],
       "Hash": "cdc4a473222b0112d4df0bcfbed12d44"
     },
+    "data.table": {
+      "Package": "data.table",
+      "Version": "1.15.4",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "methods"
+      ],
+      "Hash": "8ee9ac56ef633d0c7cab8b2ca87d683e"
+    },
     "desc": {
       "Package": "desc",
       "Version": "1.4.3",
@@ -332,15 +399,15 @@
       "Version": "0.3.0",
       "Source": "GitHub",
       "RemoteType": "github",
+      "RemoteHost": "api.github.com",
       "RemoteUsername": "dfe-analytical-services",
       "RemoteRepo": "dfeR",
       "RemoteRef": "main",
-      "RemoteSha": "6f5aca112e8fa0f35541c4a987cea6222302f89d",
-      "RemoteHost": "api.github.com",
+      "RemoteSha": "1572161bcd2a4e0e6e35a5c9f2cd15625bb2a822",
       "Requirements": [
         "lifecycle"
       ],
-      "Hash": "1ecf7c371ee428eebb9234de2d48c05a"
+      "Hash": "0a1607cfd218b8c49a0111f02f88111a"
     },
     "dfeshiny": {
       "Package": "dfeshiny",
@@ -527,6 +594,21 @@
       ],
       "Hash": "81d371a9cc60640e74e4ab6ac46dcedc"
     },
+    "htmlwidgets": {
+      "Package": "htmlwidgets",
+      "Version": "1.6.4",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "grDevices",
+        "htmltools",
+        "jsonlite",
+        "knitr",
+        "rmarkdown",
+        "yaml"
+      ],
+      "Hash": "04291cc45198225444a397606810ac37"
+    },
     "httpuv": {
       "Package": "httpuv",
       "Version": "1.6.15",
@@ -702,6 +784,23 @@
       ],
       "Hash": "2bcca3848e4734eb3b16103bc9aa4b8e"
     },
+    "openxlsx": {
+      "Package": "openxlsx",
+      "Version": "4.2.6.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "grDevices",
+        "methods",
+        "stats",
+        "stringi",
+        "utils",
+        "zip"
+      ],
+      "Hash": "bd8fbd2904be3ce8fdf529a4f74a0c29"
+    },
     "pillar": {
       "Package": "pillar",
       "Version": "1.9.0",
@@ -849,6 +948,31 @@
         "R"
       ],
       "Hash": "5e3c5dc0b071b21fa128676560dbe94d"
+    },
+    "reactR": {
+      "Package": "reactR",
+      "Version": "0.6.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "htmltools"
+      ],
+      "Hash": "10f4d661c235181648a5958c02c0382a"
+    },
+    "reactable": {
+      "Package": "reactable",
+      "Version": "0.4.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "digest",
+        "htmltools",
+        "htmlwidgets",
+        "jsonlite",
+        "reactR"
+      ],
+      "Hash": "6069eb2a6597963eae0605c1875ff14c"
     },
     "rematch2": {
       "Package": "rematch2",
@@ -1307,6 +1431,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "9cb28d11799d93c953f852083d55ee9e"
+    },
+    "zip": {
+      "Package": "zip",
+      "Version": "2.3.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "fcc4bd8e6da2d2011eb64a5e5cc685ab"
     }
   }
 }

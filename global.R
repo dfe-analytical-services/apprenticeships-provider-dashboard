@@ -49,6 +49,10 @@ if (FALSE) {
   # Code linting and styling
   shhh(library(lintr))
   shhh(library(styler))
+
+  # Pre commit hooks
+  shhh(library(rsconnect))
+  shhh(library(git2r))
 }
 
 # Source R scripts ============================================================

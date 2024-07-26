@@ -1,25 +1,26 @@
 /* Fonts ------------------------------------------------------------------- */
 /* main body text */
 body {
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
   font-size: 19px;
   margin-bottom: 20px;
 }
 
 p {
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
   font-size: 19px;
   margin-bottom: 20px;
 }
 
 /* heading text */
 .govuk-header__link--service-name {
+  font-family: "Helvetica Neue", "Arial", sans-serif;
   font-size: 30px;
 }
 
 .h1,
 h1 {
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
   font-size: 48px;
   font-weight: 700;
   line-height: 1.0416666667;
@@ -29,7 +30,7 @@ h1 {
 
 .h2,
 h2 {
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
   font-size: 24px;
   font-weight: 700;
   line-height: 1.0416666667;
@@ -39,7 +40,7 @@ h2 {
 
 .h3,
 h3 {
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica Neue","Arial", sans-serif;
   font-size: 20px;
   font-weight: 700;
   line-height: 1.0416666667;
@@ -49,14 +50,14 @@ h3 {
 
 /* feedback banner */
 .govuk-phase-banner__content {
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
   font-size: 16px;
   color: #000000;
 }
 
 /* well text */
 label {
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
   font-size: 19px;
 }
 
@@ -71,7 +72,7 @@ label {
 
 /* second dropdown options */
 .selectize-input {
-  font-family: "Arial", sans-serif;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
   font-size: 19px;
   color: #000000;
 }
@@ -91,7 +92,7 @@ ul {
 
 /* Link text styling ------------------------------------------------------- */
 a {
-  font-family: arial, sans-serif;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
   text-decoration: underline;
   text-decoration-thickness: max(1px, .0625rem);
   text-underline-offset: .1578em;
@@ -120,6 +121,10 @@ a:hover {
 }
 
 /* GOV.UK containers ------------------------------------------------------- */
+.govuk-header__link:hover {
+  color: #000;
+}
+
 /* force things like beta banner to full width */
 .govuk-width-container {
   max-width: 100% !important;
@@ -133,8 +138,6 @@ a:hover {
 }
 
 /* reduce the padding even more around the beta banner */
-/* TODO: not working */
-
 .govuk-phase-banner.govuk-width-container.govuk-main-wrapper {
   padding: 0.5rem !important;
 }
@@ -239,7 +242,7 @@ html {
 
 /* GOV.UK button copied in from shiny gov style ---------------------------- */
 .btn-default {
-    font-family: GDS Transport, arial, sans-serif;
+    font-family: "Helvetica Neue", "Arial", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 400;
@@ -285,15 +288,28 @@ html {
 
 /* Highlight on the page button indicators --------------------------------- */
 .rt-page-button:hover,
-.rt-page-button:active,
-.rt-page-button:focus {
-    background: #fd0;
+.rt-page-button:focus,
+.rt-page-button:active {
+    background: #fd0 !important; 
     box-shadow: inset 0 -3px 0 0 #1d70b8;
 }
 
 .selectize-input:hover,
 .selectize-input:active,
 .selectize-input:focus {
-  border: #fd0 !important;
   box-shadow: inset 0 -3px 0 0 #1d70b8;
+}
+
+/* Change focus border color to yellow */
+.selectize-input.focus {
+    border-color: #fd0 !important;
+    box-shadow: 0 0 5px #fd0 !important;
+}
+
+/* Change focus color to bright yellow */
+.selectize-dropdown-content .option:hover,
+.selectize-dropdown-content .option:focus,
+.selectize-dropdown-content .option.active {
+    background-color: #fd0 !important;
+    color: black !important;
 }

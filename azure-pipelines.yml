@@ -26,7 +26,4 @@ extends:
     - name: Pre-Production
       appId: 948
     - name: Production
-      appId: None
-    approvers: |
-     cameron.race@education.gov.uk
-     richard.bielby@education.gov.uk
+      appId: 383

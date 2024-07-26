@@ -3330,7 +3330,7 @@
       "checksum": "94d500fe8e3a1b354b217ebd3279ba5c"
     },
     ".github/workflows/automated-tests.yaml": {
-      "checksum": "0632a61c292184d1246e61f385b0274c"
+      "checksum": "1d77fa3ab865d3bc574fecae489d48d7"
     },
     ".github/workflows/deploy-shiny.yaml": {
       "checksum": "1d5e1555f60760c3b71d8bde77883198"
@@ -3345,7 +3345,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "9fe3c94cb14949f113db58a636afecbe"
+      "checksum": "560c752e1f6ecdc60833acf2360d1206"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -3411,7 +3411,7 @@
       "checksum": "366715f16d961a1529f6e8307182f2b9"
     },
     "README.md": {
-      "checksum": "01e925b3c1f82cbf5642669b34d6664c"
+      "checksum": "db7305c1a434efa8d6dd90e522274c40"
     },
     "renv.lock": {
       "checksum": "985ddba11c746b5eaa7e3e47ffba847c"
@@ -3444,7 +3444,7 @@
       "checksum": "cdeb5f78799f6762f5db3e6da436c5b4"
     },
     "tests/testthat/test-UI-05-nps_downloads.R": {
-      "checksum": "11182359dc88004d31610b4978e3ce40"
+      "checksum": "fc8257db6b282a58fda2a63c8dcc526f"
     },
     "ui.R": {
       "checksum": "982e9bae8dbce9996f38d859c507f94c"

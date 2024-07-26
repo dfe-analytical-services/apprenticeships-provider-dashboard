@@ -3333,7 +3333,7 @@
       "checksum": "1d77fa3ab865d3bc574fecae489d48d7"
     },
     ".github/workflows/deploy-shiny.yaml": {
-      "checksum": "1d5e1555f60760c3b71d8bde77883198"
+      "checksum": "daa321b0f496d045fd363df2ea85d0d4"
     },
     ".github/workflows/lintr.yml": {
       "checksum": "21cd29b42da3fde8a759e602a8c59683"
@@ -3345,7 +3345,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "560c752e1f6ecdc60833acf2360d1206"
+      "checksum": "a185860449c510582ef136d8083b93c1"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"

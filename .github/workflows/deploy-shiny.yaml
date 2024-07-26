@@ -20,16 +20,10 @@ jobs:
         with:
           use-public-rspm: true
 
-      - name: Set env vars (dev)
-        if: endsWith(github.ref, '/development')
-        run: |
-          echo "SHINYAPP_NAME='dev-apprenticeships-provider-dashboard'" >> $GITHUB_ENV
-          echo "SHINYAPP_OVERFLOW_NAME='dev-apprenticeships-provider-dashboard-overflow'">> $GITHUB_ENV
       - name: Set env vars (prod)
         if: endsWith(github.ref, '/main')
         run: |
           echo "SHINYAPP_NAME='apprenticeships-provider-dashboard'">> $GITHUB_ENV
-          echo "SHINYAPP_OVERFLOW_NAME='apprenticeships-provider-dashboard'">> $GITHUB_ENV
 
       - name: Install git2r dependencies
         run: sudo apt-get install -y libgit2-dev
@@ -55,4 +49,3 @@ jobs:
           Rscript
           -e "rsconnect::setAccountInfo(name = 'department-for-education', token = '${{secrets.SHINYAPPS_TOKEN}}', secret = '${{secrets.SHINYAPPS_SECRET}}')"
           -e "rsconnect::deployApp(appName=${{env.SHINYAPP_NAME}}, forceUpdate = TRUE)"
-          -e "rsconnect::deployApp(appName=${{env.SHINYAPP_OVERFLOW_NAME}}, forceUpdate = TRUE)"

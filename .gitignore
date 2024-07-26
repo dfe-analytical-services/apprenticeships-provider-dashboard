@@ -9,6 +9,3 @@ README.html
 data/national_provider_summary.csv
 data/apprenticeships_demographics.csv
 data/apprenticeships_data.csv
-data/apprenticeships_data_0.parquet
-data/apprenticeships_demographics_0.parquet
-data/national_provider_summary_0.parquet

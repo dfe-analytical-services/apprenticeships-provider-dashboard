@@ -90,15 +90,15 @@ ui <- function(input, output, session) {
             ## Left navigation ------------------------------------------------
             tags$div(
               style = "position: sticky; top: 0.5rem; padding: 0.25rem;", # Make it stick!
-              h2(style = "margin-left: 1rem", "Contents"),
+              h2("Contents"),
               tags$ul(
-                style = "list-style-type: none", # remove the circle bullets
-                tags$li(actionLink("provider_breakdowns", "Provider breakdowns")),
-                tags$li(actionLink("local_authority_district", "Local authority district")),
-                tags$li(actionLink("subjects_and_standards", "Subjects and standards")),
-                tags$li(actionLink("learner_characteristics", "Learner characteristics")),
-                tags$li(actionLink("national_provider_summary", "National provider summary")),
-                tags$li(actionLink("user_guide", "User guide"))
+                style = "list-style-type: none; padding-left: 0; font-size: 1rem;", # remove the circle bullets
+                tags$li("—", actionLink("provider_breakdowns", "Provider breakdowns")),
+                tags$li("—", actionLink("local_authority_district", "Local authority district")),
+                tags$li("—", actionLink("subjects_and_standards", "Subjects and standards")),
+                tags$li("—", actionLink("learner_characteristics", "Learner characteristics")),
+                tags$li("—", actionLink("national_provider_summary", "National provider summary")),
+                tags$li("—", actionLink("user_guide", "User guide"))
               )
             ),
             ## Dashboard panels -----------------------------------------------

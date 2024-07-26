@@ -56,15 +56,11 @@ nps_ui <- function(id) {
           choices = c("CSV (Up to 5.22 MB)", "XLSX (Up to 1.76 MB)"),
           selected = "CSV (Up to 5.22 MB)"
         ),
-        # Bit of a hack to force the button not to be full width
-        layout_columns(
-          col_widths = 3,
-          downloadButton(
-            NS(id, "download_data"),
-            label = "Download data",
-            class = "gov-uk-button",
-            icon = NULL
-          )
+        downloadButton(
+          NS(id, "download_data"),
+          label = "Download data",
+          class = "gov-uk-button",
+          icon = NULL
         )
       )
     ),

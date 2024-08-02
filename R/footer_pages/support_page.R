@@ -10,8 +10,12 @@ support_page <- function() {
     h1("Support and feedback"),
     h2("Give us feedback"),
     p(
-      "This dashboard is a new service that we are developing. If you have any feedback or suggestions for
-          improvements, please submit them using our ",
+      "This provider-focussed dashboard is a new service that we are developing.
+      It is a prototype, designed to supplement the main apprenticeships visualisation tool and table tool,
+      and to replace the current provider-focussed interactive tool."
+    ),
+    p(
+      "If you have any feedback or suggestions for improvements, please submit them using our ",
       a(href = feedback_form_url, "feedback form", .noWS = c("after")), "."
     ),
     p("Alternatively, if you spot any errors or bugs while using this dashboard, please screenshot and email them

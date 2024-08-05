@@ -3344,11 +3344,8 @@
     ".lintr": {
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
-    ".Rbuildignore": {
-      "checksum": "81051bcc2cf1bedf378224b0a93e2877"
-    },
     ".Rprofile": {
-      "checksum": "d7b13976cf867361b11209f9389fd773"
+      "checksum": "f86bfdebfcdc8aec41dcfbc9cfe346f4"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"

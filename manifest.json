@@ -3345,7 +3345,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "424bc0986eca7eef3844cfb35230abef"
+      "checksum": "755ea777be969ee714db0dee38094e20"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -3381,7 +3381,7 @@
       "checksum": "75454e0ebffa6406deb970b743b59168"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
-      "checksum": "308be86995ba444ef9bc5945a2f6606b"
+      "checksum": "7fe46330e7d79ffc6ccdab4c89c42c54"
     },
     "R/dashboard_modules/06-user_guide.R": {
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
@@ -3405,7 +3405,7 @@
       "checksum": "0bba83e756aeb4513d4ceeff629c8969"
     },
     "R/helper_functions.R": {
-      "checksum": "5d48ccdef179e95094b5a947a046cc01"
+      "checksum": "1500b893cc4140110e5e2b1b81289e4f"
     },
     "R/read_data.R": {
       "checksum": "366715f16d961a1529f6e8307182f2b9"
@@ -3417,7 +3417,7 @@
       "checksum": "985ddba11c746b5eaa7e3e47ffba847c"
     },
     "server.R": {
-      "checksum": "054fbc8776edc55c5face0589ebba045"
+      "checksum": "fcb1d91c0ebe7c49f485747b3d77468b"
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
@@ -3441,19 +3441,19 @@
       "checksum": "1fd753be5bbff3a1b07b6b6983483ca1"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "cdeb5f78799f6762f5db3e6da436c5b4"
+      "checksum": "e0e0e94fc81a65b28330137dddb30d16"
     },
     "tests/testthat/test-UI-05-nps_downloads.R": {
       "checksum": "fc8257db6b282a58fda2a63c8dcc526f"
     },
     "ui.R": {
-      "checksum": "3aa92e402c25b7c0495ea0d3b62485f5"
+      "checksum": "8759779a8bca5a758b0aa36b7435699f"
     },
     "www/dfe_logo.svg": {
       "checksum": "c23764dae2d73a45a55815d0327be6cb"
     },
     "www/dfe_shiny_gov_style.css": {
-      "checksum": "05bf50bbc97d52c3df0e707c711f6817"
+      "checksum": "394030838b5d2f7f7f4ee275e6e5c6f0"
     },
     "www/dfefavicon.png": {
       "checksum": "179db108199253ed0617024df291473b"

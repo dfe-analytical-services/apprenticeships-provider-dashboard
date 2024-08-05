@@ -330,6 +330,7 @@ html {
     box-shadow: inset 0 -0.188rem 0 0 #1d70b8;
 }
 
+/* dropdowns CSS ----------------------------------------------------------- */
 .selectize-input:hover,
 .selectize-input:active,
 .selectize-input:focus {

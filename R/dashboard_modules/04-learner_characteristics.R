@@ -1,30 +1,48 @@
 library(ggplot2)
 library(ggiraph)
 library(tidyr)
+library(forcats)
+library(treemapify)
 
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet")
-
-# Default for input is to select rows within a column so put into long format
-chars_parquet <- chars_parquet %>%
+chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet") %>%
+  # Default for input is to select rows within a column so put into long format
   pivot_longer(
     cols = -c(year, age_group, sex, ethnicity_major, lldd, provider_name),
     names_to = "measure",
     values_to = "count"
-  )
+  ) %>%
+  mutate(measure = firstup(measure))
+
+
+
 
 # divide up data for different characteristics
+# age
 chars_age <- chars_parquet %>% filter(age_group != "Total")
-chars_sex <- chars_parquet %>% filter(sex != "Total")
+# and sort into the right order
+
+
+
+# ethnicity
 chars_ethnicity <- chars_parquet %>% filter(ethnicity_major != "Total")
-chars_lldd <- chars_parquet %>% filter(lldd != "Total")
+
+
 
 
 # Create static lists of options for dropdowns
-chars_provider_choices <- data_choices(data = chars_parquet, column = "provider_name")
-chars_year_choices <- data_choices(data = chars_parquet, column = "year")
+chars_year_choices <- sort(data_choices(data = chars_parquet, column = "year"),
+  decreasing = TRUE
+)
 chars_measure_choices <- data_choices(data = chars_parquet, column = "measure")
+# for providers need to remove total first so can put at the beginning
+chars_parquet_no_total_providers <- chars_parquet %>%
+  filter(provider_name != "Total")
+chars_provider_choices <- sort(data_choices(
+  data = chars_parquet_no_total_providers,
+  column = "provider_name"
+))
 
 
 
@@ -44,17 +62,21 @@ learner_characteristics_ui <- function(id) {
         selectizeInput(
           inputId = NS(id, "provider"),
           label = NULL,
-          choices = NULL
+          choices = NULL,
+          selected = "Total",
+          options = list(maxOptions = 2000)
         ),
         selectInput(
           inputId = NS(id, "year"),
           label = "Select academic year",
-          choices = c(chars_year_choices)
+          choices = c(chars_year_choices),
+          selected = "2023/24 (Q3 Aug to Apr)"
         ),
         selectInput(
           inputId = NS(id, "measure"),
           label = "Select measure",
-          choices = c(chars_measure_choices)
+          choices = c(chars_measure_choices),
+          selected = "Starts"
         ),
       )
     ),
@@ -62,11 +84,25 @@ learner_characteristics_ui <- function(id) {
     # Main table ==============================================================
     navset_card_tab(
       id = "provider_learner_characteristics",
-      ## age tab ------------------------------------------------------------
+      ## lldd tab ------------------------------------------------------------
+      nav_panel(
+        "LLDD",
+        plotOutput(NS(id, ("lldd_plot")))
+      ),
+      ## sex tab ------------------------------------------------------------
+      nav_panel(
+        "Sex",
+        plotOutput(NS(id, ("sex_plot")))
+      ),
+      ## Age tab ------------------------------------------------------------
       nav_panel(
         "Age",
-        reactable::reactableOutput(NS(id, "chars_table")),
-        plotOutput("age_plot")
+        plotOutput(NS(id, ("age_plot")))
+      ),
+      # Ethnicity tab ------------------------------------------------------------
+      nav_panel(
+        "Ethnicity",
+        plotOutput(NS(id, ("ethnicity_plot")))
       ),
       ## Download tab ---------------------------------------------------------
       nav_panel(
@@ -101,30 +137,106 @@ learner_characteristics_server <- function(id) {
       session = session,
       inputId = "provider",
       label = "Search for provider",
-      choices = c(chars_provider_choices),
-      server = TRUE
+      choices = c("Total", chars_provider_choices),
+      server = TRUE,
+      selected = "Total"
     )
 
     # Reactive data set =======================================================
     chars_reactive_table <- reactive({
-      chars_filtered <- chars_age
+      chars_filtered <- chars_parquet
       chars_filtered <- chars_filtered %>% filter(provider_name == input$provider)
       chars_filtered <- chars_filtered %>% filter(year == input$year)
       chars_filtered <- chars_filtered %>% filter(measure == input$measure)
+      # and sort into the right order
+      chars_filtered$lldd <- factor(chars_filtered$lldd,
+        levels = c("LLDD - yes", "LLDD - no", "25+", "LLDD - unknown")
+      )
+      chars_filtered$sex <- factor(chars_filtered$sex,
+        levels = c("Male", "Female", "Unknown")
+      )
+      chars_filtered$age_group <- factor(chars_filtered$age_group,
+        levels = c("Under 19", "19-24", "25+", "Unknown")
+      )
+      chars_filtered$ethnicity_major <- factor(chars_filtered$ethnicity_major,
+        levels = c(
+          "White",
+          "Black / African / Caribbean / Black British",
+          "Asian / Asian British",
+          "Mixed / Multiple ethnic groups",
+          "Other ethnic group",
+          "Unknown"
+        )
+      )
+      chars_filtered <- chars_filtered[order(
+        chars_filtered$lldd,
+        chars_filtered$sex,
+        chars_filtered$age_group,
+        chars_filtered$ethnicity_major
+      ), ]
+
+
       # Pull the lazy loaded and now filtered data into memory
       chars_filtered %>% collect()
     })
 
-    # Age ===================================================================
-    output$chars_table <- renderReactable({
-      dfe_reactable(chars_reactive_table())
+    # LLDD ===================================================================
+    output$lldd_plot <- renderPlot({
+      chars_reactive_table() %>%
+        filter(lldd != "Total") %>%
+        ggplot(aes(x = lldd, y = count)) +
+        geom_col(fill = c("#12436D")) +
+        xlab("") +
+        ylab("") +
+        theme_classic() +
+        theme(axis.ticks.x = element_blank()) +
+        coord_flip()
     })
-    # Render a barplot
+    # Sex ===================================================================
+    output$sex_plot <- renderPlot({
+      chars_reactive_table() %>%
+        filter(sex != "Total") %>%
+        ggplot(aes(x = sex, y = count)) +
+        geom_col(fill = c("#12436D")) +
+        xlab("") +
+        ylab("") +
+        theme_classic() +
+        theme(axis.ticks.x = element_blank())
+    })
+    # Age ===================================================================
     output$age_plot <- renderPlot({
       chars_reactive_table() %>%
+        filter(age_group != "Total") %>%
         ggplot(aes(x = age_group, y = count)) +
-        geom_col(fill = c("#12436D"))
+        geom_col(fill = c("#12436D")) +
+        xlab("") +
+        ylab("") +
+        theme_classic() +
+        theme(axis.ticks.x = element_blank())
     })
+    # Ethnicity ===================================================================
+    output$ethnicity_plot <- renderPlot({
+      chars_reactive_table() %>%
+        filter(ethnicity_major != "Total") %>%
+        ggplot(aes(
+          area = count,
+          subgroup = ethnicity_major,
+          label = paste0(ethnicity_major, "\n", (count)),
+          fill = factor(ethnicity_major)
+        )) +
+        geom_treemap() +
+        xlim(0, 1) +
+        ylim(0, 1) + # need to set these to be able to place a geom_text
+        theme_void() + # needto get rid of axis values
+        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), "cm")) + # sets margins around needed with limits
+        scale_fill_manual(values = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1")) +
+        theme(legend.position = "none") + # no legend
+        geom_treemap_text(
+          alpha = 1, colour = "white", place = "topleft", size = 20, min.size = 4,
+          reflow = TRUE, grow = FALSE, fontface = "bold", layout = "squarified"
+        )
+    })
+
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------

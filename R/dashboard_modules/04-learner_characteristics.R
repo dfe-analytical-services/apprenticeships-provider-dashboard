@@ -18,19 +18,6 @@ chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet") %>%
 
 
 
-# divide up data for different characteristics
-# age
-chars_age <- chars_parquet %>% filter(age_group != "Total")
-# and sort into the right order
-
-
-
-# ethnicity
-chars_ethnicity <- chars_parquet %>% filter(ethnicity_major != "Total")
-
-
-
-
 # Create static lists of options for dropdowns
 chars_year_choices <- sort(data_choices(data = chars_parquet, column = "year"),
   decreasing = TRUE
@@ -150,16 +137,17 @@ learner_characteristics_server <- function(id) {
       chars_filtered <- chars_filtered %>% filter(measure == input$measure)
       # and sort into the right order
       chars_filtered$lldd <- factor(chars_filtered$lldd,
-        levels = c("LLDD - yes", "LLDD - no", "25+", "LLDD - unknown")
+        levels = c("Total", "LLDD - yes", "LLDD - no", "25+", "LLDD - unknown")
       )
       chars_filtered$sex <- factor(chars_filtered$sex,
-        levels = c("Male", "Female", "Unknown")
+        levels = c("Total", "Male", "Female", "Unknown")
       )
       chars_filtered$age_group <- factor(chars_filtered$age_group,
-        levels = c("Under 19", "19-24", "25+", "Unknown")
+        levels = c("Total", "Under 19", "19-24", "25+", "Unknown")
       )
       chars_filtered$ethnicity_major <- factor(chars_filtered$ethnicity_major,
         levels = c(
+          "Total",
           "White",
           "Black / African / Caribbean / Black British",
           "Asian / Asian British",

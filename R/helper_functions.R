@@ -148,3 +148,10 @@ dfe_reactable <- function(data) {
     defaultColDef = colDef(headerClass = "bar-sort-header")
   )
 }
+
+
+# properly capitalise first letter of a string
+firstup <- function(x) {
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  x
+}

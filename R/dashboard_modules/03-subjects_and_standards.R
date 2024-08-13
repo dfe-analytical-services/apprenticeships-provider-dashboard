@@ -72,7 +72,7 @@ subject_standards_server <- function(id) {
           values = sum(values),
           .by = c("ssa_t1_desc")
         ) %>%
-        mutate(ssa_t1_desc = stringr::str_wrap(ssa_t1_desc, 32))
+        mutate(ssa_t1_desc = str_wrap(ssa_t1_desc, 32))
     })
 
     output$subject_area_bar <- renderGirafe(

@@ -1446,36 +1446,6 @@
         "Built": "R 4.4.0; ; 2024-04-25 20:24:42 UTC; windows"
       }
     },
-    "forcats": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "forcats",
-        "Title": "Tools for Working with Categorical Variables (Factors)",
-        "Version": "1.0.0",
-        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", role = c(\"aut\", \"cre\")),\n    person(\"RStudio\", role = c(\"cph\", \"fnd\"))\n  )",
-        "Description": "Helpers for reordering factor levels (including moving\n    specified levels to front, ordering by first appearance, reversing,\n    and randomly shuffling), and tools for modifying factor levels\n    (including collapsing rare levels into other, 'anonymising', and\n    manually 'recoding').",
-        "License": "MIT + file LICENSE",
-        "URL": "https://forcats.tidyverse.org/,\nhttps://github.com/tidyverse/forcats",
-        "BugReports": "https://github.com/tidyverse/forcats/issues",
-        "Depends": "R (>= 3.4)",
-        "Imports": "cli (>= 3.4.0), glue, lifecycle, magrittr, rlang (>= 1.0.0),\ntibble",
-        "Suggests": "covr, dplyr, ggplot2, knitr, readr, rmarkdown, testthat (>=\n3.0.0), withr",
-        "VignetteBuilder": "knitr",
-        "Config/Needs/website": "tidyverse/tidytemplate",
-        "Config/testthat/edition": "3",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "RoxygenNote": "7.2.3",
-        "NeedsCompilation": "no",
-        "Packaged": "2023-01-27 14:11:11 UTC; hadleywickham",
-        "Author": "Hadley Wickham [aut, cre],\n  RStudio [cph, fnd]",
-        "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
-        "Repository": "CRAN",
-        "Date/Publication": "2023-01-29 22:20:02 UTC",
-        "Built": "R 4.4.1; ; 2024-07-17 02:17:49 UTC; windows"
-      }
-    },
     "fs": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -1543,43 +1513,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "0.1.3"
-      }
-    },
-    "ggfittext": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "ggfittext",
-        "Title": "Fit Text Inside a Box in 'ggplot2'",
-        "Version": "0.10.2",
-        "Authors@R": "c(person(\"David\", \"Wilkins\", email = \"david@wilkox.org\",\n                  role = c(\"aut\", \"cre\")), \n             person(\"Brady\", \"Johnston\", email = \"brady.johnston@me.com\", \n                  role = c(\"ctb\"))\n             )",
-        "Description": "A 'ggplot2' extension to fit text into a box by growing, shrinking or wrapping the text.",
-        "Depends": "R (>= 3.6)",
-        "License": "GPL-2",
-        "LazyData": "true",
-        "Imports": "grid (>= 3.1), stringi (>= 1.1.2), shades (>= 1.3.1), gridtext\n(>= 0.1.4), ggplot2 (>= 2.2.1), cli (>= 3.6.1)",
-        "RoxygenNote": "7.3.1",
-        "URL": "https://wilkox.org/ggfittext/",
-        "BugReports": "https://github.com/wilkox/ggfittext/issues/",
-        "Suggests": "knitr, rmarkdown, testthat (>= 3.0.0), vdiffr, spelling",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "Language": "en-GB",
-        "Config/testthat/edition": "3",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-02-01 00:21:27 UTC; wilkox",
-        "Author": "David Wilkins [aut, cre],\n  Brady Johnston [ctb]",
-        "Maintainer": "David Wilkins <david@wilkox.org>",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-02-01 00:50:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-25 23:58:14 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "ggfittext",
-        "RemoteRef": "ggfittext",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.10.2"
       }
     },
     "ggiraph": {
@@ -1740,43 +1673,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "1.7.0"
-      }
-    },
-    "gridtext": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "gridtext",
-        "Type": "Package",
-        "Title": "Improved Text Rendering Support for 'Grid' Graphics",
-        "Version": "0.1.5",
-        "Authors@R": "\n    c(\n      person(\n        given = \"Claus O.\",\n        family = \"Wilke\",\n        role = c(\"aut\"),\n        email = \"wilke@austin.utexas.edu\",\n        comment = c(ORCID = \"0000-0002-7470-9261\")\n      ),\n      person(\n        given = \"Brenton M.\",\n        family = \"Wiernik\",\n        role = c(\"aut\", \"cre\"),\n        email = \"brenton@wiernik.org\",\n        comment = c(ORCID = \"0000-0001-9560-6336\", Twitter = \"@bmwiernik\")\n      )\n    )",
-        "Description": "Provides support for rendering of formatted text using 'grid' graphics. Text can be\n    formatted via a minimal subset of 'Markdown', 'HTML', and inline 'CSS' directives, and it can be\n    rendered both with and without word wrap.",
-        "URL": "https://wilkelab.org/gridtext/",
-        "BugReports": "https://github.com/wilkelab/gridtext/issues",
-        "License": "MIT + file LICENSE",
-        "Depends": "R (>= 3.5)",
-        "Imports": "curl, grid, grDevices, markdown, rlang, Rcpp, png, jpeg,\nstringr, xml2",
-        "Suggests": "covr, knitr, rmarkdown, testthat, vdiffr",
-        "LinkingTo": "Rcpp",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.1.1",
-        "SystemRequirements": "C++11",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-09-15 13:49:42 UTC; brentonw",
-        "Author": "Claus O. Wilke [aut] (<https://orcid.org/0000-0002-7470-9261>),\n  Brenton M. Wiernik [aut, cre] (<https://orcid.org/0000-0001-9560-6336>,\n    @bmwiernik)",
-        "Maintainer": "Brenton M. Wiernik <brenton@wiernik.org>",
-        "Repository": "RSPM",
-        "Date/Publication": "2022-09-16 11:16:15 UTC",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-07-18 06:28:15 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemotePkgRef": "gridtext",
-        "RemoteRef": "gridtext",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.1.5"
       }
     },
     "gtable": {
@@ -1983,37 +1879,6 @@
         "Date/Publication": "2022-12-20 10:00:13 UTC",
         "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 19:44:55 UTC; windows",
         "Archs": "x64"
-      }
-    },
-    "jpeg": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "jpeg",
-        "Version": "0.1-10",
-        "Title": "Read and write JPEG images",
-        "Author": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-        "Maintainer": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-        "Depends": "R (>= 2.9.0)",
-        "Description": "This package provides an easy and simple way to read, write and display bitmap images stored in the JPEG format. It can read and write both files and in-memory raw vectors.",
-        "License": "GPL-2 | GPL-3",
-        "SystemRequirements": "libjpeg",
-        "URL": "https://www.rforge.net/jpeg/",
-        "BugReports": "https://github.com/s-u/jpeg/issues",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-11-29 09:23:09 UTC; rforge",
-        "Repository": "RSPM",
-        "Date/Publication": "2022-11-29 11:12:52 UTC",
-        "Encoding": "UTF-8",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 20:30:54 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemotePkgRef": "jpeg",
-        "RemoteRef": "jpeg",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.1-10"
       }
     },
     "jquerylib": {
@@ -2315,40 +2180,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "2.0.3"
-      }
-    },
-    "markdown": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "markdown",
-        "Type": "Package",
-        "Title": "Render Markdown with 'commonmark'",
-        "Version": "1.13",
-        "Authors@R": "c(\n   person(\"Yihui\", \"Xie\", role = c(\"aut\", \"cre\"), email = \"xie@yihui.name\", comment = c(ORCID = \"0000-0003-0645-5666\")),\n   person(\"JJ\", \"Allaire\", role = \"aut\"),\n   person(\"Jeffrey\", \"Horner\", role = \"aut\"),\n   person(\"Henrik\", \"Bengtsson\", role = \"ctb\"),\n   person(\"Jim\", \"Hester\", role = \"ctb\"),\n   person(\"Yixuan\", \"Qiu\", role = \"ctb\"),\n   person(\"Kohske\", \"Takahashi\", role = \"ctb\"),\n   person(\"Adam\", \"November\", role = \"ctb\"),\n   person(\"Nacho\", \"Caballero\", role = \"ctb\"),\n   person(\"Jeroen\", \"Ooms\", role = \"ctb\"),\n   person(\"Thomas\", \"Leeper\", role = \"ctb\"),\n   person(\"Joe\", \"Cheng\", role = \"ctb\"),\n   person(\"Andrzej\", \"Oles\", role = \"ctb\"),\n   person(given = \"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n   )",
-        "Description": "Render Markdown to full and lightweight HTML/LaTeX documents with\n    the 'commonmark' package. This package has been superseded by 'litedown'.",
-        "Depends": "R (>= 2.11.1)",
-        "Imports": "utils, commonmark (>= 1.9.0), xfun (>= 0.38)",
-        "Suggests": "knitr, rmarkdown (>= 2.18), yaml, RCurl",
-        "License": "MIT + file LICENSE",
-        "URL": "https://github.com/rstudio/markdown",
-        "BugReports": "https://github.com/rstudio/markdown/issues",
-        "RoxygenNote": "7.3.1",
-        "Encoding": "UTF-8",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-06-04 15:36:56 UTC; yihui",
-        "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),\n  JJ Allaire [aut],\n  Jeffrey Horner [aut],\n  Henrik Bengtsson [ctb],\n  Jim Hester [ctb],\n  Yixuan Qiu [ctb],\n  Kohske Takahashi [ctb],\n  Adam November [ctb],\n  Nacho Caballero [ctb],\n  Jeroen Ooms [ctb],\n  Thomas Leeper [ctb],\n  Joe Cheng [ctb],\n  Andrzej Oles [ctb],\n  Posit Software, PBC [cph, fnd]",
-        "Maintainer": "Yihui Xie <xie@yihui.name>",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-06-04 20:50:02 UTC",
-        "Built": "R 4.4.0; ; 2024-06-05 12:00:49 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "markdown",
-        "RemoteRef": "markdown",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "1.13"
       }
     },
     "memoise": {
@@ -2763,28 +2594,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "1.4.0"
-      }
-    },
-    "png": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "png",
-        "Version": "0.1-8",
-        "Title": "Read and write PNG images",
-        "Author": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-        "Maintainer": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-        "Depends": "R (>= 2.9.0)",
-        "Description": "This package provides an easy and simple way to read, write and display bitmap images stored in the PNG format. It can read and write both files and in-memory raw vectors.",
-        "License": "GPL-2 | GPL-3",
-        "SystemRequirements": "libpng",
-        "URL": "http://www.rforge.net/png/",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-11-29 09:42:31 UTC; rforge",
-        "Repository": "CRAN",
-        "Date/Publication": "2022-11-29 11:12:53 UTC",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-23 00:24:52 UTC; windows",
-        "Archs": "x64"
       }
     },
     "praise": {
@@ -3372,38 +3181,6 @@
         "Built": "R 4.4.0; ; 2024-04-25 20:09:32 UTC; windows"
       }
     },
-    "shades": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "shades",
-        "Version": "1.4.0",
-        "Date": "2019-08-02",
-        "Title": "Simple Colour Manipulation",
-        "Author": "Jon Clayden",
-        "Maintainer": "Jon Clayden <code@clayden.org>",
-        "Description": "Functions for easily manipulating colours, creating colour scales and calculating colour distances.",
-        "Suggests": "testthat, covr, ggplot2",
-        "Enhances": "colorspace",
-        "Encoding": "UTF-8",
-        "License": "BSD_3_clause + file LICENCE",
-        "URL": "https://github.com/jonclayden/shades",
-        "BugReports": "https://github.com/jonclayden/shades/issues",
-        "RoxygenNote": "6.1.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-08-02 14:53:11 UTC; jon",
-        "Repository": "RSPM",
-        "Date/Publication": "2019-08-02 16:00:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-25 18:30:59 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "shades",
-        "RemoteRef": "shades",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "1.4.0"
-      }
-    },
     "shiny": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -3818,45 +3595,6 @@
         "RemoteSha": "3.2.1"
       }
     },
-    "tidyr": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "tidyr",
-        "Title": "Tidy Messy Data",
-        "Version": "1.3.1",
-        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Davis\", \"Vaughan\", , \"davis@posit.co\", role = \"aut\"),\n    person(\"Maximilian\", \"Girlich\", role = \"aut\"),\n    person(\"Kevin\", \"Ushey\", , \"kevin@posit.co\", role = \"ctb\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
-        "Description": "Tools to help to create tidy data, where each column is a\n    variable, each row is an observation, and each cell contains a single\n    value.  'tidyr' contains tools for changing the shape (pivoting) and\n    hierarchy (nesting and 'unnesting') of a dataset, turning deeply\n    nested lists into rectangular data frames ('rectangling'), and\n    extracting values out of string columns. It also includes tools for\n    working with missing values (both implicit and explicit).",
-        "License": "MIT + file LICENSE",
-        "URL": "https://tidyr.tidyverse.org, https://github.com/tidyverse/tidyr",
-        "BugReports": "https://github.com/tidyverse/tidyr/issues",
-        "Depends": "R (>= 3.6)",
-        "Imports": "cli (>= 3.4.1), dplyr (>= 1.0.10), glue, lifecycle (>= 1.0.3),\nmagrittr, purrr (>= 1.0.1), rlang (>= 1.1.1), stringr (>=\n1.5.0), tibble (>= 2.1.1), tidyselect (>= 1.2.0), utils, vctrs\n(>= 0.5.2)",
-        "Suggests": "covr, data.table, knitr, readr, repurrrsive (>= 1.1.0),\nrmarkdown, testthat (>= 3.0.0)",
-        "LinkingTo": "cpp11 (>= 0.4.0)",
-        "VignetteBuilder": "knitr",
-        "Config/Needs/website": "tidyverse/tidytemplate",
-        "Config/testthat/edition": "3",
-        "Encoding": "UTF-8",
-        "LazyData": "true",
-        "RoxygenNote": "7.3.0",
-        "NeedsCompilation": "yes",
-        "Packaged": "2024-01-23 14:27:23 UTC; hadleywickham",
-        "Author": "Hadley Wickham [aut, cre],\n  Davis Vaughan [aut],\n  Maximilian Girlich [aut],\n  Kevin Ushey [ctb],\n  Posit Software, PBC [cph, fnd]",
-        "Maintainer": "Hadley Wickham <hadley@posit.co>",
-        "Repository": "CRAN",
-        "Date/Publication": "2024-01-24 14:50:09 UTC",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-07-17 02:38:32 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemotePkgRef": "tidyr",
-        "RemoteRef": "tidyr",
-        "RemoteRepos": "https://cran.rstudio.com",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "1.3.1"
-      }
-    },
     "tidyselect": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -3925,42 +3663,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "source",
         "RemoteSha": "0.52"
-      }
-    },
-    "treemapify": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "treemapify",
-        "Title": "Draw Treemaps in 'ggplot2'",
-        "Version": "2.5.6",
-        "Authors@R": "c(\n  person(\"David\", \"Wilkins\", , \"david@wilkox.org\", role = c(\"aut\", \"cre\"),\n         comment = c(ORCID = \"0000-0002-3385-8981\")),\n  person(\"Bob\", \"Rudis\", , \"bob@rud.is\", role = c(\"ctb\"),\n         comment = c(ORCID = \"0000-0001-5670-2640\"))\n  )",
-        "URL": "https://wilkox.org/treemapify/",
-        "BugReports": "https://github.com/wilkox/treemapify/issues/",
-        "Description": "Provides 'ggplot2' geoms for drawing treemaps.",
-        "Depends": "R (>= 3.6)",
-        "Imports": "ggplot2 (>= 2.2.1), ggfittext (>= 0.5.0), grid (>= 3.1), cli\n(>= 3.6.1)",
-        "Suggests": "knitr, rmarkdown, testthat, vdiffr, spelling",
-        "License": "GPL (>= 3)",
-        "LazyData": "true",
-        "RoxygenNote": "7.2.3",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "Language": "en-GB",
-        "NeedsCompilation": "no",
-        "Packaged": "2023-09-30 07:12:19 UTC; wilkox",
-        "Author": "David Wilkins [aut, cre] (<https://orcid.org/0000-0002-3385-8981>),\n  Bob Rudis [ctb] (<https://orcid.org/0000-0001-5670-2640>)",
-        "Maintainer": "David Wilkins <david@wilkox.org>",
-        "Repository": "RSPM",
-        "Date/Publication": "2023-09-30 07:40:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-26 00:11:53 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "treemapify",
-        "RemoteRef": "treemapify",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "2.5.6"
       }
     },
     "utf8": {
@@ -4397,7 +4099,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "fbdc61ad78dd45ee329674b45ca7d829"
+      "checksum": "902ae93b202e6e9964c0ed2d6972d685"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4415,7 +4117,7 @@
       "checksum": "398a532ecd8bf1ea54ba7612848ccaa7"
     },
     "global.R": {
-      "checksum": "43848cedb829a651de5c181c1a9ef767"
+      "checksum": "94ecb37ff510ac72d46e9680dd4eef5b"
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
@@ -4427,7 +4129,7 @@
       "checksum": "68c17e9641cc232a75915295f58bd9ba"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "4b4a9f6de5f3f0b9f67e713a4a37a74b"
+      "checksum": "33b07e814852172652dfe0c09759deda"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
       "checksum": "75454e0ebffa6406deb970b743b59168"
@@ -4460,13 +4162,13 @@
       "checksum": "5d48ccdef179e95094b5a947a046cc01"
     },
     "R/read_data.R": {
-      "checksum": "b8d939f140df2b54e86b03359ac5dab8"
+      "checksum": "2fae38a6bd2a15890479ef783544208a"
     },
     "README.md": {
       "checksum": "db7305c1a434efa8d6dd90e522274c40"
     },
     "renv.lock": {
-      "checksum": "6954aa66167f4cb96e3020a45ea5001c"
+      "checksum": "2d8822b347b96d484d25b6befb808068"
     },
     "server.R": {
       "checksum": "3cf8a16344ff27901f444fcab9fd33e8"

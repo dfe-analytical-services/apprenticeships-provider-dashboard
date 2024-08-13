@@ -43,8 +43,8 @@ read_sas <- function(file_path) {
       values_to = "values"
     ) %>%
     mutate(
-      provider_name = stringr::str_to_title(provider_name),
-      measure = stringr::str_to_sentence(measure)
+      provider_name = str_to_title(provider_name),
+      measure = str_to_sentence(measure)
     )
 }
 

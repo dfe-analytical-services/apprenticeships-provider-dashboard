@@ -727,10 +727,9 @@
         "License": "GPL",
         "NeedsCompilation": "no",
         "Packaged": "2024-03-31 18:18:09 UTC; luke",
-        "Repository": "RSPM",
+        "Repository": "CRAN",
         "Date/Publication": "2024-03-31 20:10:06 UTC",
-        "Encoding": "UTF-8",
-        "Built": "R 4.4.0; ; 2024-04-25 19:49:30 UTC; windows"
+        "Built": "R 4.4.1; ; 2024-06-14 08:33:57 UTC; windows"
       }
     },
     "commonmark": {
@@ -2378,9 +2377,9 @@
         "Packaged": "2024-04-11 16:26:24 UTC; kevin",
         "Author": "Kevin Ushey [aut, cre] (<https://orcid.org/0000-0003-2880-7407>),\n  Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),\n  Posit Software, PBC [cph, fnd]",
         "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2024-04-11 22:20:02 UTC",
-        "Built": "R 4.4.1; ; 2024-07-09 00:27:41 UTC; windows"
+        "Built": "R 4.4.0; ; 2024-04-25 20:32:06 UTC; windows"
       }
     },
     "rex": {
@@ -3345,11 +3344,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-<<<<<<< HEAD
-      "checksum": "755ea777be969ee714db0dee38094e20"
-=======
-      "checksum": "f86bfdebfcdc8aec41dcfbc9cfe346f4"
->>>>>>> main
+      "checksum": "8e2dde0fb6b0faca44dcf574f28d806f"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -3457,7 +3452,7 @@
       "checksum": "c23764dae2d73a45a55815d0327be6cb"
     },
     "www/dfe_shiny_gov_style.css": {
-      "checksum": "394030838b5d2f7f7f4ee275e6e5c6f0"
+      "checksum": "1203e8409896cd4bfe5d87a6f81539d8"
     },
     "www/dfefavicon.png": {
       "checksum": "179db108199253ed0617024df291473b"

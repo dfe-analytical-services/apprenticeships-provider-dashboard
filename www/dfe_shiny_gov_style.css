@@ -189,24 +189,7 @@ html {
 }
 
 /* Card tabs CSS ----------------------------------------------------------- */
-/* Fairly sure none of this works yet */
-.card-header-tabs>li>a {
-}
-
-.card-header-tabs>li.active>a {
-  box-shadow: 0 0 #fd0, 0 0.25rem #1d70b8 !important;
-}
-
-.card-header-tabs>li>a:focus {
-  background-color: #fd0 !important;
-  box-shadow: 0 0 #fd0, 0 0.25rem #1d70b8 !important;
-}
-
-.card-header-tabs>li>a:hover {
-  color: #000;
-  font-weight: bold;
-  background-color: #b1b4b6;
-}
+/* TODO - fix the borders and margins on the tabs */
 
 /* Custom disconnect CSS --------------------------------------------------- */
 #ss-connect-dialog {

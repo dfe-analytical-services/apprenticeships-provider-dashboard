@@ -183,6 +183,15 @@ html {
   background-color: #f3f2f1;
 }
 
+/* Contents links, remove visited style ------------------------------------ */
+.action-button:visited {
+  color: #1d70b8;
+}
+
+.action-button:hover .action-button:focus {
+  color: #000;
+}
+
 /* backlinks --------------------------------------------------------------- */
 .govuk-back-link:link {
   max-width: fit-content;

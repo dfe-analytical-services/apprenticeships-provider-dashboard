@@ -3344,7 +3344,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "8e2dde0fb6b0faca44dcf574f28d806f"
+      "checksum": "1026b953eb851d3f28fdc4789ec52e34"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -3440,7 +3440,7 @@
       "checksum": "1fd753be5bbff3a1b07b6b6983483ca1"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "e0e0e94fc81a65b28330137dddb30d16"
+      "checksum": "922d1ee2ed760eb586842d8cd713871c"
     },
     "tests/testthat/test-UI-05-nps_downloads.R": {
       "checksum": "fc8257db6b282a58fda2a63c8dcc526f"
@@ -3452,7 +3452,7 @@
       "checksum": "c23764dae2d73a45a55815d0327be6cb"
     },
     "www/dfe_shiny_gov_style.css": {
-      "checksum": "1203e8409896cd4bfe5d87a6f81539d8"
+      "checksum": "7c4e6920c446c5714d9720a98a8b0e01"
     },
     "www/dfefavicon.png": {
       "checksum": "179db108199253ed0617024df291473b"

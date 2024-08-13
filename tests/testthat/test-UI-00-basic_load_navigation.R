@@ -28,21 +28,27 @@ test_that("App loads and title of app appears as expected", {
 # Title updates when changing tabs ============================================
 test_that("Tab titles load when switching", {
   app$click("local_authority_district")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - local authority district")
 
   app$click("subjects_and_standards")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - subjects and standards")
 
   app$click("learner_characteristics")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - learner characteristics")
 
   app$click("national_provider_summary")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - national provider summary")
 
   app$click("user_guide")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - user guide")
 
   app$click("provider_breakdowns")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 })
 

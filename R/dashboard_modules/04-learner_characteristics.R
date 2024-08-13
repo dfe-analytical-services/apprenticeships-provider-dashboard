@@ -1,9 +1,3 @@
-library(ggplot2)
-library(ggiraph)
-library(tidyr)
-library(forcats)
-library(treemapify)
-
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
 chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet") %>%
@@ -24,10 +18,10 @@ chars_year_choices <- sort(data_choices(data = chars_parquet, column = "year"),
 )
 chars_measure_choices <- data_choices(data = chars_parquet, column = "measure")
 # for providers need to remove total first so can put at the beginning
-chars_parquet_no_total_providers <- chars_parquet %>%
+chars_parquet_no_total <- chars_parquet %>%
   filter(provider_name != "Total")
 chars_provider_choices <- sort(data_choices(
-  data = chars_parquet_no_total_providers,
+  data = chars_parquet_no_total,
   column = "provider_name"
 ))
 
@@ -98,8 +92,8 @@ learner_characteristics_ui <- function(id) {
           inputId = NS(id, "file_type"),
           label = h2("Choose download file format"),
           hint_label = "The XLSX format is designed for use in Microsoft Excel",
-          choices = c("CSV (Up to 5.22 MB)", "XLSX (Up to 1.76 MB)"),
-          selected = "CSV (Up to 5.22 MB)"
+          choices = c("CSV (Up to 8.73 MB)", "XLSX (Up to 2.74 MB)"),
+          selected = "CSV (Up to 8.73 MB)"
         ),
         # Bit of a hack to force the button not to be full width
         layout_columns(
@@ -230,7 +224,7 @@ learner_characteristics_server <- function(id) {
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$provider, "-", input$year, "-", "-provider_summary")
-        extension <- if (input$file_type == "CSV (Up to 5.22 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 8.73 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -239,7 +233,7 @@ learner_characteristics_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 5.22 MB)") {
+        if (input$file_type == "CSV (Up to 8.73 MB)") {
           data.table::fwrite(chars_reactive_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

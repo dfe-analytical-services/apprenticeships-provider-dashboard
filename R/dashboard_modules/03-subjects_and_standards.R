@@ -31,6 +31,11 @@ subjects_standards_ui <- function(id) {
           choices = c(sas_measure_choices)
         )
       )
+    ),
+    card(
+      layout_columns(
+        girafeOutput(NS(id, "subject_area_bar"))
+      )
     )
   )
 }
@@ -45,6 +50,32 @@ subject_standards_server <- function(id) {
       label = "Search for provider",
       choices = c("All providers", sas_provider_choices),
       server = TRUE
+    )
+
+    subject_area_data <- reactive({
+      sas_parquet %>%
+        filter(
+          provider_name %in% input$provider,
+          measure == input$measure,
+          year == input$year
+        ) %>%
+        summarise(
+          values = sum(values),
+          .by = c("ssa_t1_desc")
+        )
+    })
+
+    output$subject_area_bar <- renderGirafe(
+      girafe(
+        ggobj =
+          subject_area_data() %>%
+            ggplot(aes(x = ssa_t1_desc, y = values)) +
+            geom_col_interactive() +
+            theme_classic() +
+            coord_flip() +
+            xlab("Subject area") +
+            ylab(input$measure)
+      )
     )
   })
 }

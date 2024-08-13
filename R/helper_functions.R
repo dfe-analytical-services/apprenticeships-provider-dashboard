@@ -156,3 +156,10 @@ dfe_reactable <- function(data, onClick = NULL, selection = NULL, rowStyle = NUL
     selection = selection
   )
 }
+
+
+# properly capitalise first letter of a string
+firstup <- function(x) {
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  x
+}

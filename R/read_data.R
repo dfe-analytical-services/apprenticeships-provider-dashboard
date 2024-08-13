@@ -17,6 +17,16 @@
 
 # Load data ===================================================================
 
+## Domographics / characteristics summary --------------------------------------------------
+# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
+read_chars <- function(file_path) {
+  arrow::read_parquet(file_path)
+}
+
+
+
+
+
 ## National provider summary --------------------------------------------------
 # Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
 read_nps <- function(file_path) {

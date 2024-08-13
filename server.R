@@ -50,6 +50,7 @@ server <- function(input, output, session) {
   })
 
   # Module calls ==============================================================
+  prov_breakdowns_server(id = "prov_breakdowns")
   nps_server(id = "nps")
 
   # Stop app when tab closes ==================================================

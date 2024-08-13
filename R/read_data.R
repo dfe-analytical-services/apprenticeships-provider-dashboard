@@ -24,6 +24,12 @@ read_nps <- function(file_path) {
     select(-c(`order_ref`, `order_detailed`)) # unused columns
 }
 
+## Apprenticeships data -------------------------------------------------------
+# TODO: check if all data is needed here, and filter out what isn't / create separate parquet file
+read_apps <- function(file_path) {
+  arrow::read_parquet(file_path)
+}
+
 # Create options lists for use in the dropdowns ===============================
 data_choices <- function(data, column) {
   data %>%

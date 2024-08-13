@@ -727,10 +727,9 @@
         "License": "GPL",
         "NeedsCompilation": "no",
         "Packaged": "2024-03-31 18:18:09 UTC; luke",
-        "Repository": "RSPM",
+        "Repository": "CRAN",
         "Date/Publication": "2024-03-31 20:10:06 UTC",
-        "Encoding": "UTF-8",
-        "Built": "R 4.4.0; ; 2024-04-25 19:49:30 UTC; windows"
+        "Built": "R 4.4.1; ; 2024-06-14 08:33:57 UTC; windows"
       }
     },
     "commonmark": {
@@ -814,6 +813,32 @@
         "Repository": "RSPM",
         "Date/Publication": "2024-06-20 13:00:02 UTC",
         "Built": "R 4.4.0; ; 2024-06-21 04:46:07 UTC; windows"
+      }
+    },
+    "crosstalk": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "crosstalk",
+        "Type": "Package",
+        "Title": "Inter-Widget Interactivity for HTML Widgets",
+        "Version": "1.2.1",
+        "Authors@R": "c(\n    person(\"Joe\", \"Cheng\", role = \"aut\", email = \"joe@posit.co\"),\n    person(\"Carson\", \"Sievert\", role = c(\"aut\", \"cre\"),\n    email = \"carson@posit.co\", comment = c(ORCID = \"0000-0002-4958-2844\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n    person(family = \"jQuery Foundation\", role = \"cph\",\n    comment = \"jQuery library and jQuery UI library\"),\n    person(family = \"jQuery contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"jQuery library; authors listed in inst/www/shared/jquery-AUTHORS.txt\"),\n    person(\"Mark\", \"Otto\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(\"Jacob\", \"Thornton\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Bootstrap contributors\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Twitter, Inc\", role = \"cph\",\n    comment = \"Bootstrap library\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"),\n    comment = \"selectize.js library\"),\n    person(\"Kristopher Michael\", \"Kowal\", role = c(\"ctb\", \"cph\"),\n    comment = \"es5-shim library\"),\n    person(family = \"es5-shim contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"es5-shim library\"),\n    person(\"Denis\", \"Ineshin\", role = c(\"ctb\", \"cph\"),\n    comment = \"ion.rangeSlider library\"),\n    person(\"Sami\", \"Samhuri\", role = c(\"ctb\", \"cph\"),\n    comment = \"Javascript strftime library\")\n    )",
+        "Description": "Provides building blocks for allowing HTML widgets to communicate\n    with each other, with Shiny or without (i.e. static .html files). Currently\n    supports linked brushing and filtering.",
+        "License": "MIT + file LICENSE",
+        "Imports": "htmltools (>= 0.3.6), jsonlite, lazyeval, R6",
+        "Suggests": "shiny, ggplot2, testthat (>= 2.1.0), sass, bslib",
+        "URL": "https://rstudio.github.io/crosstalk/,\nhttps://github.com/rstudio/crosstalk",
+        "BugReports": "https://github.com/rstudio/crosstalk/issues",
+        "RoxygenNote": "7.2.3",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-11-22 16:29:50 UTC; cpsievert",
+        "Author": "Joe Cheng [aut],\n  Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>),\n  Posit Software, PBC [cph, fnd],\n  jQuery Foundation [cph] (jQuery library and jQuery UI library),\n  jQuery contributors [ctb, cph] (jQuery library; authors listed in\n    inst/www/shared/jquery-AUTHORS.txt),\n  Mark Otto [ctb] (Bootstrap library),\n  Jacob Thornton [ctb] (Bootstrap library),\n  Bootstrap contributors [ctb] (Bootstrap library),\n  Twitter, Inc [cph] (Bootstrap library),\n  Brian Reavis [ctb, cph] (selectize.js library),\n  Kristopher Michael Kowal [ctb, cph] (es5-shim library),\n  es5-shim contributors [ctb, cph] (es5-shim library),\n  Denis Ineshin [ctb, cph] (ion.rangeSlider library),\n  Sami Samhuri [ctb, cph] (Javascript strftime library)",
+        "Maintainer": "Carson Sievert <carson@posit.co>",
+        "Repository": "RSPM",
+        "Date/Publication": "2023-11-23 08:50:07 UTC",
+        "Built": "R 4.4.0; ; 2024-04-25 20:40:47 UTC; windows"
       }
     },
     "curl": {
@@ -2378,9 +2403,9 @@
         "Packaged": "2024-04-11 16:26:24 UTC; kevin",
         "Author": "Kevin Ushey [aut, cre] (<https://orcid.org/0000-0003-2880-7407>),\n  Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),\n  Posit Software, PBC [cph, fnd]",
         "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2024-04-11 22:20:02 UTC",
-        "Built": "R 4.4.1; ; 2024-07-09 00:27:41 UTC; windows"
+        "Built": "R 4.4.0; ; 2024-04-25 20:32:06 UTC; windows"
       }
     },
     "rex": {
@@ -3345,7 +3370,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "f86bfdebfcdc8aec41dcfbc9cfe346f4"
+      "checksum": "960fdaf537f91206e63fc56006f2b0bb"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -3363,13 +3388,13 @@
       "checksum": "398a532ecd8bf1ea54ba7612848ccaa7"
     },
     "global.R": {
-      "checksum": "43848cedb829a651de5c181c1a9ef767"
+      "checksum": "81fb3b4e16db849d3a5233c97e23b6d9"
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
-      "checksum": "0274842ede696d2cab0a78f1de67453f"
+      "checksum": "2a58c444ed470798e3a7dd25f5c9c32a"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
       "checksum": "68c17e9641cc232a75915295f58bd9ba"
@@ -3390,7 +3415,7 @@
       "checksum": "24716a1f342674870451e4f5713817bf"
     },
     "R/data-prep/create_data_files.R": {
-      "checksum": "0737c78ad4447ef406af7b05333f7215"
+      "checksum": "607a785639ee545b510e13e4df437963"
     },
     "R/footer_pages/accessibility_page.R": {
       "checksum": "e9351e2d333a66228f36dc3963e2d1bd"
@@ -3405,19 +3430,19 @@
       "checksum": "4fb06508719a86445bed410f6640a071"
     },
     "R/helper_functions.R": {
-      "checksum": "5d48ccdef179e95094b5a947a046cc01"
+      "checksum": "45ce1128e94461d57b85f64a073bc10b"
     },
     "R/read_data.R": {
-      "checksum": "366715f16d961a1529f6e8307182f2b9"
+      "checksum": "143debd9977ccabfc0cd9d0664d555bc"
     },
     "README.md": {
       "checksum": "db7305c1a434efa8d6dd90e522274c40"
     },
     "renv.lock": {
-      "checksum": "985ddba11c746b5eaa7e3e47ffba847c"
+      "checksum": "0dc9958d6e73e9b6c075c41dea32af44"
     },
     "server.R": {
-      "checksum": "054fbc8776edc55c5face0589ebba045"
+      "checksum": "c827d42f009711c20badc0132ea7d459"
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
@@ -3447,7 +3472,7 @@
       "checksum": "fc8257db6b282a58fda2a63c8dcc526f"
     },
     "ui.R": {
-      "checksum": "982e9bae8dbce9996f38d859c507f94c"
+      "checksum": "7a8c46b92e18b5a8794d1cd7d89f7ea2"
     },
     "www/dfe_logo.svg": {
       "checksum": "c23764dae2d73a45a55815d0327be6cb"

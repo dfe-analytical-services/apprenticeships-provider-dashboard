@@ -138,13 +138,21 @@ custom_footer <- function() {
 }
 
 # dfe reactable ===============================================================
-dfe_reactable <- function(data) {
+dfe_reactable <- function(data, onClick = NULL, selection = NULL, rowStyle = NULL) {
   reactable(
     data,
+
+    # DfE styling
     highlight = TRUE,
     borderless = TRUE,
     showSortIcon = FALSE,
     style = list(fontSize = "16px"),
-    defaultColDef = colDef(headerClass = "bar-sort-header")
+    defaultColDef = colDef(headerClass = "bar-sort-header"),
+
+    # Customiseable settings
+    # TODO: think about the best way to set this out for dfeshiny to allow flexibility while keeping defaults we want
+    rowStyle = rowStyle,
+    onClick = onClick,
+    selection = selection
   )
 }

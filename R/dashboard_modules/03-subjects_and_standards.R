@@ -35,11 +35,13 @@ subjects_standards_ui <- function(id) {
     card(
       layout_columns(
         col_widths = c(4, 8),
-        reactable::reactableOutput(NS(id, "sas_provider_table")),
+        card(
+          card_header(textOutput(NS(id, "sas_provider_table_title"))),
+          card_body(reactable::reactableOutput(NS(id, "sas_provider_table")))
+        ),
         layout_column_wrap(
           width = 1,
           heights_equal = "row",
-          textOutput(NS(id, "subject_area_selected")),
           girafeOutput(NS(id, "subject_area_bar")),
           reactable::reactableOutput(NS(id, "sas_subject_area_table"))
         )
@@ -60,6 +62,14 @@ subject_standards_server <- function(id) {
       server = TRUE
     )
 
+    subject_selection <- reactive({
+      if (is.null(input$subject_area_bar_selected)) {
+        "all subjects"
+      } else {
+        input$subject_area_bar_selected
+      }
+    })
+
     subject_area_data <- reactive({
       if ("All providers" %in% input$provider) {
         provider_data <- sas_parquet %>%
@@ -78,9 +88,25 @@ subject_standards_server <- function(id) {
       provider_data
     })
 
-    output$sas_provider_table <- renderReactable(
+    # Adding a reactive to handle cleaning the selected SSA T1 Description from
+    # the bar chart
+    ssa_t1_selected <- reactive({
+      gsub("\\n", " ", input$subject_area_bar_selected)
+    })
+
+    output$sas_provider_table_title <- renderText({
+      paste(input$measure, "for providers across", subject_selection())
+    })
+
+    output$sas_provider_table <- renderReactable({
+      if (!is.null(input$subject_area_bar_selected)) {
+        provider_data <- subject_area_data() %>%
+          filter(ssa_t1_desc %in% ssa_t1_selected())
+      } else {
+        provider_data <- subject_area_data()
+      }
       dfe_reactable(
-        subject_area_data() %>%
+        provider_data %>%
           summarise(
             values = sum(values),
             .by = c("provider_name")
@@ -91,7 +117,7 @@ subject_standards_server <- function(id) {
             !!quo_name(input$measure) := values
           )
       )
-    )
+    })
 
     output$subject_area_bar <- renderGirafe(
       girafe(
@@ -113,7 +139,7 @@ subject_standards_server <- function(id) {
             geom_col_interactive(fill = "#2073BC") +
             theme_classic() +
             coord_flip() +
-            xlab("Subject area") +
+            xlab("") +
             ylab(input$measure),
         options = list(opts_selection(type = "single"))
       )

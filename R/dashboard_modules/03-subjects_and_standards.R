@@ -39,6 +39,7 @@ subjects_standards_ui <- function(id) {
         layout_column_wrap(
           width = 1,
           heights_equal = "row",
+          textOutput(NS(id, "subject_area_selected")),
           girafeOutput(NS(id, "subject_area_bar")),
           reactable::reactableOutput(NS(id, "sas_subject_area_table"))
         )
@@ -101,14 +102,29 @@ subject_standards_server <- function(id) {
               .by = c("ssa_t1_desc")
             ) %>%
             mutate(ssa_t1_desc = str_wrap(ssa_t1_desc, 32)) %>%
-            ggplot(aes(x = reorder(ssa_t1_desc, values), y = values)) +
+            ggplot(
+              aes(
+                x = reorder(ssa_t1_desc, values),
+                y = values,
+                tooltip = ssa_t1_desc,
+                data_id = ssa_t1_desc
+              )
+            ) +
             geom_col_interactive(fill = "#2073BC") +
             theme_classic() +
             coord_flip() +
             xlab("Subject area") +
-            ylab(input$measure)
+            ylab(input$measure),
+        options = list(opts_selection(type = "single"))
       )
     )
+
+    output$subject_area_selected <- renderText({
+      paste(
+        "Selected subject = ",
+        input$subject_area_bar_selected
+      )
+    })
 
     output$sas_subject_area_table <- renderReactable(
       dfe_reactable(

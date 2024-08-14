@@ -34,7 +34,10 @@ subjects_standards_ui <- function(id) {
     ),
     card(
       layout_columns(
-        girafeOutput(NS(id, "subject_area_bar"))
+        reactable::reactableOutput(NS(id, "sas_provider_table")),
+        card(
+          girafeOutput(NS(id, "subject_area_bar"))
+        )
       )
     )
   )
@@ -67,18 +70,33 @@ subject_standards_server <- function(id) {
             year == input$year
           )
       }
-      provider_data %>%
-        summarise(
-          values = sum(values),
-          .by = c("ssa_t1_desc")
-        ) %>%
-        mutate(ssa_t1_desc = str_wrap(ssa_t1_desc, 32))
+      provider_data
     })
+
+    output$sas_provider_table <- renderReactable(
+      dfe_reactable(
+        subject_area_data() %>%
+          summarise(
+            values = sum(values),
+            .by = c("provider_name")
+          ) %>%
+          arrange(-values) %>%
+          rename(
+            `Provider name` = provider_name,
+            !!quo_name(input$measure) := values
+          )
+      )
+    )
 
     output$subject_area_bar <- renderGirafe(
       girafe(
         ggobj =
           subject_area_data() %>%
+            summarise(
+              values = sum(values),
+              .by = c("ssa_t1_desc")
+            ) %>%
+            mutate(ssa_t1_desc = str_wrap(ssa_t1_desc, 32)) %>%
             ggplot(aes(x = reorder(ssa_t1_desc, values), y = values)) +
             geom_col_interactive(fill = "#2073BC") +
             theme_classic() +

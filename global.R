@@ -29,6 +29,7 @@ shhh(library(ggiraph))
 ## Data and string manipulation -----------------------------------------------
 shhh(library(arrow))
 shhh(library(dplyr))
+shhh(library(tidyr))
 shhh(library(stringr))
 
 ## Data downloads -------------------------------------------------------------

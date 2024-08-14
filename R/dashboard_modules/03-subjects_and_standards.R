@@ -95,7 +95,10 @@ subject_standards_server <- function(id) {
     })
 
     output$sas_provider_table_title <- renderText({
-      paste(input$measure, "for providers across", subject_selection())
+      paste(
+        input$measure, "for providers across",
+        paste0(ssa_t1_selected(), collapse = " / ")
+      )
     })
 
     output$sas_provider_table <- renderReactable({
@@ -141,7 +144,10 @@ subject_standards_server <- function(id) {
             coord_flip() +
             xlab("") +
             ylab(input$measure),
-        options = list(opts_selection(type = "single"))
+        options = list(opts_selection(
+          type = "multiple",
+          css = "fill:#28A197;stroke:#28A197;r:5pt;"
+        ))
       )
     )
 

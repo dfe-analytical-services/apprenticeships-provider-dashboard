@@ -15,7 +15,6 @@ suppressMessages(
   gss_colour_pallette <- afcolours::af_colours("categorical", colour_format = "hex", n = 4)
 )
 
-
 # Custom footer ===============================================================
 # This is hardcoded from shinygovstyle
 # The section lined off early on is the custom bit where links are set
@@ -138,7 +137,7 @@ custom_footer <- function() {
 }
 
 # dfe reactable ===============================================================
-dfe_reactable <- function(data, onClick = NULL, selection = NULL, rowStyle = NULL) {
+dfe_reactable <- function(data, onClick = NULL, selection = NULL, rowStyle = NULL, searchable = FALSE) {
   reactable(
     data,
 
@@ -153,7 +152,8 @@ dfe_reactable <- function(data, onClick = NULL, selection = NULL, rowStyle = NUL
     # TODO: think about the best way to set this out for dfeshiny to allow flexibility while keeping defaults we want
     rowStyle = rowStyle,
     onClick = onClick,
-    selection = selection
+    selection = selection,
+    searchable = searchable
   )
 }
 

@@ -76,6 +76,7 @@ learner_characteristics_ui <- function(id) {
         plotOutput(NS(id, ("sex_plot")))
       ),
       ## Age tab ------------------------------------------------------------
+      # this should be a plot where possible or a message where all age groups are suppressed
       nav_panel(
         "Age",
         plotOutput(NS(id, ("age_plot")))
@@ -166,36 +167,70 @@ learner_characteristics_server <- function(id) {
     output$lldd_plot <- renderPlot({
       chars_reactive_table() %>%
         filter(lldd != "Total") %>%
-        ggplot(aes(x = lldd, y = count)) +
-        geom_col(fill = c("#12436D")) +
-        xlab("") +
-        ylab("") +
-        theme_classic() +
-        theme(axis.ticks.x = element_blank()) +
-        coord_flip()
+        ggplot(aes(
+          area = count,
+          subgroup = lldd,
+          label = paste0(lldd, "\n\n", count),
+          fill = factor(lldd)
+        )) +
+        geom_treemap() +
+        xlim(0, 1) +
+        ylim(0, 1) + # need to set these to be able to place a geom_text
+        theme_void() + # needto get rid of axis values
+        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), "cm")) + # sets margins around needed with limits
+        scale_fill_manual(values = c("#12436D", "#28A197", "#801650")) +
+        theme(legend.position = "none") + # no legend
+        geom_treemap_text(
+          alpha = 1, colour = "white", place = "topleft", size = 20, min.size = 4,
+          reflow = TRUE, grow = FALSE, fontface = "bold", layout = "squarified"
+        )
     })
     # Sex ===================================================================
     output$sex_plot <- renderPlot({
       chars_reactive_table() %>%
         filter(sex != "Total") %>%
-        ggplot(aes(x = sex, y = count)) +
-        geom_col(fill = c("#12436D")) +
-        xlab("") +
-        ylab("") +
-        theme_classic() +
-        theme(axis.ticks.x = element_blank())
+        ggplot(aes(
+          area = count,
+          subgroup = sex,
+          label = paste0(sex, "\n\n", count),
+          fill = factor(sex)
+        )) +
+        geom_treemap() +
+        xlim(0, 1) +
+        ylim(0, 1) + # need to set these to be able to place a geom_text
+        theme_void() + # needto get rid of axis values
+        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), "cm")) + # sets margins around needed with limits
+        scale_fill_manual(values = c("#12436D", "#28A197")) +
+        theme(legend.position = "none") + # no legend
+        geom_treemap_text(
+          alpha = 1, colour = "white", place = "topleft", size = 20, min.size = 4,
+          reflow = TRUE, grow = FALSE, fontface = "bold", layout = "squarified"
+        )
     })
     # Age ===================================================================
+    # create the plot
     output$age_plot <- renderPlot({
       chars_reactive_table() %>%
         filter(age_group != "Total") %>%
-        ggplot(aes(x = age_group, y = count)) +
-        geom_col(fill = c("#12436D")) +
-        xlab("") +
-        ylab("") +
-        theme_classic() +
-        theme(axis.ticks.x = element_blank())
+        ggplot(aes(
+          area = count,
+          subgroup = age_group,
+          label = paste0(age_group, "\n\n", count),
+          fill = factor(age_group)
+        )) +
+        geom_treemap() +
+        xlim(0, 1) +
+        ylim(0, 1) + # need to set these to be able to place a geom_text
+        theme_void() + # needto get rid of axis values
+        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), "cm")) + # sets margins around needed with limits
+        scale_fill_manual(values = c("#12436D", "#28A197", "#801650")) +
+        theme(legend.position = "none") + # no legend
+        geom_treemap_text(
+          alpha = 1, colour = "white", place = "topleft", size = 20, min.size = 4,
+          reflow = TRUE, grow = FALSE, fontface = "bold", layout = "squarified"
+        )
     })
+
     # Ethnicity ===================================================================
     output$ethnicity_plot <- renderPlot({
       chars_reactive_table() %>%
@@ -203,7 +238,7 @@ learner_characteristics_server <- function(id) {
         ggplot(aes(
           area = count,
           subgroup = ethnicity_major,
-          label = paste0(ethnicity_major, "\n", (count)),
+          label = paste0(ethnicity_major, "\n\n", (count)),
           fill = factor(ethnicity_major)
         )) +
         geom_treemap() +

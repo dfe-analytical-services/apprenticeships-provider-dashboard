@@ -137,7 +137,7 @@ custom_footer <- function() {
 }
 
 # dfe reactable ===============================================================
-dfe_reactable <- function(data, onClick = NULL, selection = NULL, rowStyle = NULL, searchable = FALSE) {
+dfe_reactable <- function(data, on_click = NULL, selection = NULL, row_style = NULL, searchable = FALSE) {
   reactable(
     data,
 
@@ -150,8 +150,8 @@ dfe_reactable <- function(data, onClick = NULL, selection = NULL, rowStyle = NUL
 
     # Customiseable settings
     # TODO: think about the best way to set this out for dfeshiny to allow flexibility while keeping defaults we want
-    rowStyle = rowStyle,
-    onClick = onClick,
+    rowStyle = row_style,
+    onClick = on_click,
     selection = selection,
     searchable = searchable
   )

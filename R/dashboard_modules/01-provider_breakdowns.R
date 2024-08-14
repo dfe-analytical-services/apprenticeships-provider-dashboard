@@ -1,6 +1,4 @@
-# TODO: add a chart to filter using the onClick from the table
 # TODO: make clicking the chart filter the table
-# TODO: add region tables
 # TODO: make region tables cross filter
 
 # Load data ===================================================================
@@ -60,21 +58,29 @@ prov_breakdowns_ui <- function(id) {
           girafeOutput(NS(id, "provider_types"))
         ),
         nav_panel(
-          "Delivery region",
-          reactable::reactableOutput(NS(id, "delivery_region"))
-        ),
-        nav_panel(
-          "Test selection",
-          textOutput(NS(id, "selected_data"))
+          "Regions",
+          bslib::layout_column_wrap(
+            reactable::reactableOutput(NS(id, "delivery_region")),
+            reactable::reactableOutput(NS(id, "home_region"))
+          )
         ),
         nav_panel(
           "Download data",
           shinyGovstyle::radio_button_Input(
             inputId = NS(id, "file_type"),
             label = h2("Choose download file format"),
-            hint_label = "The XLSX format is designed for use in Microsoft Excel",
+            hint_label = paste0(
+              "This will download all data related to the providers and options selected.",
+              " The XLSX format is designed for use in Microsoft Excel."
+            ),
             choices = c("CSV (Up to X MB)", "XLSX (Up to X MB)"),
             selected = "CSV (Up to X MB)"
+          ),
+          downloadButton(
+            NS(id, "download_data"),
+            label = "Download data",
+            class = "gov-uk-button",
+            icon = NULL
           )
         )
       )
@@ -111,29 +117,29 @@ prov_breakdowns_server <- function(id) {
     output$prov_selection_table <- renderReactable({
       dfe_reactable(
         prov_selection_table(),
-        onClick = "select",
+        on_click = "select",
         selection = "multiple",
-        rowStyle = list(cursor = "pointer"),
+        row_style = list(cursor = "pointer"),
         searchable = TRUE
       )
     })
 
     # Get the selections from the provider table ------------------------------
-    selectedProviders <- reactive({
+    selected_providers <- reactive({
       selected <- getReactableState("prov_selection_table", "selected")
       if (length(selected) == 0) {
         # Return the full data of all providers if nothing selected from the table
-        return(unlist(prov_selection_table()[, 1]))
+        # use.names = FALSE is used as it is much faster to process and we don't name the items
+        return(unlist(prov_selection_table()[, 1], use.names = FALSE))
       }
 
       # Filter to only the selected providers
       # Convert to a vector of provider names to use for filtering elsewhere
-      # use.names = FALSE is used as it is much faster to process and we don't name the items
-      unlist(prov_selection_table()[selected, 1])
+      unlist(prov_selection_table()[selected, 1], use.names = FALSE)
     })
 
     # Main data ===============================================================
-    # Main dataset for use in charts / tables / download ----------------------
+    # Main data set for use in charts / tables / download ---------------------
     prov_breakdown_table <- reactive({
       prov_breakdown <- prov_breakdowns_parquet %>%
         filter(year == input$year)
@@ -146,27 +152,10 @@ prov_breakdowns_server <- function(id) {
         prov_breakdown <- prov_breakdown %>% filter(age_group == input$age)
       }
       if (length(getReactableState("prov_selection_table", "selected")) != 0) {
-        prov_breakdown <- prov_breakdown %>% filter(provider_name %in% selectedProviders())
+        prov_breakdown <- prov_breakdown %>% filter(provider_name %in% selected_providers())
       }
 
       prov_breakdown %>% collect()
-    })
-
-    delivery_region_table <- reactive({
-      prov_breakdown_table() %>%
-        with_groups(
-          "delivery_region",
-          summarise,
-          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
-        )
-    })
-
-    output$delivery_region <- renderReactable({
-      dfe_reactable(delivery_region_table())
-    })
-
-    output$selected_data <- renderText({
-      selectedProviders()
     })
 
     # Chart of provider types =================================================
@@ -190,6 +179,60 @@ prov_breakdowns_server <- function(id) {
         options = list(opts_selection(type = "single"))
       )
     )
+
+
+    # Region tables ===========================================================
+    # Delivery regions --------------------------------------------------------
+    delivery_region_table <- reactive({
+      prov_breakdown_table() %>%
+        with_groups(
+          "delivery_region",
+          summarise,
+          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
+        )
+    })
+
+    output$delivery_region <- renderReactable({
+      dfe_reactable(delivery_region_table())
+    })
+
+    # Home regions ------------------------------------------------------------
+    home_region_table <- reactive({
+      prov_breakdown_table() %>%
+        with_groups(
+          "learner_home_region",
+          summarise,
+          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
+        )
+    })
+
+    output$home_region <- renderReactable({
+      dfe_reactable(home_region_table())
+    })
+
     # Data download ===========================================================
+    output$download_data <- downloadHandler(
+      ## Set filename ---------------------------------------------------------
+      filename = function(name) {
+        raw_name <- paste0(input$year, "-", input$level, "-", input$age, "-provider_breakdowns")
+        extension <- if (input$file_type == "CSV (Up to X MB)") {
+          ".csv"
+        } else {
+          ".xlsx"
+        }
+        paste0(tolower(gsub(" ", "", raw_name)), extension)
+      },
+      ## Generate downloaded file ---------------------------------------------
+      content = function(file) {
+        if (input$file_type == "CSV (Up to X MB)") {
+          data.table::fwrite(prov_breakdown_table(), file)
+        } else {
+          # Added a basic pop up notification as the Excel file can take time to generate
+          pop_up <- showNotification("Generating download file", duration = NULL)
+          openxlsx::write.xlsx(prov_breakdown_table(), file, colWidths = "Auto")
+          on.exit(removeNotification(pop_up), add = TRUE)
+        }
+      }
+    )
   })
 }

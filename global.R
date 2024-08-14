@@ -26,7 +26,6 @@ shhh(library(reactable))
 shhh(library(ggplot2))
 shhh(library(ggiraph))
 shhh(library(treemapify))
-shhh(library(plotly))
 
 ## Data and string manipulation -----------------------------------------------
 shhh(library(arrow))
@@ -42,7 +41,6 @@ shhh(library(data.table))
 shhh(library(shinytitle))
 shhh(library(metathis))
 shhh(library(shinytitle))
-shhh(library(crosstalk))
 
 ## Testing dependencies -------------------------------------------------------
 # These are not needed for the app itself but including them here keeps them in

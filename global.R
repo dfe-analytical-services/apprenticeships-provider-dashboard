@@ -25,12 +25,14 @@ shhh(library(shinyGovstyle))
 shhh(library(reactable))
 shhh(library(ggplot2))
 shhh(library(ggiraph))
+shhh(library(treemapify))
 
 ## Data and string manipulation -----------------------------------------------
 shhh(library(arrow))
 shhh(library(dplyr))
 shhh(library(tidyr))
 shhh(library(stringr))
+shhh(library(forcats))
 
 ## Data downloads -------------------------------------------------------------
 shhh(library(openxlsx))
@@ -39,6 +41,13 @@ shhh(library(data.table))
 ## Shiny extensions -----------------------------------------------------------
 shhh(library(shinytitle))
 shhh(library(metathis))
+
+
+
+
+
+
+
 
 ## Testing dependencies -------------------------------------------------------
 # These are not needed for the app itself but including them here keeps them in

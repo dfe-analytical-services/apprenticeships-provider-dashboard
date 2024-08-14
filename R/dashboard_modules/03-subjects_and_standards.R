@@ -34,9 +34,13 @@ subjects_standards_ui <- function(id) {
     ),
     card(
       layout_columns(
+        col_widths = c(4, 8),
         reactable::reactableOutput(NS(id, "sas_provider_table")),
-        card(
-          girafeOutput(NS(id, "subject_area_bar"))
+        layout_column_wrap(
+          width = 1,
+          heights_equal = "row",
+          girafeOutput(NS(id, "subject_area_bar")),
+          reactable::reactableOutput(NS(id, "sas_subject_area_table"))
         )
       )
     )
@@ -103,6 +107,20 @@ subject_standards_server <- function(id) {
             coord_flip() +
             xlab("Subject area") +
             ylab(input$measure)
+      )
+    )
+
+    output$sas_subject_area_table <- renderReactable(
+      dfe_reactable(
+        subject_area_data() %>%
+          summarise(
+            values = sum(values),
+            .by = c("ssa_t1_desc", "ssa_t2_desc")
+          ) %>%
+          arrange(-values) %>%
+          rename(
+            !!quo_name(input$measure) := values
+          )
       )
     )
   })

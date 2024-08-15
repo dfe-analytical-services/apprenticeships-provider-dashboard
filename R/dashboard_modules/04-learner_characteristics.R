@@ -170,7 +170,7 @@ learner_characteristics_server <- function(id) {
         ggplot(aes(
           area = count,
           subgroup = lldd,
-          label = paste0(lldd, "\n\n", count),
+          label = paste0(lldd, "\n\n", lapply(count, pretty_num)),
           fill = factor(lldd)
         )) +
         geom_treemap() +

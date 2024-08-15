@@ -148,4 +148,9 @@ dfe_contents_links <- function(links_list) {
       lapply(links_list, create_sidelink)
     )
   )
+
+# properly capitalise first letter of a string
+firstup <- function(x) {
+  substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+  x
 }

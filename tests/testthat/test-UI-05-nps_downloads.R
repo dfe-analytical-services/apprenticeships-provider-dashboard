@@ -7,13 +7,15 @@ app <- AppDriver$new(
 )
 
 # Test download ===============================================================
+app$wait_for_idle(50)
 app$set_inputs(left_nav = "national_provider_summary")
+app$wait_for_idle(50)
 app$set_inputs(provider_table_tabs = "Download data")
 
 test_that("Default download gives expected name", {
-  app$wait_for_idle(5)
+  app$wait_for_idle(50)
   download_info <- app$get_download("nps-download_data")
-  app$wait_for_idle(5)
+  app$wait_for_idle(50)
   expect_equal(basename(download_info), "allproviders-allyears-allcharacteristics-provider_summary.csv")
 })
 
@@ -25,17 +27,17 @@ test_that("Filename reacts to dropdowns", {
     `nps-characteristic` = "Sex - Male"
   )
 
-  app$wait_for_idle(5)
+  app$wait_for_idle(50)
   download_info <- app$get_download("nps-download_data")
-  app$wait_for_idle(5)
+  app$wait_for_idle(50)
   expect_equal(basename(download_info), "darlingtoncollege-2021_22-sex-male-provider_summary.csv")
 })
 
 # Try changing radio option ---------------------------------------------------
 test_that("File type radio button changes to XLSX download", {
   app$set_inputs(`nps-file_type` = "XLSX (Up to 1.76 MB)")
-  app$wait_for_idle(5)
+  app$wait_for_idle(50)
   download_info <- app$get_download("nps-download_data")
-  app$wait_for_idle(5)
+  app$wait_for_idle(50)
   expect_equal(basename(download_info), "darlingtoncollege-2021_22-sex-male-provider_summary.xlsx")
 })

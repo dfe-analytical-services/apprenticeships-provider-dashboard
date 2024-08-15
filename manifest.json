@@ -4168,11 +4168,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-<<<<<<< HEAD
-      "checksum": "4fc10adebbb06f60e842e4cfbafa900f"
-=======
-      "checksum": "e6488032e076ced7b48d022924f1f34a"
->>>>>>> main
+      "checksum": "6bd4b7344846b6163cd42baf62ae3556"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4190,11 +4186,7 @@
       "checksum": "398a532ecd8bf1ea54ba7612848ccaa7"
     },
     "global.R": {
-<<<<<<< HEAD
-      "checksum": "48e892c5ddfb0d5de62bc0893bb49696"
-=======
       "checksum": "e1ae6db13f2b569bf43a6e4ffa522e74"
->>>>>>> main
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
@@ -4236,11 +4228,7 @@
       "checksum": "4fb06508719a86445bed410f6640a071"
     },
     "R/helper_functions.R": {
-<<<<<<< HEAD
-      "checksum": "b74733c66d10e64ad7b1625fe21e275a"
-=======
-      "checksum": "273b94472ee19f753e6ef356be3f8c5d"
->>>>>>> main
+      "checksum": "b7861f411838da3474ad4c2e24792daf"
     },
     "R/read_data.R": {
       "checksum": "5309edd07006dcb17e19b1edaa5fb5cc"
@@ -4252,11 +4240,7 @@
       "checksum": "e916e4d237d715099c01dc748f6d8109"
     },
     "server.R": {
-<<<<<<< HEAD
-      "checksum": "2f182c4bb12c8e62ed5b62a44bc45588"
-=======
-      "checksum": "b5f41c8aa2b7c59f3a883baab9a097f2"
->>>>>>> main
+      "checksum": "cc1f06b73f30942bd60a3fe0525649ec"
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
@@ -4280,27 +4264,19 @@
       "checksum": "1fd753be5bbff3a1b07b6b6983483ca1"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "922d1ee2ed760eb586842d8cd713871c"
+      "checksum": "35dc5697f06f1711e263e048b4360322"
     },
     "tests/testthat/test-UI-05-nps_downloads.R": {
-      "checksum": "fc8257db6b282a58fda2a63c8dcc526f"
+      "checksum": "d2acc1072836156e7c83e23eeb5c32e0"
     },
     "ui.R": {
-<<<<<<< HEAD
-      "checksum": "fa9928b560ab6088f30f7f813e72a160"
-=======
-      "checksum": "0c62e4c6db2706875b4a0220d4eda275"
->>>>>>> main
+      "checksum": "c99bfe2cdfed8ca751f16c16dee22d62"
     },
     "www/dfe_logo.svg": {
       "checksum": "c23764dae2d73a45a55815d0327be6cb"
     },
     "www/dfe_shiny_gov_style.css": {
-<<<<<<< HEAD
-      "checksum": "62980c83ee53494a540f7e9f298788b8"
-=======
-      "checksum": "7c4e6920c446c5714d9720a98a8b0e01"
->>>>>>> main
+      "checksum": "2b76f69230c48d584b232375b3c67705"
     },
     "www/dfefavicon.png": {
       "checksum": "179db108199253ed0617024df291473b"

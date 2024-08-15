@@ -159,16 +159,26 @@ subject_standards_server <- function(id) {
     })
 
     output$sas_subject_area_table <- renderReactable(
-      dfe_reactable(
+      reactable(
         subject_area_data() %>%
           summarise(
             values = sum(values),
             .by = c("ssa_t1_desc", "ssa_t2_desc")
           ) %>%
-          arrange(-values) %>%
-          rename(
-            !!quo_name(input$measure) := values
+          rename(`Subject area` = ssa_t1_desc) %>%
+          arrange(-values),
+        highlight = TRUE,
+        borderless = TRUE,
+        showSortIcon = FALSE,
+        style = list(fontSize = "16px"),
+        defaultColDef = colDef(headerClass = "bar-sort-header"),
+        groupBy = "Subject area",
+        columns = list(
+          values = colDef(
+            name = input$measure,
+            aggregate = "sum"
           )
+        )
       )
     )
   })

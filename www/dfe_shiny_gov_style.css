@@ -2,68 +2,71 @@
 /* main body text */
 body {
   font-family: "Helvetica Neue", "Arial", sans-serif;
-  font-size: 19px;
-  margin-bottom: 20px;
+  font-size: 1.188rem;
+  margin-bottom: 1.25rem;
 }
 
 p {
   font-family: "Helvetica Neue", "Arial", sans-serif;
-  font-size: 19px;
-  margin-bottom: 20px;
+  font-size: 1.188rem;
+  margin-bottom: 1.25rem;
+  overflow-wrap: anywhere; /* email too big for smaller screens and needs to wrap */
 }
 
 /* heading text */
 .govuk-header__link--service-name {
   font-family: "Helvetica Neue", "Arial", sans-serif;
-  font-size: 30px;
+  font-size: 1.875rem;
 }
 
 .h1,
 h1 {
   font-family: "Helvetica Neue", "Arial", sans-serif;
-  font-size: 48px;
+  font-size: 3rem;
   font-weight: 700;
   line-height: 1.0416666667;
   margin-top: 0;
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem;
+  overflow-wrap: break-word; /* apprenticeships in H1 is too big for some mobiles and needs to wrap */
 }
 
 .h2,
 h2 {
   font-family: "Helvetica Neue", "Arial", sans-serif;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   line-height: 1.0416666667;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .h3,
 h3 {
   font-family: "Helvetica Neue","Arial", sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.0416666667;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 /* feedback banner */
-.govuk-phase-banner__content {
+.govuk-phase-banner__text {
   font-family: "Helvetica Neue", "Arial", sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   color: #000000;
+  overflow-wrap: anywhere; /* email too big for smaller screens and needs to wrap */
 }
 
 /* well text */
 label {
   font-family: "Helvetica Neue", "Arial", sans-serif;
-  font-size: 19px;
+  font-size: 1.188rem;
 }
 
 /* bslib card text */
 .bslib-card .card-header, .bslib-card .card-footer {
-    font-size: 19px;
+    font-size: 1.188rem;
 }
 
 .bslib-card {
@@ -73,20 +76,20 @@ label {
 /* second dropdown options */
 .selectize-input {
   font-family: "Helvetica Neue", "Arial", sans-serif;
-  font-size: 19px;
+  font-size: 1.188rem;
   color: #000000;
 }
 
 /* Bullet point formatting ------------------------------------------------- */
 li {
-  margin-bottom: 5px;
+  margin-bottom: 0.313rem;
   display: list-item;
   text-align: -webkit-match-parent;
   unicode-bidi: isolate;
 }
 
 ul {
-  padding-left: 20px;
+  padding-left: 1.25rem;
   list-style-type: disc;
 }
 
@@ -94,7 +97,7 @@ ul {
 a {
   font-family: "Helvetica Neue", "Arial", sans-serif;
   text-decoration: underline;
-  text-decoration-thickness: max(1px, .0625rem);
+  text-decoration-thickness: max(0.063rem);
   text-underline-offset: .1578em;
   word-break: break-word;
   background-color: transparent;
@@ -105,18 +108,18 @@ a:visited {
 }
 
 a:focus {
-  outline: 3px solid rgba(0, 0, 0, 0);
+  outline: 0.188rem solid rgba(0, 0, 0, 0);
   color: #0b0c0c;
   background-color: #fd0 !important;
-  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+  box-shadow: 0 -0.125rem #fd0, 0 0.25rem #0b0c0c;
   text-decoration: underline;
 }
 
 a:hover {
-  outline: 3px solid rgba(0, 0, 0, 0);
+  outline: 0.188rem solid rgba(0, 0, 0, 0);
   color: #0b0c0c;
   background-color: #fd0 !important;
-  box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+  box-shadow: 0 -0.125rem #fd0, 0 0.25rem #0b0c0c;
   text-decoration: underline;
 }
 
@@ -156,11 +159,11 @@ a:hover {
 }
 
 .container-fluid {
-  padding: 0px;
+  padding: 0;
 }
 
 .row {
-  margin-right: 0px;
+  margin-right: 0;
 }
 
 /* sets the main area width. Originally set to 66.667% in the GDS 
@@ -180,25 +183,22 @@ html {
   background-color: #f3f2f1;
 }
 
-/* Card tabs CSS ----------------------------------------------------------- */
-/* Fairly sure none of this works yet */
-.card-header-tabs>li>a {
+/* Contents links, remove visited style ------------------------------------ */
+.action-button:visited {
+  color: #1d70b8;
 }
 
-.card-header-tabs>li.active>a {
-  box-shadow: 0 0px #fd0, 0 4px #1d70b8 !important;
-}
-
-.card-header-tabs>li>a:focus {
-  background-color: #fd0 !important;
-  box-shadow: 0 0px #fd0, 0 4px #1d70b8 !important;
-}
-
-.card-header-tabs>li>a:hover {
+.action-button:hover .action-button:focus {
   color: #000;
-  font-weight: bold;
-  background-color: #b1b4b6;
 }
+
+/* backlinks --------------------------------------------------------------- */
+.govuk-back-link:link {
+  max-width: fit-content;
+}
+
+/* Card tabs CSS ----------------------------------------------------------- */
+/* TODO - fix the borders and margins on the tabs */
 
 /* Custom disconnect CSS --------------------------------------------------- */
 #ss-connect-dialog {
@@ -230,18 +230,19 @@ html {
   top: 50% !important;
   position: fixed !important;
   bottom: auto !important;
+  font-size: 1.188rem !important;
   left: 50% !important;
   padding: 0.8em 1.5em !important;
   text-align: center !important;
   height: auto !important;
   opacity: 1 !important;
   z-index: 99999 !important;
-  border-radius: 3px !important;
-  box-shadow: rgba(0, 0, 0, 0.3) 3px 3px 10px !important;
+  border-radius: 0.188rem !important;
+  box-shadow: rgba(0, 0, 0, 0.3) 0.188rem 0.188rem 0.625rem !important;
 }
 
 /* GOV.UK button copied in from shiny gov style ---------------------------- */
-.btn-default {
+.gov-uk-button {
     font-family: "Helvetica Neue", "Arial", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -252,17 +253,44 @@ html {
     display: inline-block;
     position: relative;
     width: 100%;
-    margin: 0 0 22px;
-    padding: 8px 10px 7px;
-    border: 2px solid transparent;
+    max-width: fit-content;
+    margin: 0 0 1.375rem;
+    padding: 0.5rem 0.625rem 0.438rem;
+    border: 0.125rem solid transparent;
     border-radius: 0;
     color: #fff !important;
     background-color: #00703c;
-    box-shadow: 0 2px 0 #002d18;
+    box-shadow: 0 0.125rem 0 #002d18;
     text-align: center;
     vertical-align: top;
     cursor: pointer;
-    -webkit-appearance: none
+    -webkit-appearance: none;
+    text-decoration: none;
+}
+
+.gov-uk-button:active {
+    top: 0.125rem;
+    background-color: #00703c !important;
+}
+
+.gov-uk-button:hover {
+    top: 0.125rem;
+    text-decoration: none;
+    background-color: #005a30 !important;
+}
+
+.gov-uk-button:focus:not(:active):not(:hover) {
+    border-color: #fd0;
+    color: #fff !important;
+    background-color: #005a30 !important;
+    text-decoration: none;
+    box-shadow: 0 0.125rem 0 #000;
+}
+
+.gov-uk-button:focus {
+    border-color: #fd0;
+    outline: 0.188rem solid transparent;
+    box-shadow: inset 0 0 0 0.063rem #fd0;
 }
 
 /* custom sort indicators -------------------------------------------------- */
@@ -273,12 +301,12 @@ html {
 
 /* Add a top bar on ascending sort */
 .bar-sort-header[aria-sort="ascending"] {
-  box-shadow: inset 0 3px 0 0 #1d70b8;
+  box-shadow: inset 0 0.188rem 0 0 #1d70b8;
 }
 
 /* Add a bottom bar on descending sort */
 .bar-sort-header[aria-sort="descending"] {
-  box-shadow: inset 0 -3px 0 0 #1d70b8;
+  box-shadow: inset 0 -0.188rem 0 0 #1d70b8;
 }
 
 /* Add an animation when toggling between ascending and descending sort */
@@ -300,19 +328,20 @@ html {
 .rt-page-button:focus,
 .rt-page-button:active {
     background: #fd0 !important; 
-    box-shadow: inset 0 -3px 0 0 #1d70b8;
+    box-shadow: inset 0 -0.188rem 0 0 #1d70b8;
 }
 
+/* dropdowns CSS ----------------------------------------------------------- */
 .selectize-input:hover,
 .selectize-input:active,
 .selectize-input:focus {
-  box-shadow: inset 0 -3px 0 0 #1d70b8;
+  box-shadow: inset 0 -0.188rem 0 0 #1d70b8;
 }
 
 /* Change focus border color to yellow */
 .selectize-input.focus {
     border-color: #fd0 !important;
-    box-shadow: 0 0 5px #fd0 !important;
+    box-shadow: 0 0 0.313rem #fd0 !important;
 }
 
 /* Change focus color to bright yellow */

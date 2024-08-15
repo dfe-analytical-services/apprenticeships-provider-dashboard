@@ -29,7 +29,7 @@ server <- function(input, output, session) {
   observeEvent(input$dashboard, nav_select("pages", "dashboard"))
   observeEvent(input$footnotes, nav_select("pages", "footnotes"))
   observeEvent(input$support, nav_select("pages", "support"))
-  observeEvent(input$accessibility, nav_select("pages", "accessibility_statement"))
+  observeEvent(input$accessibility_statement, nav_select("pages", "accessibility_statement"))
   observeEvent(input$cookies, nav_select("pages", "cookies"))
 
   ## Back links to main dashboard ---------------------------------------------
@@ -53,9 +53,4 @@ server <- function(input, output, session) {
   prov_breakdowns_server(id = "prov_breakdowns")
   learner_characteristics_server(id = "learner_characteristics")
   nps_server(id = "nps")
-
-  # Stop app when tab closes ==================================================
-  session$onSessionEnded(function() {
-    stopApp()
-  })
 }

@@ -20,6 +20,7 @@ shhh(library(bslib))
 shhh(library(dfeR))
 shhh(library(dfeshiny))
 shhh(library(shinyGovstyle))
+shhh(library(afcolours))
 
 ## Creating charts and tables--------------------------------------------------
 shhh(library(reactable))

@@ -19,7 +19,20 @@ suppressMessages(
 # This is hardcoded from shinygovstyle
 # The section lined off early on is the custom bit where links are set
 
-custom_footer <- function() {
+dfe_footer <- function(links_list) {
+  # Add the HTML around the link and make an id by snake casing
+  create_footer_link <- function(link_text) {
+    shiny::tags$li(
+      class = "govuk-footer__inline-list-item",
+      actionLink(
+        class = "govuk-link govuk-footer__link",
+        inputId = tolower(gsub(" ", "_", link_text)),
+        label = link_text
+      )
+    )
+  }
+
+  # The HTML div to be returned
   shiny::tags$footer(
     class = "govuk-footer ",
     role = "contentinfo",
@@ -38,38 +51,9 @@ custom_footer <- function() {
           ),
           shiny::tags$ul(
             class = "govuk-footer__inline-list",
-            shiny::tags$li(
-              class = "govuk-footer__inline-list-item",
-              actionLink(
-                class = "govuk-link govuk-footer__link",
-                inputId = "footnotes",
-                label = "Footnotes"
-              )
-            ),
-            shiny::tags$li(
-              class = "govuk-footer__inline-list-item",
-              actionLink(
-                class = "govuk-link govuk-footer__link",
-                inputId = "support",
-                label = "Support"
-              )
-            ),
-            shiny::tags$li(
-              class = "govuk-footer__inline-list-item",
-              actionLink(
-                class = "govuk-link govuk-footer__link",
-                inputId = "cookies",
-                label = "Cookies"
-              )
-            ),
-            shiny::tags$li(
-              class = "govuk-footer__inline-list-item",
-              actionLink(
-                class = "govuk-link govuk-footer__link",
-                inputId = "accessibility",
-                label = "Accessibility statement"
-              )
-            )
+
+            # Generate as many links as needed
+            lapply(links_list, create_footer_link)
           )
         ),
 
@@ -157,6 +141,23 @@ dfe_reactable <- function(data, on_click = NULL, selection = NULL, row_style = N
   )
 }
 
+# left nav ====================================================================
+dfe_contents_links <- function(links_list) {
+  # Add the HTML around the link and make an id by snake casing
+  create_sidelink <- function(link_text) {
+    tags$li("—", actionLink(tolower(gsub(" ", "_", link_text)), link_text, class = "contents_link"))
+  }
+
+  # The HTML div to be returned
+  tags$div(
+    style = "position: sticky; top: 0.5rem; padding: 0.25rem;", # Make it stick!
+    h2("Contents"),
+    tags$ol(
+      style = "list-style-type: none; padding-left: 0; font-size: 1rem;", # remove the circle bullets
+      lapply(links_list, create_sidelink)
+    )
+  )
+}
 
 # properly capitalise first letter of a string
 firstup <- function(x) {

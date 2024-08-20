@@ -26,7 +26,7 @@ ui <- function(input, output, session) {
     tags$head(HTML(paste0("<title>", site_title, "</title>"))), # set in global.R
     tags$head(tags$link(rel = "shortcut icon", href = "dfefavicon.png")),
     # Add meta description for search engines
-    meta() %>%
+    metathis::meta() %>%
       meta_general(
         application_name = "Apprenticeships provider dashboard",
         description = "Interactive tool for exploring apprenticeships provider data",

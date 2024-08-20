@@ -107,12 +107,15 @@ subject_standards_server <- function(id) {
     })
 
     provider_selection_table <- reactive({
+      # Filter the data based on whether the user's selected any subject areas
+      # from the chart
       if (!is.null(input$subject_area_bar_selected)) {
         provider_data <- subject_area_data() %>%
           filter(ssa_t1_desc %in% ssa_t1_selected())
       } else {
         provider_data <- subject_area_data()
       }
+      # Run a quick aggregate of numbers by provider name.
       provider_data %>%
         summarise(
           values = sum(values),
@@ -132,7 +135,8 @@ subject_standards_server <- function(id) {
       )
     })
 
-    # Get the selections from the provider table ------------------------------
+    # Create an interactive chart showing the numbers broken down by subject
+    # area
     output$subject_area_bar <- renderGirafe(
       girafe(
         ggobj =
@@ -162,13 +166,7 @@ subject_standards_server <- function(id) {
       )
     )
 
-    output$subject_area_selected <- renderText({
-      paste(
-        "Selected subject = ",
-        input$subject_area_bar_selected
-      )
-    })
-
+    # Expandable table of subject areas.
     output$sas_subject_area_table <- renderReactable({
       subject_data <- subject_area_data() %>%
         summarise(

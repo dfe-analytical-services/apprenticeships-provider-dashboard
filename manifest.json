@@ -4881,7 +4881,7 @@
       "checksum": "ada964d21284bee290640971bd88047a"
     },
     ".Rprofile": {
-      "checksum": "2fdb551c44b6ebfda8447e560eebf78e"
+      "checksum": "b219281d121d5e403c3eccc146d760e9"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4914,7 +4914,7 @@
       "checksum": "8c780f36387d78fc7d58867071e46f22"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
-      "checksum": "605786815b372349ebb3a140df91d84d"
+      "checksum": "4ab81533c2f2382ad29b053d3aae2b41"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "7b29a0a21528b69f57e33a5c529aec12"
@@ -4944,7 +4944,7 @@
       "checksum": "de954b896d43e158fd949feab89f005d"
     },
     "R/read_data.R": {
-      "checksum": "9091e30ab387c6854a04ab0f10dd2b1d"
+      "checksum": "2fae38a6bd2a15890479ef783544208a"
     },
     "README.md": {
       "checksum": "db7305c1a434efa8d6dd90e522274c40"

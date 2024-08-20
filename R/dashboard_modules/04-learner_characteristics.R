@@ -10,6 +10,13 @@ chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet") %>%
   mutate(measure = firstup(measure))
 
 
+
+lldd_parquet <- chars_parquet %>%
+  filter(sex == "Total" & age_group == "Total" & ethnicity_major == "Total" & count > 0)
+
+sex_parquet <- chars_parquet %>%
+  filter(lldd == "Total" & age_group == "Total" & ethnicity_major == "Total" & count > 0)
+
 age_parquet <- chars_parquet %>%
   filter(lldd == "Total" & sex == "Total" & ethnicity_major == "Total" & count > 0)
 
@@ -137,7 +144,7 @@ learner_characteristics_server <- function(id) {
       chars_filtered <- chars_filtered %>% filter(measure == input$measure)
       # and sort into the right order
       chars_filtered$lldd <- factor(chars_filtered$lldd,
-        levels = c("Total", "LLDD - yes", "LLDD - no", "25+", "LLDD - unknown")
+        levels = c("Total", "LLDD - yes", "LLDD - no", "LLDD - unknown")
       )
       chars_filtered$sex <- factor(chars_filtered$sex,
         levels = c("Total", "Male", "Female", "Unknown")
@@ -168,6 +175,48 @@ learner_characteristics_server <- function(id) {
     })
 
 
+
+    # lldd data
+    lldd_reactive_table <- reactive({
+      lldd_filtered <- lldd_parquet
+      lldd_filtered <- lldd_filtered %>% filter(provider_name == input$provider)
+      lldd_filtered <- lldd_filtered %>% filter(year == input$year)
+      lldd_filtered <- lldd_filtered %>% filter(measure == input$measure)
+      # and sort into the right order
+      lldd_filtered$sex <- factor(lldd_filtered$lldd,
+        levels = c("Total", "LLDD - yes", "LLDD - no", "LLDD - unknown")
+      )
+      lldd_filtered <- lldd_filtered[order(
+        lldd_filtered$lldd
+      ), ]
+
+      # Pull the lazy loaded and now filtered data into memory
+      lldd_filtered %>% collect()
+    })
+
+
+
+
+    # sex data
+    sex_reactive_table <- reactive({
+      sex_filtered <- sex_parquet
+      sex_filtered <- sex_filtered %>% filter(provider_name == input$provider)
+      sex_filtered <- sex_filtered %>% filter(year == input$year)
+      sex_filtered <- sex_filtered %>% filter(measure == input$measure)
+      # and sort into the right order
+      sex_filtered$sex <- factor(sex_filtered$sex,
+        levels = c("Total", "Male", "Female")
+      )
+      sex_filtered <- sex_filtered[order(
+        sex_filtered$sex
+      ), ]
+
+      # Pull the lazy loaded and now filtered data into memory
+      sex_filtered %>% collect()
+    })
+
+
+
     # age data
     age_reactive_table <- reactive({
       age_filtered <- age_parquet
@@ -175,7 +224,7 @@ learner_characteristics_server <- function(id) {
       age_filtered <- age_filtered %>% filter(year == input$year)
       age_filtered <- age_filtered %>% filter(measure == input$measure)
       # and sort into the right order
-      chars_filtered$age_group <- factor(chars_filtered$age_group,
+      age_filtered$age_group <- factor(age_filtered$age_group,
         levels = c("Total", "Under 19", "19-24", "25+", "Unknown")
       )
       age_filtered <- age_filtered[order(
@@ -213,13 +262,17 @@ learner_characteristics_server <- function(id) {
       ethnicity_filtered %>% collect()
     })
 
+
+
+
     # LLDD ===================================================================
     output$lldd_plot <- renderPlotly({
-      lldd <-
-        chars_reactive_table() %>%
-        filter(((lldd == "LLDD - yes" & count > 0) |
-          (lldd == "LLDD - no" & count > 0) |
-          (lldd == "LLDD - unknown" & count > 0))) %>%
+      validate(need(nrow(chars_reactive_table()) > 0 &
+        nrow(lldd_reactive_table()) > 0, paste0("No ", input$measure, " for this provider.")))
+
+      validate(need(nrow(lldd_reactive_table()) > 0, "All LLDD groups have low numbers."))
+
+      lldd_reactive_table() %>%
         plot_ly(
           labels = ~ stringr::str_wrap(lldd, width = 5),
           parents = NA,
@@ -232,9 +285,12 @@ learner_characteristics_server <- function(id) {
     })
     # Sex ===================================================================
     output$sex_plot <- renderPlotly({
-      chars_reactive_table() %>%
-        filter((lldd == "Male" & count > 0) |
-          (lldd == "Female" & count > 0)) %>%
+      validate(need(nrow(chars_reactive_table()) > 0 &
+        nrow(sex_reactive_table()) > 0, paste0("No ", input$measure, " for this provider.")))
+
+      validate(need(nrow(sex_reactive_table()) > 0, "Both sexes have low numbers."))
+
+      sex_reactive_table() %>%
         plot_ly(
           labels = ~sex,
           parents = NA,
@@ -248,9 +304,11 @@ learner_characteristics_server <- function(id) {
     # Age ===================================================================
     # create the plot
     output$age_plot <- renderPlotly({
-      validate(
-        need(nrow(age_reactive_table) > 0, "All age groups have low numbers")
-      )
+      validate(need(nrow(chars_reactive_table()) > 0 &
+        nrow(age_reactive_table()) > 0, paste0("No ", input$measure, " for this provider.")))
+
+      validate(need(nrow(age_reactive_table()) > 0, "All age groups have low numbers."))
+
       age_reactive_table() %>%
         plot_ly(
           labels = ~ stringr::str_wrap(age_group, width = 5),
@@ -265,9 +323,11 @@ learner_characteristics_server <- function(id) {
 
     # Ethnicity ===================================================================
     output$ethnicity_plot <- renderPlotly({
-      validate(
-        need(nrow(ethnicity_reactive_table()) > 0, "All ethnicity groups have low numbers")
-      )
+      validate(need(nrow(chars_reactive_table()) > 0 &
+        nrow(ethnicity_reactive_table()) > 0, paste0("No ", input$measure, " for this provider.")))
+
+      validate(need(nrow(ethnicity_reactive_table()) > 0, "All ethnicity groups have low numbers."))
+
       ethnicity_reactive_table() %>%
         plot_ly(
           labels = ~ stringr::str_wrap(ethnicity_major, width = 5),
@@ -275,21 +335,13 @@ learner_characteristics_server <- function(id) {
           values = ~count,
           type = "treemap",
           hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
-          marker = (list(colors = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"), sizemode = "area")),
+          marker = (list(
+            colors = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"),
+            sizemode = "area"
+          )),
           textfont = list(color = "white", size = 30)
         )
     })
-
-
-
-
-
-
-
-
-
-
-
 
     # Data download ===========================================================
     output$download_data <- downloadHandler(

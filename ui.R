@@ -88,18 +88,16 @@ ui <- function(input, output, session) {
             # Override default wrapping breakpoints to avoid text overlap
             col_widths = breakpoints(sm = c(4, 8), md = c(3, 9), lg = c(2, 9)),
             ## Left navigation ------------------------------------------------
-            tags$div(
-              style = "position: sticky; top: 0.5rem; padding: 0.25rem;", # Make it stick!
-              h2(style = "margin-left: 1rem", "Contents"),
-              tags$ul(
-                style = "list-style-type: none", # remove the circle bullets
-                tags$li(actionLink("provider_breakdowns", "Provider breakdowns")),
-                tags$li(actionLink("local_authority_district", "Local authority district")),
-                tags$li(actionLink("subjects_and_standards", "Subjects and standards")),
-                tags$li(actionLink("learner_characteristics", "Learner characteristics")),
-                tags$li(actionLink("national_provider_summary", "National provider summary")),
-                tags$li(actionLink("user_guide", "User guide"))
-              )
+            dfe_contents_links(
+              links_list =
+                c(
+                  "Provider breakdowns",
+                  "Local authority district",
+                  "Subjects and standards",
+                  "Learner characteristics",
+                  "National provider summary",
+                  "User guide"
+                )
             ),
             ## Dashboard panels -----------------------------------------------
             bslib::navset_hidden(
@@ -122,6 +120,6 @@ ui <- function(input, output, session) {
     ),
 
     # Footer ==================================================================
-    custom_footer() # set in helper_functions.R
+    dfe_footer(links_list = c("Footnotes", "Support", "Accessibility statement", "Cookies"))
   )
 }

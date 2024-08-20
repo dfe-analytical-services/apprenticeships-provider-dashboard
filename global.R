@@ -20,6 +20,7 @@ shhh(library(bslib))
 shhh(library(dfeR))
 shhh(library(dfeshiny))
 shhh(library(shinyGovstyle))
+shhh(library(afcolours))
 
 ## Creating charts and tables--------------------------------------------------
 shhh(library(reactable))
@@ -41,13 +42,6 @@ shhh(library(data.table))
 ## Shiny extensions -----------------------------------------------------------
 shhh(library(shinytitle))
 shhh(library(metathis))
-
-
-
-
-
-
-
 
 ## Testing dependencies -------------------------------------------------------
 # These are not needed for the app itself but including them here keeps them in

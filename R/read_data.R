@@ -24,6 +24,15 @@ read_nps <- function(file_path) {
     select(-c(`order_ref`, `order_detailed`)) # unused columns
 }
 
+read_lad <- function(file_path) {
+  arrow::read_parquet(file_path)
+}
+
+read_lad_map <- function(file_path) {
+  # This is a geospatial dataset so needs the sfarrow / st_read_... functions
+  sfarrow::st_read_parquet(file_path)
+}
+
 # Create options lists for use in the dropdowns ===============================
 data_choices <- function(data, column) {
   data %>%

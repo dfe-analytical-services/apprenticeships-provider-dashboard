@@ -27,49 +27,55 @@ test_that("App loads and title of app appears as expected", {
 
 # Title updates when changing tabs ============================================
 test_that("Tab titles load when switching", {
-  app$set_inputs(left_nav = "local_authority_district")
+  app$click("local_authority_district")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - local authority district")
 
-  app$set_inputs(left_nav = "subjects_and_standards")
+  app$click("subjects_and_standards")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - subjects and standards")
 
-  app$set_inputs(left_nav = "learner_characteristics")
+  app$click("learner_characteristics")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - learner characteristics")
 
-  app$set_inputs(left_nav = "national_provider_summary")
+  app$click("national_provider_summary")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - national provider summary")
 
-  app$set_inputs(left_nav = "user_guide")
+  app$click("user_guide")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - user guide")
 
-  app$set_inputs(left_nav = "provider_breakdowns")
+  app$click("provider_breakdowns")
+  app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 })
 
 # Footer links and backlinks work =============================================
 test_that("Footer link and back links work", {
-  app$set_inputs(pages = "footnotes")
+  app$click("footnotes")
   app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - footnotes")
   app$click("footnotes_to_dashboard")
   app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 
-  app$set_inputs(pages = "support")
+  app$click("support")
   app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - support")
   app$click("support_to_dashboard")
   app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 
-  app$set_inputs(pages = "accessibility_statement")
+  app$click("accessibility_statement")
   app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - accessibility statement")
   app$click("accessibility_to_dashboard")
   app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 
-  app$set_inputs(pages = "cookies")
+  app$click("cookies")
   app$wait_for_idle(5)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - cookies")
   app$click("cookies_to_dashboard")

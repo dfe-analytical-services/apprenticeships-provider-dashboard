@@ -4397,7 +4397,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "0af3cb4cff182ea30b3410442b90573d"
+      "checksum": "ff9a16ad5f4b6844a2c73549db3ffe39"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4493,7 +4493,7 @@
       "checksum": "1fd753be5bbff3a1b07b6b6983483ca1"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "cc1dc01fc3120356e6a08e2c1f61a13a"
+      "checksum": "b6e81211e31608d392a8606980dab65d"
     },
     "tests/testthat/test-UI-05-nps_downloads.R": {
       "checksum": "fc8257db6b282a58fda2a63c8dcc526f"

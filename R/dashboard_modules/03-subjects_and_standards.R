@@ -18,7 +18,8 @@ subjects_standards_ui <- function(id) {
         selectizeInput(
           inputId = NS(id, "provider"),
           label = NULL,
-          choices = NULL
+          choices = NULL,
+          multiple = TRUE
         ),
         selectInput(
           inputId = NS(id, "year"),
@@ -58,7 +59,7 @@ subject_standards_server <- function(id) {
       session = session,
       inputId = "provider",
       label = "Search for provider",
-      choices = c("All providers", sas_provider_choices),
+      choices = c(sas_provider_choices),
       server = TRUE
     )
 
@@ -70,58 +71,68 @@ subject_standards_server <- function(id) {
       }
     })
 
+    # Filter subject area data set based on inputs on this page. This reactive
+    # feeds the tables and chart.
     subject_area_data <- reactive({
-      if ("All providers" %in% input$provider) {
-        provider_data <- sas_parquet %>%
+      data <- sas_parquet %>%
+        filter(
+          measure == input$measure,
+          year == input$year
+        )
+      if (!(is.null(input$provider))) {
+        data <- data %>%
           filter(
-            measure == input$measure,
-            year == input$year
-          )
-      } else {
-        provider_data <- sas_parquet %>%
-          filter(
-            provider_name %in% input$provider,
-            measure == input$measure,
-            year == input$year
+            provider_name %in% input$provider
           )
       }
-      provider_data
+      data
     })
 
     # Adding a reactive to handle cleaning the selected SSA T1 Description from
-    # the bar chart
+    # the bar chart. Removes the line wrapping I've added for the chart.
     ssa_t1_selected <- reactive({
       gsub("\\n", " ", input$subject_area_bar_selected)
     })
 
+    # Create dynamic title for the provider table
     output$sas_provider_table_title <- renderText({
       paste(
         input$measure, "for providers across",
-        paste0(ssa_t1_selected(), collapse = " / ")
+        ifelse(
+          length(ssa_t1_selected()) != 0,
+          paste0(ssa_t1_selected(), collapse = " / "),
+          "all subject areas"
+        )
       )
     })
 
-    output$sas_provider_table <- renderReactable({
+    provider_selection_table <- reactive({
       if (!is.null(input$subject_area_bar_selected)) {
         provider_data <- subject_area_data() %>%
           filter(ssa_t1_desc %in% ssa_t1_selected())
       } else {
         provider_data <- subject_area_data()
       }
+      provider_data %>%
+        summarise(
+          values = sum(values),
+          .by = c("provider_name")
+        ) %>%
+        arrange(-values) %>%
+        rename(
+          `Provider name` = provider_name,
+          !!quo_name(input$measure) := values
+        )
+    })
+
+    output$sas_provider_table <- renderReactable({
       dfe_reactable(
-        provider_data %>%
-          summarise(
-            values = sum(values),
-            .by = c("provider_name")
-          ) %>%
-          arrange(-values) %>%
-          rename(
-            `Provider name` = provider_name,
-            !!quo_name(input$measure) := values
-          )
+        provider_selection_table(),
+        searchable = TRUE
       )
     })
 
+    # Get the selections from the provider table ------------------------------
     output$subject_area_bar <- renderGirafe(
       girafe(
         ggobj =
@@ -158,13 +169,18 @@ subject_standards_server <- function(id) {
       )
     })
 
-    output$sas_subject_area_table <- renderReactable(
+    output$sas_subject_area_table <- renderReactable({
+      subject_data <- subject_area_data() %>%
+        summarise(
+          values = sum(values),
+          .by = c("ssa_t1_desc", "ssa_t2_desc")
+        )
+      if (!is.null(input$subject_area_bar_selected)) {
+        subject_data <- subject_data %>%
+          filter(ssa_t1_desc %in% ssa_t1_selected())
+      }
       reactable(
-        subject_area_data() %>%
-          summarise(
-            values = sum(values),
-            .by = c("ssa_t1_desc", "ssa_t2_desc")
-          ) %>%
+        subject_data %>%
           rename(`Subject area` = ssa_t1_desc) %>%
           arrange(-values),
         highlight = TRUE,
@@ -180,6 +196,6 @@ subject_standards_server <- function(id) {
           )
         )
       )
-    )
+    })
   })
 }

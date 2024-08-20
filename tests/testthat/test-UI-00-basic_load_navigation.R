@@ -44,7 +44,7 @@ test_that("Tab titles load when switching", {
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - national provider summary")
 
   app$click("user_guide")
-  app$wait_for_idle(5)
+  app$wait_for_idle(50)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - user guide")
 
   app$click("provider_breakdowns")

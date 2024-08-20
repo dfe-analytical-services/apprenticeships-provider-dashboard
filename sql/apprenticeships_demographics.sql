@@ -81,5 +81,5 @@ where
 (age_group = 'Total' and sex  not IN ('Total') and ethnicity_major = 'Total' and lldd = 'Total') or 
 (age_group = 'Total' and sex = 'Total' and ethnicity_major  not IN ('Total') and lldd = 'Total') or 
 (age_group = 'Total' and sex = 'Total' and ethnicity_major = 'Total' and lldd  not IN ('Total') ) or 
-(age_group = 'Total' and sex = 'Total' and ethnicity_major = 'Total' and lldd  = 'Total'  )  
+(age_group = 'Total' and sex = 'Total' and ethnicity_major = 'Total' and lldd  = 'Total'  )
 

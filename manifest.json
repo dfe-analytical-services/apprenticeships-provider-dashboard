@@ -4881,7 +4881,7 @@
       "checksum": "ada964d21284bee290640971bd88047a"
     },
     ".Rprofile": {
-      "checksum": "01d577c01f0b468f2a1d41f097e3c0a5"
+      "checksum": "c24ffb461b052598096f7faf3514989c"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4889,8 +4889,11 @@
     "data/apprenticeships_data_0.parquet": {
       "checksum": "2f33fbdc88f41225932c55a6441d7404"
     },
+    "data/apprenticeships_demographics.csv": {
+      "checksum": "8ffbb78b0b2eb271d5e6ff8e8f40d023"
+    },
     "data/apprenticeships_demographics_0.parquet": {
-      "checksum": "9f8f4178aae1ed79ca6eb57296b4d1c1"
+      "checksum": "b2824ff473ecbbefc9ba3549ad11c4b0"
     },
     "data/national_provider_summary_0.parquet": {
       "checksum": "05cbcc1201a16f97d4919345e05cdaf0"
@@ -4959,7 +4962,7 @@
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
     },
     "sql/apprenticeships_demographics.sql": {
-      "checksum": "55351a8c5e2b0c732145d54769762dd3"
+      "checksum": "c54391163b75aab8b0097492f6b74d9c"
     },
     "sql/national_provider_summary.sql": {
       "checksum": "ec13f7fa4f964568957189766dd4713a"

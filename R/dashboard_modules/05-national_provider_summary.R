@@ -56,22 +56,18 @@ nps_ui <- function(id) {
           choices = c("CSV (Up to 5.22 MB)", "XLSX (Up to 1.76 MB)"),
           selected = "CSV (Up to 5.22 MB)"
         ),
-        # Bit of a hack to force the button not to be full width
-        layout_columns(
-          col_widths = 3,
-          downloadButton(
-            NS(id, "download_data"),
-            label = "Download data",
-            class = "gov-uk-button",
-            icon = NULL
-          )
+        downloadButton(
+          NS(id, "download_data"),
+          label = "Download data",
+          class = "gov-uk-button",
+          icon = NULL
         )
       )
     ),
     ## Footer -----------------------------------------------------------------
     div(
       class = "well",
-      style = "font-size: 16px; background: #f7f7f7;",
+      style = "font-size: 1rem; background: #f7f7f7;",
       "The Index of Multiple deprivation (IMD) is a measure of relative deprivation. The IMD shown here has been
         split into quintiles, with a value of one indicating the 20% most deprived neighbourhoods and five the 20%
         least deprived. IMD is derived from the learner postcode recorded on the Individualised Learner Record."

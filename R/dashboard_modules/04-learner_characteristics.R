@@ -230,8 +230,7 @@ learner_characteristics_server <- function(id) {
           reflow = TRUE, grow = FALSE, fontface = "bold", layout = "squarified"
         )
     })
-
-    
+  
     # Ethnicity ===================================================================
     output$ethnicity_plot <- renderPlot({
       chars_reactive_table() %>%

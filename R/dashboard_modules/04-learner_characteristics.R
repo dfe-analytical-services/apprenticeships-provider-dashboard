@@ -231,36 +231,7 @@ learner_characteristics_server <- function(id) {
         )
     })
 
-    # create text to say if all age groups are suppressed ie below 5
-
-    #  output$ages_suppressed <- reactive({
-    #  chars_reactive_table() %>%
-    #      ifelse( (age_group == "Under 19" & count == 0 ) &
-    #   (age_group == "19-24" & count == 0 ) &
-    #  (age_group == "25+" & count == 0 ) ,
-    #   "All age groups have low numbers.",
-    #  '')
-    # })
-
-    # Render the text so that it is available in the UI
-    #  output$suppressed_ages_text <- renderText(output$ages_suppressed ())
-
-
-
-
-
-    #  output$Plotorprint <- renderUI({
-    #   if(  (chars_reactive_table$age_group == "Under 19" & count == 0 ) &
-    # (chars_reactive_table$age_group == "19-24" & count == 0 ) &
-    # (chars_reactive_table$age_group == "25+" & count == 0 ) ) { # Check if output of f(x) is data.frame
-    #  verbatimTextOutput("output$ages_suppressed") # If so, create a print
-    # } else {                      # If not,
-    #   plotOutput("output$age_plot") # create a plot
-    #  }
-    #  })
-
-
-
+    
     # Ethnicity ===================================================================
     output$ethnicity_plot <- renderPlot({
       chars_reactive_table() %>%

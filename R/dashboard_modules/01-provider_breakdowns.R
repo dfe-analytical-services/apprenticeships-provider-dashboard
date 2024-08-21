@@ -172,12 +172,23 @@ prov_breakdowns_server <- function(id) {
     output$provider_types <- renderGirafe(
       girafe(
         ggobj = prov_type_chart_data() %>%
-          ggplot(aes(y = `Number of apprenticeships`, x = provider_type)) +
+          ggplot(
+            aes(
+              y = `Number of apprenticeships`,
+              x = provider_type,
+              tooltip = provider_type,
+              data_id = provider_type
+            )
+          ) +
           geom_col() +
           coord_flip() +
           theme_classic() +
-          labs(y = "Number of apprenticeships", x = ""),
-        options = list(opts_selection(type = "single"))
+          geom_col_interactive(fill = "#1d70b8") +
+          labs(y = "Number of apprenticeships", , x = ""),
+        options = list(opts_selection(
+          type = "multiple",
+          css = "fill:#28A197;stroke:#fd0;r:5pt;"
+        ))
       )
     )
 

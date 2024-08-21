@@ -4880,8 +4880,14 @@
     ".RDataTmp3": {
       "checksum": "ada964d21284bee290640971bd88047a"
     },
+    ".RDataTmp4": {
+      "checksum": "834e8ce4dd1e70a78479be4f98813988"
+    },
+    ".RDataTmp5": {
+      "checksum": "2866b7f42aa3631cb765ef38282d4f3b"
+    },
     ".Rprofile": {
-      "checksum": "b219281d121d5e403c3eccc146d760e9"
+      "checksum": "0e773e0d167d642bc1887ca82699aca1"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4889,8 +4895,11 @@
     "data/apprenticeships_data_0.parquet": {
       "checksum": "2f33fbdc88f41225932c55a6441d7404"
     },
+    "data/apprenticeships_demographics.csv": {
+      "checksum": "8ffbb78b0b2eb271d5e6ff8e8f40d023"
+    },
     "data/apprenticeships_demographics_0.parquet": {
-      "checksum": "9f8f4178aae1ed79ca6eb57296b4d1c1"
+      "checksum": "b2824ff473ecbbefc9ba3549ad11c4b0"
     },
     "data/national_provider_summary_0.parquet": {
       "checksum": "05cbcc1201a16f97d4919345e05cdaf0"
@@ -4914,7 +4923,7 @@
       "checksum": "8c780f36387d78fc7d58867071e46f22"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
-      "checksum": "4ab81533c2f2382ad29b053d3aae2b41"
+      "checksum": "8868db31ad3c977a3e66c17934a9f03a"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "7b29a0a21528b69f57e33a5c529aec12"
@@ -4944,7 +4953,7 @@
       "checksum": "de954b896d43e158fd949feab89f005d"
     },
     "R/read_data.R": {
-      "checksum": "2fae38a6bd2a15890479ef783544208a"
+      "checksum": "6221d29a5249087f099c3e478a41dffc"
     },
     "README.md": {
       "checksum": "db7305c1a434efa8d6dd90e522274c40"
@@ -4953,7 +4962,7 @@
       "checksum": "e916e4d237d715099c01dc748f6d8109"
     },
     "server.R": {
-      "checksum": "fe42c8aa4257e9f149b1f47ee67aa545"
+      "checksum": "b5f41c8aa2b7c59f3a883baab9a097f2"
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"

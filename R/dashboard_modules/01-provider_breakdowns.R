@@ -1,5 +1,6 @@
 # TODO: make clicking the chart filter the table
 # TODO: make region tables cross filter
+# TODO: tidy up table column names
 
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file

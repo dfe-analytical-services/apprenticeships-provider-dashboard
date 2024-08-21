@@ -1,0 +1,174 @@
+{
+  "input": {
+    "sas-measure": "Starts",
+    "sas-provider": "Nottingham College",
+    "sas-year": "2021/22",
+    "subjects_and_standards": 1
+  },
+  "output": {
+    "sas-sas_provider_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Provider name": [
+                "Nottingham College"
+              ],
+              "Starts": [
+                940
+              ]
+            },
+            "columns": [
+              {
+                "id": "Provider name",
+                "name": "Provider name",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "Starts",
+                "name": "Starts",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header"
+              }
+            ],
+            "searchable": true,
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "a5a4c339602530b4bad90a47abc8b1a4",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "sas-sas_provider_table_title": "Starts for providers across all subject areas",
+    "sas-sas_subject_area_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Subject area": [
+                "Engineering and Manufacturing Technologies",
+                "Health, Public Services and Care",
+                "Construction, Planning and the Built Environment",
+                "Business, Administration and Law",
+                "Engineering and Manufacturing Technologies",
+                "Education and Training",
+                "Retail and Commercial Enterprise",
+                "Health, Public Services and Care",
+                "Retail and Commercial Enterprise",
+                "Business, Administration and Law",
+                "Leisure, Travel and Tourism",
+                "Business, Administration and Law",
+                "Engineering and Manufacturing Technologies",
+                "Information and Communication Technology",
+                "Retail and Commercial Enterprise",
+                "Health, Public Services and Care"
+              ],
+              "ssa_t2_desc": [
+                "Transportation Operations and Maintenance",
+                "Health and Social Care",
+                "Building and Construction",
+                "Administration",
+                "Engineering",
+                "Direct Learning Support",
+                "Hospitality and Catering",
+                "Child Development and Well Being",
+                "Service Enterprises",
+                "Business Management",
+                "Sport, Leisure and Recreation",
+                "Accounting and Finance",
+                "Manufacturing Technologies",
+                "ICT Practitioners",
+                "Retailing and Wholesaling",
+                "Medicine and Dentistry"
+              ],
+              "values": [
+                306,
+                143,
+                126,
+                118,
+                71,
+                47,
+                32,
+                31,
+                17,
+                14,
+                12,
+                8,
+                7,
+                4,
+                2,
+                2
+              ]
+            },
+            "columns": [
+              {
+                "id": "Subject area",
+                "name": "Subject area",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "ssa_t2_desc",
+                "name": "ssa_t2_desc",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "values",
+                "name": "Starts",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header",
+                "aggregate": "sum"
+              }
+            ],
+            "groupBy": [
+              "Subject area"
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "9aa96343be3103e44900971c33629485",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    }
+  }
+}

@@ -53,4 +53,5 @@ server <- function(input, output, session) {
   prov_breakdowns_server(id = "prov_breakdowns")
   learner_characteristics_server(id = "learner_characteristics")
   nps_server(id = "nps")
+  subject_standards_server(id = "sas")
 }

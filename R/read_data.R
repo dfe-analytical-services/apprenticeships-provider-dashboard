@@ -18,6 +18,36 @@
 # Load data ===================================================================
 # Note that all of these do a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
 
+## Provider breakdowns --------------------------------------------------------
+# TODO: check if all data is needed here, and filter out what isn't / create separate parquet file
+read_prov_breakdowns <- function(file_path) {
+  arrow::read_parquet(file_path)
+}
+
+## Subjects and standards --------------------------------------------------
+# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
+read_sas <- function(file_path) {
+  arrow::read_parquet(file_path) %>%
+    summarise(
+      starts = sum(starts),
+      enrolments = sum(enrolments),
+      achievements = sum(achievements),
+      .by = c(
+        "year", "apps_Level", "std_fwk_name", "ssa_t1_desc",
+        "ssa_t2_desc", "std_fwk_flag", "provider_type", "provider_name"
+      )
+    ) %>%
+    pivot_longer(
+      c("starts", "enrolments", "achievements"),
+      names_to = "measure",
+      values_to = "values"
+    ) %>%
+    mutate(
+      provider_name = str_to_title(provider_name),
+      measure = str_to_sentence(measure)
+    )
+}
+
 ## Demographics / characteristics summary -------------------------------------
 read_chars <- function(file_path) {
   arrow::read_parquet(file_path)
@@ -27,12 +57,6 @@ read_chars <- function(file_path) {
 read_nps <- function(file_path) {
   arrow::read_parquet(file_path) %>%
     select(-c(`order_ref`, `order_detailed`)) # unused columns
-}
-
-## Apprenticeships data -------------------------------------------------------
-# TODO: check if all data is needed here, and filter out what isn't / create separate parquet file
-read_apps <- function(file_path) {
-  arrow::read_parquet(file_path)
 }
 
 # Create options lists for use in the dropdowns ===============================

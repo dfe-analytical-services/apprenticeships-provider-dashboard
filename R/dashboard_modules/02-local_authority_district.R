@@ -1,18 +1,11 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-lad_prov_parquet <- read_lad("data/apprenticeships_data_0.parquet") # TODO: use a cut down version of the data
-lad_map_parquet <- read_lad_map("data/lad_maps.parquet") %>%
-  pivot_longer(
-    cols = c(
-      "starts_delivery", "enrolments_delivery", "achievements_delivery",
-      "starts_learner", "enrolments_learner", "achievements_learner"
-    ),
-    names_to = c(".value", "lad_type"),
-    names_sep = "_"
-  )
+lad_prov_parquet <- read_lad("data/apprenticeships_data_0.parquet")
+
+lad_map_rds <- read_lad_map("data/lad_maps.RDS")
 
 # Create static lists of options for dropdowns
-lad_year_choices <- data_choices(data = lad_map_parquet, column = "year")
+lad_year_choices <- data_choices(data = lad_prov_parquet, column = "year")
 lad_measure_choices <- c("achievements", "enrolments", "starts") # TODO: would like to capitalise eventually
 
 # Main module code ============================================================
@@ -105,27 +98,7 @@ lad_server <- function(id) {
 
     # Create the table itself
     output$prov_selection_table <- renderReactable({
-      dfe_reactable(
-        prov_selection_table(),
-        on_click = "select",
-        selection = "multiple",
-        row_style = list(cursor = "pointer"),
-        searchable = TRUE
-      )
-    })
-
-    # Get the selections from the provider table
-    selected_providers <- reactive({
-      selected <- getReactableState("prov_selection_table", "selected")
-      if (length(selected) == 0) {
-        # Return the full data of all providers if nothing selected from the table
-        # use.names = FALSE is used as it is much faster to process and we don't name the items
-        return(unlist(prov_selection_table()[, 1], use.names = FALSE))
-      }
-
-      # Filter to only the selected providers
-      # Convert to a vector of provider names to use for filtering elsewhere
-      unlist(prov_selection_table()[selected, 1], use.names = FALSE)
+      dfe_reactable(prov_selection_table())
     })
 
     # Reactive data set =======================================================
@@ -134,12 +107,12 @@ lad_server <- function(id) {
         filter(year == input$year)
     })
 
-
     # Region tables ===========================================================
     # Delivery regions --------------------------------------------------------
     delivery_lad_table <- reactive({
       map_data() %>%
         filter(lad_type == "delivery") %>%
+        select(lad_name, starts, enrolments, achievements) %>%
         with_groups(
           "lad_name",
           summarise,
@@ -155,6 +128,7 @@ lad_server <- function(id) {
     learner_home_lad_table <- reactive({
       map_data() %>%
         filter(lad_type == "learner") %>%
+        select(lad_name, starts, enrolments, achievements) %>%
         with_groups(
           "lad_name",
           summarise,
@@ -169,44 +143,52 @@ lad_server <- function(id) {
     # Create maps =============================================================
 
     # Create the delivery map
-    # output$delivery_lad_map <- renderLeaflet({
-    #   # Set the color scheme and scale
-    #   pal_fun <- colorNumeric(
-    #     "Blues",
-    #     domain = c(
-    #       min(map_data$example_count),
-    #       max(map_data$example_count)
-    #     )
-    #   )
-    #
-    #   # Set a pop up
-    #   map_popup <- paste(
-    #     map_data$example_count,
-    #     " example count for ",
-    #     map_data$lsip_name
-    #   )
-    #
-    #   # Create the map
-    #   map <- leaflet(
-    #     map_data,
-    #     # Take off annoying scrolling, personal preference
-    #     options = leafletOptions(scrollWheelZoom = FALSE)
-    #   ) %>%
-    #     # Set the basemap (this is a good neutral one)
-    #     addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
-    #     # Add the shaded regions
-    #     addPolygons(
-    #       color = "black",
-    #       weight = 1,
-    #       fillColor = pal_fun(map_data[["example_count"]]),
-    #       popup = map_popup
-    #     ) %>%
-    #     # Add a legend to the map
-    #     addLegend("topright",
-    #               pal = pal_fun,
-    #               values = ~map_data[["example_count"]],
-    #               title = "Example map title"
-    #     )
-    # })
+    output$delivery_lad_map <- renderLeaflet({
+      map_data <- map_data() %>%
+        filter(lad_type == "delivery") %>%
+        with_groups(
+          "lad_name",
+          summarise,
+          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
+        )
+
+      # Set the color scheme and scale
+      pal_fun <- colorNumeric(
+        "Blues",
+        domain = c(
+          min(map_data$`Number of apprenticeships`),
+          max(map_data$`Number of apprenticeships`)
+        )
+      )
+
+      # Set a pop up
+      map_popup <- paste(
+        map_data$`Number of apprenticeships`,
+        " apprenticeships in ",
+        map_data$lad_name
+      )
+
+      # Create the map
+      map <- leaflet(
+        map_data,
+        # Take off annoying scrolling, personal preference
+        options = leafletOptions(scrollWheelZoom = FALSE)
+      ) %>%
+        # Set the basemap (this is a good neutral one)
+        addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+        # Add the shaded regions
+        addPolygons(
+          color = "black",
+          weight = 1,
+          fillColor = pal_fun(map_data[["Number of apprenticeships"]]),
+          popup = map_popup
+        ) %>%
+        # Add a legend to the map
+        addLegend("topright",
+          pal = pal_fun,
+          values = ~ map_data[["Number of apprenticeships"]],
+          title = "Delivery LAD"
+        )
+    })
   })
 }

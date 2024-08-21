@@ -77,6 +77,14 @@ lad_map_data_2024 <- available_lads %>%
     lad_learner_home_data,
     by = join_by("lad_name" == "learner_home_lad", "year" == "year"),
     suffix = c("_delivery", "_learner") # differentiate the metric cols for delivery and learner home
+  ) %>%
+  pivot_longer(
+    cols = c(
+      "starts_delivery", "enrolments_delivery", "achievements_delivery",
+      "starts_learner", "enrolments_learner", "achievements_learner"
+    ),
+    names_to = c(".value", "lad_type"),
+    names_sep = "_"
   )
 
 lad_map_data_2023 <- available_lads %>%
@@ -86,6 +94,14 @@ lad_map_data_2023 <- available_lads %>%
     lad_learner_home_data,
     by = join_by("lad_name" == "learner_home_lad", "year" == "year"),
     suffix = c("_delivery", "_learner") # differentiate the metric cols for delivery and learner home
+  ) %>%
+  pivot_longer(
+    cols = c(
+      "starts_delivery", "enrolments_delivery", "achievements_delivery",
+      "starts_learner", "enrolments_learner", "achievements_learner"
+    ),
+    names_to = c(".value", "lad_type"),
+    names_sep = "_"
   )
 
 lad_map_data_2022 <- available_lads %>%
@@ -95,6 +111,14 @@ lad_map_data_2022 <- available_lads %>%
     lad_learner_home_data,
     by = join_by("lad_name" == "learner_home_lad", "year" == "year"),
     suffix = c("_delivery", "_learner") # differentiate the metric cols for delivery and learner home
+  ) %>%
+  pivot_longer(
+    cols = c(
+      "starts_delivery", "enrolments_delivery", "achievements_delivery",
+      "starts_learner", "enrolments_learner", "achievements_learner"
+    ),
+    names_to = c(".value", "lad_type"),
+    names_sep = "_"
   )
 
 ## Join boundary files on ----
@@ -120,5 +144,5 @@ joined_lad_final_data <- rbind(
   joined_lad_2022 %>% select(-c(LAD22CD)) %>% rename("lad_name" = LAD22NM)
 )
 
-# As this is geospatial data we need to use the sfarrow package to save it
-sfarrow::st_write_parquet(joined_lad_final_data, "data/lad_maps.parquet")
+# As this is geospatial data we're saving as RDS to preserve the format
+saveRDS(joined_lad_final_data, "data/lad_maps.RDS")

@@ -24,8 +24,7 @@ read_lad <- function(file_path) {
 }
 
 read_lad_map <- function(file_path) {
-  # This is a geospatial dataset so needs the sfarrow / st_read_... functions
-  sfarrow::st_read_parquet(file_path)
+  readRDS(file_path)
 }
 
 ## Subjects and standards -----------------------------------------------------

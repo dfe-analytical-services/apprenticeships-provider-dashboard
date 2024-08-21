@@ -4,10 +4,11 @@
 
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-prov_breakdowns_parquet <- read_apps("data/apprenticeships_data_0.parquet")
+prov_breakdowns_parquet <- read_prov_breakdowns("data/apprenticeships_data_0.parquet")
 
 # Create static lists of options for dropdowns
 apps_measure_choices <- c("achievements", "enrolments", "starts") # TODO: would like to capitalise eventually
+apps_prov_type_choices <- data_choices(data = prov_breakdowns_parquet, column = "provider_type")
 apps_year_choices <- data_choices(data = prov_breakdowns_parquet, column = "year")
 apps_level_choices <- data_choices(data = prov_breakdowns_parquet, column = "apps_Level")
 apps_age_choices <- data_choices(data = prov_breakdowns_parquet, column = "age_group")
@@ -29,6 +30,11 @@ prov_breakdowns_ui <- function(id) {
           inputId = NS(id, "measure"),
           label = "Select measure",
           choices = apps_measure_choices
+        ),
+        selectInput(
+          inputId = NS(id, "prov_type"),
+          label = "Select provider type",
+          choices = c("All provider types", apps_prov_type_choices)
         ),
         selectInput(
           inputId = NS(id, "year"),
@@ -54,10 +60,6 @@ prov_breakdowns_ui <- function(id) {
       ## Tabs on right --------------------------------------------------------
       navset_card_tab(
         id = "provider_breakdown_tabs",
-        nav_panel(
-          "Provider type",
-          girafeOutput(NS(id, "provider_types"))
-        ),
         nav_panel(
           "Regions",
           bslib::layout_column_wrap(
@@ -98,6 +100,9 @@ prov_breakdowns_server <- function(id) {
         filter(year == input$year)
 
       # Only filtering these if needed, by default we want all returned
+      if (input$prov_type != "All provider types") {
+        prov_selection <- prov_selection %>% filter(provider_type %in% input$prov_type)
+      }
       if (input$level != "All levels") {
         prov_selection <- prov_selection %>% filter(apps_Level %in% input$level)
       }
@@ -146,6 +151,9 @@ prov_breakdowns_server <- function(id) {
         filter(year == input$year)
 
       # Only filtering these if needed, by default we want all returned
+      if (input$prov_type != "All provider types") {
+        prov_breakdown <- prov_breakdown %>% filter(provider_type %in% input$prov_type)
+      }
       if (input$level != "All levels") {
         prov_breakdown <- prov_breakdown %>% filter(apps_Level %in% input$level)
       }
@@ -158,40 +166,6 @@ prov_breakdowns_server <- function(id) {
 
       prov_breakdown %>% collect()
     })
-
-    # Chart of provider types =================================================
-    prov_type_chart_data <- reactive({
-      prov_breakdown_table() %>%
-        with_groups(
-          "provider_type",
-          summarise,
-          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
-        )
-    })
-
-    output$provider_types <- renderGirafe(
-      girafe(
-        ggobj = prov_type_chart_data() %>%
-          ggplot(
-            aes(
-              y = `Number of apprenticeships`,
-              x = provider_type,
-              tooltip = provider_type,
-              data_id = provider_type
-            )
-          ) +
-          geom_col() +
-          coord_flip() +
-          theme_classic() +
-          geom_col_interactive(fill = "#1d70b8") +
-          labs(y = "Number of apprenticeships", , x = ""),
-        options = list(opts_selection(
-          type = "multiple",
-          css = "fill:#28A197;stroke:#fd0;r:5pt;"
-        ))
-      )
-    )
-
 
     # Region tables ===========================================================
     # Delivery regions --------------------------------------------------------

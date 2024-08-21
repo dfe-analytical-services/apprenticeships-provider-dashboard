@@ -105,7 +105,8 @@ ui <- function(input, output, session) {
             bslib::navset_hidden(
               id = "left_nav",
               nav_panel("provider_breakdowns", provider_breakdowns()),
-              nav_panel("local_authority_district", local_authority_district()),
+              nav_panel("provider_breakdowns", prov_breakdowns_ui(id = "prov_breakdowns")),
+              nav_panel("local_authority_district", lad_ui(id = "lad")),
               nav_panel("subjects_and_standards", subjects_and_standards()),
               nav_panel("learner_characteristics", learner_characteristics()),
               nav_panel("national_provider_summary", nps_ui(id = "nps")),

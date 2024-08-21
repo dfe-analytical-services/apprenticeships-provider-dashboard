@@ -76,7 +76,7 @@ lad_map_data_2024 <- available_lads %>%
   left_join(
     lad_learner_home_data,
     by = join_by("lad_name" == "learner_home_lad", "year" == "year"),
-    suffix = c("_delivery", "_learner_home") # differentiate the metric cols for delivery and learner home
+    suffix = c("_delivery", "_learner") # differentiate the metric cols for delivery and learner home
   )
 
 lad_map_data_2023 <- available_lads %>%
@@ -85,7 +85,7 @@ lad_map_data_2023 <- available_lads %>%
   left_join(
     lad_learner_home_data,
     by = join_by("lad_name" == "learner_home_lad", "year" == "year"),
-    suffix = c("_delivery", "_learner_home") # differentiate the metric cols for delivery and learner home
+    suffix = c("_delivery", "_learner") # differentiate the metric cols for delivery and learner home
   )
 
 lad_map_data_2022 <- available_lads %>%
@@ -94,7 +94,7 @@ lad_map_data_2022 <- available_lads %>%
   left_join(
     lad_learner_home_data,
     by = join_by("lad_name" == "learner_home_lad", "year" == "year"),
-    suffix = c("_delivery", "_learner_home") # differentiate the metric cols for delivery and learner home
+    suffix = c("_delivery", "_learner") # differentiate the metric cols for delivery and learner home
   )
 
 ## Join boundary files on ----

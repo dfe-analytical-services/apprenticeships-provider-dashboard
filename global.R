@@ -23,10 +23,17 @@ shhh(library(shinyGovstyle))
 
 ## Creating charts and tables--------------------------------------------------
 shhh(library(reactable))
+shhh(library(ggplot2))
+shhh(library(ggiraph))
+shhh(library(treemapify))
+shhh(library(leaflet))
 
 ## Data and string manipulation -----------------------------------------------
 shhh(library(arrow))
 shhh(library(dplyr))
+shhh(library(tidyr))
+shhh(library(forcats))
+shhh(library(sfarrow))
 
 ## Data downloads -------------------------------------------------------------
 shhh(library(openxlsx))

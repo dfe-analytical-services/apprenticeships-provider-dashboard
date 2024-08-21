@@ -51,9 +51,5 @@ server <- function(input, output, session) {
 
   # Module calls ==============================================================
   nps_server(id = "nps")
-
-  # Stop app when tab closes ==================================================
-  session$onSessionEnded(function() {
-    stopApp()
-  })
+  lad_server(id = "lad")
 }

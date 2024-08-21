@@ -19,71 +19,73 @@ prov_breakdowns_ui <- function(id) {
   div(
     # Tab header ==============================================================
     h1("Provider breakdowns"),
-
-    # User selection area =====================================================
-    div(
-      class = "well",
-      style = "min-height: 100%; height: 100%; overflow-y: visible;",
-      bslib::layout_column_wrap(
-        width = "15rem", # Minimum width for each input box before wrapping
-        selectInput(
-          inputId = NS(id, "measure"),
-          label = "Select measure",
-          choices = apps_measure_choices
-        ),
-        selectInput(
-          inputId = NS(id, "prov_type"),
-          label = "Select provider type",
-          choices = c("All provider types", apps_prov_type_choices)
-        ),
-        selectInput(
-          inputId = NS(id, "year"),
-          label = "Select academic year",
-          choices = apps_year_choices
-        ),
-        selectInput(
-          inputId = NS(id, "level"),
-          label = "Select level",
-          choices = c("All levels", apps_level_choices)
-        ),
-        selectInput(
-          inputId = NS(id, "age"),
-          label = "Select age group",
-          choices = c("All age groups", apps_age_choices)
-        )
-      )
-    ),
     layout_columns(
       col_widths = c(4, 8),
       ## Table on left you can select providers from --------------------------
       card(reactable::reactableOutput(NS(id, "prov_selection_table"))),
-      ## Tabs on right --------------------------------------------------------
-      navset_card_tab(
-        id = "provider_breakdown_tabs",
-        nav_panel(
-          "Regions",
+      # User selection area =====================================================
+      column(
+        width = 12,
+        div(
+          class = "well",
+          # style = "min-height: 100%; height: 100%; overflow-y: visible;",
           bslib::layout_column_wrap(
-            reactable::reactableOutput(NS(id, "delivery_region")),
-            reactable::reactableOutput(NS(id, "home_region"))
+            width = "15rem", # Minimum width for each input box before wrapping
+            selectInput(
+              inputId = NS(id, "measure"),
+              label = "Select measure",
+              choices = apps_measure_choices
+            ),
+            selectInput(
+              inputId = NS(id, "prov_type"),
+              label = "Select provider type",
+              choices = c("All provider types", apps_prov_type_choices)
+            ),
+            selectInput(
+              inputId = NS(id, "year"),
+              label = "Select academic year",
+              choices = apps_year_choices
+            ),
+            selectInput(
+              inputId = NS(id, "level"),
+              label = "Select level",
+              choices = c("All levels", apps_level_choices)
+            ),
+            selectInput(
+              inputId = NS(id, "age"),
+              label = "Select age group",
+              choices = c("All age groups", apps_age_choices)
+            )
           )
         ),
-        nav_panel(
-          "Download data",
-          shinyGovstyle::radio_button_Input(
-            inputId = NS(id, "file_type"),
-            label = h2("Choose download file format"),
-            hint_label = paste0(
-              "This will download all data related to the providers and options selected.",
-              " The XLSX format is designed for use in Microsoft Excel."
-            ),
-            choices = c("CSV (Up to X MB)", "XLSX (Up to X MB)"),
-            selected = "CSV (Up to X MB)"
+        ## Tabs on right --------------------------------------------------------
+        navset_card_tab(
+          id = "provider_breakdown_tabs",
+          nav_panel(
+            "Regions",
+            bslib::layout_column_wrap(
+              reactable::reactableOutput(NS(id, "delivery_region")),
+              reactable::reactableOutput(NS(id, "home_region"))
+            )
           ),
-          downloadButton(
-            NS(id, "download_data"),
-            label = "Download data",
-            class = "gov-uk-button",
-            icon = NULL
+          nav_panel(
+            "Download data",
+            shinyGovstyle::radio_button_Input(
+              inputId = NS(id, "file_type"),
+              label = h2("Choose download file format"),
+              hint_label = paste0(
+                "This will download all data related to the providers and options selected.",
+                " The XLSX format is designed for use in Microsoft Excel."
+              ),
+              choices = c("CSV (Up to X MB)", "XLSX (Up to X MB)"),
+              selected = "CSV (Up to X MB)"
+            ),
+            downloadButton(
+              NS(id, "download_data"),
+              label = "Download data",
+              class = "gov-uk-button",
+              icon = NULL
+            )
           )
         )
       )
@@ -114,8 +116,10 @@ prov_breakdowns_server <- function(id) {
         with_groups(
           "provider_name",
           summarise,
-          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
+          `number` = sum(!!sym(input$measure), na.rm = TRUE)
         ) %>%
+        rename("Provider name" = provider_name) %>%
+        rename_with(~ paste("Number of", input$measure), `number`) %>%
         collect()
     })
 
@@ -174,8 +178,10 @@ prov_breakdowns_server <- function(id) {
         with_groups(
           "delivery_region",
           summarise,
-          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
-        )
+          `number` = sum(!!sym(input$measure), na.rm = TRUE)
+        ) %>%
+        rename("Delivery region" = delivery_region) %>%
+        rename_with(~ paste("Number of", input$measure), `number`)
     })
 
     output$delivery_region <- renderReactable({
@@ -188,8 +194,10 @@ prov_breakdowns_server <- function(id) {
         with_groups(
           "learner_home_region",
           summarise,
-          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
-        )
+          `number` = sum(!!sym(input$measure), na.rm = TRUE)
+        ) %>%
+        rename("Learner home region" = learner_home_region) %>%
+        rename_with(~ paste("Number of", input$measure), `number`)
     })
 
     output$home_region <- renderReactable({

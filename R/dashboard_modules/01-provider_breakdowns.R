@@ -86,6 +86,12 @@ prov_breakdowns_ui <- function(id) {
               class = "gov-uk-button",
               icon = NULL
             )
+          ),
+          nav_panel(
+            "testing",
+            textOutput(NS(id, "test_prov")),
+            textOutput(NS(id, "test_delivery")),
+            textOutput(NS(id, "test_learner"))
           )
         )
       )
@@ -95,6 +101,18 @@ prov_breakdowns_ui <- function(id) {
 
 prov_breakdowns_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
+    # Testing outputs
+    output$test_prov <- renderText({
+      paste(selected_providers())
+    })
+    output$test_delivery <- renderText({
+      paste(selected_delivery_region())
+    })
+    output$test_learner <- renderText({
+      paste(selected_learner_home_region())
+    })
+
+
     # Main data ===============================================================
     # Main data set for use in charts / tables / download ---------------------
     # This reads in the raw data and applies the filters from the dropdowns
@@ -122,11 +140,6 @@ prov_breakdowns_server <- function(id) {
     # Get the selections from the provider table ------------------------------
     selected_providers <- reactive({
       selected <- getReactableState("prov_selection_table", "selected")
-      if (length(selected) == 0) {
-        # Return the full data of all providers if nothing selected from the table
-        # use.names = FALSE is used as it is much faster to process and we don't names of the items
-        return(unlist(prov_selection_table()[, 1], use.names = FALSE))
-      }
 
       # Filter to only the selected providers
       # Convert to a vector of provider names to use for filtering elsewhere
@@ -142,8 +155,9 @@ prov_breakdowns_server <- function(id) {
     })
 
     # Table reactive data =====================================================
+    ## Provider data ----------------------------------------------------------
     prov_selection_table <- reactive({
-      filtered_raw_data() %>%
+      prov_selection_table <- filtered_raw_data() %>%
         with_groups(
           "provider_name",
           summarise,
@@ -152,13 +166,23 @@ prov_breakdowns_server <- function(id) {
         rename("Provider name" = provider_name) %>%
         rename_with(~ paste("Number of", input$measure), `number`) %>%
         collect()
+
+      return(prov_selection_table)
     }) %>%
       # Set the dependent variables that will trigger this table to update
       bindEvent(input$measure, filtered_raw_data(), selected_learner_home_region(), selected_delivery_region())
 
-
+    ## Delivery region data ---------------------------------------------------
     delivery_region_table <- reactive({
-      filtered_raw_data() %>%
+      # Start with the filtered data
+      delivery_region_table <- filtered_raw_data()
+
+      # Filter down provider list there is something selected from the providers
+      if (length(getReactableState("prov_selection_table", "selected")) != 0) {
+        delivery_region_table <- delivery_region_table %>% filter(provider_name %in% selected_providers())
+      }
+
+      delivery_region_table <- delivery_region_table %>%
         with_groups(
           "delivery_region",
           summarise,
@@ -166,10 +190,22 @@ prov_breakdowns_server <- function(id) {
         ) %>%
         rename("Delivery region" = delivery_region) %>%
         rename_with(~ paste("Number of", input$measure), `number`)
-    })
 
+      return(delivery_region_table)
+    }) %>%
+      bindEvent(input$measure, filtered_raw_data(), selected_providers())
+
+    ## Home region data -------------------------------------------------------
     home_region_table <- reactive({
-      filtered_raw_data() %>%
+      # Start with the filtered data
+      home_region_table <- filtered_raw_data()
+
+      # Filter down provider list there is something selected from the providers
+      if (length(getReactableState("prov_selection_table", "selected")) != 0) {
+        home_region_table <- home_region_table %>% filter(provider_name %in% selected_providers())
+      }
+
+      home_region_table <- home_region_table %>%
         with_groups(
           "learner_home_region",
           summarise,
@@ -177,7 +213,10 @@ prov_breakdowns_server <- function(id) {
         ) %>%
         rename("Learner home region" = learner_home_region) %>%
         rename_with(~ paste("Number of", input$measure), `number`)
-    })
+
+      return(home_region_table)
+    }) %>%
+      bindEvent(input$measure, filtered_raw_data(), selected_providers())
 
     # Table output objects ====================================================
     output$prov_selection_table <- renderReactable({

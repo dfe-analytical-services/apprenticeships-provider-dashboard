@@ -211,7 +211,8 @@ prov_breakdowns_server <- function(id) {
       # Regions vector defined at top of this script
       delivery_region_table <- tibble(`Delivery region` = regions) %>%
         left_join(delivery_region_table, by = "Delivery region") %>%
-        mutate(across(starts_with("Number of"), ~ replace_na(., 0)))
+        mutate(across(starts_with("Number of"), ~ replace_na(., 0))) %>%
+        collect()
 
       return(delivery_region_table)
     }) %>%
@@ -240,7 +241,8 @@ prov_breakdowns_server <- function(id) {
       # Regions vector defined at top of this script
       home_region_table <- tibble(`Learner home region` = regions) %>%
         left_join(home_region_table, by = "Learner home region") %>%
-        mutate(across(starts_with("Number of"), ~ replace_na(., 0)))
+        mutate(across(starts_with("Number of"), ~ replace_na(., 0))) %>%
+        collect()
 
       return(home_region_table)
     }) %>%

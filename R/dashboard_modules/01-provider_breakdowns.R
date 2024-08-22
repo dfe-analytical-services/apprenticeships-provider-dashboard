@@ -13,6 +13,12 @@ apps_year_choices <- data_choices(data = prov_breakdowns_parquet, column = "year
 apps_level_choices <- data_choices(data = prov_breakdowns_parquet, column = "apps_Level")
 apps_age_choices <- data_choices(data = prov_breakdowns_parquet, column = "age_group")
 
+# Create static list of regions to set the order for the region tables and use in the user selections
+regions <- c(
+  "East Midlands", "East of England", "London", "North East", "North West", "Outside of England and unknown",
+  "South East", "South West", "West Midlands", "Yorkshire and The Humber"
+)
+
 # Main module code ============================================================
 
 prov_breakdowns_ui <- function(id) {
@@ -139,6 +145,11 @@ prov_breakdowns_server <- function(id) {
 
     # Get the selections from the provider table ------------------------------
     selected_providers <- reactive({
+      # # If selection is made from either region table, don't return a provider selection
+      # if(getReactableState("home_region_table", "selected") == 1 || getReactableState("delivery_region_table", "selected") == 1) {
+      #   return(NULL)
+      # }
+      #
       selected <- getReactableState("prov_selection_table", "selected")
 
       # Filter to only the selected providers
@@ -147,11 +158,19 @@ prov_breakdowns_server <- function(id) {
     })
 
     selected_learner_home_region <- reactive({
-
+      # selected <- getReactableState("home_region_table", "selected")
+      #
+      # # Filter to only the selected region
+      # # Convert to a vector of provider names to use for filtering elsewhere
+      # unlist(home_region_table()[selected, 1], use.names = FALSE)
     })
 
     selected_delivery_region <- reactive({
-
+      # selected <- getReactableState("delivery_region_table", "selected")
+      #
+      # # Filter to only the selected region
+      # # Convert to a vector of provider names to use for filtering elsewhere
+      # unlist(delivery_region_table()[selected, 1], use.names = FALSE)
     })
 
     # Table reactive data =====================================================
@@ -178,7 +197,7 @@ prov_breakdowns_server <- function(id) {
       delivery_region_table <- filtered_raw_data()
 
       # Filter down provider list there is something selected from the providers
-      if (length(getReactableState("prov_selection_table", "selected")) != 0) {
+      if (length(selected_providers() != 0)) {
         delivery_region_table <- delivery_region_table %>% filter(provider_name %in% selected_providers())
       }
 
@@ -190,6 +209,12 @@ prov_breakdowns_server <- function(id) {
         ) %>%
         rename("Delivery region" = delivery_region) %>%
         rename_with(~ paste("Number of", input$measure), `number`)
+
+      # Make sure all regions have a row even if 0
+      # Regions vector defined at top of this script
+      delivery_region_table <- tibble(`Delivery region` = regions) %>%
+        left_join(delivery_region_table, by = "Delivery region") %>%
+        mutate(across(starts_with("Number of"), ~ replace_na(., 0)))
 
       return(delivery_region_table)
     }) %>%
@@ -213,6 +238,12 @@ prov_breakdowns_server <- function(id) {
         ) %>%
         rename("Learner home region" = learner_home_region) %>%
         rename_with(~ paste("Number of", input$measure), `number`)
+
+      # Make sure all regions have a row even if 0
+      # Regions vector defined at top of this script
+      home_region_table <- tibble(`Learner home region` = regions) %>%
+        left_join(home_region_table, by = "Learner home region") %>%
+        mutate(across(starts_with("Number of"), ~ replace_na(., 0)))
 
       return(home_region_table)
     }) %>%

@@ -28,7 +28,7 @@ prov_breakdowns_ui <- function(id) {
     layout_columns(
       col_widths = c(4, 8),
       ## Table on left you can select providers from --------------------------
-      card(reactable::reactableOutput(NS(id, "prov_selection_table"))),
+      card(reactable::reactableOutput(NS(id, "prov_selection"))),
       # User selection area =====================================================
       column(
         width = 12,
@@ -95,8 +95,11 @@ prov_breakdowns_ui <- function(id) {
           ),
           nav_panel(
             "testing",
+            "Providers selected:",
             textOutput(NS(id, "test_prov")),
+            "Delivery region selected:",
             textOutput(NS(id, "test_delivery")),
+            "Learner home region selected:",
             textOutput(NS(id, "test_learner"))
           )
         )
@@ -150,7 +153,7 @@ prov_breakdowns_server <- function(id) {
       #   return(NULL)
       # }
       #
-      selected <- getReactableState("prov_selection_table", "selected")
+      selected <- getReactableState("prov_selection", "selected")
 
       # Filter to only the selected providers
       # Convert to a vector of provider names to use for filtering elsewhere
@@ -158,19 +161,13 @@ prov_breakdowns_server <- function(id) {
     })
 
     selected_learner_home_region <- reactive({
-      # selected <- getReactableState("home_region_table", "selected")
-      #
-      # # Filter to only the selected region
-      # # Convert to a vector of provider names to use for filtering elsewhere
-      # unlist(home_region_table()[selected, 1], use.names = FALSE)
+      # Filter to only the selected region using the vector at the top of the script
+      return(regions[getReactableState("home_region", "selected")])
     })
 
     selected_delivery_region <- reactive({
-      # selected <- getReactableState("delivery_region_table", "selected")
-      #
-      # # Filter to only the selected region
-      # # Convert to a vector of provider names to use for filtering elsewhere
-      # unlist(delivery_region_table()[selected, 1], use.names = FALSE)
+      # Filter to only the selected region using the vector at the top of the script
+      return(regions[getReactableState("delivery_region", "selected")])
     })
 
     # Table reactive data =====================================================
@@ -226,7 +223,7 @@ prov_breakdowns_server <- function(id) {
       home_region_table <- filtered_raw_data()
 
       # Filter down provider list there is something selected from the providers
-      if (length(getReactableState("prov_selection_table", "selected")) != 0) {
+      if (length(selected_providers() != 0)) {
         home_region_table <- home_region_table %>% filter(provider_name %in% selected_providers())
       }
 
@@ -250,7 +247,7 @@ prov_breakdowns_server <- function(id) {
       bindEvent(input$measure, filtered_raw_data(), selected_providers())
 
     # Table output objects ====================================================
-    output$prov_selection_table <- renderReactable({
+    output$prov_selection <- renderReactable({
       dfe_reactable(
         prov_selection_table(),
         on_click = "select",

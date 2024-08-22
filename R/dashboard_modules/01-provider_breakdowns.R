@@ -95,24 +95,55 @@ prov_breakdowns_ui <- function(id) {
 
 prov_breakdowns_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
-    # Provider selection ======================================================
-    # Create the data used for the table on the left you can select providers from
-    prov_selection_table <- reactive({
-      prov_selection <- prov_breakdowns_parquet %>%
+    # Main data ===============================================================
+    # Main data set for use in charts / tables / download ---------------------
+    # This reads in the raw data and applies the filters from the dropdowns
+    filtered_raw_data <- reactive({
+      filtered_raw_data <- prov_breakdowns_parquet %>%
         filter(year == input$year)
 
       # Only filtering these if needed, by default we want all returned
       if (input$prov_type != "All provider types") {
-        prov_selection <- prov_selection %>% filter(provider_type %in% input$prov_type)
+        filtered_raw_data <- filtered_raw_data %>% filter(provider_type %in% input$prov_type)
       }
       if (input$level != "All levels") {
-        prov_selection <- prov_selection %>% filter(apps_Level %in% input$level)
+        filtered_raw_data <- filtered_raw_data %>% filter(apps_Level %in% input$level)
       }
       if (input$age != "All age groups") {
-        prov_selection <- prov_selection %>% filter(age_group == input$age)
+        filtered_raw_data <- filtered_raw_data %>% filter(age_group == input$age)
       }
 
-      prov_selection %>%
+      return(filtered_raw_data)
+    })
+
+    # User selections =========================================================
+    # Here we get the user selections from the tables to then use to filter the table reactive data sets
+
+    # Get the selections from the provider table ------------------------------
+    selected_providers <- reactive({
+      selected <- getReactableState("prov_selection_table", "selected")
+      if (length(selected) == 0) {
+        # Return the full data of all providers if nothing selected from the table
+        # use.names = FALSE is used as it is much faster to process and we don't names of the items
+        return(unlist(prov_selection_table()[, 1], use.names = FALSE))
+      }
+
+      # Filter to only the selected providers
+      # Convert to a vector of provider names to use for filtering elsewhere
+      unlist(prov_selection_table()[selected, 1], use.names = FALSE)
+    })
+
+    selected_learner_home_region <- reactive({
+
+    })
+
+    selected_delivery_region <- reactive({
+
+    })
+
+    # Table reactive data =====================================================
+    prov_selection_table <- reactive({
+      filtered_raw_data() %>%
         with_groups(
           "provider_name",
           summarise,
@@ -121,9 +152,34 @@ prov_breakdowns_server <- function(id) {
         rename("Provider name" = provider_name) %>%
         rename_with(~ paste("Number of", input$measure), `number`) %>%
         collect()
+    }) %>%
+      # Set the dependent variables that will trigger this table to update
+      bindEvent(input$measure, filtered_raw_data(), selected_learner_home_region(), selected_delivery_region())
+
+
+    delivery_region_table <- reactive({
+      filtered_raw_data() %>%
+        with_groups(
+          "delivery_region",
+          summarise,
+          `number` = sum(!!sym(input$measure), na.rm = TRUE)
+        ) %>%
+        rename("Delivery region" = delivery_region) %>%
+        rename_with(~ paste("Number of", input$measure), `number`)
     })
 
-    # Create the table itself -------------------------------------------------
+    home_region_table <- reactive({
+      filtered_raw_data() %>%
+        with_groups(
+          "learner_home_region",
+          summarise,
+          `number` = sum(!!sym(input$measure), na.rm = TRUE)
+        ) %>%
+        rename("Learner home region" = learner_home_region) %>%
+        rename_with(~ paste("Number of", input$measure), `number`)
+    })
+
+    # Table output objects ====================================================
     output$prov_selection_table <- renderReactable({
       dfe_reactable(
         prov_selection_table(),
@@ -134,78 +190,29 @@ prov_breakdowns_server <- function(id) {
       )
     })
 
-    # Get the selections from the provider table ------------------------------
-    selected_providers <- reactive({
-      selected <- getReactableState("prov_selection_table", "selected")
-      if (length(selected) == 0) {
-        # Return the full data of all providers if nothing selected from the table
-        # use.names = FALSE is used as it is much faster to process and we don't name the items
-        return(unlist(prov_selection_table()[, 1], use.names = FALSE))
-      }
-
-      # Filter to only the selected providers
-      # Convert to a vector of provider names to use for filtering elsewhere
-      unlist(prov_selection_table()[selected, 1], use.names = FALSE)
-    })
-
-    # Main data ===============================================================
-    # Main data set for use in charts / tables / download ---------------------
-    prov_breakdown_table <- reactive({
-      prov_breakdown <- prov_breakdowns_parquet %>%
-        filter(year == input$year)
-
-      # Only filtering these if needed, by default we want all returned
-      if (input$prov_type != "All provider types") {
-        prov_breakdown <- prov_breakdown %>% filter(provider_type %in% input$prov_type)
-      }
-      if (input$level != "All levels") {
-        prov_breakdown <- prov_breakdown %>% filter(apps_Level %in% input$level)
-      }
-      if (input$age != "All age groups") {
-        prov_breakdown <- prov_breakdown %>% filter(age_group == input$age)
-      }
-      if (length(getReactableState("prov_selection_table", "selected")) != 0) {
-        prov_breakdown <- prov_breakdown %>% filter(provider_name %in% selected_providers())
-      }
-
-      prov_breakdown %>% collect()
-    })
-
-    # Region tables ===========================================================
-    # Delivery regions --------------------------------------------------------
-    delivery_region_table <- reactive({
-      prov_breakdown_table() %>%
-        with_groups(
-          "delivery_region",
-          summarise,
-          `number` = sum(!!sym(input$measure), na.rm = TRUE)
-        ) %>%
-        rename("Delivery region" = delivery_region) %>%
-        rename_with(~ paste("Number of", input$measure), `number`)
-    })
-
     output$delivery_region <- renderReactable({
-      dfe_reactable(delivery_region_table())
-    })
-
-    # Home regions ------------------------------------------------------------
-    home_region_table <- reactive({
-      prov_breakdown_table() %>%
-        with_groups(
-          "learner_home_region",
-          summarise,
-          `number` = sum(!!sym(input$measure), na.rm = TRUE)
-        ) %>%
-        rename("Learner home region" = learner_home_region) %>%
-        rename_with(~ paste("Number of", input$measure), `number`)
+      dfe_reactable(
+        delivery_region_table(),
+        on_click = "select",
+        selection = "single",
+        row_style = list(cursor = "pointer")
+      )
     })
 
     output$home_region <- renderReactable({
-      dfe_reactable(home_region_table())
+      dfe_reactable(
+        home_region_table(),
+        on_click = "select",
+        selection = "single",
+        row_style = list(cursor = "pointer")
+      )
     })
 
     # Data download ===========================================================
     output$download_data <- downloadHandler(
+      # This currently just downloads the filtered raw data, which doesn't react to any
+      # selections made from the tables made by users
+
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$year, "-", input$level, "-", input$age, "-provider_breakdowns")
@@ -219,11 +226,11 @@ prov_breakdowns_server <- function(id) {
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
         if (input$file_type == "CSV (Up to X MB)") {
-          data.table::fwrite(prov_breakdown_table(), file)
+          data.table::fwrite(filtered_raw_data(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
-          openxlsx::write.xlsx(prov_breakdown_table(), file, colWidths = "Auto")
+          openxlsx::write.xlsx(filtered_raw_data(), file, colWidths = "Auto")
           on.exit(removeNotification(pop_up), add = TRUE)
         }
       }

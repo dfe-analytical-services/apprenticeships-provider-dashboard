@@ -66,9 +66,9 @@ coalesce(age_group,'Total') as age_group,
 coalesce(sex,'Total') as sex,
 coalesce(ethnicity_major,'Total') as ethnicity_major,
 coalesce(lldd,'Total') as lldd,
-coalesce(provider_name,'Total') as provider_name,
-round(sum(starts), -1) as starts,
-round(sum(achievements), -1) as achievements
+coalesce(provider_name,'Total (All providers)') as provider_name,
+case when sum(starts) < 5 then 'low' else cast(round(sum(starts), -1) as varchar) end as starts,
+case when sum(achievements) < 5 then 'low' else cast(round(sum(achievements), -1) as varchar) end as achievements
 into #APPS2
 FROM #APPS 
 group by [year],cube(age_group,sex,ethnicity_major,lldd,provider_name) 
@@ -80,5 +80,6 @@ where
 (age_group not IN ('Total') and sex = 'Total' and ethnicity_major = 'Total' and lldd = 'Total') or 
 (age_group = 'Total' and sex  not IN ('Total') and ethnicity_major = 'Total' and lldd = 'Total') or 
 (age_group = 'Total' and sex = 'Total' and ethnicity_major  not IN ('Total') and lldd = 'Total') or 
-(age_group = 'Total' and sex = 'Total' and ethnicity_major = 'Total' and lldd  not IN ('Total')) 
+(age_group = 'Total' and sex = 'Total' and ethnicity_major = 'Total' and lldd  not IN ('Total') ) or 
+(age_group = 'Total' and sex = 'Total' and ethnicity_major = 'Total' and lldd  = 'Total'  )
 

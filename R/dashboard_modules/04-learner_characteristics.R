@@ -75,6 +75,7 @@ chars_parquet_ethnicity <- chars_parquet %>%
   ) %>%
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
+
 chars_parquet <-
   rbind(
     chars_parquet_total_age, chars_parquet_age,
@@ -273,9 +274,8 @@ learner_characteristics_server <- function(id) {
       chars_reactive_table()
     })
 
-
-
     # Data download ===========================================================
+
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {

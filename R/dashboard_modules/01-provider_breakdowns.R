@@ -1,6 +1,4 @@
-# TODO: make clicking the chart filter the table
 # TODO: make region tables cross filter
-# TODO: tidy up table column names
 
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
@@ -148,11 +146,6 @@ prov_breakdowns_server <- function(id) {
 
     # Get the selections from the provider table ------------------------------
     selected_providers <- reactive({
-      # # If selection is made from either region table, don't return a provider selection
-      # if(getReactableState("home_region_table", "selected") == 1 || getReactableState("delivery_region_table", "selected") == 1) {
-      #   return(NULL)
-      # }
-      #
       selected <- getReactableState("prov_selection", "selected")
 
       # Filter to only the selected providers
@@ -173,7 +166,19 @@ prov_breakdowns_server <- function(id) {
     # Table reactive data =====================================================
     ## Provider data ----------------------------------------------------------
     prov_selection_table <- reactive({
-      prov_selection_table <- filtered_raw_data() %>%
+      prov_selection_table <- filtered_raw_data()
+
+      # Filter to learner home region selection if it exists
+      if (length(selected_learner_home_region()) == 1) {
+        prov_selection_table <- prov_selection_table %>% filter(learner_home_region == selected_learner_home_region())
+      }
+
+      # Filter to delivery region selection if it exists
+      if (length(selected_delivery_region()) == 1) {
+        prov_selection_table <- prov_selection_table %>% filter(delivery_region == selected_delivery_region())
+      }
+
+      prov_selection_table <- prov_selection_table %>%
         with_groups(
           "provider_name",
           summarise,

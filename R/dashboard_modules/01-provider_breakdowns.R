@@ -88,15 +88,6 @@ prov_breakdowns_ui <- function(id) {
               class = "gov-uk-button",
               icon = NULL
             )
-          ),
-          nav_panel(
-            "testing",
-            "Providers selected:",
-            textOutput(NS(id, "test_prov")),
-            "Delivery region selected:",
-            textOutput(NS(id, "test_delivery")),
-            "Learner home region selected:",
-            textOutput(NS(id, "test_learner"))
           )
         )
       )
@@ -106,18 +97,6 @@ prov_breakdowns_ui <- function(id) {
 
 prov_breakdowns_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
-    # Testing outputs
-    output$test_prov <- renderText({
-      paste(selected_providers())
-    })
-    output$test_delivery <- renderText({
-      paste(selected_delivery_region())
-    })
-    output$test_learner <- renderText({
-      paste(selected_learner_home_region())
-    })
-
-
     # Main data ===============================================================
     # Main data set for use in charts / tables / download ---------------------
     # This reads in the raw data and applies the filters from the dropdowns

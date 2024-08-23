@@ -4168,7 +4168,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "332c4dd76acdc89d40d714361e497eae"
+      "checksum": "18ecd89df199a5d67c72583a8ec75b1b"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4195,7 +4195,7 @@
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
-      "checksum": "ad738a75e28d9db137479c2e182d396b"
+      "checksum": "6d64e4b90c10d17a53dfcd868b5f279d"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
       "checksum": "68c17e9641cc232a75915295f58bd9ba"

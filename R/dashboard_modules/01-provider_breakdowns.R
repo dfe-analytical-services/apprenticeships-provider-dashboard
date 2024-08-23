@@ -1,5 +1,3 @@
-# TODO: make region tables cross filter
-
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
 prov_breakdowns_parquet <- read_prov_breakdowns("data/apprenticeships_data_0.parquet")
@@ -200,6 +198,11 @@ prov_breakdowns_server <- function(id) {
         delivery_region_table <- delivery_region_table %>% filter(provider_name %in% selected_providers())
       }
 
+      # Filter to learner home region selection if it exists
+      if (length(selected_learner_home_region()) == 1) {
+        delivery_region_table <- delivery_region_table %>% filter(learner_home_region == selected_learner_home_region())
+      }
+
       delivery_region_table <- delivery_region_table %>%
         with_groups(
           "delivery_region",
@@ -228,6 +231,11 @@ prov_breakdowns_server <- function(id) {
       # Filter down provider list there is something selected from the providers
       if (length(selected_providers() != 0)) {
         home_region_table <- home_region_table %>% filter(provider_name %in% selected_providers())
+      }
+
+      # Filter to delivery region selection if it exists
+      if (length(selected_delivery_region()) == 1) {
+        home_region_table <- home_region_table %>% filter(delivery_region == selected_delivery_region())
       }
 
       home_region_table <- home_region_table %>%

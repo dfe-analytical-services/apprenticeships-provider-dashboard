@@ -146,11 +146,8 @@ prov_breakdowns_server <- function(id) {
 
     # Get the selections from the provider table ------------------------------
     selected_providers <- reactive({
-      selected <- getReactableState("prov_selection", "selected")
-
-      # Filter to only the selected providers
-      # Convert to a vector of provider names to use for filtering elsewhere
-      unlist(prov_selection_table()[selected, 1], use.names = FALSE)
+      # Filter to only the selected providers and convert to a vector to use for filtering elsewhere
+      unlist(prov_selection_table()[getReactableState("prov_selection", "selected"), 1], use.names = FALSE)
     })
 
     selected_learner_home_region <- reactive({

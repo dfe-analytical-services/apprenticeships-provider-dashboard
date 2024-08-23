@@ -9,11 +9,11 @@ chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet") %>%
   ) %>%
   mutate(measure = firstup(measure))
 
-
+# this pivots it longer still and puts in the totals for the table
 chars_parquet_total_lldd <- chars_parquet %>%
   filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
   mutate(
-    characteristic_type = "LLDD",
+    characteristic_type = "Learner with learning difficulties or disabilities (LLDD)",
     characteristic = "Total"
   ) %>%
   select(year, provider_name, characteristic_type, characteristic, measure, count)
@@ -21,7 +21,7 @@ chars_parquet_total_lldd <- chars_parquet %>%
 chars_parquet_lldd <- chars_parquet %>%
   filter(lldd != "Total") %>%
   mutate(
-    characteristic_type = "LLDD",
+    characteristic_type = "Learner with learning difficulties or disabilities (LLDD)",
     characteristic = lldd
   ) %>%
   select(year, provider_name, characteristic_type, characteristic, measure, count)
@@ -47,7 +47,7 @@ chars_parquet_total_age <- chars_parquet %>%
   filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
   mutate(
     characteristic_type = "Age",
-    characteristic = sex
+    characteristic = age_group
   ) %>%
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
@@ -75,16 +75,13 @@ chars_parquet_ethnicity <- chars_parquet %>%
   ) %>%
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
-
-
 chars_parquet <-
   rbind(
-    chars_parquet_total_lldd, chars_parquet_lldd,
-    chars_parquet_total_sex, chars_parquet_sex,
     chars_parquet_total_age, chars_parquet_age,
+    chars_parquet_total_sex, chars_parquet_sex,
+    chars_parquet_total_lldd, chars_parquet_lldd,
     chars_parquet_total_ethnicity, chars_parquet_ethnicity
   )
-
 
 # Create static lists of options for dropdowns
 chars_year_choices <- sort(data_choices(data = chars_parquet, column = "year"),
@@ -139,7 +136,8 @@ learner_characteristics_ui <- function(id) {
         selectInput(
           inputId = NS(id, "characteristic_type"),
           label = "Select characteristic",
-          choices = c(chars_choices)
+          choices = c(chars_choices),
+          selected = "Age"
         ),
       )
     ),
@@ -206,14 +204,18 @@ learner_characteristics_server <- function(id) {
       # and sort into the right order
 
       chars_filtered$characteristic_type <- factor(chars_filtered$characteristic_type,
-        levels = c("LLDD", "Sex", "Age", "Ethnicity")
+        levels = c(
+          "Age", "Sex",
+          "Learner with learning difficulties or disabilities (LLDD)", "Ethnicity"
+        )
       )
 
       chars_filtered$characteristic <- factor(chars_filtered$characteristic,
         levels = c(
-          "Total", "LLDD - yes", "LLDD - no", "LLDD - unknown",
-          "Male", "Female",
+          "Total",
           "Under 19", "19-24", "25+",
+          "Male", "Female",
+          "LLDD - yes", "LLDD - no", "LLDD - unknown",
           "White",
           "Black / African / Caribbean / Black British",
           "Asian / Asian British",
@@ -233,9 +235,13 @@ learner_characteristics_server <- function(id) {
     })
 
     # Treemap plot
+
+    # Message when there are none of the measure at all
     output$tree_map_plot <- renderPlotly({
       validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for this provider.")))
 
+      # Message when all groups are low, and treemap cannot be displayed
+      # But can still be seen in the table
       validate(need(
         nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
         paste0("All groups have low numbers.")
@@ -260,6 +266,7 @@ learner_characteristics_server <- function(id) {
 
     # table
 
+    # Message when there are none of the measure at all, and no table
     output$chars_table <- renderTable({
       validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for this provider.")))
 

@@ -228,7 +228,6 @@ learner_characteristics_server <- function(id) {
           hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
           marker = (list(colors = c("#12436D", "#28A197", "#801650"), sizemode = "area")),
           textfont = list(color = "white", size = 30)
-
         )
     })
     # Sex ===================================================================
@@ -280,8 +279,8 @@ learner_characteristics_server <- function(id) {
           textfont = list(color = "white", size = 30)
         )
     })
-  
-      # Data download ===========================================================
+
+    # Data download ===========================================================
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {

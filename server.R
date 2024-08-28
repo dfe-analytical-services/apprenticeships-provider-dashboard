@@ -59,5 +59,4 @@ server <- function(input, output, session) {
     stopApp()
   })
   subject_standards_server(id = "sas")
-
 }

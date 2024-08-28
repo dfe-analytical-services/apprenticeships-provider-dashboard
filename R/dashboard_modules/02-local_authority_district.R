@@ -103,7 +103,7 @@ lad_server <- function(id) {
 
     # Reactive data set =======================================================
     map_data <- reactive({
-      lad_map_parquet %>%
+      lad_map_rds %>%
         filter(year == input$year)
     })
 
@@ -130,10 +130,11 @@ lad_server <- function(id) {
         filter(lad_type == "learner") %>%
         select(lad_name, starts, enrolments, achievements) %>%
         with_groups(
-          "lad_name",
+          lad_name,
           summarise,
           `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
-        )
+        ) %>%
+        collect()
     })
 
     output$learner_home_lad_table <- renderReactable({

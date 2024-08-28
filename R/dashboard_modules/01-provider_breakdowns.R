@@ -30,7 +30,6 @@ prov_breakdowns_ui <- function(id) {
         width = 12,
         div(
           class = "well",
-          # style = "min-height: 100%; height: 100%; overflow-y: visible;",
           bslib::layout_column_wrap(
             width = "15rem", # Minimum width for each input box before wrapping
             selectInput(
@@ -95,7 +94,7 @@ prov_breakdowns_ui <- function(id) {
   )
 }
 
-prov_breakdowns_server <- function(id) {
+prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
   shiny::moduleServer(id, function(input, output, session) {
     # Main data ===============================================================
     # Main data set for use in charts / tables / download ---------------------

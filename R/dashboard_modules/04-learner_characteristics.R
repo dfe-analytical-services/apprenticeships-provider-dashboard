@@ -217,9 +217,7 @@ learner_characteristics_server <- function(id) {
     output$lldd_plot <- renderPlotly({
       lldd <-
         chars_reactive_table() %>%
-        filter(((lldd == "LLDD - yes" & count > 0) |
-          (lldd == "LLDD - no" & count > 0) |
-          (lldd == "LLDD - unknown" & count > 0))) %>%
+        filter(((lldd == "LLDD - yes" & count > 0) | (lldd == "LLDD - no" & count > 0) | (lldd == "LLDD - unknown" & count > 0))) %>% # nolint: line_length_linter
         plot_ly(
           labels = ~ stringr::str_wrap(lldd, width = 5),
           parents = NA,
@@ -228,13 +226,13 @@ learner_characteristics_server <- function(id) {
           hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
           marker = (list(colors = c("#12436D", "#28A197", "#801650"), sizemode = "area")),
           textfont = list(color = "white", size = 30)
-        )
+        ) %>%
+        config(displaylogo = FALSE, displayModeBar = FALSE)
     })
     # Sex ===================================================================
     output$sex_plot <- renderPlotly({
       chars_reactive_table() %>%
-        filter((sex == "Male" & count > 0) |
-          (sex == "Female" & count > 0)) %>%
+        filter((sex == "Male" & count > 0) | (sex == "Female" & count > 0)) %>%
         plot_ly(
           labels = ~sex,
           parents = NA,
@@ -243,7 +241,8 @@ learner_characteristics_server <- function(id) {
           hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
           marker = (list(colors = c("#12436D", "#28A197"), sizemode = "area")),
           textfont = list(color = "white", size = 30)
-        )
+        ) %>%
+        config(displaylogo = FALSE, displayModeBar = FALSE)
     })
     # Age ===================================================================
     # create the plot
@@ -260,7 +259,8 @@ learner_characteristics_server <- function(id) {
           hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
           marker = (list(colors = c("#12436D", "#28A197", "#801650"), sizemode = "area")),
           textfont = list(color = "white", size = 30)
-        )
+        ) %>%
+        config(displaylogo = FALSE, displayModeBar = FALSE)
     })
 
     # Ethnicity ===================================================================
@@ -275,9 +275,13 @@ learner_characteristics_server <- function(id) {
           values = ~count,
           type = "treemap",
           hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
-          marker = (list(colors = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"), sizemode = "area")),
+          marker = (list(
+            colors = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"),
+            sizemode = "area"
+          )),
           textfont = list(color = "white", size = 30)
-        )
+        ) %>%
+        config(displaylogo = FALSE, displayModeBar = FALSE)
     })
 
     # Data download ===========================================================

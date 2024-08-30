@@ -16,22 +16,12 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Load data ===================================================================
+# Note that all of these do a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
 
-## Domographics / characteristics summary --------------------------------------------------
-# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
-read_chars <- function(file_path) {
+## Provider breakdowns --------------------------------------------------------
+# TODO: check if all data is needed here, and filter out what isn't / create separate parquet file
+read_prov_breakdowns <- function(file_path) {
   arrow::read_parquet(file_path)
-}
-
-
-
-
-
-## National provider summary --------------------------------------------------
-# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
-read_nps <- function(file_path) {
-  arrow::read_parquet(file_path) %>%
-    select(-c(`order_ref`, `order_detailed`)) # unused columns
 }
 
 ## Subjects and standards --------------------------------------------------
@@ -58,6 +48,16 @@ read_sas <- function(file_path) {
     )
 }
 
+## Demographics / characteristics summary -------------------------------------
+read_chars <- function(file_path) {
+  arrow::read_parquet(file_path)
+}
+
+## National provider summary --------------------------------------------------
+read_nps <- function(file_path) {
+  arrow::read_parquet(file_path) %>%
+    select(-c(`order_ref`, `order_detailed`)) # unused columns
+}
 
 # Create options lists for use in the dropdowns ===============================
 data_choices <- function(data, column) {

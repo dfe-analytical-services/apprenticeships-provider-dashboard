@@ -7,7 +7,9 @@ app <- AppDriver$new(
 )
 
 # Test download ===============================================================
+app$wait_for_idle(50)
 app$set_inputs(left_nav = "national_provider_summary")
+app$wait_for_idle(50)
 app$set_inputs(provider_table_tabs = "Download data")
 
 test_that("Default download gives expected name", {

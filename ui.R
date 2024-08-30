@@ -102,7 +102,7 @@ ui <- function(input, output, session) {
             ## Dashboard panels -----------------------------------------------
             bslib::navset_hidden(
               id = "left_nav",
-              nav_panel("provider_breakdowns", provider_breakdowns()),
+              nav_panel("provider_breakdowns", prov_breakdowns_ui(id = "prov_breakdowns")),
               nav_panel("local_authority_district", local_authority_district()),
               nav_panel("subjects_and_standards", subjects_standards_ui(id = "sas")),
               nav_panel("learner_characteristics", learner_characteristics_ui(id = "learner_characteristics")),

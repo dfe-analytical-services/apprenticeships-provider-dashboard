@@ -28,6 +28,7 @@ shhh(library(ggplot2))
 shhh(library(ggiraph))
 shhh(library(treemapify))
 shhh(library(leaflet))
+shhh(library(plotly))
 
 ## Data and string manipulation -----------------------------------------------
 shhh(library(arrow))

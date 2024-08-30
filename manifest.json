@@ -1354,6 +1354,7 @@
         "Date/Publication": "2023-11-17 16:50:02 UTC",
         "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 20:33:28 UTC; windows",
         "Archs": "x64"
+<<<<<<< HEAD
       }
     },
     "e1071": {
@@ -1377,6 +1378,8 @@
         "Date/Publication": "2023-12-06 09:22:29 UTC",
         "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-25 01:13:19 UTC; windows",
         "Archs": "x64"
+=======
+>>>>>>> main
       }
     },
     "evaluate": {
@@ -2868,6 +2871,44 @@
         "Repository": "RSPM",
         "Date/Publication": "2024-06-28 11:30:02 UTC",
         "Built": "R 4.4.0; ; 2024-06-29 05:14:04 UTC; windows"
+<<<<<<< HEAD
+=======
+      }
+    },
+    "plotly": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "plotly",
+        "Title": "Create Interactive Web Graphics via 'plotly.js'",
+        "Version": "4.10.4",
+        "Authors@R": "c(person(\"Carson\", \"Sievert\", role = c(\"aut\", \"cre\"),\n    email = \"cpsievert1@gmail.com\", comment = c(ORCID = \"0000-0002-4958-2844\")),\n    person(\"Chris\", \"Parmer\", role = \"aut\",\n    email = \"chris@plot.ly\"),\n    person(\"Toby\", \"Hocking\", role = \"aut\",\n    email = \"tdhock5@gmail.com\"),\n    person(\"Scott\", \"Chamberlain\", role = \"aut\",\n    email = \"myrmecocystus@gmail.com\"),\n    person(\"Karthik\", \"Ram\", role = \"aut\",\n    email = \"karthik.ram@gmail.com\"),\n    person(\"Marianne\", \"Corvellec\", role = \"aut\",\n    email = \"marianne.corvellec@igdore.org\", comment = c(ORCID = \"0000-0002-1994-3581\")),\n    person(\"Pedro\", \"Despouy\", role = \"aut\",\n    email = \"pedro@plot.ly\"),\n    person(\"Salim\", \"Brüggemann\", role = \"ctb\",\n    email = \"salim-b@pm.me\", comment = c(ORCID = \"0000-0002-5329-5987\")),\n    person(\"Plotly Technologies Inc.\", role = \"cph\"))",
+        "License": "MIT + file LICENSE",
+        "Description": "Create interactive web graphics from 'ggplot2' graphs and/or a custom interface to the (MIT-licensed) JavaScript library 'plotly.js' inspired by the grammar of graphics.",
+        "URL": "https://plotly-r.com, https://github.com/plotly/plotly.R,\nhttps://plotly.com/r/",
+        "BugReports": "https://github.com/plotly/plotly.R/issues",
+        "Depends": "R (>= 3.2.0), ggplot2 (>= 3.0.0)",
+        "Imports": "tools, scales, httr (>= 1.3.0), jsonlite (>= 1.6), magrittr,\ndigest, viridisLite, base64enc, htmltools (>= 0.3.6),\nhtmlwidgets (>= 1.5.2.9001), tidyr (>= 1.0.0), RColorBrewer,\ndplyr, vctrs, tibble, lazyeval (>= 0.2.0), rlang (>= 0.4.10),\ncrosstalk, purrr, data.table, promises",
+        "Suggests": "MASS, maps, hexbin, ggthemes, GGally, ggalluvial, testthat,\nknitr, shiny (>= 1.1.0), shinytest (>= 1.3.0), curl, rmarkdown,\nCairo, broom, webshot, listviewer, dendextend, sf, png,\nIRdisplay, processx, plotlyGeoAssets, forcats, withr,\npalmerpenguins, rversions, reticulate, rsvg",
+        "LazyData": "true",
+        "RoxygenNote": "7.2.3",
+        "Encoding": "UTF-8",
+        "Config/Needs/check": "tidyverse/ggplot2, rcmdcheck, devtools, reshape2",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-01-13 20:51:33 UTC; cpsievert",
+        "Author": "Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>),\n  Chris Parmer [aut],\n  Toby Hocking [aut],\n  Scott Chamberlain [aut],\n  Karthik Ram [aut],\n  Marianne Corvellec [aut] (<https://orcid.org/0000-0002-1994-3581>),\n  Pedro Despouy [aut],\n  Salim Brüggemann [ctb] (<https://orcid.org/0000-0002-5329-5987>),\n  Plotly Technologies Inc. [cph]",
+        "Maintainer": "Carson Sievert <cpsievert1@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-01-13 22:40:02 UTC",
+        "Built": "R 4.4.1; ; 2024-07-09 02:34:32 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "plotly",
+        "RemoteRef": "plotly",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "4.10.4"
+>>>>>>> main
       }
     },
     "png": {
@@ -4490,6 +4531,7 @@
         "Repository": "RSPM",
         "Date/Publication": "2024-01-16 14:20:02 UTC",
         "Built": "R 4.4.0; ; 2024-04-25 19:44:56 UTC; windows"
+<<<<<<< HEAD
       }
     },
     "wk": {
@@ -4525,6 +4567,8 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "0.9.2"
+=======
+>>>>>>> main
       }
     },
     "xfun": {
@@ -4723,7 +4767,11 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
+<<<<<<< HEAD
       "checksum": "59be62f7219b94a06801fdad6522aa04"
+=======
+      "checksum": "c57014ed06b3481d93292e53f55f32bc"
+>>>>>>> main
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4735,7 +4783,7 @@
       "checksum": "2f33fbdc88f41225932c55a6441d7404"
     },
     "data/apprenticeships_demographics_0.parquet": {
-      "checksum": "9f8f4178aae1ed79ca6eb57296b4d1c1"
+      "checksum": "b2824ff473ecbbefc9ba3549ad11c4b0"
     },
     "data/boundary_files/Local_Authority_Districts_December_2022_UK_BUC_V2_3956567894081366924.gpkg": {
       "checksum": "77baaf077b9d8eb9ee57c4c8bdb3c1cf"
@@ -4759,22 +4807,30 @@
       "checksum": "e146f8192a8082721014fc54bb082f29"
     },
     "global.R": {
+<<<<<<< HEAD
       "checksum": "463af2c4e9b3aff13103da145babb4fd"
+=======
+      "checksum": "e32647081704212d23258c6a6e803a94"
+>>>>>>> main
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
-      "checksum": "0274842ede696d2cab0a78f1de67453f"
+      "checksum": "c828a9210ebd94aaf6971733144bd9bc"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
       "checksum": "3a4aa14773d9bda62931c8d79050d595"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "36a320b7e4d5d315b1947d92bc620aa6"
+      "checksum": "73a447642d94cd86cc3de1f48bc5e823"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
+<<<<<<< HEAD
       "checksum": "d711162d78b0ca8ef41b7f6c365dc6a7"
+=======
+      "checksum": "1f2995d56f3eb334ec6e146d368533c4"
+>>>>>>> main
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "7fe46330e7d79ffc6ccdab4c89c42c54"
@@ -4804,22 +4860,37 @@
       "checksum": "e62df71c6144084b6b1d439e176c41a9"
     },
     "R/read_data.R": {
+<<<<<<< HEAD
       "checksum": "79813a76dd7a386df196c2ba2edf2d17"
+=======
+      "checksum": "d4431c4fdfebd370a7a881e4279dbd96"
+>>>>>>> main
     },
     "README.md": {
       "checksum": "1557c3f64f6f0cba78d26508a6ed1d54"
     },
     "renv.lock": {
+<<<<<<< HEAD
       "checksum": "f14922fb44e334fcfac1f212c4fe7fb0"
     },
     "server.R": {
       "checksum": "4de4719c28ed7d952428715f476ab259"
+=======
+      "checksum": "a99ed9da4e1272255ae0ab906c523391"
+    },
+    "server.R": {
+      "checksum": "1acb41401140222df2e85986969df699"
+>>>>>>> main
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
     },
     "sql/apprenticeships_demographics.sql": {
+<<<<<<< HEAD
       "checksum": "a93d432df36d763c74fc1bac569ab5b5"
+=======
+      "checksum": "00758011dcf22b51581e8b42e63a46b0"
+>>>>>>> main
     },
     "sql/national_provider_summary.sql": {
       "checksum": "ec13f7fa4f964568957189766dd4713a"
@@ -4855,22 +4926,26 @@
       "checksum": "1fd753be5bbff3a1b07b6b6983483ca1"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "b6e81211e31608d392a8606980dab65d"
+      "checksum": "35dc5697f06f1711e263e048b4360322"
     },
     "tests/testthat/test-UI-03-sas.R": {
       "checksum": "9c63f44f3fe0fbf137692cdd5f47123b"
     },
     "tests/testthat/test-UI-05-nps_downloads.R": {
-      "checksum": "409ca10b2d438db655ba2401ca14efc5"
+      "checksum": "d2acc1072836156e7c83e23eeb5c32e0"
     },
     "ui.R": {
+<<<<<<< HEAD
       "checksum": "febf506214ee7dc66a8b5f0957d1bbf7"
+=======
+      "checksum": "3e878ebfb6c9142842c544738c484c1e"
+>>>>>>> main
     },
     "www/dfe_logo.svg": {
       "checksum": "c23764dae2d73a45a55815d0327be6cb"
     },
     "www/dfe_shiny_gov_style.css": {
-      "checksum": "7c4e6920c446c5714d9720a98a8b0e01"
+      "checksum": "2b76f69230c48d584b232375b3c67705"
     },
     "www/dfefavicon.png": {
       "checksum": "179db108199253ed0617024df291473b"

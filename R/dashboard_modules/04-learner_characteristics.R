@@ -10,6 +10,11 @@ chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet") %>%
   mutate(measure = firstup(measure))
 
 
+age_parquet <- chars_parquet %>%
+  filter(lldd == "Total" & sex == "Total" & ethnicity_major == "Total" & count > 0)
+
+ethnicity_parquet <- chars_parquet %>%
+  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & count > 0)
 
 
 # Create static lists of options for dropdowns
@@ -68,23 +73,23 @@ learner_characteristics_ui <- function(id) {
       ## lldd tab ------------------------------------------------------------
       nav_panel(
         "LLDD",
-        plotOutput(NS(id, ("lldd_plot")))
+        plotlyOutput(NS(id, ("lldd_plot")))
       ),
       ## sex tab ------------------------------------------------------------
       nav_panel(
         "Sex",
-        plotOutput(NS(id, ("sex_plot")))
+        plotlyOutput(NS(id, ("sex_plot")))
       ),
       ## Age tab ------------------------------------------------------------
       # this should be a plot where possible or a message where all age groups are suppressed
       nav_panel(
         "Age",
-        plotOutput(NS(id, ("age_plot")))
+        plotlyOutput(NS(id, ("age_plot")))
       ),
       # Ethnicity tab ------------------------------------------------------------
       nav_panel(
         "Ethnicity",
-        plotOutput(NS(id, ("ethnicity_plot")))
+        plotlyOutput(NS(id, ("ethnicity_plot")))
       ),
       ## Download tab ---------------------------------------------------------
       nav_panel(
@@ -158,100 +163,125 @@ learner_characteristics_server <- function(id) {
         chars_filtered$ethnicity_major
       ), ]
 
-
       # Pull the lazy loaded and now filtered data into memory
       chars_filtered %>% collect()
     })
 
-    # LLDD ===================================================================
-    output$lldd_plot <- renderPlot({
-      chars_reactive_table() %>%
-        filter(lldd != "Total") %>%
-        ggplot(aes(
-          area = count,
-          subgroup = lldd,
-          label = paste0(lldd, "\n\n", lapply(count, pretty_num)),
-          fill = factor(lldd)
-        )) +
-        geom_treemap() +
-        xlim(0, 1) +
-        ylim(0, 1) + # need to set these to be able to place a geom_text
-        theme_void() + # needto get rid of axis values
-        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), "cm")) + # sets margins around needed with limits
-        scale_fill_manual(values = c("#12436D", "#28A197", "#801650")) +
-        theme(legend.position = "none") + # no legend
-        geom_treemap_text(
-          alpha = 1, colour = "white", place = "topleft", size = 20, min.size = 4,
-          reflow = TRUE, grow = FALSE, fontface = "bold", layout = "squarified"
+
+    # age data
+    age_reactive_table <- reactive({
+      age_filtered <- age_parquet
+      age_filtered <- age_filtered %>% filter(provider_name == input$provider)
+      age_filtered <- age_filtered %>% filter(year == input$year)
+      age_filtered <- age_filtered %>% filter(measure == input$measure)
+      # and sort into the right order
+      chars_filtered$age_group <- factor(chars_filtered$age_group,
+        levels = c("Total", "Under 19", "19-24", "25+", "Unknown")
+      )
+      age_filtered <- age_filtered[order(
+        age_filtered$age_group
+      ), ]
+
+      # Pull the lazy loaded and now filtered data into memory
+      age_filtered %>% collect()
+    })
+
+
+    # ethnicity data
+    ethnicity_reactive_table <- reactive({
+      ethnicity_filtered <- ethnicity_parquet
+      ethnicity_filtered <- ethnicity_filtered %>% filter(provider_name == input$provider)
+      ethnicity_filtered <- ethnicity_filtered %>% filter(year == input$year)
+      ethnicity_filtered <- ethnicity_filtered %>% filter(measure == input$measure)
+      # and sort into the right order
+      ethnicity_filtered$ethnicity_major <- factor(ethnicity_filtered$ethnicity_major,
+        levels = c(
+          "Total",
+          "White",
+          "Black / African / Caribbean / Black British",
+          "Asian / Asian British",
+          "Mixed / Multiple ethnic groups",
+          "Other ethnic group",
+          "Unknown"
         )
+      )
+      ethnicity_filtered <- ethnicity_filtered[order(
+        ethnicity_filtered$ethnicity_major
+      ), ]
+
+      # Pull the lazy loaded and now filtered data into memory
+      ethnicity_filtered %>% collect()
+    })
+
+    # LLDD ===================================================================
+    output$lldd_plot <- renderPlotly({
+      lldd <-
+        chars_reactive_table() %>%
+        filter(((lldd == "LLDD - yes" & count > 0) | (lldd == "LLDD - no" & count > 0) | (lldd == "LLDD - unknown" & count > 0))) %>% # nolint: line_length_linter
+        plot_ly(
+          labels = ~ stringr::str_wrap(lldd, width = 5),
+          parents = NA,
+          values = ~count,
+          type = "treemap",
+          hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
+          marker = (list(colors = c("#12436D", "#28A197", "#801650"), sizemode = "area")),
+          textfont = list(color = "white", size = 30)
+        ) %>%
+        config(displaylogo = FALSE, displayModeBar = FALSE)
     })
     # Sex ===================================================================
-    output$sex_plot <- renderPlot({
+    output$sex_plot <- renderPlotly({
       chars_reactive_table() %>%
-        filter(sex != "Total") %>%
-        ggplot(aes(
-          area = count,
-          subgroup = sex,
-          label = paste0(sex, "\n\n", lapply(count, pretty_num)),
-          fill = factor(sex)
-        )) +
-        geom_treemap() +
-        xlim(0, 1) +
-        ylim(0, 1) + # need to set these to be able to place a geom_text
-        theme_void() + # needto get rid of axis values
-        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), "cm")) + # sets margins around needed with limits
-        scale_fill_manual(values = c("#12436D", "#28A197")) +
-        theme(legend.position = "none") + # no legend
-        geom_treemap_text(
-          alpha = 1, colour = "white", place = "topleft", size = 20, min.size = 4,
-          reflow = TRUE, grow = FALSE, fontface = "bold", layout = "squarified"
-        )
+        filter((sex == "Male" & count > 0) | (sex == "Female" & count > 0)) %>%
+        plot_ly(
+          labels = ~sex,
+          parents = NA,
+          values = ~count,
+          type = "treemap",
+          hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
+          marker = (list(colors = c("#12436D", "#28A197"), sizemode = "area")),
+          textfont = list(color = "white", size = 30)
+        ) %>%
+        config(displaylogo = FALSE, displayModeBar = FALSE)
     })
     # Age ===================================================================
     # create the plot
-    output$age_plot <- renderPlot({
-      chars_reactive_table() %>%
-        filter(age_group != "Total") %>%
-        ggplot(aes(
-          area = count,
-          subgroup = age_group,
-          label = paste0(age_group, "\n\n", lapply(count, pretty_num)),
-          fill = factor(age_group)
-        )) +
-        geom_treemap() +
-        xlim(0, 1) +
-        ylim(0, 1) + # need to set these to be able to place a geom_text
-        theme_void() + # needto get rid of axis values
-        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), "cm")) + # sets margins around needed with limits
-        scale_fill_manual(values = c("#12436D", "#28A197", "#801650")) +
-        theme(legend.position = "none") + # no legend
-        geom_treemap_text(
-          alpha = 1, colour = "white", place = "topleft", size = 20, min.size = 4,
-          reflow = TRUE, grow = FALSE, fontface = "bold", layout = "squarified"
-        )
+    output$age_plot <- renderPlotly({
+      validate(
+        need(nrow(age_reactive_table) > 0, "All age groups have low numbers")
+      )
+      age_reactive_table() %>%
+        plot_ly(
+          labels = ~ stringr::str_wrap(age_group, width = 5),
+          parents = NA,
+          values = ~count,
+          type = "treemap",
+          hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
+          marker = (list(colors = c("#12436D", "#28A197", "#801650"), sizemode = "area")),
+          textfont = list(color = "white", size = 30)
+        ) %>%
+        config(displaylogo = FALSE, displayModeBar = FALSE)
     })
 
     # Ethnicity ===================================================================
-    output$ethnicity_plot <- renderPlot({
-      chars_reactive_table() %>%
-        filter(ethnicity_major != "Total") %>%
-        ggplot(aes(
-          area = count,
-          subgroup = ethnicity_major,
-          label = paste0(ethnicity_major, "\n\n", lapply(count, pretty_num)),
-          fill = factor(ethnicity_major)
-        )) +
-        geom_treemap() +
-        xlim(0, 1) +
-        ylim(0, 1) + # need to set these to be able to place a geom_text
-        theme_void() + # needto get rid of axis values
-        theme(plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), "cm")) + # sets margins around needed with limits
-        scale_fill_manual(values = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1")) +
-        theme(legend.position = "none") + # no legend
-        geom_treemap_text(
-          alpha = 1, colour = "white", place = "topleft", size = 20, min.size = 4,
-          reflow = TRUE, grow = FALSE, fontface = "bold", layout = "squarified"
-        )
+    output$ethnicity_plot <- renderPlotly({
+      validate(
+        need(nrow(ethnicity_reactive_table()) > 0, "All ethnicity groups have low numbers")
+      )
+      ethnicity_reactive_table() %>%
+        plot_ly(
+          labels = ~ stringr::str_wrap(ethnicity_major, width = 5),
+          parents = NA,
+          values = ~count,
+          type = "treemap",
+          hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
+          marker = (list(
+            colors = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"),
+            sizemode = "area"
+          )),
+          textfont = list(color = "white", size = 30)
+        ) %>%
+        config(displaylogo = FALSE, displayModeBar = FALSE)
     })
 
     # Data download ===========================================================

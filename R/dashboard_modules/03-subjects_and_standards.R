@@ -141,7 +141,7 @@ subject_standards_server <- function(id) {
       girafe(
         ggobj =
           subject_area_data() %>%
-            summarise(
+            summarise( # nolint: indentation_linter
               values = sum(values),
               .by = c("ssa_t1_desc")
             ) %>%

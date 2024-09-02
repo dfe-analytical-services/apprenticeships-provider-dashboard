@@ -158,8 +158,51 @@ dfe_contents_links <- function(links_list) {
   )
 }
 
-# properly capitalise first letter of a string
+# properly capitalise first letter of a string ================================
 firstup <- function(x) {
   substr(x, 1, 1) <- toupper(substr(x, 1, 1))
   x
+}
+
+# Create a map ================================================================
+dfe_map <- function(data, measure) {
+  # Set the color scheme and scale
+  pal_fun <- colorNumeric(
+    "Blues",
+    domain = c(
+      min(data$`Number of apprenticeships`),
+      max(data$`Number of apprenticeships`)
+    )
+  )
+
+  # Set a pop up
+  map_popup <- paste(
+    lapply(data$`Number of apprenticeships`, dfeR::pretty_num),
+    " ", measure, " in ",
+    data$lad_name
+  )
+
+  # Create the map
+  map <- leaflet(
+    data,
+    # Take off annoying scrolling, personal preference
+    options = leafletOptions(scrollWheelZoom = FALSE)
+  ) %>%
+    # Set the basemap (this is a good neutral one)
+    addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+    # Add the shaded regions
+    addPolygons(
+      color = "black",
+      weight = 1,
+      fillColor = pal_fun(data[["Number of apprenticeships"]]),
+      popup = map_popup
+    ) %>%
+    # Add a legend to the map
+    addLegend("topright",
+      pal = pal_fun,
+      values = ~ data[["Number of apprenticeships"]],
+      title = firstup(measure)
+    )
+
+  return(map)
 }

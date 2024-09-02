@@ -34,7 +34,8 @@ read_prov_breakdowns <- function(file_path) {
 
 ## LAD ------------------------------------------------------------------------
 read_lad <- function(file_path) {
-  arrow::read_parquet(file_path)
+  arrow::read_parquet(file_path) %>%
+    select(year, provider_name, learner_home_lad, delivery_lad, starts, achievements, enrolments)
 }
 
 read_lad_map <- function(file_path) {

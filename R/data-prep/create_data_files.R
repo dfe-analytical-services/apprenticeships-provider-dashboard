@@ -12,6 +12,7 @@
 library(data.table)
 library(arrow)
 library(dplyr)
+library(tidyr)
 library(sf)
 library(sfarrow)
 
@@ -19,6 +20,18 @@ library(sfarrow)
 national_provider_summary <- data.table::fread("data/national_provider_summary.csv")
 apps_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
 apps_data <- data.table::fread("data/apprenticeships_data.csv")
+
+# Create LAD map data ---------------------------------------------------------
+# Preparing the data now so that less processing is needed in the app
+lad_map_data <- apps_data %>%
+  group_by(year, provider_name, learner_home_lad, delivery_lad) %>%
+  summarise(
+    starts = sum(starts, na.rm = TRUE),
+    enrolments = sum(enrolments, na.rm = TRUE),
+    achievements = sum(achievements, na.rm = TRUE)
+  ) %>%
+  as.data.frame()
+
 
 # Write out parquet versions --------------------------------------------------
 arrow::write_dataset(national_provider_summary, "data/",
@@ -36,12 +49,12 @@ arrow::write_dataset(apps_data, "data/",
   basename_template = "apprenticeships_data_{i}.parquet"
 )
 
-# Create LAD map data ---------------------------------------------------------
-# Preparing the data now so that less processing is needed in the app
-## Read boundary files ----
-lad_2024 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg") # nolint: line-length-linter
-lad_2023 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2023_UK_BUC_V2_8757178717458576320.gpkg") # nolint: line-length-linter
-lad_2022 <- sf::st_read("data/boundary_files/Local_Authority_Districts_December_2022_UK_BUC_V2_3956567894081366924.gpkg") # nolint: line-length-linter
+arrow::write_dataset(lad_map_data, "data/",
+  format = "parquet",
+  basename_template = "lad_map_data_{i}.parquet"
+)
+
+################ TO DE;ETE #######################################################
 
 ## Create cut down version of apps data ----
 
@@ -121,28 +134,13 @@ lad_map_data_2022 <- available_lads %>%
     names_sep = "_"
   )
 
-## Join boundary files on ----
-# All years only have one empty geometry that won't match - Outside of England and unknown, this is expected
-joined_lad_2024 <- lad_2024 %>%
-  right_join(lad_map_data_2024, by = join_by("LAD24NM" == "lad_name")) %>%
-  sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
-
-joined_lad_2023 <- lad_2023 %>%
-  right_join(lad_map_data_2023, by = join_by("LAD23NM" == "lad_name")) %>%
-  sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
-
-joined_lad_2022 <- lad_2022 %>%
-  right_join(lad_map_data_2022, by = join_by("LAD22NM" == "lad_name")) %>%
-  sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
 
 ## Stack the years back together ----
-# Dropping code and welsh name columns if present as not needed for app
-# Renaming all lad name cols to be the same so they will bind together
-joined_lad_final_data <- rbind(
-  joined_lad_2024 %>% select(-c(LAD24CD, LAD24NMW)) %>% rename("lad_name" = LAD24NM),
-  joined_lad_2023 %>% select(-c(LAD23CD, LAD23NMW)) %>% rename("lad_name" = LAD23NM),
-  joined_lad_2022 %>% select(-c(LAD22CD)) %>% rename("lad_name" = LAD22NM)
+lad_map_data <- rbind(
+  lad_map_data_2022,
+  lad_map_data_2023,
+  lad_map_data_2024
 )
 
 # As this is geospatial data we're saving as RDS to preserve the format
-saveRDS(joined_lad_final_data, "data/lad_maps.RDS")
+saveRDS(lad_map_data, "data/lad_maps.RDS")

@@ -1354,7 +1354,6 @@
         "Date/Publication": "2023-11-17 16:50:02 UTC",
         "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 20:33:28 UTC; windows",
         "Archs": "x64"
-<<<<<<< HEAD
       }
     },
     "e1071": {
@@ -1378,8 +1377,6 @@
         "Date/Publication": "2023-12-06 09:22:29 UTC",
         "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-25 01:13:19 UTC; windows",
         "Archs": "x64"
-=======
->>>>>>> main
       }
     },
     "evaluate": {
@@ -2871,8 +2868,6 @@
         "Repository": "RSPM",
         "Date/Publication": "2024-06-28 11:30:02 UTC",
         "Built": "R 4.4.0; ; 2024-06-29 05:14:04 UTC; windows"
-<<<<<<< HEAD
-=======
       }
     },
     "plotly": {
@@ -2908,7 +2903,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "4.10.4"
->>>>>>> main
       }
     },
     "png": {
@@ -4531,7 +4525,6 @@
         "Repository": "RSPM",
         "Date/Publication": "2024-01-16 14:20:02 UTC",
         "Built": "R 4.4.0; ; 2024-04-25 19:44:56 UTC; windows"
-<<<<<<< HEAD
       }
     },
     "wk": {
@@ -4567,8 +4560,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "0.9.2"
-=======
->>>>>>> main
       }
     },
     "xfun": {
@@ -4767,17 +4758,10 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-<<<<<<< HEAD
-      "checksum": "59be62f7219b94a06801fdad6522aa04"
-=======
-      "checksum": "c57014ed06b3481d93292e53f55f32bc"
->>>>>>> main
+      "checksum": "f7e314f8573790a26ddc97d37c90deff"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
-    },
-    "data/apprenticeships_data.csv": {
-      "checksum": "41dc0c9fb2ee1ffbbd692142efe84027"
     },
     "data/apprenticeships_data_0.parquet": {
       "checksum": "2f33fbdc88f41225932c55a6441d7404"
@@ -4794,24 +4778,17 @@
     "data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg": {
       "checksum": "462d51753e91e758857b2fadfd88cef1"
     },
-    "data/lad_maps.parquet": {
-      "checksum": "89970b5d6b22926d3cc31a547818a4d7"
-    },
-    "data/lad_maps.RDS": {
-      "checksum": "f09b59c94502c86b4e41f631950b114d"
+    "data/lad_map_data_0.parquet": {
+      "checksum": "2dc0e76d77a1154f7fc4603aef3d9734"
     },
     "data/national_provider_summary_0.parquet": {
       "checksum": "05cbcc1201a16f97d4919345e05cdaf0"
     },
     "datafiles_log.csv": {
-      "checksum": "e146f8192a8082721014fc54bb082f29"
+      "checksum": "05bc2f945e0441cc1794e5591d0eb623"
     },
     "global.R": {
-<<<<<<< HEAD
-      "checksum": "463af2c4e9b3aff13103da145babb4fd"
-=======
-      "checksum": "e32647081704212d23258c6a6e803a94"
->>>>>>> main
+      "checksum": "6dcb904528b58b6fd908151d61a00bb8"
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
@@ -4820,17 +4797,13 @@
       "checksum": "c828a9210ebd94aaf6971733144bd9bc"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
-      "checksum": "3a4aa14773d9bda62931c8d79050d595"
+      "checksum": "feba3fd4328d6020f0ba9b5f3d65f6fb"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
       "checksum": "73a447642d94cd86cc3de1f48bc5e823"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
-<<<<<<< HEAD
-      "checksum": "d711162d78b0ca8ef41b7f6c365dc6a7"
-=======
       "checksum": "1f2995d56f3eb334ec6e146d368533c4"
->>>>>>> main
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "7fe46330e7d79ffc6ccdab4c89c42c54"
@@ -4842,7 +4815,7 @@
       "checksum": "cdcbdb07c3d62ab110e276ce25b5ca4b"
     },
     "R/data-prep/create_data_files.R": {
-      "checksum": "8ac966e70c1b76f80052c04d154a8607"
+      "checksum": "fad0f171453a85b10960773ef9a0bd4f"
     },
     "R/footer_pages/accessibility_page.R": {
       "checksum": "e9351e2d333a66228f36dc3963e2d1bd"
@@ -4857,40 +4830,25 @@
       "checksum": "4fb06508719a86445bed410f6640a071"
     },
     "R/helper_functions.R": {
-      "checksum": "e62df71c6144084b6b1d439e176c41a9"
+      "checksum": "ff3a4b825b1892e54a1ce2d5fdb5b2d8"
     },
     "R/read_data.R": {
-<<<<<<< HEAD
-      "checksum": "79813a76dd7a386df196c2ba2edf2d17"
-=======
-      "checksum": "d4431c4fdfebd370a7a881e4279dbd96"
->>>>>>> main
+      "checksum": "1fc6d1648a1169c54840dbd5e2c63a54"
     },
     "README.md": {
       "checksum": "1557c3f64f6f0cba78d26508a6ed1d54"
     },
     "renv.lock": {
-<<<<<<< HEAD
-      "checksum": "f14922fb44e334fcfac1f212c4fe7fb0"
+      "checksum": "f5121940863792aca60d1ec2a4675824"
     },
     "server.R": {
-      "checksum": "4de4719c28ed7d952428715f476ab259"
-=======
-      "checksum": "a99ed9da4e1272255ae0ab906c523391"
-    },
-    "server.R": {
-      "checksum": "1acb41401140222df2e85986969df699"
->>>>>>> main
+      "checksum": "3a2a0e5f99d4cd72f77b351d57afd9d3"
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
     },
     "sql/apprenticeships_demographics.sql": {
-<<<<<<< HEAD
-      "checksum": "a93d432df36d763c74fc1bac569ab5b5"
-=======
       "checksum": "00758011dcf22b51581e8b42e63a46b0"
->>>>>>> main
     },
     "sql/national_provider_summary.sql": {
       "checksum": "ec13f7fa4f964568957189766dd4713a"
@@ -4935,11 +4893,7 @@
       "checksum": "d2acc1072836156e7c83e23eeb5c32e0"
     },
     "ui.R": {
-<<<<<<< HEAD
-      "checksum": "febf506214ee7dc66a8b5f0957d1bbf7"
-=======
-      "checksum": "3e878ebfb6c9142842c544738c484c1e"
->>>>>>> main
+      "checksum": "0337530069d4690f022c1504b81c7c33"
     },
     "www/dfe_logo.svg": {
       "checksum": "c23764dae2d73a45a55815d0327be6cb"

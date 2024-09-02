@@ -1,5 +1,6 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
+# TODO: filter this down to a smaller file in R/data-prep/create_data_files.R to improve performance
 prov_breakdowns_parquet <- read_prov_breakdowns("data/apprenticeships_data_0.parquet")
 
 # Create static lists of options for dropdowns

@@ -12,7 +12,13 @@ if (!is.null(lad_map_parquet)) {
   # Doing this filtered by each year to work out the maximum as otherwise we'd get ~ 3x the actual max size
 
   # Create example files without any filters (so the maximum a user could download)
-  openxlsx::write.xlsx(lad_map_parquet %>% filter(year == "2021/22") %>% collect(), "data/test.xlsx", colWidths = "auto")
+  openxlsx::write.xlsx(
+    lad_map_parquet %>%
+      filter(year == "2021/22") %>%
+      collect(),
+    "data/test.xlsx",
+    colWidths = "auto"
+  )
   data.table::fwrite(lad_map_parquet %>% filter(year == "2021/22") %>% collect(), "data/test.csv")
 
   # Print the file sizes to console
@@ -24,7 +30,13 @@ if (!is.null(lad_map_parquet)) {
   file.remove("data/test.csv")
 
   # Create example files without any filters (so the maximum a user could download)
-  openxlsx::write.xlsx(lad_map_parquet %>% filter(year == "2022/23") %>% collect(), "data/test.xlsx", colWidths = "auto")
+  openxlsx::write.xlsx(
+    lad_map_parquet %>%
+      filter(year == "2022/23") %>%
+      collect(),
+    "data/test.xlsx",
+    colWidths = "auto"
+  )
   data.table::fwrite(lad_map_parquet %>% filter(year == "2022/23") %>% collect(), "data/test.csv")
 
   # Print the file sizes to console
@@ -36,7 +48,13 @@ if (!is.null(lad_map_parquet)) {
   file.remove("data/test.csv")
 
   # Create example files without any filters (so the maximum a user could download)
-  openxlsx::write.xlsx(lad_map_parquet %>% filter(year == "2023/24 (Q3 Aug to Apr)") %>% collect(), "data/test.xlsx", colWidths = "auto")
+  openxlsx::write.xlsx(
+    lad_map_parquet %>%
+      filter(year == "2023/24 (Q3 Aug to Apr)") %>%
+      collect(),
+    "data/test.xlsx",
+    colWidths = "auto"
+  )
   data.table::fwrite(lad_map_parquet %>% filter(year == "2023/24 (Q3 Aug to Apr)") %>% collect(), "data/test.csv")
 
   # Print the file sizes to console

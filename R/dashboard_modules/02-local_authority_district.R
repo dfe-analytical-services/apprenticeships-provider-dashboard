@@ -180,21 +180,20 @@ lad_server <- function(id) {
 
     # Main reactive data ======================================================
     map_data <- reactive({
-      map_data <- lad_map_parquet %>%
-        filter(year == input$year)
-
-      # Filter to selected provider if selected
-      if (input$provider != "") {
-        map_data <- map_data %>% filter(provider_name == input$provider)
-      }
-
-      return(map_data %>% collect())
+      lad_map_parquet %>%
+        filter(year == input$year) %>%
+        collect()
     })
 
     # Region table data =======================================================
     # Delivery regions --------------------------------------------------------
     delivery_lad_table <- reactive({
       delivery_lad_table <- map_data()
+
+      # Filter to selected provider if selected
+      if (input$provider != "") {
+        delivery_lad_table <- delivery_lad_table %>% filter(provider_name == input$provider)
+      }
 
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
@@ -219,6 +218,11 @@ lad_server <- function(id) {
     # Home regions ------------------------------------------------------------
     learner_home_lad_table <- reactive({
       learner_home_lad_table <- map_data()
+
+      # Filter to selected provider if selected
+      if (input$provider != "") {
+        learner_home_lad_table <- learner_home_lad_table %>% filter(provider_name == input$provider)
+      }
 
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
@@ -264,7 +268,7 @@ lad_server <- function(id) {
       )
 
       # Choose the boundary based on the year selection from the user
-      map_boundary <- boundary_list[[input$year]]
+      return(boundary_list[[input$year]])
     })
 
     delivery_map_data <- reactive({

@@ -176,11 +176,10 @@ dfe_map <- function(data, measure) {
   )
 
   # Set a pop up
-  map_popup <- paste(
-    lapply(data$`Number of apprenticeships`, dfeR::pretty_num),
-    " ", measure, " in ",
-    data$lad_name
-  )
+  hover_labels <- paste0(
+    "<strong>", data$lad_name, "</strong><br/>",
+    lapply(data$`Number of apprenticeships`, dfeR::pretty_num), " ", measure
+  ) %>% lapply(htmltools::HTML)
 
   # Create the map
   map <- leaflet(
@@ -195,7 +194,19 @@ dfe_map <- function(data, measure) {
       color = "black",
       weight = 1,
       fillColor = pal_fun(data[["Number of apprenticeships"]]),
-      popup = map_popup
+      highlightOptions = highlightOptions(
+        weight = 5,
+        color = "#666",
+        fillOpacity = 0.7,
+        bringToFront = TRUE
+      ),
+      label = hover_labels,
+      labelOptions = labelOptions(
+        style = list("font-weight" = "normal", padding = "3px 8px"),
+        textsize = "15px",
+        direction = "auto",
+        bringToFront = TRUE
+      )
     ) %>%
     # Add a legend to the map
     addLegend("topright",

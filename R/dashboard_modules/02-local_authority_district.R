@@ -100,8 +100,8 @@ lad_ui <- function(id) {
               "This will download data for all providers and local authority districts based on the ",
               "options selected. The XLSX format is designed for use in Microsoft Excel."
             ),
-            choices = c("CSV (Up to X MB)", "XLSX (Up to X MB)"),
-            selected = "CSV (Up to X MB)"
+            choices = c("CSV (Up to 18.42 MB)", "XLSX (Up to 5.92 MB)"),
+            selected = "CSV (Up to 18.42 MB)"
           ),
           downloadButton(
             NS(id, "download_data"),
@@ -294,5 +294,30 @@ lad_server <- function(id) {
     output$learner_home_lad_map <- renderLeaflet({
       dfe_map(learner_home_map_data(), input$measure)
     })
+
+    # Data download ===========================================================
+    output$download_data <- downloadHandler(
+      ## Set filename ---------------------------------------------------------
+      filename = function(name) {
+        raw_name <- paste0("lad-", input$year, "-", input$measure)
+        extension <- if (input$file_type == "CSV (Up to 18.42 MB)") {
+          ".csv"
+        } else {
+          ".xlsx"
+        }
+        paste0(tolower(gsub(" ", "", raw_name)), extension)
+      },
+      ## Generate downloaded file ---------------------------------------------
+      content = function(file) {
+        if (input$file_type == "CSV (Up to 18.42 MB)") {
+          data.table::fwrite(map_data(), file)
+        } else {
+          # Added a basic pop up notification as the Excel file can take time to generate
+          pop_up <- showNotification("Generating download file", duration = NULL)
+          openxlsx::write.xlsx(map_data(), file, colWidths = "Auto")
+          on.exit(removeNotification(pop_up), add = TRUE)
+        }
+      }
+    )
   })
 }

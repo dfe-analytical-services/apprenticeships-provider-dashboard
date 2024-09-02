@@ -4758,7 +4758,7 @@
       "checksum": "21373c552fa1b0b8404341b9e3c127ac"
     },
     ".Rprofile": {
-      "checksum": "eda046126e0b24c55a54df2dc0c06089"
+      "checksum": "c9177d2ee1ce3580bb224bc10b005137"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4797,7 +4797,7 @@
       "checksum": "c828a9210ebd94aaf6971733144bd9bc"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
-      "checksum": "74860fcd50e4771995d79a3778aae01b"
+      "checksum": "fd773ae0b2be7cd52064bd4a72e86426"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
       "checksum": "73a447642d94cd86cc3de1f48bc5e823"
@@ -4812,7 +4812,7 @@
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
     },
     "R/data-prep/check_file_sizes.R": {
-      "checksum": "cdcbdb07c3d62ab110e276ce25b5ca4b"
+      "checksum": "e8e057d03b385c16c463bb9ea71a9024"
     },
     "R/data-prep/create_data_files.R": {
       "checksum": "fad0f171453a85b10960773ef9a0bd4f"

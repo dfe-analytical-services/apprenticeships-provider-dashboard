@@ -38,10 +38,7 @@ jobs:
           
       - name: Install git2r dependencies
         run: sudo apt-get install -y libgit2-dev
-      
-      - name: Install geospatial dependencies
-        run: sudo apt-get update && sudo apt-get install -y libproj-dev
-      
+
       - name: restore renv
         uses: r-lib/actions/setup-renv@v2
 

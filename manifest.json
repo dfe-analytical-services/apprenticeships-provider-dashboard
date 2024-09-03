@@ -5179,13 +5179,13 @@
       "checksum": "94d500fe8e3a1b354b217ebd3279ba5c"
     },
     ".github/workflows/automated-tests.yaml": {
-      "checksum": "b63c39aa35d69a84066dbca680474607"
+      "checksum": "ca3cdd3545767ce53e5cd8b4f32c8d10"
     },
     ".github/workflows/deploy-shiny.yaml": {
       "checksum": "daa321b0f496d045fd363df2ea85d0d4"
     },
     ".github/workflows/lintr.yml": {
-      "checksum": "345d191159c6f8b5fa4afade8d04d6a6"
+      "checksum": "6d16237c6609d5e1c86a0fef885f0c23"
     },
     ".hooks/pre-commit.R": {
       "checksum": "ee7e229f54e456f743dc8601e0c1c070"
@@ -5194,7 +5194,7 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "c8208d3abf93551fd1c428499343d428"
+      "checksum": "dc250e1419f43eada196444a453e9633"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"

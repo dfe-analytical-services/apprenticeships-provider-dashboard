@@ -81,6 +81,14 @@ This leads to using the [arrow package](https://arrow.apache.org/docs/r/) for da
 
 There is a bonus script `R/data-prep/check_file_sizes.R` that can be used to test the maximum potential file download sizes, so that we can then hard code that information into the UI for radio button options changing the file type for end users.
 
+#### Boundary files
+
+The boundary files used in the LAD maps are stored in the `data/boundary_files/` folder. They were downloaded from the [Open Geography Portal](https://geoportal.statistics.gov.uk/search?q=BDY_LAD%20UK%20BUC&sort=Date%20Created%7Ccreated%7Cdesc) in GeoPackage format. If you search for 'BDY_LAD UK BUC' you should be able to find the files, as well as any newer or older versions of the boundaries. The following boundaries are used for each year:
+
+- 2021/22: December 2022 boundaries
+- 2022/23: May 2023 boundaries
+- 2023/24: May 2024 boundaries
+
 ### Packages
 
 Package control is handled using renv. As in the steps above, you will need to run `renv::restore()` if this is your first time using the project.

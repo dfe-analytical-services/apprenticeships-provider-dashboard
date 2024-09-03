@@ -27,14 +27,16 @@ shhh(library(reactable))
 shhh(library(ggplot2))
 shhh(library(ggiraph))
 shhh(library(treemapify))
+shhh(library(leaflet))
 shhh(library(plotly))
 
 ## Data and string manipulation -----------------------------------------------
 shhh(library(arrow))
 shhh(library(dplyr))
 shhh(library(tidyr))
-shhh(library(stringr))
 shhh(library(forcats))
+shhh(library(sfarrow))
+shhh(library(stringr))
 
 ## Data downloads -------------------------------------------------------------
 shhh(library(openxlsx))

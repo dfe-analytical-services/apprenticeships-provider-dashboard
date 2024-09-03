@@ -124,7 +124,6 @@ dfe_footer <- function(links_list) {
 dfe_reactable <- function(data, on_click = NULL, selection = NULL, row_style = NULL, searchable = FALSE) {
   reactable(
     data,
-
     # DfE styling
     highlight = TRUE,
     borderless = TRUE,
@@ -159,8 +158,62 @@ dfe_contents_links <- function(links_list) {
   )
 }
 
-# properly capitalise first letter of a string
+# properly capitalise first letter of a string ================================
 firstup <- function(x) {
   substr(x, 1, 1) <- toupper(substr(x, 1, 1))
   x
+}
+
+# Create a map ================================================================
+dfe_map <- function(data, measure) {
+  # Set the color scheme and scale
+  pal_fun <- colorNumeric(
+    "Blues",
+    domain = c(
+      min(data$`Number of apprenticeships`),
+      max(data$`Number of apprenticeships`)
+    )
+  )
+
+  # Set a pop up
+  hover_labels <- paste0(
+    "<strong>", data$lad_name, "</strong><br/>",
+    lapply(data$`Number of apprenticeships`, dfeR::pretty_num), " ", measure
+  ) %>% lapply(htmltools::HTML)
+
+  # Create the map
+  map <- leaflet(
+    data,
+    # Take off annoying scrolling, personal preference
+    options = leafletOptions(scrollWheelZoom = FALSE)
+  ) %>%
+    # Set the basemap (this is a good neutral one)
+    addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+    # Add the shaded regions
+    addPolygons(
+      color = "black",
+      weight = 1,
+      fillColor = pal_fun(data[["Number of apprenticeships"]]),
+      highlightOptions = highlightOptions(
+        weight = 5,
+        color = "#666",
+        fillOpacity = 0.7,
+        bringToFront = TRUE
+      ),
+      label = hover_labels,
+      labelOptions = labelOptions(
+        style = list("font-weight" = "normal", padding = "3px 8px"),
+        textsize = "15px",
+        direction = "auto",
+        bringToFront = TRUE
+      )
+    ) %>%
+    # Add a legend to the map
+    addLegend("topright",
+      pal = pal_fun,
+      values = ~ data[["Number of apprenticeships"]],
+      title = firstup(measure)
+    )
+
+  return(map)
 }

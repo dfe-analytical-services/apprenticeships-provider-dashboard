@@ -14,9 +14,17 @@
 # will need to either add the file to .gitignore or add an entry for the file
 # into datafiles_log.csv.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create options lists for use in the dropdowns ===============================
+data_choices <- function(data, column) {
+  data %>%
+    distinct(!!sym(column)) %>% # adding the !!sym() to convert string to column name
+    collect() %>%
+    pull()
+}
 
 # Load data ===================================================================
-# Note that all of these do a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
+# Note that all of these that read a parquet file do a 'lazy read'
+# you will need to use `%>% collect()` to pull the final table into memory
 
 ## Provider breakdowns --------------------------------------------------------
 # TODO: check if all data is needed here, and filter out what isn't / create separate parquet file
@@ -24,8 +32,17 @@ read_prov_breakdowns <- function(file_path) {
   arrow::read_parquet(file_path)
 }
 
-## Subjects and standards --------------------------------------------------
-# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
+## LAD ------------------------------------------------------------------------
+read_lad <- function(file_path) {
+  arrow::read_parquet(file_path) %>%
+    select(year, provider_name, learner_home_lad, delivery_lad, starts, achievements, enrolments)
+}
+
+read_lad_map <- function(file_path) {
+  readRDS(file_path)
+}
+
+## Subjects and standards -----------------------------------------------------
 read_sas <- function(file_path) {
   arrow::read_parquet(file_path) %>%
     summarise(
@@ -57,12 +74,4 @@ read_chars <- function(file_path) {
 read_nps <- function(file_path) {
   arrow::read_parquet(file_path) %>%
     select(-c(`order_ref`, `order_detailed`)) # unused columns
-}
-
-# Create options lists for use in the dropdowns ===============================
-data_choices <- function(data, column) {
-  data %>%
-    distinct(!!sym(column)) %>% # adding the !!sym() to convert string to column name
-    collect() %>%
-    pull()
 }

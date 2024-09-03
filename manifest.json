@@ -5179,7 +5179,7 @@
       "checksum": "94d500fe8e3a1b354b217ebd3279ba5c"
     },
     ".github/workflows/automated-tests.yaml": {
-      "checksum": "5e0d34e9704dcfeef0fbb7f2394addf4"
+      "checksum": "b63c39aa35d69a84066dbca680474607"
     },
     ".github/workflows/deploy-shiny.yaml": {
       "checksum": "daa321b0f496d045fd363df2ea85d0d4"
@@ -5194,7 +5194,7 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "a699c8b722943da8119f9ffcb7f1546d"
+      "checksum": "c8208d3abf93551fd1c428499343d428"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"

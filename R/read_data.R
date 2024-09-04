@@ -14,27 +14,29 @@
 # will need to either add the file to .gitignore or add an entry for the file
 # into datafiles_log.csv.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Create options lists for use in the dropdowns ===============================
+data_choices <- function(data, column) {
+  data %>%
+    distinct(!!sym(column)) %>% # adding the !!sym() to convert string to column name
+    collect() %>%
+    pull()
+}
 
 # Load data ===================================================================
+# Note that all of these that read a parquet file do a 'lazy read'
+# you will need to use `%>% collect()` to pull the final table into memory
 
-## National provider summary --------------------------------------------------
-# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
-read_nps <- function(file_path) {
+## LAD ------------------------------------------------------------------------
+read_lad <- function(file_path) {
   arrow::read_parquet(file_path) %>%
-    select(-c(`order_ref`, `order_detailed`)) # unused columns
+    select(year, provider_name, learner_home_lad, delivery_lad, starts, achievements, enrolments)
 }
 
-
-## Domographics / characteristics summary --------------------------------------------------
-# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
-read_chars <- function(file_path) {
-  arrow::read_parquet(file_path)
+read_lad_map <- function(file_path) {
+  readRDS(file_path)
 }
 
-
-
-## Subjects and standards --------------------------------------------------
-# Note that this does a 'lazy read', you need to use `%>% collect()` to pull the final table into memory
+## Subjects and standards -----------------------------------------------------
 read_sas <- function(file_path) {
   arrow::read_parquet(file_path) %>%
     summarise(
@@ -57,11 +59,13 @@ read_sas <- function(file_path) {
     )
 }
 
+## Demographics / characteristics summary -------------------------------------
+read_chars <- function(file_path) {
+  arrow::read_parquet(file_path)
+}
 
-# Create options lists for use in the dropdowns ===============================
-data_choices <- function(data, column) {
-  data %>%
-    distinct(!!sym(column)) %>% # adding the !!sym() to convert string to column name
-    collect() %>%
-    pull()
+## National provider summary --------------------------------------------------
+read_nps <- function(file_path) {
+  arrow::read_parquet(file_path) %>%
+    select(-c(`order_ref`, `order_detailed`)) # unused columns
 }

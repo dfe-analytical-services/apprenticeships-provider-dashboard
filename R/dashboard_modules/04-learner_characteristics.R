@@ -251,7 +251,8 @@ learner_characteristics_server <- function(id) {
       chars_reactive_table() %>%
         filter(characteristic != "Total") %>%
         filter(count != "low") %>%
-        plot_ly(
+
+      plot_ly(
           labels = ~ stringr::str_wrap(characteristic, width = 5),
           parents = NA,
           values = ~ as.numeric(count),
@@ -262,7 +263,8 @@ learner_characteristics_server <- function(id) {
             sizemode = "area"
           )),
           textfont = list(color = "white", size = 30)
-        )
+        ) %>%
+        config(displaylogo = FALSE, displayModeBar = FALSE)
     })
 
     # table

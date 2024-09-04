@@ -1,4 +1,5 @@
-linters:  linters_with_defaults(
+linters: linters_with_defaults(
     object_usage_linter = NULL,
-    line_length_linter = line_length_linter(120L)
+    line_length_linter = line_length_linter(120L),
+    cyclocomp_linter = cyclocomp_linter(25L)
   )

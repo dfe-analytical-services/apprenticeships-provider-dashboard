@@ -27,6 +27,7 @@ test_that("App loads and title of app appears as expected", {
 
 # Title updates when changing tabs ============================================
 test_that("Tab titles load when switching", {
+  app$wait_for_idle(50)
   app$click("local_authority_district")
   app$wait_for_idle(50)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - local authority district")

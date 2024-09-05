@@ -1,12 +1,12 @@
 # Load data ===================================================================
-
-#The parquet file chars_parquet id created and pivoted longer in the 
-#create_data_files.R file
+# Functions used here are created in the R/read_data.R file
+chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet") 
 
 # Create static lists of options for dropdowns
 chars_year_choices <- sort(data_choices(data = chars_parquet, column = "year"),
   decreasing = TRUE
 )
+
 chars_measure_choices <- data_choices(data = chars_parquet, column = "measure")
 # for providers need to remove total first so can put at the beginning
 chars_parquet_no_total <- chars_parquet %>%

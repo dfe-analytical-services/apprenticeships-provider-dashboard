@@ -35,10 +35,8 @@ shhh(library(arrow))
 shhh(library(dplyr))
 shhh(library(tidyr))
 shhh(library(forcats))
-shhh(library(validate))
 shhh(library(sfarrow))
 shhh(library(stringr))
-
 
 ## Data downloads -------------------------------------------------------------
 shhh(library(openxlsx))

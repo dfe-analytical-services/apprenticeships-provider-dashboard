@@ -55,9 +55,4 @@ server <- function(input, output, session) {
   subject_standards_server(id = "sas")
   learner_characteristics_server(id = "learner_characteristics")
   nps_server(id = "nps")
-  # Stop app when tab closes ==================================================
-  session$onSessionEnded(function() {
-    stopApp()
-  })
-  subject_standards_server(id = "sas")
 }

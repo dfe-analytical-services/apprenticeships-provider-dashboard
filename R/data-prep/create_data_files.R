@@ -53,3 +53,87 @@ arrow::write_dataset(lad_map_data, "data/",
   format = "parquet",
   basename_template = "lad_map_data_{i}.parquet"
 )
+
+# This reads in the parquet file for the characteristics tab and processes it further
+chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet") %>%
+# Default for input is to select rows within a column so put into long format
+  pivot_longer(
+    cols = -c(year, age_group, sex, ethnicity_major, lldd, provider_name),
+    names_to = "measure",
+    values_to = "count"
+  ) %>%
+  mutate(measure = firstup(measure))
+
+# This pivots it longer still and puts in the totals for the table
+chars_parquet_total_lldd <- chars_parquet %>%
+  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
+  mutate(
+    characteristic_type = "Learner with learning difficulties or disabilities (LLDD)",
+    characteristic = "Total"
+  ) %>%
+  select(year, provider_name, characteristic_type, characteristic, measure, count)
+
+chars_parquet_lldd <- chars_parquet %>%
+  filter(lldd != "Total") %>%
+  mutate(
+    characteristic_type = "Learner with learning difficulties or disabilities (LLDD)",
+    characteristic = lldd
+  ) %>%
+  select(year, provider_name, characteristic_type, characteristic, measure, count)
+
+chars_parquet_total_sex <- chars_parquet %>%
+  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
+  mutate(
+    characteristic_type = "Sex",
+    characteristic = sex
+  ) %>%
+  select(year, provider_name, characteristic_type, characteristic, measure, count)
+
+chars_parquet_sex <- chars_parquet %>%
+  filter(sex != "Total") %>%
+  mutate(
+    characteristic_type = "Sex",
+    characteristic = sex
+  ) %>%
+  select(year, provider_name, characteristic_type, characteristic, measure, count)
+
+chars_parquet_total_age <- chars_parquet %>%
+  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
+  mutate(
+    characteristic_type = "Age",
+    characteristic = age_group
+  ) %>%
+  select(year, provider_name, characteristic_type, characteristic, measure, count)
+
+chars_parquet_age <- chars_parquet %>%
+  filter(age_group != "Total") %>%
+  mutate(
+    characteristic_type = "Age",
+    characteristic = age_group
+  ) %>%
+  select(year, provider_name, characteristic_type, characteristic, measure, count)
+
+chars_parquet_total_ethnicity <- chars_parquet %>%
+  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
+  mutate(
+    characteristic_type = "Ethnicity",
+    characteristic = ethnicity_major
+  ) %>%
+  select(year, provider_name, characteristic_type, characteristic, measure, count)
+
+chars_parquet_ethnicity <- chars_parquet %>%
+  filter(ethnicity_major != "Total") %>%
+  mutate(
+    characteristic_type = "Ethnicity",
+    characteristic = ethnicity_major
+  ) %>%
+  select(year, provider_name, characteristic_type, characteristic, measure, count)
+
+# Put all the different files togegther to get one long file
+chars_parquet <-
+  rbind(
+    chars_parquet_total_age, chars_parquet_age,
+    chars_parquet_total_sex, chars_parquet_sex,
+    chars_parquet_total_lldd, chars_parquet_lldd,
+    chars_parquet_total_ethnicity, chars_parquet_ethnicity
+  )

@@ -26,6 +26,12 @@ data_choices <- function(data, column) {
 # Note that all of these that read a parquet file do a 'lazy read'
 # you will need to use `%>% collect()` to pull the final table into memory
 
+## Provider breakdowns --------------------------------------------------------
+# TODO: check if all data is needed here, and filter out what isn't / create separate parquet file
+read_prov_breakdowns <- function(file_path) {
+  arrow::read_parquet(file_path)
+}
+
 ## LAD ------------------------------------------------------------------------
 read_lad <- function(file_path) {
   arrow::read_parquet(file_path) %>%

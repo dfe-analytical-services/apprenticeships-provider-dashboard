@@ -36,12 +36,12 @@ lad_map_data <- apps_data %>%
 # Preparing the data now so that less processing is needed in the app
 
 apps_chars <- apps_demographics %>%
-# Default for input is to select rows within a column so put into long format
-pivot_longer(
-  cols = -c(year, age_group, sex, ethnicity_major, lldd, provider_name),
-  names_to = "measure",
-  values_to = "count"
-) %>%
+  # Default for input is to select rows within a column so put into long format
+  pivot_longer(
+    cols = -c(year, age_group, sex, ethnicity_major, lldd, provider_name),
+    names_to = "measure",
+    values_to = "count"
+  ) %>%
   mutate(measure = firstup(measure))
 
 # This pivots it longer still and puts in the totals for the table
@@ -87,7 +87,7 @@ chars_total_age <- apps_chars %>%
   ) %>%
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
-chars_age <- apps_chars%>%
+chars_age <- apps_chars %>%
   filter(age_group != "Total") %>%
   mutate(
     characteristic_type = "Age",

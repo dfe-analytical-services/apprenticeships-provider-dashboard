@@ -5698,16 +5698,13 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "89dabf2e832c42f3ce3bf208197fe009"
+      "checksum": "891abe6d3ee6bacfc6dff8e528fccaf6"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
     },
     "data/apprenticeships_data_0.parquet": {
       "checksum": "2f33fbdc88f41225932c55a6441d7404"
-    },
-    "data/apprenticeships_demographics.csv": {
-      "checksum": "a231e8794eed09ff5325c6e34c304f31"
     },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "c2a1536dca8db47b4f91d8203d323bd4"
@@ -5724,8 +5721,11 @@
     "data/lad_map_data_0.parquet": {
       "checksum": "2dc0e76d77a1154f7fc4603aef3d9734"
     },
+    "data/national_provider_summary.csv": {
+      "checksum": "0a570afaeac03757e376607541d0f8ff"
+    },
     "data/national_provider_summary_0.parquet": {
-      "checksum": "05cbcc1201a16f97d4919345e05cdaf0"
+      "checksum": "4c8f38f019f23ea74e734b472231e949"
     },
     "datafiles_log.csv": {
       "checksum": "05bc2f945e0441cc1794e5591d0eb623"
@@ -5749,7 +5749,7 @@
       "checksum": "273d13a1ac9915d8e392b00bf0d44ffd"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
-      "checksum": "7fe46330e7d79ffc6ccdab4c89c42c54"
+      "checksum": "dc00134b1cc5dafa846435b9d49ecb8a"
     },
     "R/dashboard_modules/06-user_guide.R": {
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
@@ -5794,7 +5794,7 @@
       "checksum": "00758011dcf22b51581e8b42e63a46b0"
     },
     "sql/national_provider_summary.sql": {
-      "checksum": "ec13f7fa4f964568957189766dd4713a"
+      "checksum": "cda7d17984e43c4f5d56bf9b7408f665"
     },
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"

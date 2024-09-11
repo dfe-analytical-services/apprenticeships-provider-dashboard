@@ -3831,6 +3831,44 @@
         "Built": "R 4.4.0; ; 2024-04-25 19:46:37 UTC; windows"
       }
     },
+    "rvest": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "rvest",
+        "Title": "Easily Harvest (Scrape) Web Pages",
+        "Version": "1.0.4",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Wrappers around the 'xml2' and 'httr' packages to make it\n    easy to download, then manipulate, HTML and XML.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://rvest.tidyverse.org/, https://github.com/tidyverse/rvest",
+        "BugReports": "https://github.com/tidyverse/rvest/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "cli, glue, httr (>= 0.5), lifecycle (>= 1.0.3), magrittr,\nrlang (>= 1.1.0), selectr, tibble, xml2 (>= 1.3)",
+        "Suggests": "chromote, covr, knitr, R6, readr, repurrrsive, rmarkdown,\nspelling, stringi (>= 0.3.1), testthat (>= 3.0.2), webfakes",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/testthat/parallel": "true",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.3.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-02-12 17:13:26 UTC; hadleywickham",
+        "Author": "Hadley Wickham [aut, cre],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Hadley Wickham <hadley@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-02-12 20:10:02 UTC",
+        "Built": "R 4.4.1; ; 2024-06-25 02:06:31 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "rvest",
+        "RemoteRef": "rvest",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "1.0.4"
+      }
+    },
     "s2": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -3926,6 +3964,39 @@
         "Repository": "RSPM",
         "Date/Publication": "2023-11-28 09:10:06 UTC",
         "Built": "R 4.4.0; ; 2024-04-25 20:09:32 UTC; windows"
+      }
+    },
+    "selectr": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "selectr",
+        "Type": "Package",
+        "Title": "Translate CSS Selectors to XPath Expressions",
+        "Version": "0.4-2",
+        "Date": "2019-11-20",
+        "Authors@R": "c(person(\"Simon\", \"Potter\",\n                    role = c(\"aut\", \"trl\", \"cre\"),\n                    email = \"simon@sjp.co.nz\"),\n             person(\"Simon\", \"Sapin\", role = \"aut\"),\n             person(\"Ian\", \"Bicking\", role = \"aut\"))",
+        "License": "BSD_3_clause + file LICENCE",
+        "Depends": "R (>= 3.0)",
+        "Imports": "methods, stringr, R6",
+        "Suggests": "testthat, XML, xml2",
+        "URL": "https://sjp.co.nz/projects/selectr",
+        "BugReports": "https://github.com/sjp/selectr/issues",
+        "Description": "Translates a CSS3 selector into an equivalent XPath\n  expression. This allows us to use CSS selectors when working with\n  the XML package as it can only evaluate XPath expressions. Also\n  provided are convenience functions useful for using CSS selectors on\n  XML nodes. This package is a port of the Python package 'cssselect'\n  (<https://cssselect.readthedocs.io/>).",
+        "NeedsCompilation": "no",
+        "Packaged": "2019-11-20 06:04:49 UTC; simon",
+        "Author": "Simon Potter [aut, trl, cre],\n  Simon Sapin [aut],\n  Ian Bicking [aut]",
+        "Maintainer": "Simon Potter <simon@sjp.co.nz>",
+        "Repository": "CRAN",
+        "Date/Publication": "2019-11-20 07:30:03 UTC",
+        "Built": "R 4.4.1; ; 2024-06-25 01:58:06 UTC; windows",
+        "RemoteType": "standard",
+        "RemotePkgRef": "selectr",
+        "RemoteRef": "selectr",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "0.4-2"
       }
     },
     "sf": {
@@ -5194,16 +5265,22 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "a52df55102b2a614ede1b7442be8c3b7"
+      "checksum": "65c2b9c25833e51481851edafe06c6d8"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
     },
+    "data/apprenticeships_data.csv": {
+      "checksum": "a6f18a3fdfc9f973d580b51d768c6065"
+    },
     "data/apprenticeships_data_0.parquet": {
-      "checksum": "2f33fbdc88f41225932c55a6441d7404"
+      "checksum": "7ea32b642e85a344a79c156db407dee3"
+    },
+    "data/apprenticeships_demographics.csv": {
+      "checksum": "177cd1633ef521212ec47abcaed8f90c"
     },
     "data/apprenticeships_demographics_0.parquet": {
-      "checksum": "c2a1536dca8db47b4f91d8203d323bd4"
+      "checksum": "21135784e8ab92176deb0a64b7b6c0b3"
     },
     "data/boundary_files/Local_Authority_Districts_December_2022_UK_BUC_V2_3956567894081366924.gpkg": {
       "checksum": "77baaf077b9d8eb9ee57c4c8bdb3c1cf"
@@ -5215,10 +5292,13 @@
       "checksum": "462d51753e91e758857b2fadfd88cef1"
     },
     "data/lad_map_data_0.parquet": {
-      "checksum": "2dc0e76d77a1154f7fc4603aef3d9734"
+      "checksum": "ace1b38e436d6423501b2a00578e7904"
+    },
+    "data/national_provider_summary.csv": {
+      "checksum": "a0064193ae482f55418c7e47ea27d724"
     },
     "data/national_provider_summary_0.parquet": {
-      "checksum": "05cbcc1201a16f97d4919345e05cdaf0"
+      "checksum": "d609c3bda675001ba896f8c1152ac314"
     },
     "datafiles_log.csv": {
       "checksum": "05bc2f945e0441cc1794e5591d0eb623"
@@ -5251,7 +5331,7 @@
       "checksum": "a1b7fb5617204c21bdbc1e0a62422fd8"
     },
     "R/data-prep/create_data_files.R": {
-      "checksum": "f30027c812d8732258fd99162f7d2281"
+      "checksum": "e12baa6bc3a6e02334813c6cfdd20077"
     },
     "R/footer_pages/accessibility_page.R": {
       "checksum": "e9351e2d333a66228f36dc3963e2d1bd"
@@ -5275,7 +5355,7 @@
       "checksum": "1557c3f64f6f0cba78d26508a6ed1d54"
     },
     "renv.lock": {
-      "checksum": "bd2be805237c7f43f883fc3638a92ca1"
+      "checksum": "a4d5cc6934827b88f657b4ddc1687a1b"
     },
     "server.R": {
       "checksum": "4e64b5320a433d75ee5c412a4c2528c0"
@@ -5292,26 +5372,8 @@
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
     },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-001.json": {
-      "checksum": "d1ca77e2eef88cf478db2c1897484303"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-002.json": {
-      "checksum": "89a0168da5de1a4484936f7ba3a8c642"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-003.json": {
-      "checksum": "cf5d60df61f13a9fd679d6cd7ad7f4ee"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-004.json": {
-      "checksum": "9576b1ad1824f3dce263a0ab12e2fa17"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-005.json": {
-      "checksum": "db034bc9595b90b4b2e224a4ebdf173b"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-006.json": {
-      "checksum": "213a70dbcf4918be324c4456e8420413"
-    },
     "tests/testthat/setup-shinytest2.R": {
-      "checksum": "d3e71278de0398bd2acaa6e00ad59114"
+      "checksum": "ee17f6dba9fb726a7dc3e7562875a89f"
     },
     "tests/testthat/test-Function-01-dfe_reactable.R": {
       "checksum": "f475d5b60fbf1352d2fad7a04ab30551"
@@ -5320,10 +5382,10 @@
       "checksum": "1fd753be5bbff3a1b07b6b6983483ca1"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "35dc5697f06f1711e263e048b4360322"
+      "checksum": "01ecf880e5318014660e0827981694d2"
     },
     "tests/testthat/test-UI-03-sas.R": {
-      "checksum": "9c63f44f3fe0fbf137692cdd5f47123b"
+      "checksum": "af06008de7776c5932b78b2903b67edc"
     },
     "tests/testthat/test-UI-05-nps_downloads.R": {
       "checksum": "d2acc1072836156e7c83e23eeb5c32e0"

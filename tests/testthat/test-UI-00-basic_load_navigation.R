@@ -27,9 +27,8 @@ test_that("App loads and title of app appears as expected", {
 
 # Title updates when changing tabs ============================================
 test_that("Tab titles load when switching", {
-  app$wait_for_idle(50)
   app$click("local_authority_district")
-  app$wait_for_idle(50)
+  app$wait_for_idle(2000) # This can be particularly slow sometimes
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - local authority district")
 
   app$click("subjects_and_standards")
@@ -82,4 +81,10 @@ test_that("Footer link and back links work", {
   app$click("cookies_to_dashboard")
   app$wait_for_idle(50)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
+})
+
+# Check no console errors have occurred =======================================
+test_that("There are no errors in the whole app", {
+  expect_null(app$get_html(".shiny-output-error"))
+  expect_null(app$get_html(".shiny-output-error-validation"))
 })

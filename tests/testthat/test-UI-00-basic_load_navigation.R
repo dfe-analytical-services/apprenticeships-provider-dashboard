@@ -1,22 +1,7 @@
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# This is an example UI test file
-# It includes a basic test to check that the app loads without error
-#
-# We recommend keeping this test
-#
-# Update it to match the expected title of the app and always make sure it is
-# passing before merging any new code in
-#
-# This should prevent your app from ever failing to start up on the servers
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 # Start an app running ========================================================
 app <- AppDriver$new(
   name = "basic_load_nav",
-  load_timeout = 45 * 1000,
-  timeout = 20 * 1000,
-  wait = TRUE,
-  expect_values_screenshot_args = FALSE # Turn off as we don't need screenshots
+  expect_values_screenshot_args = FALSE
 )
 
 # Test that the app will start up without error and the app title is as expected

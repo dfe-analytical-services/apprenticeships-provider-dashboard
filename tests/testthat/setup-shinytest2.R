@@ -34,7 +34,7 @@ check_ggiraph_rendered <- function(object_name, app) {
 # Check that a ggplot2 or leaflet plot has rendered content
 check_plot_rendered <- function(object_name, app) {
   # Save 1 if image exits, 0 if not
-  plot_img_length <- app$get_html(paste0("#", object_error)) |>
+  plot_img_length <- app$get_html(paste0("#", object_name)) |>
     rvest::read_html() |>
     rvest::html_elements("img") |>
     length()

@@ -30,6 +30,7 @@ lad_map_data <- apps_data %>%
     enrolments = sum(enrolments, na.rm = TRUE),
     achievements = sum(achievements, na.rm = TRUE)
   ) %>%
+  ungroup() %>%
   as.data.frame()
 
 # Create demographics/characteristics data ------------------------------------

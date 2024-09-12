@@ -45,10 +45,6 @@ No additional requirements - all data needed to run the app and dependencies are
 
 ## How to use
 
-<!-- Add any other useful detail for others about your application code here -->
-
-...
-
 ### Running the app locally
 
 1. Clone or download the repo. 
@@ -58,6 +54,10 @@ No additional requirements - all data needed to run the app and dependencies are
 3. Run `renv::restore()` to install dependencies.
 
 4. Run `shiny::runApp()` to run the app locally.
+
+5. Run `shinytest2::test_app()` to run the tests against the app.
+
+If you run all of that successfully you're cooking with gas!
 
 ### Folder structure
 
@@ -73,9 +73,9 @@ There is a `R/data-prep/` folder, this contains scripts not used by the app, tha
 
 ### Data
 
-The data used in this app is too large in CSV format to be stored in a Git repo. As a result we have used the [parquet](https://parquet.apache.org/) format from Apache. The `R/data-prep/create_data_files.R` script takes in CSVs generated from the SQL queries and then creates .parquet versions for use in the app.
+The data used in this app is too large in CSV format to be stored in a Git repo. As a result we have used the [parquet](https://parquet.apache.org/) format from Apache. This leads to using the [arrow package](https://arrow.apache.org/docs/r/) for data reading and manipulation and provides many performance benefits.
 
-This leads to using the [arrow package](https://arrow.apache.org/docs/r/) for data reading and manipulation and provides many performance benefits.
+To update the data you will need to do this manually outside of the app. The `R/data-prep/create_data_files.R` script should be used for this. Follow the instructions in there to run the code against CSVs generated from the SQL queries and this script will then create the .parquet versions for use in the app.
 
 #### File sizes
 
@@ -104,7 +104,7 @@ There are a number of pre-commit hooks that will execute every time you commit t
 3. Checking the styling of code using `styler::style_dir()`
 4. Generating the `manifest.json` file that is used for deploying to POSIT Connect internally
 
-Should they fail or prevent you committing they will give their reasons in error / warning messages along with steps to take to remedy the issue.
+Should they fail or prevent you committing they will give their reasons in error / warning messages along with steps to take to remedy the issue. If there's persistent or confusing issues get in touch with explore.statistics@education.gov.uk.
 
 ### Tests
 
@@ -114,9 +114,11 @@ GitHub Actions provide CI by running the automated tests and checks for code sty
 
 You should run `shinytest2::test_app()` regularly to check that the tests are passing against the code you are working on.
 
+If the tests fail, sometimes just re-running them will help. Testing applications like this is notoriously difficult and every now and then shinytest2 will hiccup and fail to start a port or session running properly. If there's persistent or confusing issues get in touch with the explore education statistics platforms team.
+
 ### Deployment
 
-The app is deployed to Department for Education's shinyapps.io subscription and internal POSIT Connect servers using GitHub actions. The yaml files for this are `.github/workflows/deploy-shiny.yml` and `azure-pipelines.yml`. Maintenance of this is provided by the Explore education statistics platforms team.
+The app is deployed to Department for Education's shinyapps.io subscription and internal POSIT Connect servers using GitHub actions. The yaml files for this are `.github/workflows/deploy-shiny.yml` and `azure-pipelines.yml`. Maintenance of this is provided by the explore education statistics platforms team.
 
 ### Navigation
 
@@ -132,11 +134,20 @@ You should also run `lintr::lint_dir()` regularly as lintr will check all pull r
 
 ## How to contribute
 
+In general, it is good practice to make specific changes at a time, add one new feature rather than smattering code all over the app. It will make it easier to test, easier to roll back if needed, and also easier for whoever is reviewing your code. Like all good advice, little and often is usually the way to go.
+
+1. Make a new branch for your change based off the `main` branch
+2. Make your changes, testing thoroughly and updating documentation as needed
+
 Always run the following commands before raising changes:
 
 - `styler::style_dir()` - to format the code neatly
 - `lintr::lint_dir()` - to check for any potential issues with code formatting
 - `shinytest2::test_app()` - to run automated tests again the app
+
+3. Raise a pull request on GitHub, with details of the changes you have made
+4. Get someone to review your changes, respond to any feedback and make changes on your branch until the reviewer marks the pull request as approved
+5. Once your pull request is approved, merge it into the main branch and delete the branch you were working on (we should use a new branch for every new change, reviving old branches can get messy)
 
 ### Flagging issues
 

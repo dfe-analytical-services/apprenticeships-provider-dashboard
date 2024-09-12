@@ -5267,19 +5267,13 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "f9a1a6a5313bb305bcfacc1f5cb51dfd"
+      "checksum": "1b34d5e4167d486e0cb8100f71ed7d54"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
     },
-    "data/apprenticeships_data.csv": {
-      "checksum": "a6f18a3fdfc9f973d580b51d768c6065"
-    },
     "data/apprenticeships_data_0.parquet": {
       "checksum": "7ea32b642e85a344a79c156db407dee3"
-    },
-    "data/apprenticeships_demographics.csv": {
-      "checksum": "177cd1633ef521212ec47abcaed8f90c"
     },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "21135784e8ab92176deb0a64b7b6c0b3"
@@ -5295,9 +5289,6 @@
     },
     "data/lad_map_data_0.parquet": {
       "checksum": "ace1b38e436d6423501b2a00578e7904"
-    },
-    "data/national_provider_summary.csv": {
-      "checksum": "a0064193ae482f55418c7e47ea27d724"
     },
     "data/national_provider_summary_0.parquet": {
       "checksum": "d609c3bda675001ba896f8c1152ac314"

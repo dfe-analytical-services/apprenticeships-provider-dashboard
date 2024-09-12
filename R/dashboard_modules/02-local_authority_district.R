@@ -11,11 +11,19 @@ lad_boundaries_2022 <- sf::st_read("data/boundary_files/Local_Authority_District
   rename("lad_name" = LAD22NM)
 
 # Create static lists of options for dropdowns
+
 lad_year_choices <- data_choices(data = lad_map_parquet, column = "year")
+# Years should be in descending order order
+lad_year_choices <- sort(lad_year_choices, decreasing = TRUE)
+
 lad_measure_choices <- c("achievements", "enrolments", "starts") # TODO: would like to capitalise eventually
 
 provider_choices <- c("", distinct(lad_map_parquet, provider_name) %>% pull())
+# Providers should be in alphabetical order
+provider_choices <- sort(provider_choices)
+
 delivery_lad_choices <- c("", distinct(lad_map_parquet, delivery_lad) %>% pull())
+
 learner_home_lad_choices <- c("", distinct(lad_map_parquet, learner_home_lad) %>% pull())
 
 # Main module code ============================================================
@@ -48,7 +56,8 @@ lad_ui <- function(id) {
         selectizeInput(
           inputId = NS(id, "provider"),
           label = "Search for a provider",
-          choices = NULL
+          choices = NULL,
+          options = list(maxOptions = 6000)
         ),
         selectizeInput(
           inputId = NS(id, "delivery_lad"),
@@ -211,7 +220,6 @@ lad_server <- function(id) {
           summarise,
           `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
         )
-
       return(delivery_lad_table)
     })
 

@@ -1347,32 +1347,34 @@
       "description": {
         "Package": "dfeshiny",
         "Title": "DfE R-Shiny Standards",
-        "Version": "0.2.0",
+        "Version": "0.4.0",
         "Authors@R": "c(\n    person(\"Rich\", \"Bielby\", , \"richard.bielby@education.gov.uk\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0001-9070-9969\")),\n    person(\"Charlotte\", \"Foster\", , \"charlotte.foster@education.gov.uk\", role = \"aut\"),\n    person(\"Cam\", \"Race\", , \"cameron.race@education.gov.uk\", role = \"aut\")\n  )",
         "Description": "R package containing preferred methods for creating official\n    DfE R-Shiny dashboards.",
         "License": "GPL (>= 3)",
         "Imports": "magrittr,\ncheckmate,\nglue,\nhtmltools,\nRCurl,\nshiny,\nshinyGovstyle,\nshinyjs,\nstringr,\nstyler",
-        "Suggests": "diffviewer,\nknitr,\nrmarkdown,\nshinytest2,\ntestthat (>= 3.0.0)",
+        "Suggests": "diffviewer,\nknitr,\nrmarkdown,\nshinytest2,\ndevtools,\ntestthat (>= 3.0.0)",
         "Config/testthat/edition": "3",
         "Encoding": "UTF-8",
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.3.2",
         "URL": "https://dfe-analytical-services.github.io/dfeshiny/\nhttps://www.github.com/dfe-analytical-services/dfeshiny/",
         "VignetteBuilder": "knitr",
+        "Depends": "R (>= 2.10)",
+        "LazyData": "true",
         "Author": "Rich Bielby [aut, cre] (<https://orcid.org/0000-0001-9070-9969>),\n  Charlotte Foster [aut],\n  Cam Race [aut]",
         "Maintainer": "Rich Bielby <richard.bielby@education.gov.uk>",
-        "Built": "R 4.4.1; ; 2024-09-03 07:17:00 UTC; windows",
+        "Built": "R 4.4.1; ; 2024-09-12 09:06:40 UTC; windows",
         "RemoteType": "github",
         "RemoteUsername": "dfe-analytical-services",
         "RemoteRepo": "dfeshiny",
         "RemoteRef": "main",
-        "RemoteSha": "2c26b237c2f1345bfaa67d15449fe68c36b08a52",
+        "RemoteSha": "6a1262292a746a0c2ffe1c293fe04c55fb4d7250",
         "RemoteHost": "api.github.com",
         "GithubHost": "api.github.com",
         "GithubRepo": "dfeshiny",
         "GithubUsername": "dfe-analytical-services",
         "GithubRef": "main",
-        "GithubSHA1": "2c26b237c2f1345bfaa67d15449fe68c36b08a52"
+        "GithubSHA1": "6a1262292a746a0c2ffe1c293fe04c55fb4d7250"
       }
     },
     "diffobj": {
@@ -4004,7 +4006,7 @@
       "Repository": "https://packagemanager.posit.co/cran/latest",
       "description": {
         "Package": "sf",
-        "Version": "1.0-16",
+        "Version": "1.0-17",
         "Title": "Simple Features for R",
         "Authors@R": "\n    c(person(given = \"Edzer\",\n             family = \"Pebesma\",\n             role = c(\"aut\", \"cre\"),\n             email = \"edzer.pebesma@uni-muenster.de\",\n             comment = c(ORCID = \"0000-0001-8049-7069\")),\n      person(given = \"Roger\",\n             family = \"Bivand\",\n             role = \"ctb\",\n             comment = c(ORCID = \"0000-0003-2392-6140\")),\n      person(given = \"Etienne\",\n             family = \"Racine\",\n             role = \"ctb\"),\n      person(given = \"Michael\",\n             family = \"Sumner\",\n             role = \"ctb\"),\n      person(given = \"Ian\",\n             family = \"Cook\",\n             role = \"ctb\"),\n      person(given = \"Tim\",\n             family = \"Keitt\",\n             role = \"ctb\"),\n      person(given = \"Robin\",\n             family = \"Lovelace\",\n             role = \"ctb\"),\n      person(given = \"Hadley\",\n             family = \"Wickham\",\n             role = \"ctb\"),\n      person(given = \"Jeroen\",\n             family = \"Ooms\",\n             role = \"ctb\",\n             comment = c(ORCID = \"0000-0002-4035-0289\")),\n      person(given = \"Kirill\",\n             family = \"M\\u00fcller\",\n             role = \"ctb\"),\n      person(given = \"Thomas Lin\",\n             family = \"Pedersen\",\n             role = \"ctb\"),\n      person(given = \"Dan\",\n             family = \"Baston\",\n             role = \"ctb\"),\n      person(given = \"Dewey\",\n             family = \"Dunnington\",\n             role = \"ctb\",\n             comment = c(ORCID = \"0000-0002-9415-4582\"))\n\t\t\t )",
         "Description": "Support for simple features, a standardized way to\n    encode spatial vector data. Binds to 'GDAL' for reading and writing\n    data, to 'GEOS' for geometrical operations, and to 'PROJ' for\n    projection conversions and datum transformations. Uses by default the 's2'\n    package for spherical geometry operations on ellipsoidal (long/lat) coordinates.",
@@ -4012,31 +4014,31 @@
         "URL": "https://r-spatial.github.io/sf/, https://github.com/r-spatial/sf",
         "BugReports": "https://github.com/r-spatial/sf/issues",
         "Depends": "methods, R (>= 3.3.0)",
-        "Imports": "classInt (>= 0.4-1), DBI (>= 0.8), graphics, grDevices, grid,\nmagrittr, Rcpp (>= 0.12.18), s2 (>= 1.1.0), stats, tools, units\n(>= 0.7-0), utils",
+        "Imports": "classInt (>= 0.4-1), DBI (>= 0.8), graphics, grDevices, grid,\nmagrittr, s2 (>= 1.1.0), stats, tools, units (>= 0.7-0), utils",
         "Suggests": "blob, nanoarrow, covr, dplyr (>= 1.0.0), ggplot2, knitr,\nlwgeom (>= 0.2-14), maps, mapview, Matrix, microbenchmark,\nodbc, pbapply, pillar, pool, raster, rlang, rmarkdown,\nRPostgres (>= 1.1.0), RPostgreSQL, RSQLite, sp (>= 1.2-4),\nspatstat (>= 2.0-1), spatstat.geom, spatstat.random,\nspatstat.linnet, spatstat.utils, stars (>= 0.2-0), terra,\ntestthat (>= 3.0.0), tibble (>= 1.4.1), tidyr (>= 1.2.0),\ntidyselect (>= 1.0.0), tmap (>= 2.0), vctrs, wk (>= 0.9.0)",
         "LinkingTo": "Rcpp",
         "VignetteBuilder": "knitr",
         "Encoding": "UTF-8",
-        "RoxygenNote": "7.3.1",
+        "RoxygenNote": "7.3.2",
         "Config/testthat/edition": "2",
         "Config/needs/coverage": "XML",
         "SystemRequirements": "GDAL (>= 2.0.1), GEOS (>= 3.4.0), PROJ (>= 4.8.0),\nsqlite3",
         "Collate": "'RcppExports.R' 'init.R' 'import-standalone-s3-register.R'\n'crs.R' 'bbox.R' 'read.R' 'db.R' 'sfc.R' 'sfg.R' 'sf.R'\n'bind.R' 'wkb.R' 'wkt.R' 'plot.R' 'geom-measures.R'\n'geom-predicates.R' 'geom-transformers.R' 'transform.R'\n'proj.R' 'sp.R' 'grid.R' 'arith.R' 'tidyverse.R'\n'tidyverse-vctrs.R' 'cast_sfg.R' 'cast_sfc.R' 'graticule.R'\n'datasets.R' 'aggregate.R' 'agr.R' 'maps.R' 'join.R' 'sample.R'\n'valid.R' 'collection_extract.R' 'jitter.R' 'sgbp.R'\n'spatstat.R' 'stars.R' 'crop.R' 'gdal_utils.R' 'nearest.R'\n'normalize.R' 'sf-package.R' 'defunct.R' 'z_range.R'\n'm_range.R' 'shift_longitude.R' 'make_grid.R' 's2.R' 'terra.R'\n'geos-overlayng.R' 'break_antimeridian.R'",
         "NeedsCompilation": "yes",
-        "Packaged": "2024-03-20 22:16:20 UTC; edzer",
+        "Packaged": "2024-09-06 11:19:40 UTC; edzer",
         "Author": "Edzer Pebesma [aut, cre] (<https://orcid.org/0000-0001-8049-7069>),\n  Roger Bivand [ctb] (<https://orcid.org/0000-0003-2392-6140>),\n  Etienne Racine [ctb],\n  Michael Sumner [ctb],\n  Ian Cook [ctb],\n  Tim Keitt [ctb],\n  Robin Lovelace [ctb],\n  Hadley Wickham [ctb],\n  Jeroen Ooms [ctb] (<https://orcid.org/0000-0002-4035-0289>),\n  Kirill Müller [ctb],\n  Thomas Lin Pedersen [ctb],\n  Dan Baston [ctb],\n  Dewey Dunnington [ctb] (<https://orcid.org/0000-0002-9415-4582>)",
         "Maintainer": "Edzer Pebesma <edzer.pebesma@uni-muenster.de>",
-        "Repository": "CRAN",
-        "Date/Publication": "2024-03-24 23:50:02 UTC",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-25 01:46:19 UTC; windows",
+        "Repository": "RSPM",
+        "Date/Publication": "2024-09-06 19:20:02 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-09-07 12:23:18 UTC; windows",
         "Archs": "x64",
         "RemoteType": "standard",
         "RemotePkgRef": "sf",
         "RemoteRef": "sf",
-        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "1.0-16"
+        "RemoteSha": "1.0-17"
       }
     },
     "sfarrow": {
@@ -5026,7 +5028,7 @@
       "description": {
         "Package": "wk",
         "Title": "Lightweight Well-Known Geometry Parsing",
-        "Version": "0.9.2",
+        "Version": "0.9.3",
         "Authors@R": "\n    c(\n      person(given = \"Dewey\",\n             family = \"Dunnington\",\n             role = c(\"aut\", \"cre\"),\n             email = \"dewey@fishandwhistle.net\",\n             comment = c(ORCID = \"0000-0002-9415-4582\")),\n       person(given = \"Edzer\",\n              family = \"Pebesma\",\n              role = c(\"aut\"),\n              email = \"edzer.pebesma@uni-muenster.de\",\n              comment = c(ORCID = \"0000-0001-8049-7069\")),\n      person(given = \"Anthony\",\n             family = \"North\",\n             email = \"anthony.jl.north@gmail.com\",\n             role = c(\"ctb\"))\n    )",
         "Maintainer": "Dewey Dunnington <dewey@fishandwhistle.net>",
         "Description": "Provides a minimal R and C++ API for parsing\n  well-known binary and well-known text representation of\n  geometries to and from R-native formats.\n  Well-known binary is compact\n  and fast to parse; well-known text is human-readable\n  and is useful for writing tests. These formats are\n  useful in R only if the information they contain can be\n  accessed in R, for which high-performance functions\n  are provided here.",
@@ -5040,19 +5042,19 @@
         "Depends": "R (>= 2.10)",
         "LazyData": "true",
         "NeedsCompilation": "yes",
-        "Packaged": "2024-07-09 05:24:04 UTC; deweydunnington",
+        "Packaged": "2024-09-05 20:29:54 UTC; deweydunnington",
         "Author": "Dewey Dunnington [aut, cre] (<https://orcid.org/0000-0002-9415-4582>),\n  Edzer Pebesma [aut] (<https://orcid.org/0000-0001-8049-7069>),\n  Anthony North [ctb]",
-        "Repository": "CRAN",
-        "Date/Publication": "2024-07-09 06:00:02 UTC",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-07-10 23:50:49 UTC; windows",
+        "Repository": "RSPM",
+        "Date/Publication": "2024-09-06 15:20:02 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-09-07 12:04:59 UTC; windows",
         "Archs": "x64",
         "RemoteType": "standard",
         "RemotePkgRef": "wk",
         "RemoteRef": "wk",
-        "RemoteRepos": "https://cran.rstudio.com",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.9.2"
+        "RemoteSha": "0.9.3"
       }
     },
     "xfun": {
@@ -5250,13 +5252,13 @@
       "checksum": "94d500fe8e3a1b354b217ebd3279ba5c"
     },
     ".github/workflows/automated-tests.yaml": {
-      "checksum": "ca3cdd3545767ce53e5cd8b4f32c8d10"
+      "checksum": "e6efc6a63709705f62461d4f8da4c3e0"
     },
     ".github/workflows/deploy-shiny.yaml": {
       "checksum": "daa321b0f496d045fd363df2ea85d0d4"
     },
     ".github/workflows/lintr.yml": {
-      "checksum": "6d16237c6609d5e1c86a0fef885f0c23"
+      "checksum": "cb6ea58f6e01f6ba354b50ff33f46297"
     },
     ".hooks/pre-commit.R": {
       "checksum": "ee7e229f54e456f743dc8601e0c1c070"
@@ -5265,7 +5267,7 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "2d4e7d3c51367338eca296e1db6e8ed4"
+      "checksum": "71cb3fea31e614872dae841d8dcd1414"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5355,7 +5357,7 @@
       "checksum": "b4d538d79bccf681528a1594c5831e10"
     },
     "renv.lock": {
-      "checksum": "a4d5cc6934827b88f657b4ddc1687a1b"
+      "checksum": "b79ed92a52482031d76c1e73444e22c1"
     },
     "server.R": {
       "checksum": "4e64b5320a433d75ee5c412a4c2528c0"

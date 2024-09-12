@@ -21,11 +21,14 @@ jobs:
         with:
           use-public-rspm: true
       
-      - name: Install terra depdenencies
-        run: sudo apt-get install libproj-dev
-      
       - name: Install git2r dependencies
         run: sudo apt-get install -y libgit2-dev
+
+      - name: Install proj library (terra depdencies)
+        run: sudo apt-get install libproj-dev
+        
+      - name: Install gdal library (terra dependencies)
+        run: sudo apt-get install libgdal-dev
 
       - uses: r-lib/actions/setup-renv@v2
           

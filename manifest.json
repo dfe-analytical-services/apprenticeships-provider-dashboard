@@ -5734,7 +5734,7 @@
       "checksum": "0a570afaeac03757e376607541d0f8ff"
     },
     "data/national_provider_summary_0.parquet": {
-      "checksum": "05cbcc1201a16f97d4919345e05cdaf0"
+      "checksum": "4c8f38f019f23ea74e734b472231e949"
     },
     "datafiles_log.csv": {
       "checksum": "05bc2f945e0441cc1794e5591d0eb623"
@@ -5758,7 +5758,7 @@
       "checksum": "b15e98237d7258d7244c1a3339d5fec6"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
-      "checksum": "7fe46330e7d79ffc6ccdab4c89c42c54"
+      "checksum": "dc00134b1cc5dafa846435b9d49ecb8a"
     },
     "R/dashboard_modules/06-user_guide.R": {
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
@@ -5803,7 +5803,7 @@
       "checksum": "3ce6538ab919c9c2f191212fda29e8fe"
     },
     "sql/national_provider_summary.sql": {
-      "checksum": "ec13f7fa4f964568957189766dd4713a"
+      "checksum": "cda7d17984e43c4f5d56bf9b7408f665"
     },
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"

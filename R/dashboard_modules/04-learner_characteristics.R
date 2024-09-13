@@ -84,8 +84,8 @@ learner_characteristics_ui <- function(id) {
           label = h2("Choose download file format"),
           hint_label = "This will download data related to all providers for all years.
           The XLSX format is designed for use in Microsoft Excel",
-          choices = c("CSV (Up to 13.51 MB)", "XLSX (Up to 3.23 MB)"),
-          selected = "CSV (Up to 13.51 MB)"
+          choices = c("CSV (13.51 MB)", "XLSX (3.23 MB)"),
+          selected = "CSV (13.51 MB)"
         ),
         # Bit of a hack to force the button not to be full width
         layout_columns(
@@ -200,8 +200,8 @@ learner_characteristics_server <- function(id) {
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- paste0("learner_characteristics_provider_summary")
-        extension <- if (input$file_type == "CSV (Up to 13.51 MB)") {
+        raw_name <- "learner_characteristics_provider_summary"
+        extension <- if (input$file_type == "CSV (13.51 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -210,7 +210,7 @@ learner_characteristics_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 13.51 MB)") {
+        if (input$file_type == "CSV (13.51 MB)") {
           data.table::fwrite(chars_parquet, file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

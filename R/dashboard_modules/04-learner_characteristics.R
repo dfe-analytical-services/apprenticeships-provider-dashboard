@@ -82,7 +82,8 @@ learner_characteristics_ui <- function(id) {
         shinyGovstyle::radio_button_Input(
           inputId = NS(id, "file_type"),
           label = h2("Choose download file format"),
-          hint_label = "This will download data related to all providers for all years. The XLSX format is designed for use in Microsoft Excel",
+          hint_label = "This will download data related to all providers for all years.
+          The XLSX format is designed for use in Microsoft Excel",
           choices = c("CSV (Up to 13.51 MB)", "XLSX (Up to 3.23 MB)"),
           selected = "CSV (Up to 13.51 MB)"
         ),

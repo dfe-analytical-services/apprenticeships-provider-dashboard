@@ -167,8 +167,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       return(prov_selection_table)
     }) %>%
       # Set the dependent variables that will trigger this table to update
-      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_learner_home_region(),
-                selected_delivery_region())
+      bindEvent(
+        firstlow(input$measure), filtered_raw_data(), selected_learner_home_region(),
+        selected_delivery_region()
+      )
 
     ## Delivery region data ---------------------------------------------------
     delivery_region_table <- reactive({

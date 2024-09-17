@@ -16,15 +16,17 @@ lad_year_choices <- data_choices(data = lad_map_parquet, column = "year")
 # Years should be in descending order order
 lad_year_choices <- sort(lad_year_choices, decreasing = TRUE)
 
-lad_measure_choices <- c("achievements", "enrolments", "starts") # TODO: would like to capitalise eventually
+lad_measure_choices <- c("Starts", "Enrolments", "Achievements")
 
 provider_choices <- c("", distinct(lad_map_parquet, provider_name) %>% pull())
 # Providers should be in alphabetical order
 provider_choices <- sort(provider_choices)
 
 delivery_lad_choices <- c("", distinct(lad_map_parquet, delivery_lad) %>% pull())
+delivery_lad_choices <- sort(delivery_lad_choices)
 
 learner_home_lad_choices <- c("", distinct(lad_map_parquet, learner_home_lad) %>% pull())
+learner_home_lad_choices <- sort(learner_home_lad_choices)
 
 # Main module code ============================================================
 lad_ui <- function(id) {
@@ -39,7 +41,7 @@ lad_ui <- function(id) {
         selectInput(
           inputId = NS(id, "measure"),
           label = "Select measure",
-          choices = lad_measure_choices
+          choices = firstup(lad_measure_choices)
         ),
         selectInput(
           inputId = NS(id, "year"),
@@ -128,9 +130,7 @@ lad_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     # Drop downs ==============================================================
     # Set initial dropdown values
-    updateSelectizeInput(session, "provider", # choices = provider_choices,
-      server = TRUE
-    )
+    updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
     updateSelectizeInput(session, "delivery_lad", choices = delivery_lad_choices, server = TRUE)
     updateSelectizeInput(session, "learner_home_lad", choices = learner_home_lad_choices, server = TRUE)
 
@@ -182,7 +182,7 @@ lad_server <- function(id) {
         with_groups(
           "provider_name",
           summarise,
-          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
+          `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         collect()
 
@@ -220,7 +220,7 @@ lad_server <- function(id) {
         with_groups(
           delivery_lad,
           summarise,
-          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
+          `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         )
       return(delivery_lad_table)
     })
@@ -248,7 +248,7 @@ lad_server <- function(id) {
         with_groups(
           learner_home_lad,
           summarise,
-          `Number of apprenticeships` = sum(!!sym(input$measure), na.rm = TRUE)
+          `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         )
 
       return(learner_home_lad_table)

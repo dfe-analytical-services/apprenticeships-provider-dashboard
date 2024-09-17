@@ -1,0 +1,187 @@
+{
+  "input": {
+    "sas-measure": "Achievements",
+    "sas-provider": [
+      "Nottingham College",
+      "Tyne Coast College",
+      "Coventry College",
+      "The Fernandes And Rosario Consulting Limited"
+    ],
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
+    "subjects_and_standards": 1
+  },
+  "output": {
+    "sas-sas_provider_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Provider name": [
+                "Nottingham College",
+                "Tyne Coast College",
+                "Coventry College",
+                "The Fernandes And Rosario Consulting Limited"
+              ],
+              "Achievements": [
+                305,
+                55,
+                9,
+                5
+              ]
+            },
+            "columns": [
+              {
+                "id": "Provider name",
+                "name": "Provider name",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "Achievements",
+                "name": "Achievements",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header"
+              }
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "d05d6a5fb88dfcaef50308ba82d4ce26",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "sas-sas_provider_table_title": "Achievements for providers across all subject areas",
+    "sas-sas_subject_area_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Subject area": [
+                "Engineering and Manufacturing Technologies",
+                "Health, Public Services and Care",
+                "Construction, Planning and the Built Environment",
+                "Business, Administration and Law",
+                "Education and Training",
+                "Health, Public Services and Care",
+                "Engineering and Manufacturing Technologies",
+                "Retail and Commercial Enterprise",
+                "Retail and Commercial Enterprise",
+                "Business, Administration and Law",
+                "Retail and Commercial Enterprise",
+                "Leisure, Travel and Tourism",
+                "Business, Administration and Law",
+                "Engineering and Manufacturing Technologies",
+                "Information and Communication Technology",
+                "Health, Public Services and Care",
+                "Business, Administration and Law"
+              ],
+              "ssa_t2_desc": [
+                "Transportation Operations and Maintenance",
+                "Health and Social Care",
+                "Building and Construction",
+                "Administration",
+                "Direct Learning Support",
+                "Child Development and Well Being",
+                "Engineering",
+                "Service Enterprises",
+                "Hospitality and Catering",
+                "Accounting and Finance",
+                "Retailing and Wholesaling",
+                "Sport, Leisure and Recreation",
+                "Business Management",
+                "Manufacturing Technologies",
+                "ICT Practitioners",
+                "Medicine and Dentistry",
+                "Marketing and Sales"
+              ],
+              "values": [
+                85,
+                79,
+                63,
+                38,
+                28,
+                27,
+                19,
+                12,
+                12,
+                7,
+                2,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "columns": [
+              {
+                "id": "Subject area",
+                "name": "Subject area",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "ssa_t2_desc",
+                "name": "ssa_t2_desc",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "values",
+                "name": "Achievements",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header",
+                "aggregate": "sum"
+              }
+            ],
+            "groupBy": [
+              "Subject area"
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "a8fcc8ae1aa1e38545d09b7fd06990c3",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    }
+  }
+}

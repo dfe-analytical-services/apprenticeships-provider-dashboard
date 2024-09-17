@@ -6,7 +6,9 @@ sas_parquet <- read_sas("data/apprenticeships_data_0.parquet")
 sas_provider_choices <- data_choices(data = sas_parquet, column = "provider_name")
 # Providers should be in alphabetical order
 sas_provider_choices <- sort(sas_provider_choices)
-sas_year_choices <- data_choices(data = sas_parquet, column = "year")
+sas_year_choices <- sort(data_choices(data = sas_parquet, column = "year"),
+  decreasing = TRUE
+)
 sas_measure_choices <- data_choices(data = sas_parquet, column = "measure")
 
 subjects_standards_ui <- function(id) {

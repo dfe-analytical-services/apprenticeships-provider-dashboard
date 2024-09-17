@@ -4,9 +4,11 @@
 prov_breakdowns_parquet <- read_prov_breakdowns("data/apprenticeships_data_0.parquet")
 
 # Create static lists of options for dropdowns
-apps_measure_choices <- c("achievements", "enrolments", "starts") # TODO: would like to capitalise eventually
+apps_measure_choices <- c("Starts", "Enrolments", "Achievements")
 apps_prov_type_choices <- data_choices(data = prov_breakdowns_parquet, column = "provider_type")
-apps_year_choices <- data_choices(data = prov_breakdowns_parquet, column = "year")
+apps_year_choices <- sort(data_choices(data = prov_breakdowns_parquet, column = "year"),
+  decreasing = TRUE
+)
 apps_level_choices <- data_choices(data = prov_breakdowns_parquet, column = "apps_Level")
 apps_age_choices <- data_choices(data = prov_breakdowns_parquet, column = "age_group")
 
@@ -156,16 +158,17 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         with_groups(
           "provider_name",
           summarise,
-          `number` = sum(!!sym(input$measure), na.rm = TRUE)
+          `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         rename("Provider name" = provider_name) %>%
-        rename_with(~ paste("Number of", input$measure), `number`) %>%
+        rename_with(~ paste("Number of", firstlow(input$measure)), `number`) %>%
         collect()
 
       return(prov_selection_table)
     }) %>%
       # Set the dependent variables that will trigger this table to update
-      bindEvent(input$measure, filtered_raw_data(), selected_learner_home_region(), selected_delivery_region())
+      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_learner_home_region(),
+                selected_delivery_region())
 
     ## Delivery region data ---------------------------------------------------
     delivery_region_table <- reactive({
@@ -186,10 +189,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         with_groups(
           "delivery_region",
           summarise,
-          `number` = sum(!!sym(input$measure), na.rm = TRUE)
+          `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         rename("Delivery region" = delivery_region) %>%
-        rename_with(~ paste("Number of", input$measure), `number`)
+        rename_with(~ paste("Number of", firstlow(input$measure)), `number`)
 
       # Make sure all regions have a row even if 0
       # Regions vector defined at top of this script
@@ -200,7 +203,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
       return(delivery_region_table)
     }) %>%
-      bindEvent(input$measure, filtered_raw_data(), selected_providers())
+      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers())
 
     ## Home region data -------------------------------------------------------
     home_region_table <- reactive({
@@ -221,10 +224,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         with_groups(
           "learner_home_region",
           summarise,
-          `number` = sum(!!sym(input$measure), na.rm = TRUE)
+          `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         rename("Learner home region" = learner_home_region) %>%
-        rename_with(~ paste("Number of", input$measure), `number`)
+        rename_with(~ paste("Number of", firstlow(input$measure)), `number`)
 
       # Make sure all regions have a row even if 0
       # Regions vector defined at top of this script
@@ -235,7 +238,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
       return(home_region_table)
     }) %>%
-      bindEvent(input$measure, filtered_raw_data(), selected_providers())
+      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers())
 
     # Table output objects ====================================================
     output$prov_selection <- renderReactable({

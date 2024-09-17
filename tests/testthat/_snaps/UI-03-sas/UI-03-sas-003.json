@@ -1,0 +1,187 @@
+{
+  "input": {
+    "sas-measure": "Starts",
+    "sas-provider": [
+      "Nottingham College",
+      "Tyne Coast College",
+      "Coventry College",
+      "The Fernandes And Rosario Consulting Limited"
+    ],
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
+    "subjects_and_standards": 1
+  },
+  "output": {
+    "sas-sas_provider_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Provider name": [
+                "Nottingham College",
+                "Tyne Coast College",
+                "The Fernandes And Rosario Consulting Limited",
+                "Coventry College"
+              ],
+              "Starts": [
+                688,
+                149,
+                14,
+                0
+              ]
+            },
+            "columns": [
+              {
+                "id": "Provider name",
+                "name": "Provider name",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "Starts",
+                "name": "Starts",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header"
+              }
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "689f91f3e38a2f69bf1ac0f50788ebda",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "sas-sas_provider_table_title": "Starts for providers across all subject areas",
+    "sas-sas_subject_area_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Subject area": [
+                "Construction, Planning and the Built Environment",
+                "Engineering and Manufacturing Technologies",
+                "Health, Public Services and Care",
+                "Engineering and Manufacturing Technologies",
+                "Business, Administration and Law",
+                "Business, Administration and Law",
+                "Health, Public Services and Care",
+                "Retail and Commercial Enterprise",
+                "Engineering and Manufacturing Technologies",
+                "Business, Administration and Law",
+                "Education and Training",
+                "Retail and Commercial Enterprise",
+                "Information and Communication Technology",
+                "Retail and Commercial Enterprise",
+                "Business, Administration and Law",
+                "Health, Public Services and Care",
+                "Leisure, Travel and Tourism"
+              ],
+              "ssa_t2_desc": [
+                "Building and Construction",
+                "Transportation Operations and Maintenance",
+                "Health and Social Care",
+                "Engineering",
+                "Administration",
+                "Accounting and Finance",
+                "Child Development and Well Being",
+                "Service Enterprises",
+                "Manufacturing Technologies",
+                "Business Management",
+                "Direct Learning Support",
+                "Hospitality and Catering",
+                "ICT Practitioners",
+                "Retailing and Wholesaling",
+                "Marketing and Sales",
+                "Medicine and Dentistry",
+                "Sport, Leisure and Recreation"
+              ],
+              "values": [
+                195,
+                181,
+                140,
+                96,
+                69,
+                31,
+                27,
+                24,
+                23,
+                23,
+                14,
+                12,
+                10,
+                3,
+                2,
+                1,
+                0
+              ]
+            },
+            "columns": [
+              {
+                "id": "Subject area",
+                "name": "Subject area",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "ssa_t2_desc",
+                "name": "ssa_t2_desc",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "values",
+                "name": "Starts",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header",
+                "aggregate": "sum"
+              }
+            ],
+            "groupBy": [
+              "Subject area"
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "e34749483b69ba96933f6f41127a362e",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    }
+  }
+}

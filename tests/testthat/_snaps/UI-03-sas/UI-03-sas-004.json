@@ -1,0 +1,187 @@
+{
+  "input": {
+    "sas-measure": "Enrolments",
+    "sas-provider": [
+      "Nottingham College",
+      "Tyne Coast College",
+      "Coventry College",
+      "The Fernandes And Rosario Consulting Limited"
+    ],
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
+    "subjects_and_standards": 1
+  },
+  "output": {
+    "sas-sas_provider_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Provider name": [
+                "Nottingham College",
+                "Tyne Coast College",
+                "The Fernandes And Rosario Consulting Limited",
+                "Coventry College"
+              ],
+              "Enrolments": [
+                1932,
+                380,
+                25,
+                9
+              ]
+            },
+            "columns": [
+              {
+                "id": "Provider name",
+                "name": "Provider name",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "Enrolments",
+                "name": "Enrolments",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header"
+              }
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "7ce6f6f929051a00fb742826c8abf09f",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "sas-sas_provider_table_title": "Enrolments for providers across all subject areas",
+    "sas-sas_subject_area_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Subject area": [
+                "Engineering and Manufacturing Technologies",
+                "Construction, Planning and the Built Environment",
+                "Health, Public Services and Care",
+                "Engineering and Manufacturing Technologies",
+                "Business, Administration and Law",
+                "Health, Public Services and Care",
+                "Business, Administration and Law",
+                "Retail and Commercial Enterprise",
+                "Education and Training",
+                "Business, Administration and Law",
+                "Engineering and Manufacturing Technologies",
+                "Retail and Commercial Enterprise",
+                "Information and Communication Technology",
+                "Leisure, Travel and Tourism",
+                "Retail and Commercial Enterprise",
+                "Health, Public Services and Care",
+                "Business, Administration and Law"
+              ],
+              "ssa_t2_desc": [
+                "Transportation Operations and Maintenance",
+                "Building and Construction",
+                "Health and Social Care",
+                "Engineering",
+                "Administration",
+                "Child Development and Well Being",
+                "Accounting and Finance",
+                "Service Enterprises",
+                "Direct Learning Support",
+                "Business Management",
+                "Manufacturing Technologies",
+                "Hospitality and Catering",
+                "ICT Practitioners",
+                "Sport, Leisure and Recreation",
+                "Retailing and Wholesaling",
+                "Medicine and Dentistry",
+                "Marketing and Sales"
+              ],
+              "values": [
+                621,
+                529,
+                349,
+                263,
+                165,
+                68,
+                60,
+                54,
+                52,
+                52,
+                48,
+                33,
+                29,
+                12,
+                6,
+                3,
+                2
+              ]
+            },
+            "columns": [
+              {
+                "id": "Subject area",
+                "name": "Subject area",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "ssa_t2_desc",
+                "name": "ssa_t2_desc",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "values",
+                "name": "Enrolments",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header",
+                "aggregate": "sum"
+              }
+            ],
+            "groupBy": [
+              "Subject area"
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "dbb501708bb9957cd944c8039c3e5361",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    }
+  }
+}

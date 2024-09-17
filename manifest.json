@@ -5709,8 +5709,11 @@
     ".RDataTmp4": {
       "checksum": "b4c314ff5571e1a6f3c94f8b23089fd8"
     },
+    ".RDataTmp5": {
+      "checksum": "afd77efc660e797e716ce8c7d9585144"
+    },
     ".Rprofile": {
-      "checksum": "01f8f1ecffa88e3b7f5b26bfbbc9ecb2"
+      "checksum": "a1f9ea461436da23cd6579ba74cf4da1"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5755,13 +5758,13 @@
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
-      "checksum": "4573ae628db4b8c2d21cd2cabe462334"
+      "checksum": "e21abdac7b7046e22d74ac4625d6b5cf"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
-      "checksum": "326d062d8952fdee2740c1265ed5d625"
+      "checksum": "9e5d98c77826a9de8548e2f4d2ce9a10"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "7caff42680dad2dc21af4fbea2a4ae17"
+      "checksum": "b7206b62e98c6ccc56ee17aa55e92827"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
       "checksum": "273d13a1ac9915d8e392b00bf0d44ffd"
@@ -5791,7 +5794,7 @@
       "checksum": "4fb06508719a86445bed410f6640a071"
     },
     "R/helper_functions.R": {
-      "checksum": "eb76cf5c59630aa80cad8b53fb0d1abd"
+      "checksum": "5f1369340c633bca00c3d479d466865f"
     },
     "R/read_data.R": {
       "checksum": "1fc6d1648a1169c54840dbd5e2c63a54"
@@ -5816,6 +5819,24 @@
     },
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-001.json": {
+      "checksum": "5bec07b5ef2579d2ee5d2a0765fedbe5"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-002.json": {
+      "checksum": "0796a4e6332f8a2f2315f1f3b39c8a46"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-003.json": {
+      "checksum": "c7ca0d5dcc2498ce70dd04a9f9818c1b"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-004.json": {
+      "checksum": "3afaf9f0424deb1fda826664c0b9b41a"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-005.json": {
+      "checksum": "f5d0854c383c1bdc8fc701bc83a7e6ec"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-006.json": {
+      "checksum": "e64c408d85cc66363c844de702c91a81"
     },
     "tests/testthat/setup-shinytest2.R": {
       "checksum": "d3e71278de0398bd2acaa6e00ad59114"

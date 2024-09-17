@@ -12,8 +12,8 @@ apps_age_choices <- data_choices(data = prov_breakdowns_parquet, column = "age_g
 
 # Create static list of regions to set the order for the region tables and use in the user selections
 regions <- c(
-  "East Midlands", "East of England", "London", "North East", "North West", "Outside of England and unknown",
-  "South East", "South West", "West Midlands", "Yorkshire and The Humber"
+  "North East", "North West", "Yorkshire and The Humber", "East Midlands", "West Midlands", "East of England",
+  "London", "South East", "South West", "Outside of England and unknown"
 )
 
 # Main module code ============================================================

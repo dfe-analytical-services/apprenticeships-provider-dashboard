@@ -128,7 +128,9 @@ lad_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     # Drop downs ==============================================================
     # Set initial dropdown values
-    updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
+    updateSelectizeInput(session, "provider", # choices = provider_choices,
+      server = TRUE
+    )
     updateSelectizeInput(session, "delivery_lad", choices = delivery_lad_choices, server = TRUE)
     updateSelectizeInput(session, "learner_home_lad", choices = learner_home_lad_choices, server = TRUE)
 

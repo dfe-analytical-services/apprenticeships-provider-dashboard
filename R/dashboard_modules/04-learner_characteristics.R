@@ -192,10 +192,13 @@ learner_characteristics_server <- function(id) {
     output$chars_table <- renderTable({
       validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", firstlow(input$measure), " for this provider.")))
 
-      chars_reactive_table_tidied_names <- chars_reactive_table()
-      colnames(chars_reactive_table_tidied_names) <-
-        c("Academic year", "Provider name", "Type of characteristic", "Characteristic", "Measure", "Number of apprenticeships")
-      chars_reactive_table_tidied_names
+      chars_reactive_table_tidied <- chars_reactive_table()
+      colnames(chars_reactive_table_tidied) <-
+        c(
+          "Academic year", "Provider name", "Type of characteristic", "Characteristic",
+          "Measure", "Number of apprenticeships"
+        )
+      chars_reactive_table_tidied
     })
 
     # Data download ===========================================================

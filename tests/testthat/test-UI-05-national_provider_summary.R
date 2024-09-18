@@ -53,7 +53,7 @@ test_that("File type radio button changes to XLSX download", {
   app$set_inputs(provider_table_tabs = "Download data")
 
   # Change to XLSX download and test it works
-  app$set_inputs(`nps-file_type` = "XLSX (Up to 1.76 MB)")
+  app$set_inputs(`nps-file_type` = "XLSX (Up to 1.75 MB)")
   app$wait_for_idle(50)
   download_info <- app$get_download("nps-download_data")
   app$wait_for_idle(50)

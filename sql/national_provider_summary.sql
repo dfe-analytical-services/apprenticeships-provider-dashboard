@@ -335,14 +335,13 @@ order_detailed,
 provider_name as 'Provider name',
 ukprn  As UKPRN,
 category as 'Learner characteristic',
-case when apps in (0,1,2,3,4) then 0 else round(apps,-1) end as Apprenticeships,
-case when et   in (0,1,2,3,4) then 0 else round(et,-1)   end as 'Education and Training',
-case when cl   in (0,1,2,3,4) then 0 else round(cl ,-1)  end as 'Community Learning'
+case when apps in (0,1,2,3,4) then 'low' else cast(round(apps,-1) as varchar) end as 'Apprenticeships',
+case when et   in (0,1,2,3,4) then 'low' else cast(round(et,-1) as varchar) end as 'Education and Training',
+case when cl   in (0,1,2,3,4) then 'low' else cast(round(cl,-1) as varchar) end as 'Community Learning'
 FROM #ALL_TIDY
 
 where category not in ('IMD - unknown','LLDD - unknown','Ethnicity - unknown') 
-ORDER BY [year] desc, order_ref, provider_name, order_detailed
-
+ORDER BY order_ref, provider_name, order_detailed, [year] desc
 
 
 

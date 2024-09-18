@@ -7,7 +7,7 @@ app <- AppDriver$new(
 # Navigate to page we're testing
 app$click("local_authority_district")
 
-app$wait_for_idle(50)
+app$wait_for_idle(200)
 
 # Then run tests against it ===================================================
 test_that("LAD page loads", {

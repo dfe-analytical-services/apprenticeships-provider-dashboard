@@ -17,47 +17,47 @@ test_that("Tab titles load when switching", {
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - local authority district")
 
   app$click("subjects_and_standards")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - subjects and standards")
 
   app$click("learner_characteristics")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - learner characteristics")
 
   app$click("national_provider_summary")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - national provider summary")
 
   app$click("user_guide")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - user guide")
 
   app$click("provider_breakdowns")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 })
 
 # Footer links and backlinks work =============================================
 test_that("Footer link and back links work", {
   app$click("footnotes")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - footnotes")
   app$click("footnotes_to_dashboard")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 
   app$click("support")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - support")
   app$click("support_to_dashboard")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 
   app$click("accessibility_statement")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - accessibility statement")
   app$click("accessibility_to_dashboard")
-  app$wait_for_idle(50)
+  app$wait_for_idle(200)
   expect_equal(app$get_text("title"), "Apprenticeships provider dashboard - provider breakdowns")
 
   app$click("cookies")

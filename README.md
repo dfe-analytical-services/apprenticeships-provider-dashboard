@@ -41,6 +41,8 @@ The following requirements are necessarily for running the application yourself 
 
 No additional requirements - all data needed to run the app and dependencies are available in the repo.
 
+To update the data in the repo you will need access to the underlying databases. 
+
 ---
 
 ## How to use
@@ -75,7 +77,9 @@ There is a `R/data-prep/` folder, this contains scripts not used by the app, tha
 
 The data used in this app is too large in CSV format to be stored in a Git repo. As a result we have used the [parquet](https://parquet.apache.org/) format from Apache. This leads to using the [arrow package](https://arrow.apache.org/docs/r/) for data reading and manipulation and provides many performance benefits.
 
-To update the data you will need to do this manually outside of the app. The `R/data-prep/create_data_files.R` script should be used for this. Follow the instructions in there to run the code against CSVs generated from the SQL queries and this script will then create the .parquet versions for use in the app.
+To update the data you will need to do this manually outside of the app. The `R/data-prep/create_data_files.R` script should be used for this. Follow the instructions in there to run the code against CSVs generated from the SQL queries and this script will then create the .parquet files for use in the app.
+
+Functions used to read in the data are created in `R/read_data.R`
 
 #### File sizes
 
@@ -108,21 +112,30 @@ Should they fail or prevent you committing they will give their reasons in error
 
 ### Tests
 
-Automated tests have been created using shinytest2 that test the app loads and also give other examples of ways you can use tests. You should edit the tests as you add new features into the app and continue to add and maintain the tests over time.
+Automated tests have been created using shinytest2 that test the app loads and also give other examples of ways you can use tests. You should edit the tests as you add new features into the app and continue to add and maintain the tests over time. All test scripts can be found within the `tests/testthat/` folder.
 
-GitHub Actions provide CI by running the automated tests and checks for code styling on every pull request into the main branch. The yaml files for these workflows can be found in the .github/workflows folder.
+There are three types of test used (in increasing levels of complexity / thoroughness):
+- Function (take a specific function and check it behaves as expected)
+- Server (take a whole server module of the app and check the reactivity works as expected)
+- UI (run the full app, interact with the user interface (UI) and then check the outputs)
 
 You should run `shinytest2::test_app()` regularly to check that the tests are passing against the code you are working on.
 
-If the tests fail, sometimes just re-running them will help. Testing applications like this is notoriously difficult and every now and then shinytest2 will hiccup and fail to start a port or session running properly. If there's persistent or confusing issues get in touch with the explore education statistics platforms team.
+GitHub Actions provide CI by running the automated tests and checks for code styling on every pull request pointed at the main branch. The yaml files for these workflows can be found in the `.github/workflows` folder. Maintenance of this is provided by the explore education statistics platforms team.
+
+If the tests fail unexpectedly, sometimes just re-running them will help. Testing applications like this is notoriously difficult and every now and then shinytest2 will hiccup and fail to start a port or session running properly, or will just take too long to process something causing a test to fail. 
+
+If there's persistent or confusing issues get in touch with the explore education statistics platforms team who can support with this.
 
 ### Deployment
 
-The app is deployed to Department for Education's shinyapps.io subscription and internal POSIT Connect servers using GitHub actions. The yaml files for this are `.github/workflows/deploy-shiny.yml` and `azure-pipelines.yml`. Maintenance of this is provided by the explore education statistics platforms team.
+The app is deployed to Department for Education's shinyapps.io subscription and internal POSIT Connect servers using GitHub actions. The yaml files for this are `.github/workflows/deploy-shiny.yml` and `azure-pipelines.yml`. 
+
+Sometimes deployments may fail because they can't find a file. Often this will be due to a quirk of the manifest.json file not ignoring files correctly. If the app doesn't need the file in the error message, simply delete that file and then run `rsconnect::writeManifest()` to update the manifest file and push up a new commit. Maintenance of this is provided by the explore education statistics platforms team, reach out to them if there's any issues with deployments.
 
 ### Navigation
 
-In general all .r files will have a usable outline, so make use of that for navigation if in RStudio: `Ctrl-Shift-O`.
+In general all .R files will have a usable outline, so make use of that for navigation if in RStudio: `Ctrl-Shift-O`.
 
 ### Code styling 
 
@@ -151,11 +164,11 @@ Always run the following commands before raising changes:
 
 ### Flagging issues
 
-If you spot any issues with the application, please flag it in the "Issues" tab of this repository, and label as a bug. Include as much detail as possible to help the developers diagnose the issue and prepare a suitable remedy.
+If you spot any issues with the application, please flag it in the ["Issues" tab of this repository](https://github.com/dfe-analytical-services/apprenticeships-provider-dashboard/issues), and label as a bug. Include as much detail as possible to help the developers diagnose the issue and prepare a suitable remedy.
 
 ### Making suggestions
 
-You can also use the "Issues" tab in GitHub to suggest new features, changes or additions. Include as much detail on why you're making the suggestion and any thinking towards a solution that you have already done.
+You can also use the ["Issues" tab in GitHub](https://github.com/dfe-analytical-services/apprenticeships-provider-dashboard/issues) to suggest new features, changes or additions. Include as much detail on why you're making the suggestion and any thinking towards a solution that you have already done.
 
 ---
 

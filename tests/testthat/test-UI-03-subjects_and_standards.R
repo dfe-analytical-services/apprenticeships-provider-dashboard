@@ -7,7 +7,7 @@ app <- AppDriver$new(
 # Navigate to page we're testing
 app$click("subjects_and_standards")
 
-app$wait_for_idle(50)
+app$wait_for_idle(200)
 
 # Then run tests against it ===================================================
 test_that("SAS page loads", {

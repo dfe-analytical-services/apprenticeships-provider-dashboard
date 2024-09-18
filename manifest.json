@@ -5267,7 +5267,7 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "709674ec1b62ce0b80ebcf16a576fe5a"
+      "checksum": "d085936710110e77289548a1423f6933"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5348,7 +5348,7 @@
       "checksum": "ce9251d425cf9b81da032673d3096fcc"
     },
     "README.md": {
-      "checksum": "b4d538d79bccf681528a1594c5831e10"
+      "checksum": "8c58d8a0d7888c8f5826956d72836b0e"
     },
     "renv.lock": {
       "checksum": "b79ed92a52482031d76c1e73444e22c1"
@@ -5384,19 +5384,19 @@
       "checksum": "bdfacc991218a7013a595aaf95a9479a"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "ebb4197b6c878016a66e136d14d2bd14"
+      "checksum": "6b3ce5c7aae1dd8d9e770d108d288501"
     },
     "tests/testthat/test-UI-01-prov_breakdowns.R": {
-      "checksum": "5efd77bbc1dbcc4726458eab71885356"
+      "checksum": "9436245cb701c3ef579a1299994752bd"
     },
     "tests/testthat/test-UI-02-local_authority_district.R": {
-      "checksum": "d8ebc8289e51cf56bd2dc9a7a058df53"
+      "checksum": "bab52397ce673bfd9ab5cb1c76db3031"
     },
     "tests/testthat/test-UI-03-subjects_and_standards.R": {
-      "checksum": "ad3f91c47cb9adc820b545ec16c1182c"
+      "checksum": "8de0bbcde9548f33741d79c783b831c1"
     },
     "tests/testthat/test-UI-05-national_provider_summary.R": {
-      "checksum": "b16da088492e07e7c50af763f06a1e27"
+      "checksum": "13b85d275e512e898dedd91f0cb244f3"
     },
     "ui.R": {
       "checksum": "49c1b49ea000f430e5131bed45989590"

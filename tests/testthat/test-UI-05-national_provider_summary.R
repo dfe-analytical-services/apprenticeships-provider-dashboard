@@ -7,7 +7,7 @@ app <- AppDriver$new(
 # Navigate to page we're testing
 app$click("national_provider_summary")
 
-app$wait_for_idle(50)
+app$wait_for_idle(200)
 
 # Run tests ===================================================================
 test_that("NPS: Page loads", {

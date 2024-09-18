@@ -7,7 +7,7 @@ app <- AppDriver$new(
 # Navigate to page we're testing
 app$click("provider_breakdowns")
 
-app$wait_for_idle(50)
+app$wait_for_idle(200)
 
 # Then run tests against it ===================================================
 test_that("Prov breakdowns page loads", {

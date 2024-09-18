@@ -5267,13 +5267,10 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "033c75cec34f1e017afa7f73882ed3cf"
+      "checksum": "709674ec1b62ce0b80ebcf16a576fe5a"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
-    },
-    "data/apprenticeships_demographics.csv": {
-      "checksum": "591274bba881edd8247c0738d07b496c"
     },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "f12e1c07da0a8bc4e6a9855bf3bf9d46"
@@ -5289,9 +5286,6 @@
     },
     "data/lad_map_data_0.parquet": {
       "checksum": "ace1b38e436d6423501b2a00578e7904"
-    },
-    "data/national_provider_summary.csv": {
-      "checksum": "bcdfa924f2d9824fff3d71c3d6372d9f"
     },
     "data/national_provider_summary_0.parquet": {
       "checksum": "4c8f38f019f23ea74e734b472231e949"

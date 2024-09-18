@@ -5748,6 +5748,9 @@
     "data/national_provider_summary.csv": {
       "checksum": "0a570afaeac03757e376607541d0f8ff"
     },
+    "data/national_provider_summary.csv": {
+      "checksum": "0a570afaeac03757e376607541d0f8ff"
+    },
     "data/national_provider_summary_0.parquet": {
       "checksum": "4c8f38f019f23ea74e734b472231e949"
     },
@@ -5773,7 +5776,7 @@
       "checksum": "9db473551ca45fb5a8ff0856ceb5bf84"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
-      "checksum": "7fe46330e7d79ffc6ccdab4c89c42c54"
+      "checksum": "dc00134b1cc5dafa846435b9d49ecb8a"
     },
     "R/dashboard_modules/06-user_guide.R": {
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
@@ -5815,10 +5818,10 @@
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
     },
     "sql/apprenticeships_demographics.sql": {
-      "checksum": "00758011dcf22b51581e8b42e63a46b0"
+      "checksum": "3ce6538ab919c9c2f191212fda29e8fe"
     },
     "sql/national_provider_summary.sql": {
-      "checksum": "ec13f7fa4f964568957189766dd4713a"
+      "checksum": "cda7d17984e43c4f5d56bf9b7408f665"
     },
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"

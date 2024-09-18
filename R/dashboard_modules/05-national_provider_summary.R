@@ -23,7 +23,8 @@ nps_ui <- function(id) {
         selectizeInput(
           inputId = NS(id, "provider"),
           label = NULL,
-          choices = NULL
+          choices = NULL,
+          options = list(maxOptions = 6000)
         ),
         selectInput(
           inputId = NS(id, "year"),
@@ -53,8 +54,8 @@ nps_ui <- function(id) {
           inputId = NS(id, "file_type"),
           label = h2("Choose download file format"),
           hint_label = "The XLSX format is designed for use in Microsoft Excel",
-          choices = c("CSV (Up to 5.22 MB)", "XLSX (Up to 1.76 MB)"),
-          selected = "CSV (Up to 5.22 MB)"
+          choices = c("CSV (Up to 5.47 MB)", "XLSX (Up to 1.75 MB)"),
+          selected = "CSV (Up to 5.47 MB)"
         ),
         downloadButton(
           NS(id, "download_data"),
@@ -115,7 +116,7 @@ nps_server <- function(id) {
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$provider, "-", input$year, "-", input$characteristic, "-provider_summary")
-        extension <- if (input$file_type == "CSV (Up to 5.22 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 5.47 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -124,7 +125,7 @@ nps_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 5.22 MB)") {
+        if (input$file_type == "CSV (Up to 5.47 MB)") {
           data.table::fwrite(nps_reactive_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

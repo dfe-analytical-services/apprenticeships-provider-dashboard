@@ -82,9 +82,10 @@ learner_characteristics_ui <- function(id) {
         shinyGovstyle::radio_button_Input(
           inputId = NS(id, "file_type"),
           label = h2("Choose download file format"),
-          hint_label = "The XLSX format is designed for use in Microsoft Excel",
-          choices = c("CSV (Up to 11.61 MB)", "XLSX (Up to 2.91 MB)"),
-          selected = "CSV (Up to 11.61 MB)"
+          hint_label = "This will download data related to all providers for all years.
+          The XLSX format is designed for use in Microsoft Excel",
+          choices = c("CSV (13.51 MB)", "XLSX (3.23 MB)"),
+          selected = "CSV (13.51 MB)"
         ),
         # Bit of a hack to force the button not to be full width
         layout_columns(
@@ -206,8 +207,8 @@ learner_characteristics_server <- function(id) {
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- paste0(input$provider, "-", input$year, "-", "-provider_summary")
-        extension <- if (input$file_type == "CSV (Up to 11.61 MB)") {
+        raw_name <- "learner_characteristics_provider_summary"
+        extension <- if (input$file_type == "CSV (13.51 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -216,8 +217,8 @@ learner_characteristics_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 11.61 MB)") {
-          data.table::fwrite(chars_reactive_table(), file)
+        if (input$file_type == "CSV (13.51 MB)") {
+          data.table::fwrite(chars_parquet, file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)

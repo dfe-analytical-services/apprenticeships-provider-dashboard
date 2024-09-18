@@ -2,8 +2,8 @@ filename,status
 data/national_provider_summary.csv,unpublished
 data/apprenticeships_demographics.csv,unpublished
 data/apprenticeships_data.csv,unpublished
-data/apprenticeships_data_0.parquet,published
 data/apprenticeships_demographics_0.parquet,published
 data/national_provider_summary_0.parquet,published
 data/lad_map_data_0.parquet,published
 data/provider_breakdowns_0.parquet,published
+data/subjects_and_standards_0.parquet,published

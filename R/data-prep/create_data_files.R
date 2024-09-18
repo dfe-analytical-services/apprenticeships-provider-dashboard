@@ -8,6 +8,23 @@
 #
 # Could amend the current SQL queries to save the tables in SQL ready to read in using a SQL connection
 #
+# There are 3 source files, each with a script in sql/ folder
+# These are then processed into 5 files that the app uses and reads in, one per 'module'
+#
+# We've done it this way to mimimise the data the app needs to read and hold in
+# memory as some of the files are quite big! Apps data is over 1 million rows
+#
+# Apprenticeships data is the source for...
+# - Provider breakdowns
+# - LAD map data
+# - Subjects and standards
+#
+# Apprenticeships demographics is the source for...
+# - Learner characteristics
+#
+# National provider summary is the source for...
+# - National provider summary
+#
 # Dependencies ----------------------------------------------------------------
 library(data.table)
 library(arrow)
@@ -15,19 +32,18 @@ library(dplyr)
 library(tidyr)
 library(sf)
 library(sfarrow)
+library(stringr)
 
 # Read in files saved from SQL scripts ----------------------------------------
 national_provider_summary <- data.table::fread("data/national_provider_summary.csv")
 apps_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
 apps_data <- data.table::fread("data/apprenticeships_data.csv")
 
-
 # Create Provider breakdowns data ---------------------------------------------
 # Making a smaller cut from apps_data so less data is loaded into the app
-
 provider_breakdowns <- apps_data |>
   group_by(
-    year, provider_name, provider_type, apps_level,
+    year, provider_name, provider_type, apps_Level,
     age_group, delivery_region, learner_home_region
   ) %>%
   summarise(
@@ -38,6 +54,27 @@ provider_breakdowns <- apps_data |>
   ungroup() %>%
   as.data.frame()
 
+# Create subjects and standards data ------------------------------------------
+# Making a smaller cut from apps_data so less processing is done in the app
+subjects_and_standards <- apps_data |>
+  summarise(
+    starts = sum(starts),
+    enrolments = sum(enrolments),
+    achievements = sum(achievements),
+    .by = c(
+      "year", "apps_Level", "std_fwk_name", "ssa_t1_desc",
+      "ssa_t2_desc", "std_fwk_flag", "provider_type", "provider_name"
+    )
+  ) |>
+  pivot_longer(
+    c("starts", "enrolments", "achievements"),
+    names_to = "measure",
+    values_to = "values"
+  ) |>
+  mutate(
+    provider_name = str_to_title(provider_name),
+    measure = str_to_sentence(measure)
+  )
 
 # Create LAD map data ---------------------------------------------------------
 # Preparing the data now so that less processing is needed in the app
@@ -139,17 +176,20 @@ apps_chars <-
     chars_total_ethnicity, chars_ethnicity
   )
 
-# Write out parquet versions --------------------------------------------------
-arrow::write_dataset(
-  provider_breakdowns, "data/",
+# Write out parquet files -----------------------------------------------------
+arrow::write_dataset(provider_breakdowns, "data/",
   format = "parquet",
   basename_template = "provider_breakdowns_{i}.parquet"
 )
 
-
-arrow::write_dataset(national_provider_summary, "data/",
+arrow::write_dataset(lad_map_data, "data/",
   format = "parquet",
-  basename_template = "national_provider_summary_{i}.parquet"
+  basename_template = "lad_map_data_{i}.parquet"
+)
+
+arrow::write_dataset(subjects_and_standards, "data/",
+  format = "parquet",
+  basename_template = "subjects_and_standards_{i}.parquet"
 )
 
 arrow::write_dataset(apps_chars, "data/",
@@ -157,12 +197,7 @@ arrow::write_dataset(apps_chars, "data/",
   basename_template = "apprenticeships_demographics_{i}.parquet"
 )
 
-arrow::write_dataset(apps_data, "data/",
+arrow::write_dataset(national_provider_summary, "data/",
   format = "parquet",
-  basename_template = "apprenticeships_data_{i}.parquet"
-)
-
-arrow::write_dataset(lad_map_data, "data/",
-  format = "parquet",
-  basename_template = "lad_map_data_{i}.parquet"
+  basename_template = "national_provider_summary_{i}.parquet"
 )

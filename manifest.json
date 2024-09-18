@@ -5267,16 +5267,10 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "0b0d56de89fd7745c6a347360f8f7e34"
+      "checksum": "999e7fd3555ee290a5fa072ee7f39b71"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
-    },
-    "data/apprenticeships_data.csv": {
-      "checksum": "adbd170421b8174284e1be8a827748b8"
-    },
-    "data/apprenticeships_data_0.parquet": {
-      "checksum": "7ea32b642e85a344a79c156db407dee3"
     },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "21135784e8ab92176deb0a64b7b6c0b3"
@@ -5299,8 +5293,11 @@
     "data/provider_breakdowns_0.parquet": {
       "checksum": "8b244a23ea8512e00e4dc186a70f0911"
     },
+    "data/subjects_and_standards_0.parquet": {
+      "checksum": "2d5c1353d278a7704673d3109e2c2ead"
+    },
     "datafiles_log.csv": {
-      "checksum": "76b5dc6eb4b8e2e4cbb138a3a2bbacb9"
+      "checksum": "8c1c4e91b736315977bdef307e099cb4"
     },
     "global.R": {
       "checksum": "6dcb904528b58b6fd908151d61a00bb8"
@@ -5315,7 +5312,7 @@
       "checksum": "fd773ae0b2be7cd52064bd4a72e86426"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "73a447642d94cd86cc3de1f48bc5e823"
+      "checksum": "a1f06eb688f1119d3065012f8f58c4ce"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
       "checksum": "273d13a1ac9915d8e392b00bf0d44ffd"
@@ -5330,7 +5327,7 @@
       "checksum": "a1b7fb5617204c21bdbc1e0a62422fd8"
     },
     "R/data-prep/create_data_files.R": {
-      "checksum": "407ac9f53a04574aec0ac594438af60c"
+      "checksum": "e5c3ca334a6334e422cd0de7454e2d56"
     },
     "R/footer_pages/accessibility_page.R": {
       "checksum": "e9351e2d333a66228f36dc3963e2d1bd"
@@ -5348,7 +5345,7 @@
       "checksum": "eb76cf5c59630aa80cad8b53fb0d1abd"
     },
     "R/read_data.R": {
-      "checksum": "1fc6d1648a1169c54840dbd5e2c63a54"
+      "checksum": "ce9251d425cf9b81da032673d3096fcc"
     },
     "README.md": {
       "checksum": "b4d538d79bccf681528a1594c5831e10"

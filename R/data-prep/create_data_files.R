@@ -21,6 +21,24 @@ national_provider_summary <- data.table::fread("data/national_provider_summary.c
 apps_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
 apps_data <- data.table::fread("data/apprenticeships_data.csv")
 
+
+# Create Provider breakdowns data ---------------------------------------------
+# Making a smaller cut from apps_data so less data is loaded into the app
+
+provider_breakdowns <- apps_data |>
+  group_by(
+    year, provider_name, provider_type, apps_level,
+    age_group, delivery_region, learner_home_region
+  ) %>%
+  summarise(
+    starts = sum(starts, na.rm = TRUE),
+    enrolments = sum(enrolments, na.rm = TRUE),
+    achievements = sum(achievements, na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  as.data.frame()
+
+
 # Create LAD map data ---------------------------------------------------------
 # Preparing the data now so that less processing is needed in the app
 lad_map_data <- apps_data %>%
@@ -122,6 +140,13 @@ apps_chars <-
   )
 
 # Write out parquet versions --------------------------------------------------
+arrow::write_dataset(
+  provider_breakdowns, "data/",
+  format = "parquet",
+  basename_template = "provider_breakdowns_{i}.parquet"
+)
+
+
 arrow::write_dataset(national_provider_summary, "data/",
   format = "parquet",
   basename_template = "national_provider_summary_{i}.parquet"

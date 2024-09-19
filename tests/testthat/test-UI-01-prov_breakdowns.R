@@ -78,7 +78,7 @@ test_that("Can download data", {
   app$wait_for_idle(50)
   download_info <- app$get_download("prov_breakdowns-download_data")
   app$wait_for_idle(50)
-  expect_equal(basename(download_info), "2021_22-alllevels-allagegroups-provider_breakdowns.csv")
+  expect_equal(basename(download_info), "2023_24(q3augtoapr)-alllevels-allagegroups-provider_breakdowns.csv")
 })
 
 test_that("Can change all dropdowms and tables still render", {

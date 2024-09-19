@@ -4,7 +4,11 @@ sas_parquet <- read_sas("data/subjects_and_standards_0.parquet")
 
 # Create static lists of options for dropdowns
 sas_provider_choices <- data_choices(data = sas_parquet, column = "provider_name")
-sas_year_choices <- data_choices(data = sas_parquet, column = "year")
+# Providers should be in alphabetical order
+sas_provider_choices <- sort(sas_provider_choices)
+sas_year_choices <- sort(data_choices(data = sas_parquet, column = "year"),
+  decreasing = TRUE
+)
 sas_measure_choices <- data_choices(data = sas_parquet, column = "measure")
 
 subjects_standards_ui <- function(id) {
@@ -19,7 +23,8 @@ subjects_standards_ui <- function(id) {
           inputId = NS(id, "provider"),
           label = NULL,
           choices = NULL,
-          multiple = TRUE
+          multiple = TRUE,
+          options = list(maxOptions = 6000)
         ),
         selectInput(
           inputId = NS(id, "year"),
@@ -130,8 +135,7 @@ subject_standards_server <- function(id) {
 
     output$sas_provider_table <- renderReactable({
       dfe_reactable(
-        provider_selection_table(),
-        searchable = TRUE
+        provider_selection_table()
       )
     })
 

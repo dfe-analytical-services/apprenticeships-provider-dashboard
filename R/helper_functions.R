@@ -164,6 +164,14 @@ firstup <- function(x) {
   x
 }
 
+# Put first letter of a string to lower case, as in a variable ================
+# This reverses firstup, so can use to refer to a column name
+# that is capitalised in the input
+firstlow <- function(x) {
+  substr(x, 1, 1) <- tolower(substr(x, 1, 1))
+  x
+}
+
 # Create a map ================================================================
 dfe_map <- function(data, measure) {
   # Set the color scheme and scale

@@ -5266,8 +5266,31 @@
     ".lintr": {
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
+<<<<<<< HEAD
     ".Rprofile": {
       "checksum": "d085936710110e77289548a1423f6933"
+=======
+    ".RDataTmp1": {
+      "checksum": "713fa73b3ef1c6a2c7673b8fa40cd4b4"
+    },
+    ".RDataTmp2": {
+      "checksum": "735e0a649eba0b974e2f6df560385d64"
+    },
+    ".RDataTmp3": {
+      "checksum": "5c2a4c05af3af05f22365129858020c0"
+    },
+    ".RDataTmp4": {
+      "checksum": "b4c314ff5571e1a6f3c94f8b23089fd8"
+    },
+    ".RDataTmp5": {
+      "checksum": "afd77efc660e797e716ce8c7d9585144"
+    },
+    ".RDataTmp6": {
+      "checksum": "5046486e4a5fcde0e6e45589a0b0762a"
+    },
+    ".Rprofile": {
+      "checksum": "c43cc4a8565b03afd9d5339bc0a4c162"
+>>>>>>> main
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5286,6 +5309,15 @@
     },
     "data/lad_map_data_0.parquet": {
       "checksum": "ace1b38e436d6423501b2a00578e7904"
+<<<<<<< HEAD
+=======
+    },
+    "data/national_provider_summary.csv": {
+      "checksum": "0a570afaeac03757e376607541d0f8ff"
+    },
+    "data/national_provider_summary.csv": {
+      "checksum": "0a570afaeac03757e376607541d0f8ff"
+>>>>>>> main
     },
     "data/national_provider_summary_0.parquet": {
       "checksum": "4c8f38f019f23ea74e734b472231e949"
@@ -5306,16 +5338,24 @@
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
+<<<<<<< HEAD
       "checksum": "91171f6cd53a0762a67fa0eed048c242"
+=======
+      "checksum": "e21abdac7b7046e22d74ac4625d6b5cf"
+>>>>>>> main
     },
     "R/dashboard_modules/02-local_authority_district.R": {
-      "checksum": "fd773ae0b2be7cd52064bd4a72e86426"
+      "checksum": "9e5d98c77826a9de8548e2f4d2ce9a10"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
+<<<<<<< HEAD
       "checksum": "a1f06eb688f1119d3065012f8f58c4ce"
+=======
+      "checksum": "b7206b62e98c6ccc56ee17aa55e92827"
+>>>>>>> main
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
-      "checksum": "b15e98237d7258d7244c1a3339d5fec6"
+      "checksum": "9db473551ca45fb5a8ff0856ceb5bf84"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "dc00134b1cc5dafa846435b9d49ecb8a"
@@ -5342,7 +5382,7 @@
       "checksum": "4fb06508719a86445bed410f6640a071"
     },
     "R/helper_functions.R": {
-      "checksum": "eb76cf5c59630aa80cad8b53fb0d1abd"
+      "checksum": "5f1369340c633bca00c3d479d466865f"
     },
     "R/read_data.R": {
       "checksum": "ce9251d425cf9b81da032673d3096fcc"
@@ -5368,6 +5408,27 @@
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
     },
+<<<<<<< HEAD
+=======
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-001.json": {
+      "checksum": "5bec07b5ef2579d2ee5d2a0765fedbe5"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-002.json": {
+      "checksum": "0796a4e6332f8a2f2315f1f3b39c8a46"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-003.json": {
+      "checksum": "c7ca0d5dcc2498ce70dd04a9f9818c1b"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-004.json": {
+      "checksum": "3afaf9f0424deb1fda826664c0b9b41a"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-005.json": {
+      "checksum": "f5d0854c383c1bdc8fc701bc83a7e6ec"
+    },
+    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-006.json": {
+      "checksum": "e64c408d85cc66363c844de702c91a81"
+    },
+>>>>>>> main
     "tests/testthat/setup-shinytest2.R": {
       "checksum": "907cd57f1f33068ca1db4249985969ba"
     },

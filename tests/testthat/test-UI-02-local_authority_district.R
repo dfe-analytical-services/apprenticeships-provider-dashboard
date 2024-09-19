@@ -37,7 +37,7 @@ test_that("LAD page loads", {
   app$wait_for_idle(50)
   download_info <- app$get_download("lad-download_data")
   app$wait_for_idle(50)
-  expect_equal(basename(download_info), "lad-2021_22-achievements.csv")
+  expect_equal(basename(download_info), "lad-2023_24(q3augtoapr)-starts.csv")
 
   # Return to maps tab
   app$set_inputs(lad_maps_tabs = "Maps")
@@ -45,7 +45,7 @@ test_that("LAD page loads", {
 
 test_that("Can make a provider selection", {
   # Set inputs
-  app$set_inputs(`lad-measure` = "enrolments")
+  app$set_inputs(`lad-measure` = "Enrolments")
   app$set_inputs(`lad-year` = "2022/23")
   app$set_inputs(`lad-provider` = "1ST2 ACHIEVE TRAINING LIMITED")
 

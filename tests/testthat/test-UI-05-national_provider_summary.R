@@ -13,6 +13,7 @@ app$wait_for_idle(200)
 test_that("NPS: Page loads", {
   # Test the table renders
   app$wait_for_value(output = "nps-nps_table")
+  app$wait_for_idle(50)
   expect_gt(check_reactable_rows("nps-nps_table", app), 0)
 
   # Test the download works

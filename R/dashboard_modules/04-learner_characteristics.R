@@ -55,7 +55,7 @@ learner_characteristics_ui <- function(id) {
         ),
         selectInput(
           inputId = NS(id, "characteristic_type"),
-          label = "Select characteristic",
+          label = "Select type of characteristic",
           choices = c(chars_choices),
           selected = "Age"
         ),
@@ -151,6 +151,7 @@ learner_characteristics_server <- function(id) {
         chars_filtered$characteristic
       ), ]
 
+
       # Pull the lazy loaded and now filtered data into memory
       chars_filtered %>% collect()
     })
@@ -190,9 +191,15 @@ learner_characteristics_server <- function(id) {
 
     # Message when there are none of the measure at all, and no table
     output$chars_table <- renderTable({
-      validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for this provider.")))
+      validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", firstlow(input$measure), " for this provider.")))
 
-      chars_reactive_table()
+      chars_reactive_table_tidied <- chars_reactive_table()
+      colnames(chars_reactive_table_tidied) <-
+        c(
+          "Academic year", "Provider name", "Type of characteristic", "Characteristic",
+          "Measure", "Number of apprenticeships"
+        )
+      chars_reactive_table_tidied
     })
 
     # Data download ===========================================================

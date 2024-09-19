@@ -44,7 +44,6 @@
                 "headerClassName": "bar-sort-header"
               }
             ],
-            "searchable": true,
             "highlight": true,
             "borderless": true,
             "showSortIcon": false,

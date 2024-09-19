@@ -7,7 +7,7 @@
       "Coventry College",
       "The Fernandes And Rosario Consulting Limited"
     ],
-    "sas-year": "2021/22",
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
     "subjects_and_standards": 1
   },
   "output": {
@@ -20,14 +20,14 @@
               "Provider name": [
                 "Nottingham College",
                 "Tyne Coast College",
-                "Coventry College",
-                "The Fernandes And Rosario Consulting Limited"
+                "The Fernandes And Rosario Consulting Limited",
+                "Coventry College"
               ],
               "Enrolments": [
-                2093,
-                488,
-                362,
-                15
+                1932,
+                380,
+                25,
+                9
               ]
             },
             "columns": [
@@ -44,14 +44,13 @@
                 "headerClassName": "bar-sort-header"
               }
             ],
-            "searchable": true,
             "highlight": true,
             "borderless": true,
             "showSortIcon": false,
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "27aebe0a71717e7862962cae68b09791",
+            "dataKey": "7ce6f6f929051a00fb742826c8abf09f",
             "static": false
           },
           "children": [
@@ -83,20 +82,18 @@
                 "Health, Public Services and Care",
                 "Engineering and Manufacturing Technologies",
                 "Business, Administration and Law",
-                "Engineering and Manufacturing Technologies",
                 "Health, Public Services and Care",
-                "Education and Training",
+                "Business, Administration and Law",
                 "Retail and Commercial Enterprise",
+                "Education and Training",
                 "Business, Administration and Law",
-                "Business, Administration and Law",
+                "Engineering and Manufacturing Technologies",
                 "Retail and Commercial Enterprise",
                 "Information and Communication Technology",
                 "Leisure, Travel and Tourism",
                 "Retail and Commercial Enterprise",
                 "Health, Public Services and Care",
-                "Education and Training",
-                "Business, Administration and Law",
-                "Information and Communication Technology"
+                "Business, Administration and Law"
               ],
               "ssa_t2_desc": [
                 "Transportation Operations and Maintenance",
@@ -104,41 +101,37 @@
                 "Health and Social Care",
                 "Engineering",
                 "Administration",
-                "Manufacturing Technologies",
                 "Child Development and Well Being",
-                "Direct Learning Support",
-                "Service Enterprises",
                 "Accounting and Finance",
+                "Service Enterprises",
+                "Direct Learning Support",
                 "Business Management",
+                "Manufacturing Technologies",
                 "Hospitality and Catering",
                 "ICT Practitioners",
                 "Sport, Leisure and Recreation",
                 "Retailing and Wholesaling",
                 "Medicine and Dentistry",
-                "Teaching and Lecturing",
-                "Marketing and Sales",
-                "ICT for Users"
+                "Marketing and Sales"
               ],
               "values": [
-                695,
-                560,
-                318,
-                315,
-                285,
-                146,
-                143,
-                105,
-                102,
-                80,
-                80,
+                621,
+                529,
+                349,
+                263,
+                165,
                 68,
-                31,
-                17,
-                9,
-                2,
-                1,
-                1,
-                0
+                60,
+                54,
+                52,
+                52,
+                48,
+                33,
+                29,
+                12,
+                6,
+                3,
+                2
               ]
             },
             "columns": [
@@ -171,7 +164,7 @@
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "8c6897742c4c7bf4f944b8c414da8d77",
+            "dataKey": "dbb501708bb9957cd944c8039c3e5361",
             "static": false
           },
           "children": [

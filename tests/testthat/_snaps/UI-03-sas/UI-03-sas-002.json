@@ -2,7 +2,7 @@
   "input": {
     "sas-measure": "Starts",
     "sas-provider": "Nottingham College",
-    "sas-year": "2021/22",
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
     "subjects_and_standards": 1
   },
   "output": {
@@ -16,7 +16,7 @@
                 "Nottingham College"
               ],
               "Starts": [
-                940
+                688
               ]
             },
             "columns": [
@@ -33,14 +33,13 @@
                 "headerClassName": "bar-sort-header"
               }
             ],
-            "searchable": true,
             "highlight": true,
             "borderless": true,
             "showSortIcon": false,
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "a5a4c339602530b4bad90a47abc8b1a4",
+            "dataKey": "877e978b65da0261f6fc2ac08c1abc2c",
             "static": false
           },
           "children": [
@@ -72,17 +71,18 @@
                 "Construction, Planning and the Built Environment",
                 "Business, Administration and Law",
                 "Engineering and Manufacturing Technologies",
-                "Education and Training",
-                "Retail and Commercial Enterprise",
                 "Health, Public Services and Care",
-                "Retail and Commercial Enterprise",
-                "Business, Administration and Law",
-                "Leisure, Travel and Tourism",
-                "Business, Administration and Law",
                 "Engineering and Manufacturing Technologies",
+                "Business, Administration and Law",
+                "Business, Administration and Law",
+                "Retail and Commercial Enterprise",
+                "Education and Training",
                 "Information and Communication Technology",
                 "Retail and Commercial Enterprise",
-                "Health, Public Services and Care"
+                "Retail and Commercial Enterprise",
+                "Business, Administration and Law",
+                "Health, Public Services and Care",
+                "Leisure, Travel and Tourism"
               ],
               "ssa_t2_desc": [
                 "Transportation Operations and Maintenance",
@@ -90,35 +90,37 @@
                 "Building and Construction",
                 "Administration",
                 "Engineering",
-                "Direct Learning Support",
-                "Hospitality and Catering",
                 "Child Development and Well Being",
-                "Service Enterprises",
-                "Business Management",
-                "Sport, Leisure and Recreation",
-                "Accounting and Finance",
                 "Manufacturing Technologies",
+                "Accounting and Finance",
+                "Business Management",
+                "Hospitality and Catering",
+                "Direct Learning Support",
                 "ICT Practitioners",
+                "Service Enterprises",
                 "Retailing and Wholesaling",
-                "Medicine and Dentistry"
+                "Marketing and Sales",
+                "Medicine and Dentistry",
+                "Sport, Leisure and Recreation"
               ],
               "values": [
-                306,
-                143,
-                126,
-                118,
-                71,
-                47,
-                32,
-                31,
-                17,
-                14,
+                176,
+                140,
+                134,
+                58,
+                58,
+                25,
+                21,
+                15,
+                15,
                 12,
-                8,
+                11,
+                10,
                 7,
-                4,
+                3,
                 2,
-                2
+                1,
+                0
               ]
             },
             "columns": [
@@ -151,7 +153,7 @@
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "9aa96343be3103e44900971c33629485",
+            "dataKey": "6ea650e8b5533c53797a0a1f2c4cf915",
             "static": false
           },
           "children": [

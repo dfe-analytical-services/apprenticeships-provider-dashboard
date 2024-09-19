@@ -7,7 +7,7 @@
       "Coventry College",
       "The Fernandes And Rosario Consulting Limited"
     ],
-    "sas-year": "2021/22",
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
     "subjects_and_standards": 1
   },
   "output": {
@@ -24,10 +24,10 @@
                 "The Fernandes And Rosario Consulting Limited"
               ],
               "Achievements": [
-                360,
-                117,
-                46,
-                0
+                305,
+                55,
+                9,
+                5
               ]
             },
             "columns": [
@@ -44,14 +44,13 @@
                 "headerClassName": "bar-sort-header"
               }
             ],
-            "searchable": true,
             "highlight": true,
             "borderless": true,
             "showSortIcon": false,
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "8896c987afbd816d74ce6b8e5b66cc9d",
+            "dataKey": "d05d6a5fb88dfcaef50308ba82d4ce26",
             "static": false
           },
           "children": [
@@ -79,61 +78,55 @@
             "data": {
               "Subject area": [
                 "Engineering and Manufacturing Technologies",
-                "Engineering and Manufacturing Technologies",
                 "Health, Public Services and Care",
-                "Business, Administration and Law",
                 "Construction, Planning and the Built Environment",
-                "Engineering and Manufacturing Technologies",
+                "Business, Administration and Law",
                 "Education and Training",
-                "Retail and Commercial Enterprise",
-                "Business, Administration and Law",
-                "Retail and Commercial Enterprise",
-                "Business, Administration and Law",
                 "Health, Public Services and Care",
-                "Information and Communication Technology",
-                "Leisure, Travel and Tourism",
+                "Engineering and Manufacturing Technologies",
                 "Retail and Commercial Enterprise",
-                "Education and Training",
+                "Retail and Commercial Enterprise",
                 "Business, Administration and Law",
+                "Retail and Commercial Enterprise",
+                "Leisure, Travel and Tourism",
+                "Business, Administration and Law",
+                "Engineering and Manufacturing Technologies",
                 "Information and Communication Technology",
-                "Health, Public Services and Care"
+                "Health, Public Services and Care",
+                "Business, Administration and Law"
               ],
               "ssa_t2_desc": [
                 "Transportation Operations and Maintenance",
-                "Manufacturing Technologies",
                 "Health and Social Care",
-                "Administration",
                 "Building and Construction",
-                "Engineering",
+                "Administration",
                 "Direct Learning Support",
+                "Child Development and Well Being",
+                "Engineering",
                 "Service Enterprises",
-                "Business Management",
                 "Hospitality and Catering",
                 "Accounting and Finance",
-                "Child Development and Well Being",
-                "ICT Practitioners",
-                "Sport, Leisure and Recreation",
                 "Retailing and Wholesaling",
-                "Teaching and Lecturing",
-                "Marketing and Sales",
-                "ICT for Users",
-                "Medicine and Dentistry"
+                "Sport, Leisure and Recreation",
+                "Business Management",
+                "Manufacturing Technologies",
+                "ICT Practitioners",
+                "Medicine and Dentistry",
+                "Marketing and Sales"
               ],
               "values": [
-                114,
-                75,
-                66,
-                49,
-                45,
-                44,
+                85,
+                79,
+                63,
+                38,
+                28,
                 27,
-                24,
-                22,
-                21,
+                19,
                 12,
-                11,
-                10,
+                12,
+                7,
                 2,
+                1,
                 1,
                 0,
                 0,
@@ -171,7 +164,7 @@
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "ab9c0a3283c92101eb9f84d5ff8b6bca",
+            "dataKey": "a8fcc8ae1aa1e38545d09b7fd06990c3",
             "static": false
           },
           "children": [

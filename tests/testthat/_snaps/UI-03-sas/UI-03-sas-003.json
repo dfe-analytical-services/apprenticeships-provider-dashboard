@@ -7,7 +7,7 @@
       "Coventry College",
       "The Fernandes And Rosario Consulting Limited"
     ],
-    "sas-year": "2021/22",
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
     "subjects_and_standards": 1
   },
   "output": {
@@ -20,14 +20,14 @@
               "Provider name": [
                 "Nottingham College",
                 "Tyne Coast College",
-                "Coventry College",
-                "The Fernandes And Rosario Consulting Limited"
+                "The Fernandes And Rosario Consulting Limited",
+                "Coventry College"
               ],
               "Starts": [
-                940,
-                216,
-                163,
-                11
+                688,
+                149,
+                14,
+                0
               ]
             },
             "columns": [
@@ -44,14 +44,13 @@
                 "headerClassName": "bar-sort-header"
               }
             ],
-            "searchable": true,
             "highlight": true,
             "borderless": true,
             "showSortIcon": false,
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "a33fe384f44f61ff764897a7006aea65",
+            "dataKey": "689f91f3e38a2f69bf1ac0f50788ebda",
             "static": false
           },
           "children": [
@@ -78,66 +77,60 @@
           "attribs": {
             "data": {
               "Subject area": [
-                "Engineering and Manufacturing Technologies",
                 "Construction, Planning and the Built Environment",
-                "Health, Public Services and Care",
-                "Business, Administration and Law",
                 "Engineering and Manufacturing Technologies",
                 "Health, Public Services and Care",
+                "Engineering and Manufacturing Technologies",
+                "Business, Administration and Law",
+                "Business, Administration and Law",
+                "Health, Public Services and Care",
+                "Retail and Commercial Enterprise",
+                "Engineering and Manufacturing Technologies",
+                "Business, Administration and Law",
                 "Education and Training",
                 "Retail and Commercial Enterprise",
-                "Retail and Commercial Enterprise",
-                "Business, Administration and Law",
-                "Business, Administration and Law",
-                "Engineering and Manufacturing Technologies",
                 "Information and Communication Technology",
-                "Leisure, Travel and Tourism",
                 "Retail and Commercial Enterprise",
-                "Health, Public Services and Care",
-                "Education and Training",
                 "Business, Administration and Law",
-                "Information and Communication Technology"
+                "Health, Public Services and Care",
+                "Leisure, Travel and Tourism"
               ],
               "ssa_t2_desc": [
-                "Transportation Operations and Maintenance",
                 "Building and Construction",
+                "Transportation Operations and Maintenance",
                 "Health and Social Care",
-                "Administration",
                 "Engineering",
-                "Child Development and Well Being",
-                "Direct Learning Support",
-                "Service Enterprises",
-                "Hospitality and Catering",
+                "Administration",
                 "Accounting and Finance",
-                "Business Management",
+                "Child Development and Well Being",
+                "Service Enterprises",
                 "Manufacturing Technologies",
+                "Business Management",
+                "Direct Learning Support",
+                "Hospitality and Catering",
                 "ICT Practitioners",
-                "Sport, Leisure and Recreation",
                 "Retailing and Wholesaling",
-                "Medicine and Dentistry",
-                "Teaching and Lecturing",
                 "Marketing and Sales",
-                "ICT for Users"
+                "Medicine and Dentistry",
+                "Sport, Leisure and Recreation"
               ],
               "values": [
-                326,
-                304,
-                155,
-                154,
-                92,
-                63,
-                52,
-                42,
-                37,
-                32,
+                195,
+                181,
+                140,
+                96,
+                69,
+                31,
                 27,
-                15,
+                24,
+                23,
+                23,
                 14,
-                13,
+                12,
+                10,
+                3,
                 2,
-                2,
-                0,
-                0,
+                1,
                 0
               ]
             },
@@ -171,7 +164,7 @@
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "378cbe1782608b35a857879d57d02c67",
+            "dataKey": "e34749483b69ba96933f6f41127a362e",
             "static": false
           },
           "children": [

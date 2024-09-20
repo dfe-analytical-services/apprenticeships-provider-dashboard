@@ -11,6 +11,8 @@ sas_year_choices <- sort(data_choices(data = sas_parquet, column = "year"),
 )
 sas_measure_choices <- data_choices(data = sas_parquet, column = "measure")
 
+sas_level_choices <- data_choices(data = sas_parquet, column = "apps_Level")
+
 subjects_standards_ui <- function(id) {
   div(
     h1("Subjects and standards"),
@@ -35,21 +37,35 @@ subjects_standards_ui <- function(id) {
           inputId = NS(id, "measure"),
           label = "Select measure",
           choices = c(sas_measure_choices)
-        )
+        ),
+        selectInput(
+          inputId = NS(id, "level"),
+          label = "Select apprenticeship level",
+          choices = c(sas_level_choices),
+          multiple = TRUE,
+          selected = data_choices(data = sas_parquet, column = "apps_Level")
+        ),
       )
     ),
     card(
       layout_columns(
         col_widths = c(4, 8),
+        # Provider list
         card(
           card_header(textOutput(NS(id, "sas_provider_table_title"))),
           card_body(reactable::reactableOutput(NS(id, "sas_provider_table")))
         ),
-        layout_column_wrap(
-          width = 1,
-          heights_equal = "row",
-          girafeOutput(NS(id, "subject_area_bar")),
-          reactable::reactableOutput(NS(id, "sas_subject_area_table"))
+        ## Tabs -----------------------------------------------------------------
+        navset_card_tab(
+          id = "sas_tabs",
+          nav_panel(
+            "Graphic",
+            girafeOutput(NS(id, "subject_area_bar")),
+          ),
+          nav_panel(
+            "Table",
+            reactable::reactableOutput(NS(id, "sas_subject_area_table"))
+          )
         )
       )
     )
@@ -82,7 +98,8 @@ subject_standards_server <- function(id) {
       data <- sas_parquet %>%
         filter(
           measure == input$measure,
-          year == input$year
+          year == input$year,
+          apps_Level == input$level
         )
       if (!(is.null(input$provider))) {
         data <- data %>%
@@ -158,7 +175,7 @@ subject_standards_server <- function(id) {
                 data_id = ssa_t1_desc
               )
             ) +
-            geom_col_interactive(fill = "#2073BC") +
+            geom_col_interactive(fill = "#12436D") +
             theme_classic() +
             coord_flip() +
             xlab("") +
@@ -175,11 +192,13 @@ subject_standards_server <- function(id) {
       subject_data <- subject_area_data() %>%
         summarise(
           values = sum(values),
-          .by = c("ssa_t1_desc", "ssa_t2_desc")
+          .by = c("ssa_t1_desc", "ssa_t2_desc", "apps_Level", "std_fwk_name")
         )
       if (!is.null(input$subject_area_bar_selected)) {
         subject_data <- subject_data %>%
-          filter(ssa_t1_desc %in% ssa_t1_selected())
+          filter(ssa_t1_desc %in% ssa_t1_selected()) %>%
+          # TODO put message on table and graph where there are no rows
+          filter(values > 0)
       }
       reactable(
         subject_data %>%
@@ -190,7 +209,7 @@ subject_standards_server <- function(id) {
         showSortIcon = FALSE,
         style = list(fontSize = "16px"),
         defaultColDef = colDef(headerClass = "bar-sort-header"),
-        groupBy = "Subject area",
+        groupBy = c("Subject area", "ssa_t2_desc", "apps_Level"),
         columns = list(
           values = colDef(
             name = input$measure,

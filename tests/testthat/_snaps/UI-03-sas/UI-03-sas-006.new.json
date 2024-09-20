@@ -1,0 +1,74 @@
+{
+  "input": {
+    "sas-measure": "Achievements",
+    "sas-provider": [
+      "Nottingham College",
+      "Tyne Coast College",
+      "Coventry College",
+      "The Fernandes And Rosario Consulting Limited"
+    ],
+    "sas-year": "2022/23",
+    "subjects_and_standards": 1
+  },
+  "output": {
+    "sas-sas_provider_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Provider name": [
+                "Nottingham College",
+                "Coventry College",
+                "Tyne Coast College",
+                "The Fernandes And Rosario Consulting Limited"
+              ],
+              "Achievements": [
+                173,
+                50,
+                36,
+                2
+              ]
+            },
+            "columns": [
+              {
+                "id": "Provider name",
+                "name": "Provider name",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "Achievements",
+                "name": "Achievements",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header"
+              }
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "f651427d4988d0abe5ed4dc8fa48f0f6",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "sas-sas_provider_table_title": "Achievements for providers across all subject areas"
+  }
+}

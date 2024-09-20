@@ -38,13 +38,13 @@ subjects_standards_ui <- function(id) {
           label = "Select measure",
           choices = c(sas_measure_choices)
         ),
-        selectInput(
-          inputId = NS(id, "level"),
-          label = "Select apprenticeship level",
-          choices = c(sas_level_choices),
-          multiple = TRUE,
-          selected = data_choices(data = sas_parquet, column = "apps_Level")
-        ),
+        # selectInput(
+        #  inputId = NS(id, "level"),
+        #  label = "Select apprenticeship level",
+        #  choices = c(sas_level_choices),
+        multiple = TRUE,
+        #  selected = data_choices(data = sas_parquet, column = "apps_Level")
+        # ),
       )
     ),
     card(
@@ -55,7 +55,7 @@ subjects_standards_ui <- function(id) {
           card_header(textOutput(NS(id, "sas_provider_table_title"))),
           card_body(reactable::reactableOutput(NS(id, "sas_provider_table")))
         ),
-        ## Tabs -----------------------------------------------------------------
+        ## Tabs ----------------------------------------------------------------
         navset_card_tab(
           id = "sas_tabs",
           nav_panel(
@@ -63,8 +63,29 @@ subjects_standards_ui <- function(id) {
             girafeOutput(NS(id, "subject_area_bar")),
           ),
           nav_panel(
-            "Table",
+            "Table including level and standard",
             reactable::reactableOutput(NS(id, "sas_subject_area_table"))
+          ),
+          nav_panel(
+            "Download data",
+            shinyGovstyle::radio_button_Input(
+              inputId = NS(id, "file_type"),
+              label = h2("Choose download file format"),
+              hint_label = "This will download all data related to the providers and options selected.
+          The XLSX format is designed for use in Microsoft Excel",
+              choices = c("CSV (Up to 13.18 MB)", "XLSX (Up to 2.12 MB)"),
+              selected = "CSV (Up to 13.18 MB)"
+            ),
+            # Bit of a hack to force the button not to be full width
+            layout_columns(
+              col_widths = 3,
+              downloadButton(
+                NS(id, "download_data"),
+                label = "Download data",
+                class = "gov-uk-button",
+                icon = NULL
+              )
+            )
           )
         )
       )
@@ -98,8 +119,8 @@ subject_standards_server <- function(id) {
       data <- sas_parquet %>%
         filter(
           measure == input$measure,
-          year == input$year,
-          apps_Level == input$level
+          year == input$year # ,
+          #   apps_Level == input$level
         )
       if (!(is.null(input$provider))) {
         data <- data %>%
@@ -144,6 +165,7 @@ subject_standards_server <- function(id) {
           .by = c("provider_name")
         ) %>%
         arrange(-values) %>%
+        filter(values > 0) %>%
         rename(
           `Provider name` = provider_name,
           !!quo_name(input$measure) := values
@@ -151,6 +173,12 @@ subject_standards_server <- function(id) {
     })
 
     output$sas_provider_table <- renderReactable({
+      # Put in message where there are none of the measure
+      validate(need(
+        nrow(provider_selection_table()) > 0,
+        paste0("No ", firstlow(input$measure), " for this provider.")
+      ))
+
       dfe_reactable(
         provider_selection_table()
       )
@@ -189,6 +217,9 @@ subject_standards_server <- function(id) {
 
     # Expandable table of subject areas.
     output$sas_subject_area_table <- renderReactable({
+      # Put in message where there are none of the measure
+      validate(need(nrow(subject_area_data()) > 0, paste0("No ", firstlow(input$measure), " for this provider.")))
+
       subject_data <- subject_area_data() %>%
         summarise(
           values = sum(values),
@@ -196,20 +227,24 @@ subject_standards_server <- function(id) {
         )
       if (!is.null(input$subject_area_bar_selected)) {
         subject_data <- subject_data %>%
-          filter(ssa_t1_desc %in% ssa_t1_selected()) %>%
-          # TODO put message on table and graph where there are no rows
-          filter(values > 0)
+          filter(ssa_t1_desc %in% ssa_t1_selected())
       }
       reactable(
         subject_data %>%
-          rename(`Subject area` = ssa_t1_desc) %>%
+          rename(
+            `Subject area` = ssa_t1_desc,
+            `Subject area (tier 2)` = ssa_t2_desc,
+            `Level` = apps_Level,
+            `Standard` = std_fwk_name,
+          ) %>%
           arrange(-values),
         highlight = TRUE,
         borderless = TRUE,
         showSortIcon = FALSE,
         style = list(fontSize = "16px"),
         defaultColDef = colDef(headerClass = "bar-sort-header"),
-        groupBy = c("Subject area", "ssa_t2_desc", "apps_Level"),
+        groupBy = c("Subject area"),
+        defaultSorted = c("Subject area (tier 2)", "Level"),
         columns = list(
           values = colDef(
             name = input$measure,
@@ -218,5 +253,30 @@ subject_standards_server <- function(id) {
         )
       )
     })
+    # Data download ===========================================================
+
+    output$download_data <- downloadHandler(
+      ## Set filename ---------------------------------------------------------
+      filename = function(name) {
+        raw_name <- paste0(input$year, "-", input$level, "-", input$provider, "-subjects-and-standards")
+        extension <- if (input$file_type == "CSV (Up to 13.18 MB)") {
+          ".csv"
+        } else {
+          ".xlsx"
+        }
+        paste0(tolower(gsub(" ", "", raw_name)), extension)
+      },
+      ## Generate downloaded file ---------------------------------------------
+      content = function(file) {
+        if (input$file_type == "CSV (Up to 13.18 MB)") {
+          data.table::fwrite(subject_area_data(), file)
+        } else {
+          # Added a basic pop up notification as the Excel file can take time to generate
+          pop_up <- showNotification("Generating download file", duration = NULL)
+          openxlsx::write.xlsx(chars_reactive_table(), file, colWidths = "Auto")
+          on.exit(removeNotification(pop_up), add = TRUE)
+        }
+      }
+    )
   })
 }

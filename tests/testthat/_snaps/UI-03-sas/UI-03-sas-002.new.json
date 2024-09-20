@@ -1,0 +1,63 @@
+{
+  "input": {
+    "sas-measure": "Starts",
+    "sas-provider": "Nottingham College",
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
+    "subjects_and_standards": 1
+  },
+  "output": {
+    "sas-sas_provider_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Provider name": [
+                "Nottingham College"
+              ],
+              "Starts": [
+                435
+              ]
+            },
+            "columns": [
+              {
+                "id": "Provider name",
+                "name": "Provider name",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "Starts",
+                "name": "Starts",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header"
+              }
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "9c8e0011de2180ed210f3776b54ec2f3",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "sas-sas_provider_table_title": "Starts for providers across all subject areas"
+  }
+}

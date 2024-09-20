@@ -5719,7 +5719,7 @@
       "checksum": "705bc1bf322163e7cb8f79f94d74e89a"
     },
     ".Rprofile": {
-      "checksum": "540576ba1581b38fdd7eb31b72d28d83"
+      "checksum": "eb65cc9285a88b1e5f0b961c42f57c48"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5773,7 +5773,7 @@
       "checksum": "9e5d98c77826a9de8548e2f4d2ce9a10"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "7eadb86a2c8ccec901b27720111471b2"
+      "checksum": "8bc7734ecc6d2efb1e593d9361a607b5"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
       "checksum": "46f3d470a3ea4e6b715bcfa2b28181ee"
@@ -5785,7 +5785,7 @@
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
     },
     "R/data-prep/check_file_sizes.R": {
-      "checksum": "a1b7fb5617204c21bdbc1e0a62422fd8"
+      "checksum": "83fb5bef11efe34a4c25e860b2c1dd04"
     },
     "R/data-prep/create_data_files.R": {
       "checksum": "f30027c812d8732258fd99162f7d2281"

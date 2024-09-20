@@ -1,0 +1,74 @@
+{
+  "input": {
+    "sas-measure": "Starts",
+    "sas-provider": [
+      "Nottingham College",
+      "Tyne Coast College",
+      "Coventry College",
+      "The Fernandes And Rosario Consulting Limited"
+    ],
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
+    "subjects_and_standards": 1
+  },
+  "output": {
+    "sas-sas_provider_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Provider name": [
+                "Nottingham College",
+                "Tyne Coast College",
+                "The Fernandes And Rosario Consulting Limited",
+                "Coventry College"
+              ],
+              "Starts": [
+                435,
+                86,
+                6,
+                0
+              ]
+            },
+            "columns": [
+              {
+                "id": "Provider name",
+                "name": "Provider name",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "Starts",
+                "name": "Starts",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header"
+              }
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "31e8f997f9a6d1b9f2d296e650e31e06",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "sas-sas_provider_table_title": "Starts for providers across all subject areas"
+  }
+}

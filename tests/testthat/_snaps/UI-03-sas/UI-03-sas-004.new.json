@@ -1,0 +1,72 @@
+{
+  "input": {
+    "sas-measure": "Enrolments",
+    "sas-provider": [
+      "Nottingham College",
+      "Tyne Coast College",
+      "Coventry College",
+      "The Fernandes And Rosario Consulting Limited"
+    ],
+    "sas-year": "2023/24 (Q3 Aug to Apr)",
+    "subjects_and_standards": 1
+  },
+  "output": {
+    "sas-sas_provider_table": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Provider name": [
+                "Nottingham College",
+                "Tyne Coast College",
+                "The Fernandes And Rosario Consulting Limited"
+              ],
+              "Enrolments": [
+                170,
+                15,
+                4
+              ]
+            },
+            "columns": [
+              {
+                "id": "Provider name",
+                "name": "Provider name",
+                "type": "character",
+                "headerClassName": "bar-sort-header"
+              },
+              {
+                "id": "Enrolments",
+                "name": "Enrolments",
+                "type": "numeric",
+                "headerClassName": "bar-sort-header"
+              }
+            ],
+            "highlight": true,
+            "borderless": true,
+            "showSortIcon": false,
+            "style": {
+              "fontSize": "16px"
+            },
+            "dataKey": "8c99ad461f22bceba8d3647d19f90b2a",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "sas-sas_provider_table_title": "Enrolments for providers across all subject areas"
+  }
+}

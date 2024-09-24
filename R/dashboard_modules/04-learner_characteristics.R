@@ -177,7 +177,7 @@ learner_characteristics_server <- function(id) {
           parents = NA,
           values = ~ as.numeric(count),
           type = "treemap",
-          hovertemplate = "%{label}<br>Count: %{value}<extra></extra>",
+          hovertemplate = "%{label}<br>Count: %{value:,.0f}<extra></extra>",
           marker = (list(
             colors = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"),
             sizemode = "area"

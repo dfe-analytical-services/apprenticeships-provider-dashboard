@@ -38,13 +38,13 @@ subjects_standards_ui <- function(id) {
           label = "Select measure",
           choices = c(sas_measure_choices)
         ),
-        # selectInput(
-        #  inputId = NS(id, "level"),
-        #  label = "Select apprenticeship level",
-        #  choices = c(sas_level_choices),
-        multiple = TRUE,
-        #  selected = data_choices(data = sas_parquet, column = "apps_Level")
-        # ),
+        selectInput(
+          inputId = NS(id, "level"),
+          label = "Select apprenticeship level",
+          choices = c(sas_level_choices),
+          multiple = TRUE,
+          selected = data_choices(data = sas_parquet, column = "apps_Level")
+        ),
       )
     ),
     card(
@@ -119,8 +119,8 @@ subject_standards_server <- function(id) {
       data <- sas_parquet %>%
         filter(
           measure == input$measure,
-          year == input$year # ,
-          #   apps_Level == input$level
+          year == input$year,
+          apps_Level %in% input$level
         )
       if (!(is.null(input$provider))) {
         data <- data %>%

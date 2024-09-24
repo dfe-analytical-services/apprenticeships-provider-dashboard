@@ -19,15 +19,15 @@
             "data": {
               "Provider name": [
                 "Nottingham College",
-                "Coventry College",
                 "Tyne Coast College",
+                "Coventry College",
                 "The Fernandes And Rosario Consulting Limited"
               ],
               "Achievements": [
-                173,
-                50,
-                36,
-                2
+                342,
+                87,
+                85,
+                5
               ]
             },
             "columns": [
@@ -50,7 +50,7 @@
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "f651427d4988d0abe5ed4dc8fa48f0f6",
+            "dataKey": "fa78105aed91954b45d1506606d326f2",
             "static": false
           },
           "children": [

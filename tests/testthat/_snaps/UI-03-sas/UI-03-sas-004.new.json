@@ -20,12 +20,14 @@
               "Provider name": [
                 "Nottingham College",
                 "Tyne Coast College",
-                "The Fernandes And Rosario Consulting Limited"
+                "The Fernandes And Rosario Consulting Limited",
+                "Coventry College"
               ],
               "Enrolments": [
-                170,
-                15,
-                4
+                1932,
+                380,
+                25,
+                9
               ]
             },
             "columns": [
@@ -48,7 +50,7 @@
             "style": {
               "fontSize": "16px"
             },
-            "dataKey": "8c99ad461f22bceba8d3647d19f90b2a",
+            "dataKey": "7ce6f6f929051a00fb742826c8abf09f",
             "static": false
           },
           "children": [

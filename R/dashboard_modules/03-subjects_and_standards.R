@@ -13,6 +13,8 @@ sas_measure_choices <- data_choices(data = sas_parquet, column = "measure")
 
 sas_level_choices <- data_choices(data = sas_parquet, column = "apps_Level")
 
+sas_standard_choices <- data_choices(data = sas_parquet, column = "std_fwk_name")
+
 subjects_standards_ui <- function(id) {
   div(
     h1("Subjects and standards"),
@@ -150,6 +152,9 @@ subject_standards_server <- function(id) {
     })
 
     provider_selection_table <- reactive({
+      # put in message if no levels selected, as get error
+      validate(need(!is.null(input$level) > 0, paste0("Select apprenticeship level(s) to continue.")))
+
       # Filter the data based on whether the user's selected any subject areas
       # from the chart
       if (!is.null(input$subject_area_bar_selected)) {
@@ -190,6 +195,9 @@ subject_standards_server <- function(id) {
       girafe(
         ggobj =
           subject_area_data() %>%
+            # The bar chart won't appear when there are none of the measure,
+            # nil measures still appear in the table
+            filter(values > 0) %>%
             summarise( # nolint: indentation_linter
               values = sum(values),
               .by = c("ssa_t1_desc")
@@ -217,6 +225,9 @@ subject_standards_server <- function(id) {
 
     # Expandable table of subject areas.
     output$sas_subject_area_table <- renderReactable({
+      # put in message if no levels selected, as get error (empty as message already for provider area)
+      validate(need(!is.null(input$level) > 0, paste0("")))
+
       # Put in message where there are none of the measure
       validate(need(nrow(subject_area_data()) > 0, paste0("No ", firstlow(input$measure), " for this provider.")))
 

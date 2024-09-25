@@ -5722,7 +5722,7 @@
       "checksum": "32471ff2313e1f4580f7dc87ea91d2a3"
     },
     ".Rprofile": {
-      "checksum": "336abd328eb721bebbc938342a23ceac"
+      "checksum": "909f6233a5e9aa54de021d275571ce9c"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5776,7 +5776,7 @@
       "checksum": "b7206b62e98c6ccc56ee17aa55e92827"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
-      "checksum": "f0c79204e443f8e2fa7c45506a181e3d"
+      "checksum": "54470a9762bfff8eb0ef536d99d05084"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "dc00134b1cc5dafa846435b9d49ecb8a"

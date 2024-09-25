@@ -151,15 +151,14 @@ learner_characteristics_server <- function(id) {
         chars_filtered$characteristic
       ), ]
 
-
       # Pull the lazy loaded and now filtered data into memory
       chars_filtered %>% collect()
     })
 
     # Treemap plot
 
-    # Message when there are none of the measure at all
     output$tree_map_plot <- renderPlotly({
+      # Message when there are none of the measure at all
       validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for this provider.")))
 
       # Message when all groups are low, and treemap cannot be displayed
@@ -169,6 +168,18 @@ learner_characteristics_server <- function(id) {
         paste0("All groups have low numbers.")
       ))
 
+      # defines the font for the hover text
+      hfont <- list(
+        size = 20,
+        color = "white"
+      )
+      # defines the background for the hover text
+      hlabel <- list(
+        bgcolor = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"),
+        bordercolor = "transparent",
+        font = hfont
+      )
+
       chars_reactive_table() %>%
         filter(characteristic != "Total") %>%
         filter(count != "low") %>%
@@ -177,13 +188,19 @@ learner_characteristics_server <- function(id) {
           parents = NA,
           values = ~ as.numeric(count),
           type = "treemap",
-          hovertemplate = "%{label}<br>Count: %{value:,.0f}<extra></extra>",
           marker = (list(
             colors = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"),
             sizemode = "area"
           )),
-          textfont = list(color = "white", size = 30)
+          textfont = list(color = "white", size = 30),
+          hoverinfo = "text",
+          hoverlabel = hlabel,
+          hovertext = ~ paste0(
+            stringr::str_wrap(characteristic, width = 15), "\n\n",
+            comma_sep(as.numeric(count)), " ", firstlow(measure)
+          )
         ) %>%
+        layout(hoverlabel = list(align = "left")) %>%
         config(displaylogo = FALSE, displayModeBar = FALSE)
     })
 
@@ -193,12 +210,15 @@ learner_characteristics_server <- function(id) {
     output$chars_table <- renderTable({
       validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", firstlow(input$measure), " for this provider.")))
 
-      chars_reactive_table_tidied <- chars_reactive_table()
+      chars_reactive_table_tidied <- chars_reactive_table() %>%
+        mutate(count = comma_sep(as.numeric(count)))
+
       colnames(chars_reactive_table_tidied) <-
         c(
           "Academic year", "Provider name", "Type of characteristic", "Characteristic",
           "Measure", "Number of apprenticeships"
         )
+
       chars_reactive_table_tidied
     })
 

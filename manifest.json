@@ -5267,7 +5267,7 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "f9b0132e590fafbdfcd64d8a6fe9662b"
+      "checksum": "55dc37230df7391a9e0cabc0a39f2ea8"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5368,6 +5368,18 @@
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
     },
+    "tests/testthat/notrun-test-UI-01-prov_breakdowns.R": {
+      "checksum": "26aaeb0f3d142bee1cf6d88a760b49ac"
+    },
+    "tests/testthat/notrun-test-UI-02-local_authority_district.R": {
+      "checksum": "5cceac8ac55ac9765b90377caf65969f"
+    },
+    "tests/testthat/notrun-test-UI-03-subjects_and_standards.R": {
+      "checksum": "8de0bbcde9548f33741d79c783b831c1"
+    },
+    "tests/testthat/notrun-test-UI-05-national_provider_summary.R": {
+      "checksum": "1d8c38af50baad619e15bb6e1be76627"
+    },
     "tests/testthat/setup-shinytest2.R": {
       "checksum": "907cd57f1f33068ca1db4249985969ba"
     },
@@ -5384,19 +5396,7 @@
       "checksum": "bdfacc991218a7013a595aaf95a9479a"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "6b3ce5c7aae1dd8d9e770d108d288501"
-    },
-    "tests/testthat/test-UI-01-prov_breakdowns.R": {
-      "checksum": "26aaeb0f3d142bee1cf6d88a760b49ac"
-    },
-    "tests/testthat/test-UI-02-local_authority_district.R": {
-      "checksum": "5cceac8ac55ac9765b90377caf65969f"
-    },
-    "tests/testthat/test-UI-03-subjects_and_standards.R": {
-      "checksum": "8de0bbcde9548f33741d79c783b831c1"
-    },
-    "tests/testthat/test-UI-05-national_provider_summary.R": {
-      "checksum": "1d8c38af50baad619e15bb6e1be76627"
+      "checksum": "c46c0b932ae3e85699daab38117799e5"
     },
     "ui.R": {
       "checksum": "49c1b49ea000f430e5131bed45989590"

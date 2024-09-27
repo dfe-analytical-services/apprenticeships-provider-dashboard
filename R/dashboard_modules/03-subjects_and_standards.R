@@ -44,13 +44,13 @@ subjects_standards_ui <- function(id) {
       selectizeInput(
         inputId = NS(id, "level"),
         label = NULL,
-        choices = c(sas_measure_choices),
+        choices = NULL,
         multiple = TRUE
       ),
       selectizeInput(
         inputId = NS(id, "standard"),
         label = NULL,
-        choices = NULL,
+        choices = sas_standard_choices,
         multiple = TRUE,
         options = list(maxOptions = 6000)
       ),
@@ -65,10 +65,6 @@ subjects_standards_ui <- function(id) {
       ## Tabs ----------------------------------------------------------------
       navset_card_tab(
         id = "sas_tabs",
-        # nav_panel(
-        #  "Graphic",
-        #  girafeOutput(NS(id, "subject_area_bar")),
-        #  ),
         nav_panel(
           "Table",
           reactable::reactableOutput(NS(id, "sas_subject_area_table"))
@@ -115,7 +111,6 @@ subject_standards_server <- function(id) {
       inputId = "level",
       label = "Select level",
       choices = c(sas_level_choices),
-      selected = c(sas_level_choices),
       server = TRUE
     )
     updateSelectizeInput(
@@ -161,6 +156,7 @@ subject_standards_server <- function(id) {
             std_fwk_name %in% input$standard
           )
       }
+
       data
     })
 
@@ -183,9 +179,6 @@ subject_standards_server <- function(id) {
     })
 
     provider_selection_table <- reactive({
-      # put in message if no levels selected, as get error
-      validate(need(!is.null(input$level) > 0, paste0("Select apprenticeship level(s) to continue.")))
-
       # Filter the provider data based on whether the user's selected any subject areas
       # from the table
       if (!is.null(input$subject_area_bar_selected)) {
@@ -221,45 +214,8 @@ subject_standards_server <- function(id) {
       )
     })
 
-    # Create an interactive chart showing the numbers broken down by subject
-    # area
-    #  output$subject_area_bar <- renderGirafe(
-    #    girafe(
-    #    ggobj =
-    #     subject_area_data() %>%
-    # The bar chart won't appear when there are none of the measure,
-    #     # nil measures still appear in the table
-    #     filter(values > 0) %>%
-    #     summarise( # nolint: indentation_linter
-    #       values = sum(values),
-    ##       .by = c("ssa_t1_desc")
-    #     ) %>%
-    #     mutate(ssa_t1_desc = str_wrap(ssa_t1_desc, 32)) %>%
-    #     ggplot(
-    #      aes(
-    #        x = reorder(ssa_t1_desc, values),
-    #       y = values,
-    #        tooltip = ssa_t1_desc,
-    #        data_id = ssa_t1_desc
-    #       )
-    #     ) +
-    #    geom_col_interactive(fill = "#12436D") +
-    #     theme_classic() +
-    #     coord_flip() +
-    #     xlab("") +
-    #     ylab(input$measure),
-    # options = list(opts_selection(
-    #   type = "multiple",
-    #   css = "fill:#28A197;stroke:#28A197;r:5pt;"
-    # ))
-    # )
-    # )
-
     # Expandable table of subject areas.
     output$sas_subject_area_table <- renderReactable({
-      # put in message if no levels selected, as get error (empty as message already for provider area)
-      validate(need(!is.null(input$level) > 0, paste0("")))
-
       # Put in message where there are none of the measure
       validate(need(nrow(subject_area_data()) > 0, paste0("No ", firstlow(input$measure), " for this provider.")))
 
@@ -268,10 +224,10 @@ subject_standards_server <- function(id) {
           values = sum(values),
           .by = c("ssa_t1_desc", "ssa_t2_desc", "apps_Level", "std_fwk_name")
         )
-      #  if (!is.null(input$subject_area_bar_selected)) {
-      #   subject_data <- subject_data %>%
-      #    filter(ssa_t1_desc %in% ssa_t1_selected())
-      #  }
+      if (!is.null(input$subject_area_bar_selected)) {
+        subject_data <- subject_data %>%
+          filter(ssa_t1_desc %in% ssa_t1_selected())
+      }
       reactable(
         subject_data %>%
           rename(

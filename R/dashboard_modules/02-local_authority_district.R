@@ -279,10 +279,14 @@ lad_server <- function(id) {
     })
 
     output$learner_home_lad_table <- renderReactable({
+      validate(need(nrow(learner_home_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
       dfe_reactable(learner_home_lad_table())
     })
 
     output$delivery_lad_table <- renderReactable({
+      validate(need(nrow(delivery_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
       dfe_reactable(delivery_lad_table())
     })
 
@@ -317,10 +321,14 @@ lad_server <- function(id) {
     # Create the maps themselves ----------------------------------------------
     # dfe_lad_map is defined in R/helper_functions.R
     output$delivery_lad_map <- renderLeaflet({
+      validate(need(nrow(delivery_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
       dfe_lad_map(delivery_map_data(), input$measure)
     })
 
     output$learner_home_lad_map <- renderLeaflet({
+      validate(need(nrow(learner_home_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
       dfe_lad_map(learner_home_map_data(), input$measure)
     })
 

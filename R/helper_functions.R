@@ -203,7 +203,7 @@ function(el, x){
 }
 
 # Create a map ================================================================
-dfe_map <- function(data, measure) {
+dfe_lad_map <- function(data, measure) {
   # Set the color scheme and scale
   pal_fun <- colorNumeric(
     "Blues",
@@ -244,7 +244,8 @@ dfe_map <- function(data, measure) {
         textsize = "15px",
         direction = "auto",
         bringToFront = TRUE
-      )
+      ),
+      layerId = ~lad_name # this is what value is returned when a user clicks on a polygon
     ) %>%
     # Add a legend to the map
     addLegend("topright",

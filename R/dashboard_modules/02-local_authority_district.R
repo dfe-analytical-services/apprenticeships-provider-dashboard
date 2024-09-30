@@ -156,6 +156,22 @@ lad_server <- function(id) {
       }
     })
 
+    # User map selection ------------------------------------------------------
+    # While the maps themselves are defined elsewhere, if a user selects an LAD from a map, we capture the value here
+    # and then pass into the dropdown as if the user had selected that LAD from the dropdown itself
+    # all of the flushing of other values happens automatically when the calculations are rerun
+    #
+    # The 'id' that we pull here pulls from what we set as the 'layerId' in the map function
+    observeEvent(input$delivery_lad_map_shape_click, {
+      map_selected_delivery_lad <- input$delivery_lad_map_shape_click
+      updateSelectizeInput(session, "delivery_lad", selected = map_selected_delivery_lad$id)
+    })
+
+    observeEvent(input$learner_home_lad_map_shape_click, {
+      map_selected_learner_home_lad <- input$learner_home_lad_map_shape_click
+      updateSelectizeInput(session, "learner_home_lad", selected = map_selected_learner_home_lad$id)
+    })
+
     # Provider selection ======================================================
     # Create the data used for the table on the left you can select providers from
     prov_selection_table <- reactive({
@@ -299,13 +315,13 @@ lad_server <- function(id) {
     })
 
     # Create the maps themselves ----------------------------------------------
-    # dfe_map is defined in R/helper_functions.R
+    # dfe_lad_map is defined in R/helper_functions.R
     output$delivery_lad_map <- renderLeaflet({
-      dfe_map(delivery_map_data(), input$measure)
+      dfe_lad_map(delivery_map_data(), input$measure)
     })
 
     output$learner_home_lad_map <- renderLeaflet({
-      dfe_map(learner_home_map_data(), input$measure)
+      dfe_lad_map(learner_home_map_data(), input$measure)
     })
 
     # Data download ===========================================================

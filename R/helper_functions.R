@@ -172,6 +172,36 @@ firstlow <- function(x) {
   x
 }
 
+# Add a map reset button to a Leaflet map object, using some additional JavaScript
+# @param leaf A Leaflet map object
+addMapResetButton <- function(leaf) {
+  leaf %>%
+    # Add a button into the map
+    addEasyButton(
+      easyButton(
+        icon = "ion-refresh",
+        title = "Reset View",
+        # When clicking the button, reset the view of the map
+        onClick = JS(
+          "function(btn, map){ map.setView(map._initialCenter, map._initialZoom); }"
+        )
+      )
+    ) %>%
+    # When the map loads, grab it's initial centre point values
+    htmlwidgets::onRender(
+      JS(
+        "
+function(el, x){
+  var map = this;
+  map.whenReady(function(){
+    map._initialCenter = map.getCenter();
+    map._initialZoom = map.getZoom();
+  });
+}"
+      )
+    )
+}
+
 # Create a map ================================================================
 dfe_map <- function(data, measure) {
   # Set the color scheme and scale
@@ -221,7 +251,8 @@ dfe_map <- function(data, measure) {
       pal = pal_fun,
       values = ~ data[["Number of apprenticeships"]],
       title = firstup(measure)
-    )
+    ) %>%
+    addMapResetButton() # add a reset button
 
   return(map)
 }

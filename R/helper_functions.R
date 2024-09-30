@@ -124,11 +124,12 @@ dfe_footer <- function(links_list) {
 dfe_reactable <- function(data, on_click = NULL, selection = NULL, row_style = NULL, searchable = FALSE) {
   reactable(
     data,
+
     # DfE styling
     highlight = TRUE,
     borderless = TRUE,
     showSortIcon = FALSE,
-    style = list(fontSize = "16px"),
+    style = list(fontSize = "16px", display = "block"),
     defaultColDef = colDef(headerClass = "bar-sort-header"),
 
     # Customiseable settings
@@ -232,6 +233,7 @@ dfe_lad_map <- function(data, measure) {
       color = "black",
       weight = 1,
       fillColor = pal_fun(data[["Number of apprenticeships"]]),
+      fillOpacity = 1,
       highlightOptions = highlightOptions(
         weight = 5,
         color = "#666",

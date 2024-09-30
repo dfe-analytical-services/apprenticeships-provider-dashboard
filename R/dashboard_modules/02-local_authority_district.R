@@ -86,11 +86,11 @@ lad_ui <- function(id) {
             width = "15rem", # Minimum width for each input box before wrapping
             div(
               h2("Delivery map"),
-              leafletOutput(NS(id, "delivery_lad_map"))
+              leafletOutput(NS(id, "delivery_lad_map"), height = 600)
             ),
             div(
               h2("Learner home map"),
-              leafletOutput(NS(id, "learner_home_lad_map"))
+              leafletOutput(NS(id, "learner_home_lad_map"), height = 600)
             )
           )
         ),

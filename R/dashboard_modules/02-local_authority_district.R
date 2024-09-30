@@ -221,7 +221,9 @@ lad_server <- function(id) {
           delivery_lad,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
-        )
+        ) %>%
+        filter(`Number of apprenticeships` != 0)
+
       return(delivery_lad_table)
     })
 
@@ -249,7 +251,8 @@ lad_server <- function(id) {
           learner_home_lad,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
-        )
+        ) %>%
+        filter(`Number of apprenticeships` != 0)
 
       return(learner_home_lad_table)
     })

@@ -105,12 +105,13 @@ subject_standards_server <- function(id) {
     # Drop downs ==============================================================
     # Calculate the standards available based on level selection
     sas_std_choices <- reactive({
-      if (is.null(input$level) || input$level == "") {
-        sas_standard_table$std_fwk_name |>
+      if (any(is.null(input$level), input$level == "")) {
+        sas_standard_table %>%
+          pull(std_fwk_name) %>%
           unique()
       } else {
-        sas_standard_table |>
-          filter(apps_Level == input$level) |>
+        sas_standard_table %>%
+          filter(apps_Level %in% input$level) %>%
           pull(std_fwk_name)
       }
     })
@@ -155,27 +156,16 @@ subject_standards_server <- function(id) {
     # feeds the tables and chart.
     subject_area_data <- reactive({
       data <- sas_parquet %>%
-        filter(
-          measure == input$measure,
-          year == input$year,
-        )
+        filter(measure == input$measure, year == input$year)
+
       if (!(is.null(input$provider))) {
-        data <- data %>%
-          filter(
-            provider_name %in% input$provider
-          )
+        data <- data %>% filter(provider_name %in% input$provider)
       }
       if (!(is.null(input$level))) {
-        data <- data %>%
-          filter(
-            apps_Level %in% input$level
-          )
+        data <- data %>% filter(apps_Level %in% input$level)
       }
       if (!(is.null(input$standard))) {
-        data <- data %>%
-          filter(
-            std_fwk_name %in% input$standard
-          )
+        data <- data %>% filter(std_fwk_name %in% input$standard)
       }
 
       data
@@ -273,8 +263,8 @@ subject_standards_server <- function(id) {
         )
       )
     })
-    # Data download ===========================================================
 
+    # Data download ===========================================================
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {

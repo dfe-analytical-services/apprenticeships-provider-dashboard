@@ -1346,33 +1346,36 @@
       "Repository": null,
       "description": {
         "Package": "dfeshiny",
-        "Title": "DfE R-Shiny Standards",
-        "Version": "0.2.0",
+        "Title": "DfE R Shiny Standards",
+        "Version": "0.4.2",
         "Authors@R": "c(\n    person(\"Rich\", \"Bielby\", , \"richard.bielby@education.gov.uk\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0001-9070-9969\")),\n    person(\"Charlotte\", \"Foster\", , \"charlotte.foster@education.gov.uk\", role = \"aut\"),\n    person(\"Cam\", \"Race\", , \"cameron.race@education.gov.uk\", role = \"aut\")\n  )",
         "Description": "R package containing preferred methods for creating official\n    DfE R-Shiny dashboards.",
         "License": "GPL (>= 3)",
         "Imports": "magrittr,\ncheckmate,\nglue,\nhtmltools,\nRCurl,\nshiny,\nshinyGovstyle,\nshinyjs,\nstringr,\nstyler",
-        "Suggests": "diffviewer,\nknitr,\nrmarkdown,\nshinytest2,\ntestthat (>= 3.0.0)",
+        "Suggests": "diffviewer,\nknitr,\nrmarkdown,\nshinytest2,\ndevtools,\ntestthat (>= 3.0.0),\nspelling",
         "Config/testthat/edition": "3",
         "Encoding": "UTF-8",
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.3.2",
         "URL": "https://dfe-analytical-services.github.io/dfeshiny/\nhttps://www.github.com/dfe-analytical-services/dfeshiny/",
         "VignetteBuilder": "knitr",
+        "Depends": "R (>= 2.10)",
+        "LazyData": "true",
+        "Language": "en-US",
         "Author": "Rich Bielby [aut, cre] (<https://orcid.org/0000-0001-9070-9969>),\n  Charlotte Foster [aut],\n  Cam Race [aut]",
         "Maintainer": "Rich Bielby <richard.bielby@education.gov.uk>",
-        "Built": "R 4.4.1; ; 2024-09-03 07:17:00 UTC; windows",
+        "Built": "R 4.4.1; ; 2024-10-01 16:34:24 UTC; windows",
         "RemoteType": "github",
+        "RemoteHost": "api.github.com",
         "RemoteUsername": "dfe-analytical-services",
         "RemoteRepo": "dfeshiny",
         "RemoteRef": "main",
-        "RemoteSha": "2c26b237c2f1345bfaa67d15449fe68c36b08a52",
-        "RemoteHost": "api.github.com",
+        "RemoteSha": "a97980297b9d45afd5100c424a39c0e180e63524",
         "GithubHost": "api.github.com",
         "GithubRepo": "dfeshiny",
         "GithubUsername": "dfe-analytical-services",
         "GithubRef": "main",
-        "GithubSHA1": "2c26b237c2f1345bfaa67d15449fe68c36b08a52"
+        "GithubSHA1": "a97980297b9d45afd5100c424a39c0e180e63524"
       }
     },
     "diffobj": {
@@ -5194,7 +5197,7 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "9d40b4fd3ee9d961949b1798f6513487"
+      "checksum": "128b41e385e3a905f407ab96f917d232"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5260,7 +5263,7 @@
       "checksum": "d15b7a880007ded5eec1cb9e6266c5ae"
     },
     "R/footer_pages/footnotes_page.R": {
-      "checksum": "989655615adcaf6ac31ec8b6d7d3bc1b"
+      "checksum": "a6f641020e89c72a9b698213982c713d"
     },
     "R/footer_pages/support_page.R": {
       "checksum": "4fb06508719a86445bed410f6640a071"
@@ -5275,7 +5278,7 @@
       "checksum": "1557c3f64f6f0cba78d26508a6ed1d54"
     },
     "renv.lock": {
-      "checksum": "bd2be805237c7f43f883fc3638a92ca1"
+      "checksum": "1ac0d148425c2e33a2071274eac7ce07"
     },
     "server.R": {
       "checksum": "4e64b5320a433d75ee5c412a4c2528c0"

@@ -29,32 +29,32 @@ subjects_standards_ui <- function(id) {
           label = "Select measure",
           choices = c(sas_measure_choices)
         ),
+      ),
+      layout_columns(
+        col_widths = c(4, 4, 4),
+        selectizeInput(
+          inputId = NS(id, "provider"),
+          label = NULL,
+          choices = NULL,
+          multiple = TRUE,
+          options = list(maxOptions = 6000)
+        ),
+        selectizeInput(
+          inputId = NS(id, "level"),
+          label = NULL,
+          choices = NULL,
+          multiple = TRUE
+        ),
+        selectizeInput(
+          inputId = NS(id, "standard"),
+          label = NULL,
+          choices = sas_standard_choices,
+          multiple = TRUE,
+          options = list(maxOptions = 6000)
+        )
       )
     ),
     # Main data area ===========================================================
-    layout_columns(
-      col_widths = c(4, 4, 4),
-      selectizeInput(
-        inputId = NS(id, "provider"),
-        label = NULL,
-        choices = NULL,
-        multiple = TRUE,
-        options = list(maxOptions = 6000)
-      ),
-      selectizeInput(
-        inputId = NS(id, "level"),
-        label = NULL,
-        choices = NULL,
-        multiple = TRUE
-      ),
-      selectizeInput(
-        inputId = NS(id, "standard"),
-        label = NULL,
-        choices = sas_standard_choices,
-        multiple = TRUE,
-        options = list(maxOptions = 6000)
-      ),
-    ),
     # Provider list --------------------------------------------------------
     layout_columns(
       col_widths = c(4, 8),

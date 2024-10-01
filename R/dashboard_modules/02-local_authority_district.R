@@ -86,11 +86,11 @@ lad_ui <- function(id) {
             width = "15rem", # Minimum width for each input box before wrapping
             div(
               h2("Delivery map"),
-              leafletOutput(NS(id, "delivery_lad_map"))
+              leafletOutput(NS(id, "delivery_lad_map"), height = 600)
             ),
             div(
               h2("Learner home map"),
-              leafletOutput(NS(id, "learner_home_lad_map"))
+              leafletOutput(NS(id, "learner_home_lad_map"), height = 600)
             )
           )
         ),
@@ -154,6 +154,22 @@ lad_server <- function(id) {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
         updateSelectizeInput(session, "delivery_lad", choices = delivery_lad_choices, server = TRUE)
       }
+    })
+
+    # User map selection ------------------------------------------------------
+    # While the maps themselves are defined elsewhere, if a user selects an LAD from a map, we capture the value here
+    # and then pass into the dropdown as if the user had selected that LAD from the dropdown itself
+    # all of the flushing of other values happens automatically when the calculations are rerun
+    #
+    # The 'id' that we pull here pulls from what we set as the 'layerId' in the map function
+    observeEvent(input$delivery_lad_map_shape_click, {
+      map_selected_delivery_lad <- input$delivery_lad_map_shape_click
+      updateSelectizeInput(session, "delivery_lad", selected = map_selected_delivery_lad$id)
+    })
+
+    observeEvent(input$learner_home_lad_map_shape_click, {
+      map_selected_learner_home_lad <- input$learner_home_lad_map_shape_click
+      updateSelectizeInput(session, "learner_home_lad", selected = map_selected_learner_home_lad$id)
     })
 
     # Provider selection ======================================================
@@ -221,7 +237,9 @@ lad_server <- function(id) {
           delivery_lad,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
-        )
+        ) %>%
+        filter(`Number of apprenticeships` != 0)
+
       return(delivery_lad_table)
     })
 
@@ -249,7 +267,8 @@ lad_server <- function(id) {
           learner_home_lad,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
-        )
+        ) %>%
+        filter(`Number of apprenticeships` != 0)
 
       return(learner_home_lad_table)
     })
@@ -260,10 +279,14 @@ lad_server <- function(id) {
     })
 
     output$learner_home_lad_table <- renderReactable({
+      validate(need(nrow(learner_home_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
       dfe_reactable(learner_home_lad_table())
     })
 
     output$delivery_lad_table <- renderReactable({
+      validate(need(nrow(delivery_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
       dfe_reactable(delivery_lad_table())
     })
 
@@ -296,13 +319,17 @@ lad_server <- function(id) {
     })
 
     # Create the maps themselves ----------------------------------------------
-    # dfe_map is defined in R/helper_functions.R
+    # dfe_lad_map is defined in R/helper_functions.R
     output$delivery_lad_map <- renderLeaflet({
-      dfe_map(delivery_map_data(), input$measure)
+      validate(need(nrow(delivery_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
+      dfe_lad_map(delivery_map_data(), input$measure)
     })
 
     output$learner_home_lad_map <- renderLeaflet({
-      dfe_map(learner_home_map_data(), input$measure)
+      validate(need(nrow(learner_home_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
+      dfe_lad_map(learner_home_map_data(), input$measure)
     })
 
     # Data download ===========================================================

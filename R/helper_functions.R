@@ -124,11 +124,12 @@ dfe_footer <- function(links_list) {
 dfe_reactable <- function(data, on_click = NULL, selection = NULL, row_style = NULL, searchable = FALSE) {
   reactable(
     data,
+
     # DfE styling
     highlight = TRUE,
     borderless = TRUE,
     showSortIcon = FALSE,
-    style = list(fontSize = "16px"),
+    style = list(fontSize = "16px", display = "block"),
     defaultColDef = colDef(headerClass = "bar-sort-header"),
 
     # Customiseable settings
@@ -172,8 +173,38 @@ firstlow <- function(x) {
   x
 }
 
+# Add a map reset button to a Leaflet map object, using some additional JavaScript
+# @param leaf A Leaflet map object
+addMapResetButton <- function(leaf) {
+  leaf %>%
+    # Add a button into the map
+    addEasyButton(
+      easyButton(
+        icon = "ion-refresh",
+        title = "Reset View",
+        # When clicking the button, reset the view of the map
+        onClick = JS(
+          "function(btn, map){ map.setView(map._initialCenter, map._initialZoom); }"
+        )
+      )
+    ) %>%
+    # When the map loads, grab it's initial centre point values
+    htmlwidgets::onRender(
+      JS(
+        "
+function(el, x){
+  var map = this;
+  map.whenReady(function(){
+    map._initialCenter = map.getCenter();
+    map._initialZoom = map.getZoom();
+  });
+}"
+      )
+    )
+}
+
 # Create a map ================================================================
-dfe_map <- function(data, measure) {
+dfe_lad_map <- function(data, measure) {
   # Set the color scheme and scale
   pal_fun <- colorNumeric(
     "Blues",
@@ -202,6 +233,7 @@ dfe_map <- function(data, measure) {
       color = "black",
       weight = 1,
       fillColor = pal_fun(data[["Number of apprenticeships"]]),
+      fillOpacity = 1,
       highlightOptions = highlightOptions(
         weight = 5,
         color = "#666",
@@ -214,14 +246,16 @@ dfe_map <- function(data, measure) {
         textsize = "15px",
         direction = "auto",
         bringToFront = TRUE
-      )
+      ),
+      layerId = ~lad_name # this is what value is returned when a user clicks on a polygon
     ) %>%
     # Add a legend to the map
     addLegend("topright",
       pal = pal_fun,
       values = ~ data[["Number of apprenticeships"]],
       title = firstup(measure)
-    )
+    ) %>%
+    addMapResetButton() # add a reset button
 
   return(map)
 }

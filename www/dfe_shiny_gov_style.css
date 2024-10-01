@@ -351,3 +351,18 @@ html {
     background-color: #fd0 !important;
     color: black !important;
 }
+
+/* Map reset button CSS ---------------------------------------------------- */
+.leaflet-touch .leaflet-bar button:focus {
+  outline: 0.188rem solid rgba(0, 0, 0, 0);
+  color: #0b0c0c;
+  background-color: #fd0 !important;
+  box-shadow: 0 -0.125rem #fd0, 0 0.25rem #0b0c0c;
+}
+
+.leaflet-touch .leaflet-bar button:hover {
+  outline: 0.188rem solid rgba(0, 0, 0, 0);
+  color: #0b0c0c;
+  background-color: #fd0 !important;
+  box-shadow: 0 -0.125rem #fd0, 0 0.25rem #0b0c0c;
+}

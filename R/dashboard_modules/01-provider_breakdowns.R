@@ -66,7 +66,11 @@ prov_breakdowns_ui <- function(id) {
         navset_card_tab(
           id = "provider_breakdown_tabs",
           nav_panel(
-            "Regions",
+            "Bar chart",
+            girafeOutput(NS(id, "regions_bar")),
+          ),
+          nav_panel(
+            "Tables",
             bslib::layout_column_wrap(
               reactable::reactableOutput(NS(id, "delivery_region")),
               reactable::reactableOutput(NS(id, "home_region"))
@@ -193,14 +197,16 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           summarise,
           `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
-        rename("Delivery region" = delivery_region) %>%
-        rename_with(~ paste("Number of", firstlow(input$measure)), `number`)
+        rename("Delivery region" = delivery_region)
 
       # Make sure all regions have a row even if 0
       # Regions vector defined at top of this script
       delivery_region_table <- tibble(`Delivery region` = regions) %>%
         left_join(delivery_region_table, by = "Delivery region") %>%
-        mutate(across(starts_with("Number of"), ~ replace_na(., 0))) %>%
+        mutate(across(
+          number,
+          ~ replace_na(., 0)
+        )) %>%
         collect()
 
       return(delivery_region_table)
@@ -228,19 +234,128 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           summarise,
           `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
-        rename("Learner home region" = learner_home_region) %>%
-        rename_with(~ paste("Number of", firstlow(input$measure)), `number`)
+        rename("Learner home region" = learner_home_region)
 
       # Make sure all regions have a row even if 0
       # Regions vector defined at top of this script
       home_region_table <- tibble(`Learner home region` = regions) %>%
         left_join(home_region_table, by = "Learner home region") %>%
-        mutate(across(starts_with("Number of"), ~ replace_na(., 0))) %>%
+        mutate(across(
+          number,
+          ~ replace_na(., 0)
+        )) %>%
         collect()
 
       return(home_region_table)
     }) %>%
       bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers())
+
+    # Combine to make a single table for bar chart data -----------------------
+    regions_bar_data <- reactive({
+      learner_home <- home_region_table() |>
+        rename(
+          "Region" = `Learner home region`,
+          "Learner home" = number
+        )
+
+      delivery <- delivery_region_table() |>
+        rename(
+          "Region" = `Delivery region`,
+          "Delivery" = number
+        )
+
+      # Pivot the data so there's 3 columns, region, delivery / learner as a filter, and count
+      regions_bar_data <- left_join(learner_home, delivery, by = "Region") |>
+        tidyr::pivot_longer(
+          cols = c(`Learner home`, `Delivery`),
+          names_to = "type",
+          values_to = "count"
+        )
+
+      # Force the ordering of the regions
+      regions_bar_data$Region <- forcats::fct_rev(factor(regions_bar_data$Region, levels = regions))
+
+      # Create a unique column used for the hover on each bar
+      regions_bar_data$data_id <- paste(regions_bar_data$Region, regions_bar_data$type, sep = "_")
+
+      return(regions_bar_data)
+    })
+
+    # Bar chart output ========================================================
+    output$regions_bar <- renderGirafe(
+      girafe(
+        ggobj =
+          regions_bar_data() %>%
+            ggplot(
+              aes(
+                fill = type,
+                x = Region,
+                y = count,
+                tooltip = paste(
+                  lapply(count, dfeR::pretty_num), firstlow(input$measure), "<br>",
+                  type, "in", Region
+                ),
+                data_id = data_id
+              )
+            ) +
+            # Make it an interactive, clustered, bar
+            geom_bar_interactive(position = "dodge", stat = "identity") +
+            # Make it horizontal
+            coord_flip() +
+            # Axis labels
+            xlab("") +
+            ylab(input$measure) +
+            # Set the colours
+            scale_fill_manual(values = c(
+              "Learner home" = afcolours::af_colours(n = 4)[1],
+              "Delivery" = afcolours::af_colours(n = 4)[4]
+            )) +
+            # Format the x-axis numbers (using the Y function as we've flipped to horizontal!)
+            scale_y_continuous(labels = dfeR::comma_sep) +
+            # Wrap y-axis labels (set so East of England and longer will wrap onto multiple lines)
+            scale_x_discrete(labels = function(x) str_wrap(x, width = 13)) +
+            # Custom theme
+            # TODO: extract list of this to reuse in dfeshiny
+            ggplot2::theme_minimal() +
+            ggplot2::theme(
+              legend.position = "top",
+              legend.title = element_blank(),
+              panel.grid = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major.x = element_blank(),
+              axis.title.x = element_text(family = "Arial", size = 10, face = "bold", margin = margin(t = 10)),
+              axis.text.x = element_text(family = "Arial", size = 10),
+              axis.text.y = element_text(family = "Arial", size = 10)
+            ),
+        # TODO: break out custom options to steal in
+        options = list(
+          ggiraph::opts_tooltip(
+            css = paste0(
+              "background-color:#ECECEC;",
+              "color:black;",
+              "padding:5px;",
+              "border-radius:3px;",
+              "font-family:Arial;",
+              "font-weight:500;",
+              "border:1px solid black;",
+              "z-index: 99999 !important;"
+            ),
+            opacity = 1
+          ),
+          ggiraph::opts_toolbar(
+            saveaspng = FALSE,
+            hidden = c("lasso_select", "lasso_deselect")
+          ),
+          ggiraph::opts_hover(
+            css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
+          ),
+          ggiraph::opts_selection(
+            type = "none"
+          )
+        ),
+        fonts = list(sans = "Arial")
+      )
+    )
 
     # Table output objects ====================================================
     output$prov_selection <- renderReactable({
@@ -255,7 +370,8 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
     output$delivery_region <- renderReactable({
       dfe_reactable(
-        delivery_region_table(),
+        delivery_region_table() |>
+          rename_with(~ paste("Number of", firstlow(input$measure)), `number`),
         on_click = "select",
         selection = "single",
         row_style = list(cursor = "pointer")
@@ -264,7 +380,8 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
     output$home_region <- renderReactable({
       dfe_reactable(
-        home_region_table(),
+        home_region_table() |>
+          rename_with(~ paste("Number of", firstlow(input$measure)), `number`),
         on_click = "select",
         selection = "single",
         row_style = list(cursor = "pointer")

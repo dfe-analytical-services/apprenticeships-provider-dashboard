@@ -9,7 +9,12 @@ sas_year_choices <- sort(data_choices(data = sas_parquet, column = "year"),
 )
 sas_measure_choices <- data_choices(data = sas_parquet, column = "measure")
 sas_level_choices <- data_choices(data = sas_parquet, column = "apps_Level")
-sas_standard_choices <- sort(data_choices(data = sas_parquet, column = "std_fwk_name"))
+
+# Creating a table of levels to standards so we can filter the standards options based on level selection
+sas_standard_table <- sas_parquet |>
+  select(apps_Level, std_fwk_name) |>
+  distinct() |>
+  arrange(std_fwk_name)
 
 subjects_standards_ui <- function(id) {
   div(
@@ -48,7 +53,7 @@ subjects_standards_ui <- function(id) {
         selectizeInput(
           inputId = NS(id, "standard"),
           label = NULL,
-          choices = sas_standard_choices,
+          choices = NULL,
           multiple = TRUE,
           options = list(maxOptions = 6000)
         )
@@ -98,28 +103,44 @@ subjects_standards_ui <- function(id) {
 subject_standards_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     # Drop downs ==============================================================
+    # Calculate the standards available based on level selection
+    sas_std_choices <- reactive({
+      if (is.null(input$level) || input$level == "") {
+        sas_standard_table$std_fwk_name |>
+          unique()
+      } else {
+        sas_standard_table |>
+          filter(apps_Level == input$level) |>
+          pull(std_fwk_name)
+      }
+    })
+
     # Using the server to power to the provider dropdown for increased speed
     updateSelectizeInput(
       session = session,
       inputId = "provider",
       label = "Search for provider",
-      choices = c(sas_provider_choices),
+      choices = sas_provider_choices,
       server = TRUE
     )
     updateSelectizeInput(
       session = session,
       inputId = "level",
       label = "Select level",
-      choices = c(sas_level_choices),
+      choices = sas_level_choices,
       server = TRUE
     )
-    updateSelectizeInput(
-      session = session,
-      inputId = "standard",
-      label = "Search for standard",
-      choices = c(sas_standard_choices),
-      server = TRUE
-    )
+
+    # This dropdown needs to watch (observe) and update when a level is selected
+    observe({
+      updateSelectizeInput(
+        session = session,
+        inputId = "standard",
+        label = "Search for standard",
+        choices = sas_std_choices(),
+        server = TRUE
+      )
+    })
 
     # Select a subject area from the table
     subject_selection <- reactive({

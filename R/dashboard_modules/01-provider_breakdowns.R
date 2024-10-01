@@ -281,6 +281,14 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     # Bar chart output ========================================================
     # Create an interactive chart showing the numbers broken down by subject
     # area
+
+    # Todo list for chart
+    # TODO: Add hover highlighting on bars
+    # TODO: Add tool tip on hover
+    # TODO: Make x axis pretty_num'd
+    # TODO: Change x axis label font to match the axis generally (seems too big?)
+    # TODO: Wrap y axis labels and make it use more horizontal space
+
     output$regions_bar <- renderGirafe(
       girafe(
         ggobj =
@@ -299,6 +307,11 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             # Axis labels
             xlab("") +
             ylab(input$measure) +
+            # Set the colours
+            scale_fill_manual(values = c(
+              "Learner home" = afcolours::af_colours(n = 4)[1],
+              "Delivery" = afcolours::af_colours(n = 4)[4]
+            )) +
             # Custom theme
             # TODO: extract list of this to reuse in dfeshiny
             ggplot2::theme_minimal() +
@@ -329,7 +342,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         fonts = list(sans = "Arial")
       )
     )
-
 
     # Table output objects ====================================================
     output$prov_selection <- renderReactable({

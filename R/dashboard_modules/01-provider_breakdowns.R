@@ -275,6 +275,9 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       # Force the ordering of the regions
       regions_bar_data$Region <- forcats::fct_rev(factor(regions_bar_data$Region, levels = regions))
 
+      # Create a unique column used for the hover on each bar
+      regions_bar_data$data_id <- paste(regions_bar_data$Region, regions_bar_data$type, sep = "_")
+
       return(regions_bar_data)
     })
 
@@ -283,8 +286,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     # area
 
     # Todo list for chart
-    # TODO: Add hover highlighting on bars
-    # TODO: Add tool tip on hover
     # TODO: Make x axis pretty_num'd
     # TODO: Change x axis label font to match the axis generally (seems too big?)
     # TODO: Wrap y axis labels and make it use more horizontal space
@@ -297,11 +298,16 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               aes(
                 fill = type,
                 x = Region,
-                y = count
+                y = count,
+                tooltip = paste(
+                  lapply(count, dfeR::pretty_num), firstlow(input$measure), "<br>",
+                  type, "in", Region
+                ),
+                data_id = data_id
               )
             ) +
-            # Make it clustered
-            geom_bar(position = "dodge", stat = "identity") +
+            # Make it an interactive, clustered, bar
+            geom_bar_interactive(position = "dodge", stat = "identity") +
             # Make it horizontal
             coord_flip() +
             # Axis labels
@@ -337,7 +343,16 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             ),
             opacity = 1
           ),
-          ggiraph::opts_toolbar(saveaspng = FALSE)
+          ggiraph::opts_toolbar(
+            saveaspng = FALSE,
+            hidden = c("lasso_select", "lasso_deselect")
+          ),
+          ggiraph::opts_hover(
+            css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
+          ),
+          ggiraph::opts_selection(
+            type = "none"
+          )
         ),
         fonts = list(sans = "Arial")
       )

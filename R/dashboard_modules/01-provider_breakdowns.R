@@ -282,14 +282,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     })
 
     # Bar chart output ========================================================
-    # Create an interactive chart showing the numbers broken down by subject
-    # area
-
-    # Todo list for chart
-    # TODO: Make x axis pretty_num'd
-    # TODO: Change x axis label font to match the axis generally (seems too big?)
-    # TODO: Wrap y axis labels and make it use more horizontal space
-
     output$regions_bar <- renderGirafe(
       girafe(
         ggobj =
@@ -318,6 +310,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               "Learner home" = afcolours::af_colours(n = 4)[1],
               "Delivery" = afcolours::af_colours(n = 4)[4]
             )) +
+            # Format the x-axis numbers (using the Y function as we've flipped to horizontal!)
+            scale_y_continuous(labels = dfeR::comma_sep) +
+            # Wrap y-axis labels (set so East of England and longer will wrap onto multiple lines)
+            scale_x_discrete(labels = function(x) str_wrap(x, width = 13)) +
             # Custom theme
             # TODO: extract list of this to reuse in dfeshiny
             ggplot2::theme_minimal() +
@@ -326,7 +322,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               legend.title = element_blank(),
               panel.grid = element_blank(),
               panel.grid.minor = element_blank(),
-              panel.grid.major.x = element_blank()
+              panel.grid.major.x = element_blank(),
+              axis.title.x = element_text(family = "Arial", size = 10, face = "bold", margin = margin(t = 10)),
+              axis.text.x = element_text(family = "Arial", size = 10),
+              axis.text.y = element_text(family = "Arial", size = 10)
             ),
         # TODO: break out custom options to steal in
         options = list(

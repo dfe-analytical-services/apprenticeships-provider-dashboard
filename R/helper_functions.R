@@ -121,7 +121,7 @@ dfe_footer <- function(links_list) {
 }
 
 # dfe reactable ===============================================================
-dfe_reactable <- function(data, on_click = NULL, selection = NULL, row_style = NULL, searchable = FALSE) {
+dfe_reactable <- function(data, on_click = NULL, selection = NULL, row_style = NULL, searchable = FALSE, default_page_size = 10) {
   reactable(
     data,
     # DfE styling
@@ -133,6 +133,7 @@ dfe_reactable <- function(data, on_click = NULL, selection = NULL, row_style = N
 
     # Customiseable settings
     # TODO: think about the best way to set this out for dfeshiny to allow flexibility while keeping defaults we want
+    defaultPageSize = default_page_size,
     rowStyle = row_style,
     onClick = on_click,
     selection = selection,

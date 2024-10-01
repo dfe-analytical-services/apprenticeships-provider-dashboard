@@ -3,7 +3,6 @@
 sas_parquet <- read_sas("data/apprenticeships_data_0.parquet")
 
 # Create static lists of options for dropdowns
-sas_provider_choices <- sort(data_choices(data = sas_parquet, column = "provider_name"))
 sas_year_choices <- sort(data_choices(data = sas_parquet, column = "year"),
   decreasing = TRUE
 )
@@ -34,16 +33,6 @@ subjects_standards_ui <- function(id) {
           label = "Select measure",
           choices = c(sas_measure_choices)
         ),
-      ),
-      layout_columns(
-        col_widths = c(4, 4, 4),
-        selectizeInput(
-          inputId = NS(id, "provider"),
-          label = NULL,
-          choices = NULL,
-          multiple = TRUE,
-          options = list(maxOptions = 6000)
-        ),
         selectizeInput(
           inputId = NS(id, "level"),
           label = NULL,
@@ -64,8 +53,7 @@ subjects_standards_ui <- function(id) {
     layout_columns(
       col_widths = c(4, 8),
       card(
-        card_header(textOutput(NS(id, "sas_provider_table_title"))),
-        card_body(reactable::reactableOutput(NS(id, "sas_provider_table")))
+        reactable::reactableOutput(NS(id, "sas_provider_table"))
       ),
       ## Tabs ----------------------------------------------------------------
       navset_card_tab(
@@ -116,14 +104,6 @@ subject_standards_server <- function(id) {
       }
     })
 
-    # Using the server to power to the provider dropdown for increased speed
-    updateSelectizeInput(
-      session = session,
-      inputId = "provider",
-      label = "Search for provider",
-      choices = sas_provider_choices,
-      server = TRUE
-    )
     updateSelectizeInput(
       session = session,
       inputId = "level",
@@ -143,24 +123,19 @@ subject_standards_server <- function(id) {
       )
     })
 
-    # Select a subject area from the table
-    subject_selection <- reactive({
-      if (is.null(input$subject_area_bar_selected)) {
-        "all subjects"
-      } else {
-        input$subject_area_bar_selected
-      }
+    # Get the selections from the provider table ==============================
+    selected_providers <- reactive({
+      # Filter to only the selected providers and convert to a vector to use for filtering elsewhere
+      unlist(provider_selection_table()[getReactableState("sas_provider_table", "selected"), 1], use.names = FALSE)
     })
 
+    # Reactive data ===========================================================
     # Filter subject area data set based on inputs on this page. This reactive
     # feeds the tables and chart.
-    subject_area_data <- reactive({
+    filtered_raw_data <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
 
-      if (!(is.null(input$provider))) {
-        data <- data %>% filter(provider_name %in% input$provider)
-      }
       if (!(is.null(input$level))) {
         data <- data %>% filter(apps_Level %in% input$level)
       }
@@ -168,39 +143,15 @@ subject_standards_server <- function(id) {
         data <- data %>% filter(std_fwk_name %in% input$standard)
       }
 
-      data
+      return(data)
     })
 
-    # Adding a reactive to handle cleaning the selected SSA T1 Description from
-    # the bar chart. Removes the line wrapping I've added for the chart.
-    ssa_t1_selected <- reactive({
-      gsub("\\n", " ", input$subject_area_bar_selected)
-    })
-
-    # Create dynamic title for the provider table
-    output$sas_provider_table_title <- renderText({
-      paste(
-        input$measure, "for providers across",
-        ifelse(
-          length(ssa_t1_selected()) != 0,
-          paste0(ssa_t1_selected(), collapse = " / "),
-          "all subject areas"
-        )
-      )
-    })
-
+    # Create the table for providers to select from
     provider_selection_table <- reactive({
-      # Filter the provider data based on whether the user's selected any subject areas
-      # from the table
-      if (!is.null(input$subject_area_bar_selected)) {
-        provider_data <- subject_area_data() %>%
-          filter(ssa_t1_desc %in% ssa_t1_selected())
-      } else {
-        provider_data <- subject_area_data()
-      }
+      provider_data <- filtered_raw_data()
 
       # Run a quick aggregate of numbers by provider name.
-      provider_data %>%
+      provider_data <- provider_data %>%
         summarise(
           values = sum(values),
           .by = c("provider_name")
@@ -211,7 +162,22 @@ subject_standards_server <- function(id) {
           `Provider name` = provider_name,
           !!quo_name(input$measure) := values
         )
+
+      return(provider_data)
     })
+
+    # Main expandable table data (adds the filter for provider selections)
+    subject_area_data <- reactive({
+      data <- filtered_raw_data()
+
+      if (length(selected_providers() != 0)) {
+        data <- data %>% filter(provider_name %in% selected_providers())
+      }
+
+      return(data)
+    })
+
+
 
     output$sas_provider_table <- renderReactable({
       # Put in message where there are none of the measure
@@ -221,7 +187,12 @@ subject_standards_server <- function(id) {
       ))
 
       dfe_reactable(
-        provider_selection_table()
+        provider_selection_table(),
+        on_click = "select",
+        selection = "multiple",
+        searchable = TRUE,
+        row_style = list(cursor = "pointer"),
+        default_page_size = 15
       )
     })
 

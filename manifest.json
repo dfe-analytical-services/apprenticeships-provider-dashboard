@@ -5700,6 +5700,12 @@
     ".RDataTmp1": {
       "checksum": "713fa73b3ef1c6a2c7673b8fa40cd4b4"
     },
+    ".RDataTmp10": {
+      "checksum": "7f919c483c6fa8ce7c97194699cf9802"
+    },
+    ".RDataTmp11": {
+      "checksum": "9f4636edddd5a30c11bf1fd42270be79"
+    },
     ".RDataTmp2": {
       "checksum": "735e0a649eba0b974e2f6df560385d64"
     },
@@ -5723,6 +5729,9 @@
     },
     ".Rprofile": {
       "checksum": "909f6233a5e9aa54de021d275571ce9c"
+    },
+    ".RDataTmp9": {
+      "checksum": "a775eb3b0bd5cbe54a0f3516b8644f75"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5779,7 +5788,7 @@
       "checksum": "54470a9762bfff8eb0ef536d99d05084"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
-      "checksum": "dc00134b1cc5dafa846435b9d49ecb8a"
+      "checksum": "9b7612db529b8909338e5e5f83660b9f"
     },
     "R/dashboard_modules/06-user_guide.R": {
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"

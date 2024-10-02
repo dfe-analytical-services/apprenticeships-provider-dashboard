@@ -59,6 +59,10 @@ subjects_standards_ui <- function(id) {
       navset_card_tab(
         id = "sas_tabs",
         nav_panel(
+          "Bar chart",
+          girafeOutput(NS(id, "subject_area_bar")),
+        ),
+        nav_panel(
           "Table",
           reactable::reactableOutput(NS(id, "sas_subject_area_table"))
         ),
@@ -195,6 +199,41 @@ subject_standards_server <- function(id) {
         default_page_size = 15
       )
     })
+
+    # Create an interactive chart showing the numbers broken down by subject
+    # area
+    output$subject_area_bar <- renderGirafe(
+      girafe(
+        ggobj =
+          subject_area_data() %>%
+            summarise( # nolint: indentation_linter
+              values = sum(values),
+              .by = c("ssa_t1_desc")
+            ) %>%
+            mutate(ssa_t1_desc = str_wrap(ssa_t1_desc, 32)) %>%
+            ggplot(
+              aes(
+                x = reorder(ssa_t1_desc, values),
+                y = values,
+                tooltip = ssa_t1_desc,
+                data_id = ssa_t1_desc
+              )
+            ) +
+            geom_col_interactive(fill = "#12436D") +
+            theme_classic() +
+            coord_flip() +
+            xlab("") +
+            ylab(input$measure),
+        options = list(opts_selection(
+          type = "multiple",
+          css = "fill:#28A197;stroke:#28A197;r:5pt;"
+        ))
+      )
+    )
+
+
+
+
 
     # Expandable table of subject areas.
     output$sas_subject_area_table <- renderReactable({

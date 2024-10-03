@@ -22,13 +22,13 @@ regions <- c(
 
 prov_breakdowns_ui <- function(id) {
   div(
-    # Tab header ==============================================================
+    # Page header =============================================================
     h1("Provider breakdowns"),
     layout_columns(
       col_widths = c(4, 8),
-      ## Table on left you can select providers from --------------------------
+      ## Provider table -------------------------------------------------------
       card(reactable::reactableOutput(NS(id, "prov_selection"))),
-      # User selection area =====================================================
+      # User selection area ===================================================
       column(
         width = 12,
         div(
@@ -104,7 +104,7 @@ prov_breakdowns_ui <- function(id) {
 prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
   shiny::moduleServer(id, function(input, output, session) {
     # Main data ===============================================================
-    # Main data set for use in charts / tables / download ---------------------
+    # Main data set for use in charts / tables / download
     # This reads in the raw data and applies the filters from the dropdowns
     filtered_raw_data <- reactive({
       filtered_raw_data <- prov_breakdowns_parquet %>%
@@ -127,12 +127,13 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     # User selections =========================================================
     # Here we get the user selections from the tables to then use to filter the table reactive data sets
 
-    # Get the selections from the provider table ------------------------------
+    # Provider table selections -----------------------------------------------
     selected_providers <- reactive({
       # Filter to only the selected providers and convert to a vector to use for filtering elsewhere
       unlist(prov_selection_table()[getReactableState("prov_selection", "selected"), 1], use.names = FALSE)
     })
 
+    # Region table selections -------------------------------------------------
     selected_learner_home_region <- reactive({
       # Filter to only the selected region using the vector at the top of the script
       return(regions[getReactableState("home_region", "selected")])
@@ -250,7 +251,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     }) %>%
       bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers())
 
-    # Combine to make a single table for bar chart data -----------------------
+    # Bar chart data ----------------------------------------------------------
     regions_bar_data <- reactive({
       learner_home <- home_region_table() |>
         rename(
@@ -281,7 +282,21 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       return(regions_bar_data)
     })
 
-    # Bar chart output ========================================================
+    # Bar chart output object =================================================
+    # Get the selected region and return in a form that matches the id's used in the chart
+    # This is then used to show which region is currently selected from the tables
+    selected_region <- reactive({
+      # We know only one of the two can be selected in the tables at once so we can cheat a bit with our logic here
+      # Filter to delivery region selection if it exists
+      if (length(selected_delivery_region()) == 1) {
+        return(paste0(selected_delivery_region(), "_Delivery"))
+      } else {
+        # Filter to learner home region selection if it exists, if it doesn't then it returns _Leaner home
+        # which won't match an id in the chart and will act as if nothing is selected
+        return(paste0(selected_learner_home_region(), "_Learner home"))
+      }
+    })
+
     output$regions_bar <- renderGirafe(
       girafe(
         ggobj =
@@ -327,30 +342,21 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               axis.text.x = element_text(family = "Arial", size = 10),
               axis.text.y = element_text(family = "Arial", size = 10)
             ),
-        # TODO: break out custom options to steal in
+        # TODO: break out custom options to function to reuse for dfeshiny
         options = list(
-          ggiraph::opts_tooltip(
-            css = paste0(
-              "background-color:#ECECEC;",
-              "color:black;",
-              "padding:5px;",
-              "border-radius:3px;",
-              "font-family:Arial;",
-              "font-weight:500;",
-              "border:1px solid black;",
-              "z-index: 99999 !important;"
-            ),
-            opacity = 1
-          ),
+          # Turn off toolbar options (as they're bad for accessibility / confusing for users)
           ggiraph::opts_toolbar(
             saveaspng = FALSE,
             hidden = c("lasso_select", "lasso_deselect")
           ),
+          # Set styling for bars on hover and when selected
           ggiraph::opts_hover(
             css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
           ),
           ggiraph::opts_selection(
-            type = "none"
+            type = "single",
+            selected = selected_region(),
+            css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
           )
         ),
         fonts = list(sans = "Arial")

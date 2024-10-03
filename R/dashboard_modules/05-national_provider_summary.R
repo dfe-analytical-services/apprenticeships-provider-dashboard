@@ -53,7 +53,10 @@ nps_ui <- function(id) {
         shinyGovstyle::radio_button_Input(
           inputId = NS(id, "file_type"),
           label = h2("Choose download file format"),
-          hint_label = "The XLSX format is designed for use in Microsoft Excel",
+          hint_label = paste0(
+            "This will download all data related to the providers and options selected.",
+            " The XLSX format is designed for use in Microsoft Excel."
+          ),
           choices = c("CSV (Up to 5.47 MB)", "XLSX (Up to 1.75 MB)"),
           selected = "CSV (Up to 5.47 MB)"
         ),

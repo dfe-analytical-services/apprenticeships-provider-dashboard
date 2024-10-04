@@ -6,12 +6,24 @@ sas_parquet <- read_sas("data/apprenticeships_data_0.parquet")
 sas_year_choices <- sort(data_choices(data = sas_parquet, column = "year"),
   decreasing = TRUE
 )
+sas_subject_choices <- data_choices(data = sas_parquet, column = "ssa_t1_desc")
 sas_measure_choices <- data_choices(data = sas_parquet, column = "measure")
 sas_level_choices <- data_choices(data = sas_parquet, column = "apps_Level")
 
-# Creating a table of levels to standards so we can filter the standards options based on level selection
+# Creating a table of levels and subjects to standards so we can filter the
+# standards options based on level and subject selection
 sas_standard_table <- sas_parquet |>
+  select(apps_Level, ssa_t1_desc, std_fwk_name) |>
+  distinct() |>
+  arrange(std_fwk_name)
+
+sas_standard_level_table <- sas_parquet |>
   select(apps_Level, std_fwk_name) |>
+  distinct() |>
+  arrange(std_fwk_name)
+
+sas_standard_subject_table <- sas_parquet |>
+  select(ssa_t1_desc, std_fwk_name) |>
   distinct() |>
   arrange(std_fwk_name)
 
@@ -40,6 +52,12 @@ subjects_standards_ui <- function(id) {
           multiple = TRUE
         ),
         selectizeInput(
+          inputId = NS(id, "subject"),
+          label = NULL,
+          choices = NULL,
+          multiple = TRUE
+        ),
+        selectizeInput(
           inputId = NS(id, "standard"),
           label = NULL,
           choices = NULL,
@@ -53,6 +71,7 @@ subjects_standards_ui <- function(id) {
     layout_columns(
       col_widths = c(4, 8),
       card(
+        card_header(textOutput(NS(id, "sas_provider_table_title"))),
         reactable::reactableOutput(NS(id, "sas_provider_table"))
       ),
       ## Tabs ----------------------------------------------------------------
@@ -95,15 +114,33 @@ subjects_standards_ui <- function(id) {
 subject_standards_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     # Drop downs ==============================================================
-    # Calculate the standards available based on level selection
+    # Initial selections
+    # Calculate the standards available based on level/subject selection
+    # if both empty - all standards
     sas_std_choices <- reactive({
-      if (any(is.null(input$level), input$level == "")) {
+      if (any(is.null(input$level), input$level == "") & any(is.null(input$subject), input$subject == "")) {
         sas_standard_table %>%
           pull(std_fwk_name) %>%
           unique()
+      }
+      # if level is empty and subject isn't then get list for that subject
+      else if (any(is.null(input$level), input$level == "")) {
+        sas_standard_subject_table %>%
+          filter(ssa_t1_desc %in% input$subject) %>%
+          pull(std_fwk_name) %>%
+          unique()
+      }
+      # if subject is empty and level isn't then get list for that level
+      else if (any(is.null(input$subject), input$subject == "")) {
+        sas_standard_level_table %>%
+          filter(apps_Level %in% input$level) %>%
+          pull(std_fwk_name) %>%
+          unique()
+        # if both populated then get list based on both
       } else {
         sas_standard_table %>%
           filter(apps_Level %in% input$level) %>%
+          filter(ssa_t1_desc %in% input$subject) %>%
           pull(std_fwk_name)
       }
     })
@@ -116,7 +153,16 @@ subject_standards_server <- function(id) {
       server = TRUE
     )
 
-    # This dropdown needs to watch (observe) and update when a level is selected
+    updateSelectizeInput(
+      session = session,
+      inputId = "subject",
+      label = "Select subject area",
+      choices = sas_subject_choices,
+      server = TRUE
+    )
+
+    # This dropdown needs to watch (observe) and update when a level
+    # or subject area is selected
     observe({
       updateSelectizeInput(
         session = session,
@@ -133,6 +179,19 @@ subject_standards_server <- function(id) {
       unlist(provider_selection_table()[getReactableState("sas_provider_table", "selected"), 1], use.names = FALSE)
     })
 
+
+
+    # User bar selection ------------------------------------------------------
+    # and then pass into the dropdown as if the user had selected that LAD from the dropdown itself
+    # all of the flushing of other values happens automatically when the calculations are rerun
+    #
+    # The 'id' that we pull here pulls from what we set as the 'layerId' in bar chart
+    observeEvent(input$input$subject_area_bar_selected, {
+      bar_selected_subject <- input$subject_area_bar_selected
+      updateSelectizeInput(session, "ssa_t1_desc", selected = bar_selected_subject$id)
+    })
+
+
     # Reactive data ===========================================================
     # Filter subject area data set based on inputs on this page. This reactive
     # feeds the tables and chart.
@@ -143,10 +202,12 @@ subject_standards_server <- function(id) {
       if (!(is.null(input$level))) {
         data <- data %>% filter(apps_Level %in% input$level)
       }
+      if (!(is.null(input$subject))) {
+        data <- data %>% filter(ssa_t1_desc %in% input$subject)
+      }
       if (!(is.null(input$standard))) {
         data <- data %>% filter(std_fwk_name %in% input$standard)
       }
-
       return(data)
     })
 
@@ -166,7 +227,6 @@ subject_standards_server <- function(id) {
           `Provider name` = provider_name,
           !!quo_name(input$measure) := values
         )
-
       return(provider_data)
     })
 
@@ -181,7 +241,23 @@ subject_standards_server <- function(id) {
       return(data)
     })
 
+    # Adding a reactive to handle cleaning the selected SSA T1 Description from
+    # the bar chart. Removes the line wrapping I've added for the chart.
+    ssa_t1_selected <- reactive({
+      gsub("\\n", " ", input$subject_area_bar_selected)
+    })
 
+    # Create dynamic title for the provider table
+    output$sas_provider_table_title <- renderText({
+      paste(
+        input$measure, "for providers across",
+        ifelse(
+          length(ssa_t1_selected()) != 0,
+          paste0(ssa_t1_selected(), collapse = " / "),
+          "all subject areas"
+        )
+      )
+    })
 
     output$sas_provider_table <- renderReactable({
       # Put in message where there are none of the measure
@@ -227,7 +303,7 @@ subject_standards_server <- function(id) {
         options = list(opts_selection(
           type = "multiple",
           css = "fill:#28A197;stroke:#28A197;r:5pt;"
-        ))
+        ), layerId = ~lad_name)
       )
     )
 

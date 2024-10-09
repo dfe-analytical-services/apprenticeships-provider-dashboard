@@ -17,16 +17,6 @@ sas_standard_table <- sas_parquet |>
   distinct() |>
   arrange(std_fwk_name)
 
-sas_standard_level_table <- sas_parquet |>
-  select(apps_Level, std_fwk_name) |>
-  distinct() |>
-  arrange(std_fwk_name)
-
-sas_standard_subject_table <- sas_parquet |>
-  select(ssa_t1_desc, std_fwk_name) |>
-  distinct() |>
-  arrange(std_fwk_name)
-
 subjects_standards_ui <- function(id) {
   div(
     h1("Subjects and standards"),
@@ -125,14 +115,14 @@ subject_standards_server <- function(id) {
       } else
       # if level is empty and subject isn't then get list for that subject
       if (any(is.null(input$level), input$level == "")) {
-        sas_standard_subject_table %>%
+        sas_standard_table %>%
           filter(ssa_t1_desc %in% input$subject) %>%
           pull(std_fwk_name) %>%
           unique()
       } else
       # if subject is empty and level isn't then get list for that level
       if (any(is.null(input$subject), input$subject == "")) {
-        sas_standard_level_table %>%
+        sas_standard_table %>%
           filter(apps_Level %in% input$level) %>%
           pull(std_fwk_name) %>%
           unique()
@@ -141,25 +131,49 @@ subject_standards_server <- function(id) {
         sas_standard_table %>%
           filter(apps_Level %in% input$level) %>%
           filter(ssa_t1_desc %in% input$subject) %>%
-          pull(std_fwk_name)
+          pull(std_fwk_name) %>%
+          unique()
       }
     })
 
-    updateSelectizeInput(
-      session = session,
-      inputId = "subject",
-      label = "Select subject area",
-      choices = sas_subject_choices,
-      server = TRUE
-    )
+    # Ensure the level is based on a selection in the standard dropdown
+    observeEvent(input$standard, {
+      relevant_level <- sas_standard_table %>%
+        filter(std_fwk_name %in% input$standard) %>%
+        pull(apps_Level)
+      updateSelectizeInput(session, "level", selected = relevant_level)
+    })
 
-    updateSelectizeInput(
-      session = session,
-      inputId = "level",
-      label = "Select level",
-      choices = sas_level_choices,
-      server = TRUE
-    )
+    # Ensure the subject is based on a selection in the standard dropdown
+    observeEvent(input$standard, {
+      relevant_subject <- sas_standard_table %>%
+        filter(std_fwk_name %in% input$standard) %>%
+        pull(ssa_t1_desc)
+      updateSelectizeInput(session, "subject", selected = relevant_subject)
+    })
+
+    # This dropdown needs to watch (observe) and update when bar(s)
+    # of subject area is selected
+    observe({
+      updateSelectizeInput(
+        session = session,
+        inputId = "subject",
+        label = "Select subject area",
+        choices = sas_subject_choices,
+        server = TRUE
+      )
+    })
+
+    # This dropdown needs to watch (observe) and update
+    observe({
+      updateSelectizeInput(
+        session = session,
+        inputId = "level",
+        label = "Select level",
+        choices = sas_level_choices,
+        server = TRUE
+      )
+    })
 
     # This dropdown needs to watch (observe) and update when a level
     # or subject area is selected
@@ -235,13 +249,19 @@ subject_standards_server <- function(id) {
     })
 
     # Main expandable table data (adds the filter for provider selections)
-    subject_area_data <- reactive({
+    subject_area_data_table <- reactive({
       data <- filtered_raw_data_table()
-
       if (length(selected_providers() != 0)) {
         data <- data %>% filter(provider_name %in% selected_providers())
       }
+      return(data)
+    })
 
+    subject_area_data_chart <- reactive({
+      data <- filtered_raw_data_chart()
+      if (length(selected_providers() != 0)) {
+        data <- data %>% filter(provider_name %in% selected_providers())
+      }
       return(data)
     })
 
@@ -297,12 +317,11 @@ subject_standards_server <- function(id) {
     output$subject_area_bar <- renderGirafe(
       girafe(
         ggobj =
-          subject_area_data() %>%
+          subject_area_data_chart() %>%
             summarise( # nolint: indentation_linter
               values = sum(values),
               .by = c("ssa_t1_desc")
             ) %>%
-            #  mutate(ssa_t1_desc = str_wrap(ssa_t1_desc, 32)) %>%
             ggplot(
               aes(
                 x = reorder(ssa_t1_desc, values),
@@ -318,8 +337,8 @@ subject_standards_server <- function(id) {
             ylab(input$measure),
         options = list(opts_selection(
           type = "multiple",
-          css = "fill:#28A197;stroke:#28A197;r:5pt;"
-        ), layerId = ~lad_name)
+          css = "fill:#801650;stroke:#801650;r:5pt;"
+        ))
       )
     )
 
@@ -328,13 +347,17 @@ subject_standards_server <- function(id) {
     # Think need to update based upon what is in the subject dropdown
     # as can be updated by the bar chart
 
-
-
     output$sas_subject_area_table <- renderReactable({
       # Put in message where there are none of the measure
-      validate(need(nrow(subject_area_data()) > 0, paste0("No ", firstlow(input$measure), " for these selections.")))
+      validate(need(
+        nrow(subject_area_data_table()) > 0,
+        paste0(
+          "No ", firstlow(input$measure),
+          " for these selections."
+        )
+      ))
 
-      subject_data <- subject_area_data() %>%
+      subject_data <- subject_area_data_table() %>%
         summarise(
           values = sum(values),
           .by = c("ssa_t1_desc", "ssa_t2_desc", "apps_Level", "std_fwk_name")

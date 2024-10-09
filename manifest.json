@@ -5731,7 +5731,7 @@
       "checksum": "a775eb3b0bd5cbe54a0f3516b8644f75"
     },
     ".Rprofile": {
-      "checksum": "f3754431321e40a4b78e571532b8d80c"
+      "checksum": "a1cc633cde73aeb50fbcfa9487e83ec0"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5785,7 +5785,7 @@
       "checksum": "9e5d98c77826a9de8548e2f4d2ce9a10"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "3570742c5b66f7bf152684f5bfe91a12"
+      "checksum": "8fc820f07351a7e240ebad528619b29f"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
       "checksum": "54470a9762bfff8eb0ef536d99d05084"
@@ -5842,40 +5842,22 @@
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
     },
     "tests/testthat/_snaps/UI-03-sas/UI-03-sas-001.json": {
-      "checksum": "d4aefbd2378f584a0aa8f592640313b8"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-001.new.json": {
-      "checksum": "6f1c380ad48a62847307a96ebe5271b0"
+      "checksum": "8e2c00b826aa5ac12500b0044e8ee3a0"
     },
     "tests/testthat/_snaps/UI-03-sas/UI-03-sas-002.json": {
-      "checksum": "1acaccabc412d430a2e00dd1bb20903f"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-002.new.json": {
-      "checksum": "98719bdd2e03da73bf0d582bd050c04a"
+      "checksum": "8e2c00b826aa5ac12500b0044e8ee3a0"
     },
     "tests/testthat/_snaps/UI-03-sas/UI-03-sas-003.json": {
-      "checksum": "2c4fd3c9df99ce02a1eefd0af88d66f8"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-003.new.json": {
-      "checksum": "0bf0f6c99d2430d3459efada63498001"
+      "checksum": "8e2c00b826aa5ac12500b0044e8ee3a0"
     },
     "tests/testthat/_snaps/UI-03-sas/UI-03-sas-004.json": {
-      "checksum": "f37fb1eef022d570d2cf529361edccb6"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-004.new.json": {
-      "checksum": "a2f5e04e7919c96b27331a7d4049f0e4"
+      "checksum": "e8c3b2f8f4e4c3b859da878a89d18946"
     },
     "tests/testthat/_snaps/UI-03-sas/UI-03-sas-005.json": {
-      "checksum": "6d439b2837a425cf2ae9c5758efc98d0"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-005.new.json": {
-      "checksum": "411462dc3bf698bb3b02122b32bd002c"
+      "checksum": "ad2a9ede6cfecdd9e39a0f3a1911e01d"
     },
     "tests/testthat/_snaps/UI-03-sas/UI-03-sas-006.json": {
-      "checksum": "f554099711a02468fc8ff9e0a47b527d"
-    },
-    "tests/testthat/_snaps/UI-03-sas/UI-03-sas-006.new.json": {
-      "checksum": "7d692a3aeee8efab54c29983b13ae082"
+      "checksum": "0a42aa3aab0f09d4736275e9f1be3f98"
     },
     "tests/testthat/setup-shinytest2.R": {
       "checksum": "d3e71278de0398bd2acaa6e00ad59114"

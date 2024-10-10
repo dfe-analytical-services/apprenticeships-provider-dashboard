@@ -5731,7 +5731,7 @@
       "checksum": "a775eb3b0bd5cbe54a0f3516b8644f75"
     },
     ".Rprofile": {
-      "checksum": "a1cc633cde73aeb50fbcfa9487e83ec0"
+      "checksum": "935b076c448edf0dd84547d6cec05614"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5785,7 +5785,7 @@
       "checksum": "9e5d98c77826a9de8548e2f4d2ce9a10"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "8fc820f07351a7e240ebad528619b29f"
+      "checksum": "b2ae4be06af14b25b41ed23ad55e24ee"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
       "checksum": "54470a9762bfff8eb0ef536d99d05084"
@@ -5842,7 +5842,7 @@
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
     },
     "tests/testthat/_snaps/UI-03-sas/UI-03-sas-001.json": {
-      "checksum": "8e2c00b826aa5ac12500b0044e8ee3a0"
+      "checksum": "d4aefbd2378f584a0aa8f592640313b8"
     },
     "tests/testthat/_snaps/UI-03-sas/UI-03-sas-002.json": {
       "checksum": "8e2c00b826aa5ac12500b0044e8ee3a0"

@@ -137,6 +137,7 @@ subject_standards_server <- function(id) {
     })
 
     # Ensure the level is based on a selection in the standard dropdown
+    # if there is one
     observeEvent(input$standard, {
       relevant_level <- sas_standard_table %>%
         filter(std_fwk_name %in% input$standard) %>%
@@ -145,7 +146,9 @@ subject_standards_server <- function(id) {
     })
 
     # Ensure the subject is based on a selection in the standard dropdown
+    # if there is one
     observeEvent(input$standard, {
+      print(input$standard)
       relevant_subject <- sas_standard_table %>%
         filter(std_fwk_name %in% input$standard) %>%
         pull(ssa_t1_desc)
@@ -153,7 +156,7 @@ subject_standards_server <- function(id) {
     })
 
     # This dropdown needs to watch (observe) and update when bar(s)
-    # of subject area is selected
+    # of subject area is selected, or a standard
     observe({
       updateSelectizeInput(
         session = session,
@@ -164,7 +167,8 @@ subject_standards_server <- function(id) {
       )
     })
 
-    # This dropdown needs to watch (observe) and update
+    # This dropdown needs to watch (observe) and update when a standard is
+    # selected
     observe({
       updateSelectizeInput(
         session = session,
@@ -192,10 +196,6 @@ subject_standards_server <- function(id) {
       # Filter to only the selected providers and convert to a vector to use for filtering elsewhere
       unlist(provider_selection_table()[getReactableState("sas_provider_table", "selected"), 1], use.names = FALSE)
     })
-
-
-
-
 
     # Reactive data ===========================================================
     # Filter subject area data set based on inputs on this page. This reactive
@@ -257,6 +257,8 @@ subject_standards_server <- function(id) {
       return(data)
     })
 
+    # Separate data file for the chart - don't want it to be filtered by subject
+    # So that bars don't disappear if not selected
     subject_area_data_chart <- reactive({
       data <- filtered_raw_data_chart()
       if (length(selected_providers() != 0)) {
@@ -291,10 +293,16 @@ subject_standards_server <- function(id) {
     # Not sure that this is a problem at the mo...
 
     observeEvent(input$subject_area_bar_selected, {
+      print(input$subject_area_bar_selected)
+      print(length(input$subject_area_bar_selected))
       bar_selected_subjects <- input$subject_area_bar_selected
-      updateSelectizeInput(session, "subject", selected = bar_selected_subjects)
+      updateSelectizeInput(session, "subject",
+        selected = bar_selected_subjects # ,
+        # options = list(maxItems = 13)
+      )
     })
 
+    # A selectable list of providers
     output$sas_provider_table <- renderReactable({
       # Put in message where there are none of the measure
       validate(need(

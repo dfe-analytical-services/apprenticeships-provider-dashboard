@@ -148,7 +148,6 @@ subject_standards_server <- function(id) {
     # Ensure the subject is based on a selection in the standard dropdown
     # if there is one
     observeEvent(input$standard, {
-      print(input$standard)
       relevant_subject <- sas_standard_table %>%
         filter(std_fwk_name %in% input$standard) %>%
         pull(ssa_t1_desc)
@@ -343,10 +342,16 @@ subject_standards_server <- function(id) {
             coord_flip() +
             xlab("") +
             ylab(input$measure),
-        options = list(opts_selection(
-          type = "multiple",
-          css = "fill:#801650;stroke:#801650;r:5pt;"
-        ))
+        options = list(
+          opts_selection(
+            type = "multiple",
+            css = "fill:#801650;stroke:#801650;r:5pt;"
+          ),
+          ggiraph::opts_toolbar(
+            saveaspng = FALSE,
+            hidden = c("lasso_select", "lasso_deselect")
+          )
+        )
       )
     )
 

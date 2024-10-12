@@ -323,13 +323,13 @@ lad_server <- function(id) {
     output$delivery_lad_map <- renderLeaflet({
       validate(need(nrow(delivery_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
-      dfe_lad_map(delivery_map_data(), input$measure)
+      dfe_lad_map(delivery_map_data(), input$measure, NS(id, "delivery_lad"))
     })
 
     output$learner_home_lad_map <- renderLeaflet({
       validate(need(nrow(learner_home_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
-      dfe_lad_map(learner_home_map_data(), input$measure)
+      dfe_lad_map(learner_home_map_data(), input$measure, NS(id, "learner_home_lad"))
     })
 
     # Data download ===========================================================

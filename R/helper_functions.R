@@ -175,20 +175,31 @@ firstlow <- function(x) {
 
 # Add a map reset button to a Leaflet map object, using some additional JavaScript
 # @param leaf A Leaflet map object
-addMapResetButton <- function(leaf) {
+# @param selectizeInputId The ID of the input you want the reset button to clear
+#
+# Note that if you're working inside a module, you will need to wrap the inputId in the NS function
+addMapResetButton <- function(leaf, selectizeInputId = NULL) {
   leaf %>%
     # Add a button into the map
     addEasyButton(
       easyButton(
         icon = "ion-refresh",
         title = "Reset View",
-        # When clicking the button, reset the view of the map
+        # When clicking the button, reset the view of the map and clear the selectizeInput
         onClick = JS(
-          "function(btn, map){ map.setView(map._initialCenter, map._initialZoom); }"
+          sprintf(
+            "function(btn, map){
+              map.setView(map._initialCenter, map._initialZoom);
+              if ('%s' !== 'null') {
+                Shiny.setInputValue('%s', '');
+              }
+            }",
+            selectizeInputId, selectizeInputId
+          )
         )
       )
     ) %>%
-    # When the map loads, grab it's initial centre point values
+    # When the map loads, grab its initial center point values
     htmlwidgets::onRender(
       JS(
         "
@@ -203,8 +214,9 @@ function(el, x){
     )
 }
 
+
 # Create a map ================================================================
-dfe_lad_map <- function(data, measure) {
+dfe_lad_map <- function(data, measure, inputId) {
   # Set the color scheme and scale
   pal_fun <- colorNumeric(
     "Blues",
@@ -255,7 +267,7 @@ dfe_lad_map <- function(data, measure) {
       values = ~ data[["Number of apprenticeships"]],
       title = firstup(measure)
     ) %>%
-    addMapResetButton() # add a reset button
+    addMapResetButton(selectizeInputId = inputId) # add a reset button
 
   return(map)
 }

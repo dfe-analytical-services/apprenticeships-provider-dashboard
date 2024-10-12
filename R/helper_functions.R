@@ -187,11 +187,13 @@ addMapResetButton <- function(leaf, selectizeInputId = NULL) {
         title = "Reset View",
         # When clicking the button, reset the view of the map and clear the selectizeInput
         onClick = JS(
+          # Use of a random number ensures that shiny will always recognise every button click
+          # without it multiple clicks in quick succession might not be registered / recognised
           sprintf(
             "function(btn, map){
               map.setView(map._initialCenter, map._initialZoom);
               if ('%s' !== 'null') {
-                Shiny.setInputValue('%s', '');
+                Shiny.setInputValue('%s_reset', Math.random());
               }
             }",
             selectizeInputId, selectizeInputId
@@ -199,7 +201,7 @@ addMapResetButton <- function(leaf, selectizeInputId = NULL) {
         )
       )
     ) %>%
-    # When the map loads, grab its initial center point values
+    # When the map loads, grab its initial centre point values
     htmlwidgets::onRender(
       JS(
         "
@@ -213,7 +215,6 @@ function(el, x){
       )
     )
 }
-
 
 # Create a map ================================================================
 dfe_lad_map <- function(data, measure, inputId) {

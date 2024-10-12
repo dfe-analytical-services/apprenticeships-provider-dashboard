@@ -332,6 +332,15 @@ lad_server <- function(id) {
       dfe_lad_map(learner_home_map_data(), input$measure, NS(id, "learner_home_lad"))
     })
 
+    # Watch for the reset buttons and clear selection if pressed
+    observeEvent(input$delivery_lad_reset, {
+      updateSelectizeInput(session, "delivery_lad", selected = "")
+    })
+
+    observeEvent(input$learner_home_lad_reset, {
+      updateSelectizeInput(session, "learner_home_lad", selected = "")
+    })
+
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------

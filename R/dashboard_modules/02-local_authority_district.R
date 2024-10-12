@@ -64,12 +64,14 @@ lad_ui <- function(id) {
         selectizeInput(
           inputId = NS(id, "delivery_lad"),
           label = "Search for a delivery LAD",
-          choices = NULL
+          choices = NULL,
+          options = list(dropdownParent = "body") # force dropdown menu to be in front of other objects
         ),
         selectizeInput(
           inputId = NS(id, "learner_home_lad"),
           label = "Search for a learner home LAD",
-          choices = NULL
+          choices = NULL,
+          options = list(dropdownParent = "body") # force dropdown menu to be in front of other objects
         )
       )
     ),

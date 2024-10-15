@@ -128,10 +128,15 @@ if (!is.null(sas_parquet)) {
 
 # 4. Demographics data
 if (!is.null(chars_parquet)) {
-  # Create example files without any filters (so the maximum a user could download)
-  openxlsx::write.xlsx(chars_parquet %>% collect(), "data/chars_full.xlsx", colWidths = "auto")
-  data.table::fwrite(chars_parquet %>% collect(), "data/chars_full.csv")
-
+  # Create example files
+  openxlsx::write.xlsx(chars_parquet %>%
+    filter(year == "2023/24 (Q3 Aug to Apr)") %>%
+    filter(measure == "Starts") %>%
+    collect(), "data/chars_full.xlsx", colWidths = "auto")
+  data.table::fwrite(chars_parquet %>%
+    filter(year == "2023/24 (Q3 Aug to Apr)") %>%
+    filter(measure == "Starts") %>%
+    collect(), "data/chars_full.csv")
   # Print the file sizes to console
   message("Max XLSX characteristics file size: ", dfeR::pretty_filesize(file.size("data/chars_full.xlsx")))
   message("Max CSV characteristics file size: ", dfeR::pretty_filesize(file.size("data/chars_full.csv")))

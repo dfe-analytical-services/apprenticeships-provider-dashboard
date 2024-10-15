@@ -266,39 +266,35 @@ subject_standards_server <- function(id) {
       return(data)
     })
 
-    # Adding a reactive to handle cleaning the selected SSA T1 Description from
-    # the bar chart. Removes the line wrapping I've added for the chart.
-    ssa_t1_selected <- reactive({
-      gsub("\\n", " ", input$subject_area_bar_selected)
-    })
-
     # Create dynamic title for the provider table
-    output$sas_provider_table_title <- renderText({
+    reactive_table_title <- reactive({
       paste(
         input$measure, "for providers across",
         ifelse(
-          length(ssa_t1_selected()) != 0,
-          paste0(ssa_t1_selected(), collapse = " / "),
+          length(input$subject) != 0,
+          paste0(input$subject, collapse = " / "),
           "all subject areas"
         )
       )
     })
 
+    output$sas_provider_table_title <- renderText({
+      paste(reactive_table_title())
+    })
+
     # User bar selection ------------------------------------------------------
     # This records what bar has been selected in the chart
     # then passes it into the dropdown as if the user had selected that LAD from the dropdown itself
-    # This means that can only select one chart from the bar chart itself
-    # as then the dropdown is updated and barchart is filtered to that one subject
-    # Not sure that this is a problem at the mo...
+    observe({
+      selections <- input$subject_area_bar_selected
 
-    observeEvent(input$subject_area_bar_selected, {
-      print(input$subject_area_bar_selected)
-      print(length(input$subject_area_bar_selected))
-      bar_selected_subjects <- input$subject_area_bar_selected
-      updateSelectizeInput(session, "subject",
-        selected = bar_selected_subjects # ,
-        # options = list(maxItems = 13)
-      )
+      if (is.null(selections) || length(selections) == 0) {
+        selected_value <- ""
+      } else {
+        selected_value <- selections
+      }
+
+      updateSelectizeInput(session, "subject", selected = selected_value)
     })
 
     # A selectable list of providers
@@ -333,25 +329,43 @@ subject_standards_server <- function(id) {
               aes(
                 x = reorder(ssa_t1_desc, values),
                 y = values,
-                tooltip = ssa_t1_desc,
+                tooltip = paste0(ssa_t1_desc, ": ", dfeR::comma_sep(values), " ", input$measure),
                 data_id = ssa_t1_desc
               )
             ) +
-            geom_col_interactive(fill = "#12436D") +
-            theme_classic() +
+            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1], position = position_dodge(width = 4.9)) +
             coord_flip() +
             xlab("") +
-            ylab(input$measure),
+            ylab(input$measure) +
+            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_x_discrete(labels = function(x) str_wrap(x, width = 30)) +
+            ggplot2::theme_minimal() +
+            ggplot2::theme(
+              legend.position = "top",
+              legend.title = element_blank(),
+              panel.grid = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major.x = element_blank(),
+              axis.title.x = element_text(family = "Arial", size = 10, face = "bold", margin = margin(t = 10)),
+              axis.text.x = element_text(family = "Arial", size = 10),
+              axis.text.y = element_text(family = "Arial", size = 10)
+            ),
         options = list(
-          opts_selection(
+          # Set styling for bars on hover and when selected
+          ggiraph::opts_hover(
+            css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
+          ),
+          ggiraph::opts_selection(
             type = "multiple",
-            css = "fill:#801650;stroke:#801650;r:5pt;"
+            selected = input$subject,
+            css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
           ),
           ggiraph::opts_toolbar(
             saveaspng = FALSE,
             hidden = c("lasso_select", "lasso_deselect")
           )
-        )
+        ),
+        fonts = list(sans = "Arial")
       )
     )
 
@@ -375,9 +389,9 @@ subject_standards_server <- function(id) {
           values = sum(values),
           .by = c("ssa_t1_desc", "ssa_t2_desc", "apps_Level", "std_fwk_name")
         )
-      if (!is.null(input$subject_area_bar_selected)) {
+      if (!is.null(input$subject)) {
         subject_data <- subject_data %>%
-          filter(ssa_t1_desc %in% ssa_t1_selected())
+          filter(ssa_t1_desc %in% input$subject)
       }
 
       reactable(

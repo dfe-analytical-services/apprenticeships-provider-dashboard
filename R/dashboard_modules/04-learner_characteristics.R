@@ -82,10 +82,12 @@ learner_characteristics_ui <- function(id) {
         shinyGovstyle::radio_button_Input(
           inputId = NS(id, "file_type"),
           label = h2("Choose download file format"),
-          hint_label = "This will download data related to all providers for all years.
-          The XLSX format is designed for use in Microsoft Excel",
-          choices = c("CSV (13.51 MB)", "XLSX (3.23 MB)"),
-          selected = "CSV (13.51 MB)"
+          hint_label = "Selecting a provider will download the data relating to
+          that provider and selections. Selecting Total (all providers) will download
+          data for all providers relating to the selected year and measure.
+          The XLSX format is designed for use in Microsoft Excel.",
+          choices = c("CSV (Up to 2.34 MB)", "XLSX (Up to 550.45 KB)"),
+          selected = "CSV (Up to 2.34 MB)"
         ),
         # Bit of a hack to force the button not to be full width
         layout_columns(
@@ -159,7 +161,7 @@ learner_characteristics_server <- function(id) {
 
     output$tree_map_plot <- renderPlotly({
       # Message when there are none of the measure at all
-      validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for this provider.")))
+      validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
       # Message when all groups are low, and treemap cannot be displayed
       # But can still be seen in the table
@@ -208,7 +210,7 @@ learner_characteristics_server <- function(id) {
 
     # Message when there are none of the measure at all, and no table
     output$chars_table <- renderTable({
-      validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", firstlow(input$measure), " for this provider.")))
+      validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", firstlow(input$measure), " for these selections.")))
 
       chars_reactive_table_tidied <- chars_reactive_table() %>%
         mutate(count = comma_sep(as.numeric(count)))
@@ -227,8 +229,11 @@ learner_characteristics_server <- function(id) {
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- "learner_characteristics_provider_summary"
-        extension <- if (input$file_type == "CSV (13.51 MB)") {
+        raw_name <- paste0(
+          input$provider, "-", input$year, "-", input$measure, "-",
+          input$characteristic_type, "-learner-characteristics-provider-summary"
+        )
+        extension <- if (input$file_type == "CSV (Up to 2.34 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -237,12 +242,23 @@ learner_characteristics_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (13.51 MB)") {
-          data.table::fwrite(chars_parquet, file)
-        } else {
+        if (input$file_type == "CSV (Up to 2.34 MB)" & input$provider != "Total (All providers)") {
+          data.table::fwrite(chars_reactive_table(), file)
+        } else if (input$file_type == "CSV (Up to 2.34 MB)" & input$provider == "Total (All providers)") {
+          data.table::fwrite(chars_parquet %>%
+            filter(year %in% input$year) %>%
+            filter(measure %in% input$measure), file)
+        } else if (input$file_type == "XLSX (Up to 550.45 KB)" & input$provider != "Total (All providers)") {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
           openxlsx::write.xlsx(chars_reactive_table(), file, colWidths = "Auto")
+          on.exit(removeNotification(pop_up), add = TRUE)
+        } else {
+          # Added a basic pop up notification as the Excel file can take time to generate
+          pop_up <- showNotification("Generating download file", duration = NULL)
+          openxlsx::write.xlsx(chars_parquet %>%
+            filter(year %in% input$year) %>%
+            filter(measure %in% input$measure), file, colWidths = "Auto")
           on.exit(removeNotification(pop_up), add = TRUE)
         }
       }

@@ -145,42 +145,34 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
     # Region table selections -------------------------------------------------
     # Make the region dropdown update when a table is selected
-    observeEvent(input$home_region_selected, {
+    observe({
       # Filter to only the selected region using the vector at the top of the script
-      selected_region <- regions[getReactableState("home_region", "selected")]
+      # Work out if home or delivery region is selected from a table and update the dropdown
+      if (length(regions[getReactableState("home_region", "selected")]) != 0) {
+        selected_region <- paste0(regions[getReactableState("home_region", "selected")], "_Learner home")
 
-      updateSelectizeInput(
-        session = session,
-        inputId = "region",
-        selected = paste0(selected_region, "_Learner home"),
-        server = TRUE
-      )
+        updateSelectizeInput(
+          session = session,
+          inputId = "region",
+          selected = selected_region
+        )
+      }
     })
 
-    observeEvent(input$delivery_region_selected, {
-      # Filter to only the selected region using the vector at the top of the script
-      selected_region <- regions[getReactableState("delivery_region", "selected")]
+    observe({
+      if (length(regions[getReactableState("delivery_region", "selected")]) != 0) {
+        selected_region <- paste0(regions[getReactableState("delivery_region", "selected")], "_Delivery")
 
-      updateSelectizeInput(
-        session = session,
-        inputId = "region",
-        selected = paste0(selected_region, "_Delivery"),
-        server = TRUE
-      )
+        updateSelectizeInput(
+          session = session,
+          inputId = "region",
+          selected = selected_region
+        )
+      }
     })
 
-    # Make the region dropdown update when a bar is selected
-    observeEvent(input$delivery_region_selected, {
-      # Filter to only the selected region using the vector at the top of the script
-      selected_region <- regions[getReactableState("delivery_region", "selected")]
-
-      updateSelectizeInput(
-        session = session,
-        inputId = "region",
-        selected = paste0(selected_region, "_Delivery"),
-        server = TRUE
-      )
-    })
+    # TODO: Make chart selections update the dropdown
+    # TODO: Make sure the reactable state in the region tables matches the dropdown selection
 
     # Table reactive data =====================================================
     ## Provider data ----------------------------------------------------------
@@ -212,9 +204,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       return(prov_selection_table)
     }) %>%
       # Set the dependent variables that will trigger this table to update
-      bindEvent(
-        firstlow(input$measure), filtered_raw_data(), input$region
-      )
+      bindEvent(firstlow(input$measure), filtered_raw_data(), input$region)
 
     ## Delivery region data ---------------------------------------------------
     delivery_region_table <- reactive({
@@ -233,10 +223,11 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
       # Filter from the regions dropdown
       if (input$region != "") {
-        # Check if the region is a delivery or learner home and then filter by it
         if (grepl("_Learner home$", input$region)) {
           delivery_region_table <- delivery_region_table %>%
             filter(learner_home_region == sub("_.*", "", input$region))
+        } else {
+          # TODO: make all other delivery regions 0 except the one selected
         }
       }
 
@@ -260,7 +251,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
       return(delivery_region_table)
     }) %>%
-      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers())
+      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers(), input$region)
 
     ## Home region data -------------------------------------------------------
     home_region_table <- reactive({
@@ -278,11 +269,13 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       # }
 
       # Filter from the regions dropdown
-      if (input$region != "") {
-        # Check if the region is a delivery or learner home and then filter by it
+      if (input$region != "All regions") {
+        # Check if the region is a delivery and then filter by it
         if (grepl("_Delivery$", input$region)) {
           home_region_table <- home_region_table %>%
             filter(delivery_region == sub("_.*", "", input$region))
+        } else {
+          # TODO: make all other learner home regions 0 except the one selected
         }
       }
 
@@ -307,7 +300,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
       return(home_region_table)
     }) %>%
-      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers())
+      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers(), input$region)
 
     # Bar chart data ----------------------------------------------------------
     regions_bar_data <- reactive({
@@ -341,18 +334,21 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     })
 
     # Bar chart output object =================================================
-    observeEvent(input$regions_bar_selected, {
-      print(input$regions_bar_selected)
-
-      if (input$regions_bar_selected != "All regions") {
-        updateSelectizeInput(
-          session = session,
-          inputId = "region",
-          selected = input$regions_bar_selected,
-          server = TRUE
-        )
-      }
-    })
+    # TODO: Make this work
+    # observe({
+    #   print(input$regions_bar_selected)
+    #
+    #   if (length(input$regions_bar_selected) != 0) {
+    #     if(input$regions_bar_selected != "All regions"){
+    #       updateSelectizeInput(
+    #         session = session,
+    #         inputId = "region",
+    #         selected = input$regions_bar_selected,
+    #         server = TRUE
+    #       )
+    #     }
+    #   }
+    # })
 
     output$regions_bar <- renderGirafe(
       girafe(

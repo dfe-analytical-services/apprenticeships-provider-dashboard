@@ -37,6 +37,7 @@ shiny::testServer(nps_server, expr = {
     characteristic = "Sex - Male"
   )
 
+  # 3. Compare the reactive table with a hardcoded filter
   expect_equal(
     nps_reactive_table(),
     test_data %>%

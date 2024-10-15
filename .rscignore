@@ -4,6 +4,6 @@
 .RDataTmp
 .Ruserdata
 README.html
-.\data/national_provider_summary.csv
-.\data/apprenticeships_demographics.csv
-.\data/apprenticeships_data.csv
+data/national_provider_summary.csv
+data/apprenticeships_demographics.csv
+data/apprenticeships_data.csv

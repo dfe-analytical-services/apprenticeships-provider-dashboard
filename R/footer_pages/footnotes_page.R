@@ -12,10 +12,11 @@ footnotes_page <- function() {
     tags$ol(
       tags$li(
         "The data source for the interactive tool is the ",
-        a(
-          href = "https://www.gov.uk/government/publications/sfa-ilr-standard-file-specifications-and-reference-data",
-          "Individualised Learner Record."
-        )
+        external_link(
+          "https://www.gov.uk/government/publications/sfa-ilr-standard-file-specifications-and-reference-data",
+          "Individualised Learner Record"
+        ),
+        "."
       ),
       tags$li("Numbers are rounded to the nearest 10, with values of 0, 1, 2, 3 and 4 shown as 0, components therefore
               may not sum to totals."),
@@ -23,14 +24,14 @@ footnotes_page <- function() {
               apprenticeship.  Age for enrolments is based on the learner's age at 31 August of the academic year."),
       tags$li("Figures for 2023/24 are provisional and cover the year to date (i.e. cumulative data for the 9 months
               from 1 August to 30 April),
-              whereas those for 2021/22 and 2022/23 are final and cover the full academic year (1 August to 31July)."),
+              whereas those for 2021/22 and 2022/23 are final and cover the full academic year (1 August to 31 July)."),
       tags$li(
         "For more data and information on these statistics please refer to the department's main ",
-        a(
-          href = "https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships-and-traineeships",
-          "Apprenticeships "
+        external_link(
+          "https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships",
+          "Apprenticeships publication"
         ),
-        "publication."
+        "."
       )
     ),
     h2("Geographical breakdowns"),

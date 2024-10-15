@@ -644,7 +644,7 @@
         "ByteCompile": "yes",
         "URL": "https://github.com/truecluster/bit64",
         "Encoding": "UTF-8",
-        "Repository": "RSPM",
+        "Repository": "CRAN",
         "Repository/R-Forge/Project": "ff",
         "Repository/R-Forge/Revision": "177",
         "Repository/R-Forge/DateTimeStamp": "2018-08-17 17:45:18",
@@ -1422,7 +1422,7 @@
       "description": {
         "Package": "dfeshiny",
         "Title": "DfE R Shiny Standards",
-        "Version": "0.4.1.9000",
+        "Version": "0.4.2",
         "Authors@R": "c(\n    person(\"Rich\", \"Bielby\", , \"richard.bielby@education.gov.uk\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0001-9070-9969\")),\n    person(\"Charlotte\", \"Foster\", , \"charlotte.foster@education.gov.uk\", role = \"aut\"),\n    person(\"Cam\", \"Race\", , \"cameron.race@education.gov.uk\", role = \"aut\")\n  )",
         "Description": "R package containing preferred methods for creating official\n    DfE R-Shiny dashboards.",
         "License": "GPL (>= 3)",
@@ -1441,16 +1441,16 @@
         "Maintainer": "Rich Bielby <richard.bielby@education.gov.uk>",
         "Built": "R 4.4.1; ; 2024-10-11 17:00:42 UTC; windows",
         "RemoteType": "github",
+        "RemoteHost": "api.github.com",
         "RemoteUsername": "dfe-analytical-services",
         "RemoteRepo": "dfeshiny",
         "RemoteRef": "main",
-        "RemoteSha": "0de4922658c293ea31048a2e63a49c6111162c16",
-        "RemoteHost": "api.github.com",
+        "RemoteSha": "a97980297b9d45afd5100c424a39c0e180e63524",
         "GithubHost": "api.github.com",
         "GithubRepo": "dfeshiny",
         "GithubUsername": "dfe-analytical-services",
         "GithubRef": "main",
-        "GithubSHA1": "0de4922658c293ea31048a2e63a49c6111162c16"
+        "GithubSHA1": "a97980297b9d45afd5100c424a39c0e180e63524"
       }
     },
     "diffobj": {
@@ -5802,10 +5802,10 @@
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
-      "checksum": "0fb0d32821cdc8f3e2c357fe37fa99d2"
+      "checksum": "f3870074cee891ae98f79ecac02f6710"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
-      "checksum": "9e5d98c77826a9de8548e2f4d2ce9a10"
+      "checksum": "0268389c68220b82eeeb27f5fda8d3d5"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
       "checksum": "1c123e63c759fd13ae461c59b82f2b4f"
@@ -5832,13 +5832,13 @@
       "checksum": "d15b7a880007ded5eec1cb9e6266c5ae"
     },
     "R/footer_pages/footnotes_page.R": {
-      "checksum": "989655615adcaf6ac31ec8b6d7d3bc1b"
+      "checksum": "a6f641020e89c72a9b698213982c713d"
     },
     "R/footer_pages/support_page.R": {
       "checksum": "4fb06508719a86445bed410f6640a071"
     },
     "R/helper_functions.R": {
-      "checksum": "5f1369340c633bca00c3d479d466865f"
+      "checksum": "5403dc6edd1f198dc97aa9343ad622f5"
     },
     "R/read_data.R": {
       "checksum": "ce9251d425cf9b81da032673d3096fcc"
@@ -5847,7 +5847,7 @@
       "checksum": "8c58d8a0d7888c8f5826956d72836b0e"
     },
     "renv.lock": {
-      "checksum": "be190205b2bf140762ca330f0628de06"
+      "checksum": "1ac0d148425c2e33a2071274eac7ce07"
     },
     "server.R": {
       "checksum": "4e64b5320a433d75ee5c412a4c2528c0"
@@ -5901,7 +5901,7 @@
       "checksum": "c23764dae2d73a45a55815d0327be6cb"
     },
     "www/dfe_shiny_gov_style.css": {
-      "checksum": "2b76f69230c48d584b232375b3c67705"
+      "checksum": "d36df853777cb37265b4ce44bfdac0bb"
     },
     "www/dfefavicon.png": {
       "checksum": "179db108199253ed0617024df291473b"

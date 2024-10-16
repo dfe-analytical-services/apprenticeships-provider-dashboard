@@ -41,7 +41,7 @@ apps_data <- data.table::fread("data/apprenticeships_data.csv")
 
 # Create Provider breakdowns data ---------------------------------------------
 # Making a smaller cut from apps_data so less data is loaded into the app
-provider_breakdowns <- apps_data |>
+provider_breakdowns <- apps_data %>%
   group_by(
     year, provider_name, provider_type, apps_Level,
     age_group, delivery_region, learner_home_region

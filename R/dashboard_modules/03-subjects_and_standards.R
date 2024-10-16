@@ -1,6 +1,6 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-sas_parquet <- read_sas("data/subjects_and_standards_0.parquet")
+sas_parquet <- arrow::read_parquet("data/subjects_and_standards_0.parquet")
 
 # Create static lists of options for dropdowns
 sas_year_choices <- sort(data_choices(data = sas_parquet, column = "year"),

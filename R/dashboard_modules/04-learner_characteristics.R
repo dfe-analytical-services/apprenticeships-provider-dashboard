@@ -1,6 +1,6 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-chars_parquet <- read_chars("data/apprenticeships_demographics_0.parquet")
+chars_parquet <- arrow::read_parquet("data/apprenticeships_demographics_0.parquet")
 
 # Create static lists of options for dropdowns
 chars_year_choices <- sort(data_choices(data = chars_parquet, column = "year"),

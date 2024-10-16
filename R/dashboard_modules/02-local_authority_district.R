@@ -1,6 +1,7 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-lad_map_parquet <- read_lad("data/lad_map_data_0.parquet")
+lad_map_parquet <- arrow::read_parquet("data/lad_map_data_0.parquet") %>%
+  select(year, provider_name, learner_home_lad, delivery_lad, starts, achievements, enrolments)
 
 # Read in boundary files
 lad_boundaries_2024 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg", quiet = TRUE) %>% # nolint: line-length-linter

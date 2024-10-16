@@ -275,3 +275,11 @@ dfe_lad_map <- function(data, measure, input_id) {
 
   return(map)
 }
+
+# Create options lists for use in the dropdowns ===============================
+data_choices <- function(data, column) {
+  data %>%
+    distinct(!!sym(column)) %>% # adding the !!sym() to convert string to column name
+    collect() %>%
+    pull()
+}

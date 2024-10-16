@@ -66,12 +66,9 @@ if (FALSE) {
 
 # Source R scripts ============================================================
 # Source any scripts here. Scripts may be needed to process data before it gets
-# to the server file or to hold custom functions to keep the main files shorter
-#
-# It's best to do this here instead of the server file, to improve performance.
+# to the server file or to hold custom functions to keep the main files shorter.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 source("R/helper_functions.R")
-source("R/read_data.R")
 
 # Source all files in the dashboard modules and footer pages folders
 lapply(list.files("R/dashboard_modules/", full.names = TRUE, recursive = TRUE), source)

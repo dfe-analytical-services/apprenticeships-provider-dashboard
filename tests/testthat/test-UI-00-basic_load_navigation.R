@@ -75,6 +75,7 @@ test_that("Footer link and back links work", {
 
 # Check no console errors have occurred =======================================
 test_that("There are no errors in the whole app", {
-  # This is giving false positives in GitHub actions so commenting out for now - expect_null(app$get_html(".shiny-output-error"))
+  # This is giving false positives in GitHub actions so commenting out for now
+  # add back in eventually - expect_null(app$get_html(".shiny-output-error"))
   expect_null(app$get_html(".shiny-output-error-validation"))
 })

@@ -74,3 +74,6 @@ test_that("There are no errors in the whole app", {
   expect_null(app$get_html(".shiny-output-error"))
   expect_null(app$get_html(".shiny-output-error-validation"))
 })
+
+print(app$get_html(".shiny-output-error"))
+print(app$get_html(".shiny-output-error-validation"))

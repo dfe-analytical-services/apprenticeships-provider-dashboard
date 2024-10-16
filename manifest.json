@@ -5336,16 +5336,10 @@
       "checksum": "522774462b837ce20ada322ac0531ead"
     },
     ".Rprofile": {
-      "checksum": "3bf8a75ed332e36a230708be632a81d3"
+      "checksum": "532030cad3bc8e9c94554a5be362c8d2"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
-    },
-    "data/apprenticeships_data.csv": {
-      "checksum": "3df56759d62f2bc8dd2368a4eed46c41"
-    },
-    "data/apprenticeships_demographics.csv": {
-      "checksum": "591274bba881edd8247c0738d07b496c"
     },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "f12e1c07da0a8bc4e6a9855bf3bf9d46"
@@ -5361,9 +5355,6 @@
     },
     "data/lad_map_data_0.parquet": {
       "checksum": "ace1b38e436d6423501b2a00578e7904"
-    },
-    "data/national_provider_summary.csv": {
-      "checksum": "bcdfa924f2d9824fff3d71c3d6372d9f"
     },
     "data/national_provider_summary_0.parquet": {
       "checksum": "3d44316b7023f761d8c782609031488f"
@@ -5474,7 +5465,7 @@
       "checksum": "693f3137a724e21f3d2f3c0569e13f33"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "c46c0b932ae3e85699daab38117799e5"
+      "checksum": "fc304fced6de6dd8b4fb3957f97ea0e7"
     },
     "ui.R": {
       "checksum": "e80e22df1fdcb227de7b26c3e64d9041"

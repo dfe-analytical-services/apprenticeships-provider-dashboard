@@ -72,7 +72,7 @@ ui <- function(input, output, session) {
       "gds_phase_banner",
       "Alpha",
       paste0(
-        "This dashboard is being actively developed, contact explore.statistics@education.gov.uk with any feedback"
+        "This dashboard is being developed, contact fe.officialstatistics@education.gov.uk with any feedback"
       )
     ),
 

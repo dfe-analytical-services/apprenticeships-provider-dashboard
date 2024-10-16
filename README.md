@@ -6,9 +6,7 @@
 
 ## Introduction 
 
-<!-- Give a brief overview of what your app is for here.-->
-
-...
+A prototype dashboard for exploring further education provider data.
 
 This application is deployed in the following places, access is restricted during the development phase:
 
@@ -33,9 +31,9 @@ The following requirements are necessarily for running the application yourself 
 
 ### ii. Programming skills required (for editing or troubleshooting)
 
-- R at an intermediate level, [DfE R leanring resources](https://dfe-analytical-services.github.io/analysts-guide/learning-development/r.html)
+- R at an intermediate level, [DfE R learning resources](https://dfe-analytical-services.github.io/analysts-guide/learning-development/r.html)
 
-- Particularly [R Shiny](https://shiny.rstudio.com/) and [Shiny modules](https://mastering-shiny.org/scaling-modules.html)
+- Particularly [R Shiny](https://shiny.rstudio.com/), [reactivity](https://mastering-shiny.org/basic-reactivity.html) and [Shiny modules](https://mastering-shiny.org/scaling-modules.html)
 
 ### iii. Access requirements
 
@@ -65,21 +63,25 @@ If you run all of that successfully you're cooking with gas!
 
 All R code outside of the core `global.R`, `server.R`, and `ui.R` files is stored in the `R/` folder. The `ui.R.` and `server.R` can stay mostly static with most of the code being held in separate modules in the `R/dashboard_modules/` folder or as content for pages linked from the footer in `R/footer_pages/`.
 
-- `R/helper_functions.R` file for common custom functions.
-- `R/read_data.R` creates the functions used to read data into the app.
+- `R/helper_functions.R` file for custom functions used in the project.
 - Scripts for the different UI panels in the `R/dashboard_modules/` folder. 
 - Scripts for the pages linked from the footer in the `R/footer_pages/` folder.
 - Data used by the app is stored in the `data/` folder.
 
 There is a `R/data-prep/` folder, this contains scripts not used by the app, that are used separately to prepare the data saved in the `data/` folder in tandem with the original SQL scripts are saved in the `sql/` folder.
 
+Due to the size of the app, every page on it has its own script, for example each interactive dashboard page has it's own `UI` and `Server` component in a module script in the `R/dashboard_modules/` folder. All of the code for each page will be in the module, including:
+- reading the data into the app
+- what the UI layout looks like what the user inputs are
+- what the server side processing looks like for that page
+
+This keeps each page isolated, and hopefully easier to maintain should this expand further!
+
 ### Data
 
 The data used in this app is too large in CSV format to be stored in a Git repo. As a result we have used the [parquet](https://parquet.apache.org/) format from Apache. This leads to using the [arrow package](https://arrow.apache.org/docs/r/) for data reading and manipulation and provides many performance benefits.
 
 To update the data you will need to do this manually outside of the app. The `R/data-prep/create_data_files.R` script should be used for this. Follow the instructions in there to run the code against CSVs generated from the SQL queries and this script will then create the .parquet files for use in the app.
-
-Functions used to read in the data are created in `R/read_data.R`
 
 #### File sizes
 
@@ -174,4 +176,4 @@ You can also use the ["Issues" tab in GitHub](https://github.com/dfe-analytical-
 
 ## Contact
 
-fe.officialstatistics@education.gov.uk and explore.statistics@education.gov.uk
+fe.officialstatistics@education.gov.uk

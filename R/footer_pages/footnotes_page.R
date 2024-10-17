@@ -9,6 +9,7 @@ footnotes_page <- function() {
     # Main text content -------------------------------------------------------
     h1("Footnotes by Adrian"),
     h2("All pages"),
+    tags$p("Here's some text by Cam."),
     tags$ol(
       tags$li(
         "The data source for the interactive tool is the ",

@@ -370,17 +370,12 @@ subject_standards_server <- function(id) {
     )
 
     # Expandable table of subject areas.
-    # TODO
-    # Think need to update based upon what is in the subject dropdown
-    # as can be updated by the bar chart
-
     output$sas_subject_area_table <- renderReactable({
       # Put in message where there are none of the measure
       validate(need(
         nrow(subject_area_data_table()) > 0,
         paste0(
-          "No ", firstlow(input$measure),
-          " for these selections."
+          "No ", firstlow(input$measure), " for these selections."
         )
       ))
 
@@ -422,10 +417,15 @@ subject_standards_server <- function(id) {
 
 
     # Data download ===========================================================
+
+    # Get provider name for file name
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- paste0(input$year, "-", input$level, "-", input$provider, "-subjects-and-standards")
+        raw_name <- paste0(
+          input$year, "-", input$measure, "-", input$subject, "-",
+          input$level, "-subjects-and-standards"
+        )
         extension <- if (input$file_type == "CSV (Up to 13.18 MB)") {
           ".csv"
         } else {
@@ -436,11 +436,11 @@ subject_standards_server <- function(id) {
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
         if (input$file_type == "CSV (Up to 13.18 MB)") {
-          data.table::fwrite(subject_area_data(), file)
+          data.table::fwrite(subject_area_data_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
-          openxlsx::write.xlsx(subject_area_data(), file, colWidths = "Auto")
+          openxlsx::write.xlsx(subject_area_data_table(), file, colWidths = "Auto")
           on.exit(removeNotification(pop_up), add = TRUE)
         }
       }

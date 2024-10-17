@@ -1,3 +1,19 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Script where we provide code to create the data files
+#
+# IMPORTANT: Data files pushed to GitHub repositories are immediately public.
+# You should not be pushing unpublished data to the repository prior to your
+# publication date. You should use dummy data or already-published data during
+# development of your dashboard.
+#
+# In order to help prevent unpublished data being accidentally published, the
+# template will not let you make a commit if there are unidentified csv, xlsx,
+# parquet, tex or pdf files contained in your repository. To make a commit, you
+# will need to either add the file to .gitignore or add an entry for the file
+# into datafiles_log.csv.
+#
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
 # Using this script to create the data files for the app
 #
 # 1. Run the SQL scripts in the sql/ folder
@@ -35,13 +51,16 @@ library(sfarrow)
 library(stringr)
 
 # Read in files saved from SQL scripts ----------------------------------------
-national_provider_summary <- data.table::fread("data/national_provider_summary.csv")
+national_provider_summary <- data.table::fread("data/national_provider_summary.csv") %>%
+  select(-c(`order_ref`, `order_detailed`)) # unused columns
+
 apps_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
+
 apps_data <- data.table::fread("data/apprenticeships_data.csv")
 
 # Create Provider breakdowns data ---------------------------------------------
 # Making a smaller cut from apps_data so less data is loaded into the app
-provider_breakdowns <- apps_data |>
+provider_breakdowns <- apps_data %>%
   group_by(
     year, provider_name, provider_type, apps_Level,
     age_group, delivery_region, learner_home_region

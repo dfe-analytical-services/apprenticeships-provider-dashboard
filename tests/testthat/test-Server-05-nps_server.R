@@ -14,8 +14,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Read in the data to test against
-source("../../R/read_data.R")
-test_data <- read_nps("../../data/national_provider_summary_0.parquet")
+test_data <- arrow::read_parquet("../../data/national_provider_summary_0.parquet")
 
 # Test the server file  =======================================================
 shiny::testServer(nps_server, expr = {

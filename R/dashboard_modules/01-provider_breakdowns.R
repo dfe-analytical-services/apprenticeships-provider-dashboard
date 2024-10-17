@@ -1,6 +1,6 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-prov_breakdowns_parquet <- read_prov_breakdowns("data/provider_breakdowns_0.parquet")
+prov_breakdowns_parquet <- arrow::read_parquet("data/provider_breakdowns_0.parquet")
 
 # Create static lists of options for dropdowns
 apps_measure_choices <- c("Starts", "Enrolments", "Achievements")

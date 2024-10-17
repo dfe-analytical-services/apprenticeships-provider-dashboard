@@ -7,7 +7,7 @@ footnotes_page <- function() {
     actionLink(class = "govuk-back-link", style = "margin: 0", "footnotes_to_dashboard", "Back to dashboard"),
 
     # Main text content -------------------------------------------------------
-    h1("Footnotes by Cam"),
+    h1("Footnotes by Alison"),
     h2("All pages"),
     tags$p("Here's some text by Cam."),
     tags$ol(

@@ -29,6 +29,7 @@ shhh(library(ggiraph))
 shhh(library(treemapify))
 shhh(library(leaflet))
 shhh(library(plotly))
+shhh(library(ggrepel))
 
 ## Data and string manipulation -----------------------------------------------
 shhh(library(arrow))

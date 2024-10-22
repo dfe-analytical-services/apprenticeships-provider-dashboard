@@ -5754,7 +5754,7 @@
       "checksum": "a775eb3b0bd5cbe54a0f3516b8644f75"
     },
     ".Rprofile": {
-      "checksum": "dba3ac0804a64c6536303582755355d9"
+      "checksum": "2343cc615b87fa27dbf1708df65e7921"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5799,7 +5799,7 @@
       "checksum": "9a8e5786f13efa56be15b5ac6d4409f7"
     },
     "global.R": {
-      "checksum": "a59e988a44d3336721b62db23c581cc9"
+      "checksum": "77c443de7a68526d5e0559641b9dd38a"
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
@@ -5811,10 +5811,10 @@
       "checksum": "f452fbb95acf6614959b7f4aae71846d"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "cf24158ca02dfb59bda1823ba2e1a418"
+      "checksum": "6de0d4bcafc4572dccd096dccdf8908b"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
-      "checksum": "58d445ad96d6d16ccc11c274eb648293"
+      "checksum": "3b3fd9b9ba5b1250175754423aa23525"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "405d30b5c89e3bdd792cf58484d94d06"

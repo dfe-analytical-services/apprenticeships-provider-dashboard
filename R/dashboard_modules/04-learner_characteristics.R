@@ -53,12 +53,12 @@ learner_characteristics_ui <- function(id) {
           choices = c(chars_measure_choices),
           selected = "Starts"
         ),
-        selectInput(
-          inputId = NS(id, "characteristic_type"),
-          label = "Select type of characteristic",
-          choices = c(chars_choices),
-          selected = "Age"
-        ),
+        #   selectInput(
+        #  inputId = NS(id, "characteristic_type"),
+        #  label = "Select type of characteristic",
+        #  choices = c(chars_choices),
+        #  selected = "Age"
+        # ),
       )
     ),
 
@@ -67,8 +67,14 @@ learner_characteristics_ui <- function(id) {
       id = "provider_learner_characteristics",
       ##  plot tab ------------------------------------------------------------
       nav_panel(
-        "Graphic",
-        plotlyOutput(NS(id, ("tree_map_plot")))
+        "Bar chart",
+        layout_columns(
+          col_widths = c(3, 3, 3, 3),
+          girafeOutput(NS(id, "age_bar_plot")),
+          girafeOutput(NS(id, "sex_bar_plot")),
+          girafeOutput(NS(id, "lldd_bar_plot")),
+          girafeOutput(NS(id, "ethnicity_bar_plot")),
+        )
       ),
       ##  table tab ------------------------------------------------------------
       nav_panel(
@@ -108,6 +114,7 @@ learner_characteristics_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     # Drop downs ==============================================================
     # Using the server to power to the provider dropdown for increased speed
+
     updateSelectizeInput(
       session = session,
       inputId = "provider",
@@ -123,7 +130,8 @@ learner_characteristics_server <- function(id) {
       chars_filtered <- chars_filtered %>% filter(provider_name == input$provider)
       chars_filtered <- chars_filtered %>% filter(year == input$year)
       chars_filtered <- chars_filtered %>% filter(measure == input$measure)
-      chars_filtered <- chars_filtered %>% filter(characteristic_type == input$characteristic_type)
+      # chars_filtered <- chars_filtered %>% filter(characteristic_type == input$characteristic_type)
+
       # and sort into the right order
 
       chars_filtered$characteristic_type <- factor(chars_filtered$characteristic_type,
@@ -157,54 +165,244 @@ learner_characteristics_server <- function(id) {
       chars_filtered %>% collect()
     })
 
-    # Treemap plot
+    # plot
 
-    output$tree_map_plot <- renderPlotly({
+    output$age_bar_plot <- renderGirafe(
       # Message when there are none of the measure at all
-      validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+      # validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
       # Message when all groups are low, and treemap cannot be displayed
       # But can still be seen in the table
-      validate(need(
-        nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
-        paste0("All groups have low numbers.")
-      ))
-
-      # defines the font for the hover text
-      hfont <- list(
-        size = 20,
-        color = "white"
-      )
-      # defines the background for the hover text
-      hlabel <- list(
-        bgcolor = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"),
-        bordercolor = "transparent",
-        font = hfont
-      )
-
-      chars_reactive_table() %>%
-        filter(characteristic != "Total") %>%
-        filter(count != "low") %>%
-        plot_ly(
-          labels = ~ stringr::str_wrap(characteristic, width = 5),
-          parents = NA,
-          values = ~ as.numeric(count),
-          type = "treemap",
-          marker = (list(
-            colors = c("#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"),
-            sizemode = "area"
-          )),
-          textfont = list(color = "white", size = 30),
-          hoverinfo = "text",
-          hoverlabel = hlabel,
-          hovertext = ~ paste0(
-            stringr::str_wrap(characteristic, width = 15), "\n\n",
-            comma_sep(as.numeric(count)), " ", firstlow(measure)
+      #  validate(need(
+      #  nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
+      # paste0("All groups have low numbers.")
+      #  ))
+      girafe(
+        ggobj =
+          chars_reactive_table() %>%
+            filter(characteristic_type == "Age" & characteristic != "Total") %>%
+            filter(count != "low") %>%
+            ggplot(aes(
+              x = characteristic,
+              y = as.numeric(count),
+              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", input$measure),
+              data_id = characteristic
+            )) +
+            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1], position = position_dodge(width = 4.9)) +
+            coord_flip() +
+            labs(title = "Age") +
+            xlab("") +
+            ylab("") +
+            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+            scale_x_discrete(limit = c("25+", "19-24", "Under 19")) +
+            ggplot2::theme_minimal() +
+            ggplot2::theme(
+              legend.position = "top",
+              legend.title = element_blank(),
+              panel.grid = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major.x = element_blank(),
+              plot.title = element_text(family = "Arial", face = "bold", size = 20, hjust = 0),
+              axis.text.x = element_text(family = "Arial", size = 15),
+              axis.text.y = element_text(family = "Arial", size = 20)
+            ),
+        options = list(
+          # Set styling for bars on hover and when selected
+          ggiraph::opts_hover(
+            css = "cursor:pointer;stroke:black;stroke-width:5px;fill:#ffdd00;"
+          ),
+          ggiraph::opts_selection(
+            type = "single", css = "fill:#12436D;stroke:#12436D;"
+          ),
+          ggiraph::opts_toolbar(
+            saveaspng = FALSE,
+            hidden = c("lasso_select", "lasso_deselect")
           )
-        ) %>%
-        layout(hoverlabel = list(align = "left")) %>%
-        config(displaylogo = FALSE, displayModeBar = FALSE)
-    })
+        ),
+        fonts = list(sans = "Arial")
+      )
+    )
+
+    output$sex_bar_plot <- renderGirafe(
+      # Message when there are none of the measure at all
+      # validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
+      # Message when all groups are low, and treemap cannot be displayed
+      # But can still be seen in the table
+      #  validate(need(
+      #  nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
+      # paste0("All groups have low numbers.")
+      #  ))
+      girafe(
+        ggobj =
+          chars_reactive_table() %>%
+            filter(characteristic_type == "Sex" & characteristic != "Total") %>%
+            filter(count != "low") %>%
+            ggplot(aes(x = "", y = as.numeric(count), fill = characteristic)) +
+            geom_col_interactive(aes(
+              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", input$measure),
+              data_id = characteristic
+            )) +
+            coord_polar(theta = "y", start = 0) +
+            scale_fill_manual(breaks = c("Male", "Female"), values = afcolours::af_colours("duo")) +
+            labs(title = "Sex") +
+            xlab("") +
+            ylab("") +
+            #  scale_y_continuous(labels = dfeR::comma_sep) +
+            ggplot2::theme_void() +
+            ggplot2::theme(
+              legend.position = "bottom",
+              legend.title = element_blank(),
+              legend.text = element_text(family = "Arial", size = 15),
+              plot.title = element_text(family = "Arial", face = "bold", size = 20, hjust = 0)
+            ),
+        options = list(
+          # Set styling for bars on hover and when selected
+          ggiraph::opts_hover(
+            css = "cursor:pointer;stroke:black;stroke-width:5px;fill:#ffdd00;"
+          ),
+          ggiraph::opts_selection(
+            type = "single", css = "fill:#12436D;stroke:#12436D;"
+          ),
+          ggiraph::opts_toolbar(
+            saveaspng = FALSE,
+            hidden = c("lasso_select", "lasso_deselect")
+          )
+        ),
+        fonts = list(sans = "Arial")
+      )
+    )
+
+
+
+
+
+    output$lldd_bar_plot <- renderGirafe(
+      # Message when there are none of the measure at all
+      # validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
+      # Message when all groups are low, and treemap cannot be displayed
+      # But can still be seen in the table
+      #  validate(need(
+      #  nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
+      # paste0("All groups have low numbers.")
+      #  ))
+      girafe(
+        ggobj =
+          chars_reactive_table() %>%
+            filter(characteristic_type == "Learner with learning difficulties or disabilities (LLDD)" &
+              characteristic != "Total") %>%
+            filter(count != "low") %>%
+            ggplot(aes(
+              x = characteristic,
+              y = as.numeric(count),
+              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", input$measure),
+              data_id = characteristic
+            )) +
+            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1], position = position_dodge(width = 4.9)) +
+            coord_flip() +
+            labs(title = "Learner with learning difficulties\nor disabilities (LLDD)") +
+            xlab("") +
+            ylab("") +
+            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_x_discrete(
+              labels = function(x) str_wrap(x, width = 10),
+              limit = c("LLDD - unknown", "LLDD - no", "LLDD - yes")
+            ) +
+            ggplot2::theme_minimal() +
+            ggplot2::theme(
+              legend.position = "top",
+              legend.title = element_blank(),
+              panel.grid = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major.x = element_blank(),
+              plot.title = element_text(family = "Arial", face = "bold", size = 20, hjust = 0),
+              axis.text.x = element_text(family = "Arial", size = 15),
+              axis.text.y = element_text(family = "Arial", size = 20)
+            ),
+        options = list(
+          # Set styling for bars on hover and when selected
+          ggiraph::opts_hover(
+            css = "cursor:pointer;stroke:black;stroke-width:5px;fill:#ffdd00;"
+          ),
+          ggiraph::opts_selection(
+            type = "single", css = "fill:#12436D;stroke:#12436D;"
+          ),
+          ggiraph::opts_toolbar(
+            saveaspng = FALSE,
+            hidden = c("lasso_select", "lasso_deselect")
+          )
+        ),
+        fonts = list(sans = "Arial")
+      )
+    )
+
+
+    output$ethnicity_bar_plot <- renderGirafe(
+      # Message when there are none of the measure at all
+      #  validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+
+      # Message when all groups are low, and treemap cannot be displayed
+      # But can still be seen in the table
+      #   validate(need(
+      #   nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
+      # paste0("All groups have low numbers.")
+      #   ))
+      girafe(
+        ggobj =
+          chars_reactive_table() %>%
+            filter(characteristic_type == "Ethnicity" & characteristic != "Total") %>%
+            filter(count != "low") %>%
+            mutate(characteristic = if_else(nchar(as.character(characteristic)) > 10,
+              substr(characteristic, 1, 5),
+              characteristic
+            )) %>%
+            ggplot(aes(
+              x = characteristic,
+              y = as.numeric(count),
+              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", input$measure),
+              data_id = characteristic
+            )) +
+            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1], position = position_dodge(width = 4.9)) +
+            coord_flip() +
+            labs(title = "Ethnicity") +
+            xlab("") +
+            ylab("") +
+            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_x_discrete(
+              labels = function(x) str_wrap(x, width = 10),
+              limit = c("Unknown", "Other", "Mixed", "Asian", "Black", "White")
+            ) +
+            ggplot2::theme_minimal() +
+            ggplot2::theme(
+              legend.position = "top",
+              legend.title = element_blank(),
+              panel.grid = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major.x = element_blank(),
+              plot.title = element_text(family = "Arial", face = "bold", size = 20, hjust = 0),
+              axis.text.x = element_text(family = "Arial", size = 15),
+              axis.text.y = element_text(family = "Arial", size = 20)
+            ),
+        options = list(
+          # Set styling for bars on hover and when selected
+          ggiraph::opts_hover(
+            css = "cursor:pointer;stroke:black;stroke-width:5px;fill:#ffdd00;"
+          ),
+          ggiraph::opts_selection(
+            type = "single", css = "fill:#12436D;stroke:#12436D;"
+          ),
+          ggiraph::opts_toolbar(
+            saveaspng = FALSE,
+            hidden = c("lasso_select", "lasso_deselect")
+          )
+        ),
+        fonts = list(sans = "Arial")
+      )
+    )
+
+
 
     # table
 

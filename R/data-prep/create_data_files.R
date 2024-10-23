@@ -219,8 +219,8 @@ arrow::write_dataset(lad_map_data, "data/",
 )
 
 arrow::write_dataset(region_map_data, "data/",
-                     format = "parquet",
-                     basename_template = "region_map_data_{i}.parquet"
+  format = "parquet",
+  basename_template = "region_map_data_{i}.parquet"
 )
 
 arrow::write_dataset(subjects_and_standards, "data/",

@@ -6,14 +6,14 @@ region_map_parquet <- arrow::read_parquet("data/region_map_data_0.parquet") %>%
 
 # Read in boundary files
 # https://geoportal.statistics.gov.uk/datasets/7c23fbe8e89d4cf79ff7f2a6058e6200_0/explore?location=52.701325%2C-2.489483%2C7.38
-#https://geoportal.statistics.gov.uk/search?collection=Dataset
+# https://geoportal.statistics.gov.uk/search?collection=Dataset
 # GeoPackage
 
 region_boundaries_2024 <- sf::st_read("data/boundary_files/Regions_December_2023_Boundaries_EN_BFC_9141246588291537595.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
   rename("region_name" = RGN23NM)
-#region_boundaries_2023 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2023_UK_BUC_V2_8757178717458576320.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
+# region_boundaries_2023 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2023_UK_BUC_V2_8757178717458576320.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
 #  rename("lad_name" = LAD23NM)
-#region_boundaries_2022 <- sf::st_read("data/boundary_files/Local_Authority_Districts_December_2022_UK_BUC_V2_3956567894081366924.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
+# region_boundaries_2022 <- sf::st_read("data/boundary_files/Local_Authority_Districts_December_2022_UK_BUC_V2_3956567894081366924.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
 #  rename("lad_name" = LAD22NM)
 
 # Create static lists of options for dropdowns

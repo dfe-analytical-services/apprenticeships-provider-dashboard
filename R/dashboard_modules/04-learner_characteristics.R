@@ -21,6 +21,20 @@ characteristics_no_total <- chars_parquet %>%
   filter(characteristic != "Total")
 chars_choices <- (data_choices(data = characteristics_no_total, column = "characteristic_type"))
 
+# create lists for ordering the bar charts
+chars_parquet_age <- chars_parquet %>% filter(characteristic_type == "Age" & characteristic != "Total")
+chars_age_choices <- data_choices(data = chars_parquet_age, column = "characteristic")
+
+chars_parquet_sex <- chars_parquet %>% filter(characteristic_type == "Sex" & characteristic != "Total")
+chars_sex_choices <- data_choices(data = chars_parquet_sex, column = "characteristic")
+
+chars_parquet_lldd <- chars_parquet %>% filter(characteristic_type ==
+  "Learner with learning difficulties or disabilities (LLDD)" & characteristic != "Total")
+chars_lldd_choices <- data_choices(data = chars_parquet_lldd, column = "characteristic")
+
+chars_parquet_ethnicity <- chars_parquet %>% filter(characteristic_type == "Ethnicity" & characteristic != "Total")
+chars_ethnicity_choices <- data_choices(data = chars_parquet_ethnicity, column = "characteristic")
+
 # Main module code ============================================================
 
 learner_characteristics_ui <- function(id) {
@@ -53,12 +67,6 @@ learner_characteristics_ui <- function(id) {
           choices = c(chars_measure_choices),
           selected = "Starts"
         ),
-        #   selectInput(
-        #  inputId = NS(id, "characteristic_type"),
-        #  label = "Select type of characteristic",
-        #  choices = c(chars_choices),
-        #  selected = "Age"
-        # ),
       )
     ),
 
@@ -67,7 +75,7 @@ learner_characteristics_ui <- function(id) {
       id = "provider_learner_characteristics",
       ##  plot tab ------------------------------------------------------------
       nav_panel(
-        "Bar chart",
+        "Charts",
         layout_columns(
           col_widths = c(3, 3, 3, 3),
           girafeOutput(NS(id, "age_bar_plot")),
@@ -130,7 +138,6 @@ learner_characteristics_server <- function(id) {
       chars_filtered <- chars_filtered %>% filter(provider_name == input$provider)
       chars_filtered <- chars_filtered %>% filter(year == input$year)
       chars_filtered <- chars_filtered %>% filter(measure == input$measure)
-      # chars_filtered <- chars_filtered %>% filter(characteristic_type == input$characteristic_type)
 
       # and sort into the right order
 
@@ -167,35 +174,42 @@ learner_characteristics_server <- function(id) {
 
     # plot
 
-    output$age_bar_plot <- renderGirafe(
+    output$age_bar_plot <- renderGirafe({
       # Message when there are none of the measure at all
-      # validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+      validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", firstlow(input$measure), " for these selections.")))
 
-      # Message when all groups are low, and treemap cannot be displayed
+      # Message when all groups are low, and chart cannot be displayed
       # But can still be seen in the table
-      #  validate(need(
-      #  nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
-      # paste0("All groups have low numbers.")
-      #  ))
+      validate(need(
+        nrow(filter(chars_reactive_table(), characteristic_type == "Age" & count != "low" &
+          characteristic != "Total")) > 0, paste0("All age groups have low numbers.")
+      ))
+
       girafe(
         ggobj =
           chars_reactive_table() %>%
             filter(characteristic_type == "Age" & characteristic != "Total") %>%
-            filter(count != "low") %>%
+            # need data in all categories else columns expand if missing data
+            mutate(count = ifelse(count == "low", "0", count)) %>%
             ggplot(aes(
               x = characteristic,
               y = as.numeric(count),
-              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", input$measure),
+              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", firstlow(input$measure)),
               data_id = characteristic
             )) +
-            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1], position = position_dodge(width = 4.9)) +
+            geom_col_interactive(
+              fill = afcolours::af_colours(n = 4)[1],
+              position = position_dodge(preserve = "single")
+            ) +
             coord_flip() +
             labs(title = "Age") +
             xlab("") +
             ylab("") +
             scale_y_continuous(labels = dfeR::comma_sep) +
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-            scale_x_discrete(limit = c("25+", "19-24", "Under 19")) +
+            scale_x_discrete(
+              labels = function(x) str_wrap(x, width = 10),
+              limit = rev(chars_age_choices)
+            ) +
             ggplot2::theme_minimal() +
             ggplot2::theme(
               legend.position = "top",
@@ -222,30 +236,34 @@ learner_characteristics_server <- function(id) {
         ),
         fonts = list(sans = "Arial")
       )
-    )
+    })
 
-    output$sex_bar_plot <- renderGirafe(
-      # Message when there are none of the measure at all
-      # validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+    output$sex_bar_plot <- renderGirafe({
+      # Message when there are none of the measure at all - blank - only shown for age
+      validate(need(nrow(chars_reactive_table()) > 0, ""))
 
-      # Message when all groups are low, and treemap cannot be displayed
+      # Message when all groups are low, and chart cannot be displayed
       # But can still be seen in the table
-      #  validate(need(
-      #  nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
-      # paste0("All groups have low numbers.")
-      #  ))
+      validate(need(
+        nrow(filter(chars_reactive_table(), characteristic_type == "Sex" & count != "low" &
+          characteristic != "Total")) > 0,
+        "Males and females both have low numbers."
+      ))
+
       girafe(
         ggobj =
           chars_reactive_table() %>%
             filter(characteristic_type == "Sex" & characteristic != "Total") %>%
-            filter(count != "low") %>%
+            # need data in all categories else columns expand if missing data
+            mutate(count = ifelse(count == "low", "0", count)) %>%
             ggplot(aes(x = "", y = as.numeric(count), fill = characteristic)) +
             geom_col_interactive(aes(
-              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", input$measure),
+              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", firstlow(input$measure)),
               data_id = characteristic
             )) +
             coord_polar(theta = "y", start = 0) +
             scale_fill_manual(breaks = c("Male", "Female"), values = afcolours::af_colours("duo")) +
+            scale_y_discrete(limit = rev(chars_sex_choices)) +
             labs(title = "Sex") +
             xlab("") +
             ylab("") +
@@ -263,7 +281,7 @@ learner_characteristics_server <- function(id) {
             css = "cursor:pointer;stroke:black;stroke-width:5px;fill:#ffdd00;"
           ),
           ggiraph::opts_selection(
-            type = "single", css = "fill:#12436D;stroke:#12436D;"
+            type = "single", css = "fill:afcolours::af_colours;stroke:#12436D;"
           ),
           ggiraph::opts_toolbar(
             saveaspng = FALSE,
@@ -272,35 +290,42 @@ learner_characteristics_server <- function(id) {
         ),
         fonts = list(sans = "Arial")
       )
-    )
+    })
 
 
 
+    output$lldd_bar_plot <- renderGirafe({
+      # Message when there are none of the measure at all - blank - only shown for age
+      validate(need(nrow(chars_reactive_table()) > 0, ""))
 
-
-    output$lldd_bar_plot <- renderGirafe(
-      # Message when there are none of the measure at all
-      # validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
-
-      # Message when all groups are low, and treemap cannot be displayed
+      # Message when all groups are low, and chart cannot be displayed
       # But can still be seen in the table
-      #  validate(need(
-      #  nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
-      # paste0("All groups have low numbers.")
-      #  ))
+      validate(need(
+        nrow(filter(chars_reactive_table(), characteristic_type ==
+          "Learner with learning difficulties or disabilities (LLDD)" &
+          count != "low" & characteristic != "Total")) > 0, "All LLDD groups have low numbers."
+      ))
+
       girafe(
         ggobj =
           chars_reactive_table() %>%
             filter(characteristic_type == "Learner with learning difficulties or disabilities (LLDD)" &
               characteristic != "Total") %>%
-            filter(count != "low") %>%
+            # need data in all categories else columns expand if missing data
+            mutate(count = ifelse(count == "low", "0", count)) %>%
             ggplot(aes(
               x = characteristic,
               y = as.numeric(count),
-              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", input$measure),
+              tooltip = paste0(
+                characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ",
+                firstlow(input$measure)
+              ),
               data_id = characteristic
             )) +
-            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1], position = position_dodge(width = 4.9)) +
+            geom_col_interactive(
+              fill = afcolours::af_colours(n = 4)[1],
+              position = position_dodge(preserve = "single")
+            ) +
             coord_flip() +
             labs(title = "Learner with learning difficulties\nor disabilities (LLDD)") +
             xlab("") +
@@ -308,7 +333,7 @@ learner_characteristics_server <- function(id) {
             scale_y_continuous(labels = dfeR::comma_sep) +
             scale_x_discrete(
               labels = function(x) str_wrap(x, width = 10),
-              limit = c("LLDD - unknown", "LLDD - no", "LLDD - yes")
+              limit = rev(chars_lldd_choices)
             ) +
             ggplot2::theme_minimal() +
             ggplot2::theme(
@@ -336,24 +361,27 @@ learner_characteristics_server <- function(id) {
         ),
         fonts = list(sans = "Arial")
       )
-    )
+    })
 
 
-    output$ethnicity_bar_plot <- renderGirafe(
-      # Message when there are none of the measure at all
-      #  validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+    output$ethnicity_bar_plot <- renderGirafe({
+      # Message when there are none of the measure at all - blank - only shown for age
+      validate(need(nrow(chars_reactive_table()) > 0, ""))
 
-      # Message when all groups are low, and treemap cannot be displayed
+      # Message when all groups are low, and chart cannot be displayed
       # But can still be seen in the table
-      #   validate(need(
-      #   nrow(filter(chars_reactive_table(), count != "low" & characteristic != "Total")) > 0,
-      # paste0("All groups have low numbers.")
-      #   ))
+      validate(need(
+        nrow(filter(chars_reactive_table(), characteristic_type == "Ethnicity" & count != "low" &
+          characteristic != "Total")) > 0, "All ethnic groups have low numbers."
+      ))
+
       girafe(
         ggobj =
           chars_reactive_table() %>%
             filter(characteristic_type == "Ethnicity" & characteristic != "Total") %>%
-            filter(count != "low") %>%
+            # need data in all categories else columns expand if missing data
+            mutate(count = ifelse(count == "low", "0", count)) %>%
+            # shorten name of category to fit better
             mutate(characteristic = if_else(nchar(as.character(characteristic)) > 10,
               substr(characteristic, 1, 5),
               characteristic
@@ -361,19 +389,24 @@ learner_characteristics_server <- function(id) {
             ggplot(aes(
               x = characteristic,
               y = as.numeric(count),
-              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", input$measure),
+              tooltip = paste0(
+                characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ",
+                firstlow(input$measure)
+              ),
               data_id = characteristic
             )) +
-            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1], position = position_dodge(width = 4.9)) +
+            geom_col_interactive(
+              fill = afcolours::af_colours(n = 4)[1],
+              position = position_dodge2(preserve = "single")
+            ) +
             coord_flip() +
             labs(title = "Ethnicity") +
             xlab("") +
             ylab("") +
             scale_y_continuous(labels = dfeR::comma_sep) +
-            scale_x_discrete(
-              labels = function(x) str_wrap(x, width = 10),
-              limit = c("Unknown", "Other", "Mixed", "Asian", "Black", "White")
-            ) +
+            scale_x_discrete(limit = rev(if_else(nchar(as.character(chars_ethnicity_choices)) > 10,
+              substr(chars_ethnicity_choices, 1, 5), chars_ethnicity_choices
+            ))) +
             ggplot2::theme_minimal() +
             ggplot2::theme(
               legend.position = "top",
@@ -400,18 +433,18 @@ learner_characteristics_server <- function(id) {
         ),
         fonts = list(sans = "Arial")
       )
-    )
+    })
 
 
 
     # table
 
-    # Message when there are none of the measure at all, and no table
     output$chars_table <- renderTable({
+      # Message when there are none of the measure at all
       validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", firstlow(input$measure), " for these selections.")))
 
       chars_reactive_table_tidied <- chars_reactive_table() %>%
-        mutate(count = comma_sep(as.numeric(count)))
+        mutate(count = if_else(count != "low", as.character(dfeR::comma_sep(as.numeric(count))), count))
 
       colnames(chars_reactive_table_tidied) <-
         c(

@@ -53,7 +53,7 @@ lad_ui <- function(id) {
       # Main data area ==========================================================
       layout_column_wrap(
         width = 1 / 3,
-        
+
         ## Maps and tables and download -----------------------------------------
         ## Dropdown options for LADs
         selectizeInput(
@@ -136,7 +136,7 @@ lad_server <- function(id) {
     updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
     updateSelectizeInput(session, "delivery_lad", choices = delivery_lad_choices, server = TRUE)
     updateSelectizeInput(session, "learner_home_lad", choices = learner_home_lad_choices, server = TRUE)
-    
+
     # Update dropdown lists, clearing out when other options are selected
     observeEvent(input$provider, {
       if (input$provider != "") {
@@ -144,21 +144,21 @@ lad_server <- function(id) {
         updateSelectizeInput(session, "learner_home_lad", choices = learner_home_lad_choices, server = TRUE)
       }
     })
-    
+
     observeEvent(input$delivery_lad, {
       if (input$delivery_lad != "") {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
         updateSelectizeInput(session, "learner_home_lad", choices = learner_home_lad_choices, server = TRUE)
       }
     })
-    
+
     observeEvent(input$learner_home_lad, {
       if (input$learner_home_lad != "") {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
         updateSelectizeInput(session, "delivery_lad", choices = delivery_lad_choices, server = TRUE)
       }
     })
-    
+
     # User map selection ------------------------------------------------------
     # While the maps themselves are defined elsewhere, if a user selects an LAD from a map, we capture the value here
     # and then pass into the dropdown as if the user had selected that LAD from the dropdown itself
@@ -169,33 +169,33 @@ lad_server <- function(id) {
       map_selected_delivery_lad <- input$delivery_lad_map_shape_click
       updateSelectizeInput(session, "delivery_lad", selected = map_selected_delivery_lad$id)
     })
-    
+
     observeEvent(input$learner_home_lad_map_shape_click, {
       map_selected_learner_home_lad <- input$learner_home_lad_map_shape_click
       updateSelectizeInput(session, "learner_home_lad", selected = map_selected_learner_home_lad$id)
     })
-    
+
     # Provider selection ======================================================
     # Create the data used for the table on the left you can select providers from
     prov_selection_table <- reactive({
       prov_selection_table <- lad_map_parquet %>%
         filter(year == input$year)
-      
+
       # Filter to selected provider if selected
       if (input$provider != "") {
         prov_selection_table <- prov_selection_table %>% filter(provider_name == input$provider)
       }
-      
+
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
         prov_selection_table <- prov_selection_table %>% filter(delivery_lad == input$delivery_lad)
       }
-      
+
       # Filter based on learner home LAD if selected
       if (input$learner_home_lad != "") {
         prov_selection_table <- prov_selection_table %>% filter(learner_home_lad == input$learner_home_lad)
       }
-      
+
       # Summarise and aggregate the filtered table
       prov_selection_table <- prov_selection_table %>%
         with_groups(
@@ -204,37 +204,37 @@ lad_server <- function(id) {
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         collect()
-      
+
       return(prov_selection_table)
     })
-    
+
     # Main reactive data ======================================================
     map_data <- reactive({
       lad_map_parquet %>%
         filter(year == input$year) %>%
         collect()
     })
-    
+
     # Region table data =======================================================
     # Delivery regions --------------------------------------------------------
     delivery_lad_table <- reactive({
       delivery_lad_table <- map_data()
-      
+
       # Filter to selected provider if selected
       if (input$provider != "") {
         delivery_lad_table <- delivery_lad_table %>% filter(provider_name == input$provider)
       }
-      
+
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
         delivery_lad_table <- delivery_lad_table %>% filter(delivery_lad == input$delivery_lad)
       }
-      
+
       # Filter based on learner home LAD if selected
       if (input$learner_home_lad != "") {
         delivery_lad_table <- delivery_lad_table %>% filter(learner_home_lad == input$learner_home_lad)
       }
-      
+
       delivery_lad_table <- delivery_lad_table %>%
         with_groups(
           delivery_lad,
@@ -242,29 +242,29 @@ lad_server <- function(id) {
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         filter(`Number of apprenticeships` != 0)
-      
+
       return(delivery_lad_table)
     })
-    
+
     # Home regions ------------------------------------------------------------
     learner_home_lad_table <- reactive({
       learner_home_lad_table <- map_data()
-      
+
       # Filter to selected provider if selected
       if (input$provider != "") {
         learner_home_lad_table <- learner_home_lad_table %>% filter(provider_name == input$provider)
       }
-      
+
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
         learner_home_lad_table <- learner_home_lad_table %>% filter(delivery_lad == input$delivery_lad)
       }
-      
+
       # Filter based on learner home LAD if selected
       if (input$learner_home_lad != "") {
         learner_home_lad_table <- learner_home_lad_table %>% filter(learner_home_lad == input$learner_home_lad)
       }
-      
+
       learner_home_lad_table <- learner_home_lad_table %>%
         with_groups(
           learner_home_lad,
@@ -272,27 +272,27 @@ lad_server <- function(id) {
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         filter(`Number of apprenticeships` != 0)
-      
+
       return(learner_home_lad_table)
     })
-    
+
     # Output tables ===========================================================
     output$prov_selection_table <- renderReactable({
       dfe_reactable(prov_selection_table())
     })
-    
+
     output$learner_home_lad_table <- renderReactable({
       validate(need(nrow(learner_home_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
-      
+
       dfe_reactable(learner_home_lad_table())
     })
-    
+
     output$delivery_lad_table <- renderReactable({
       validate(need(nrow(delivery_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
-      
+
       dfe_reactable(delivery_lad_table())
     })
-    
+
     # Create maps =============================================================
     # Reactive data sets used in maps -----------------------------------------
     boundary_data <- reactive({
@@ -302,48 +302,48 @@ lad_server <- function(id) {
         "2022/23" = lad_boundaries_2023,
         "2021/22" = lad_boundaries_2022
       )
-      
+
       # Choose the boundary based on the year selection from the user
       return(boundary_list[[input$year]])
     })
-    
+
     delivery_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
       boundary_data() %>%
         right_join(delivery_lad_table(), by = join_by("lad_name" == "delivery_lad")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
-    
+
     learner_home_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
       boundary_data() %>%
         right_join(learner_home_lad_table(), by = join_by("lad_name" == "learner_home_lad")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
-    
+
     # Create the maps themselves ----------------------------------------------
     # dfe_lad_map is defined in R/helper_functions.R
     output$delivery_lad_map <- renderLeaflet({
       validate(need(nrow(delivery_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
-      
+
       dfe_lad_map(delivery_map_data(), input$measure, NS(id, "delivery_lad"))
     })
-    
+
     output$learner_home_lad_map <- renderLeaflet({
       validate(need(nrow(learner_home_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
-      
+
       dfe_lad_map(learner_home_map_data(), input$measure, NS(id, "learner_home_lad"))
     })
-    
+
     # Watch for the reset buttons and clear selection if pressed
     observeEvent(input$delivery_lad_reset, {
       updateSelectizeInput(session, "delivery_lad", selected = "")
     })
-    
+
     observeEvent(input$learner_home_lad_reset, {
       updateSelectizeInput(session, "learner_home_lad", selected = "")
     })
-    
+
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------

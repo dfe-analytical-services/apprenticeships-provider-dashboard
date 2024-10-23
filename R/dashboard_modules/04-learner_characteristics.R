@@ -316,12 +316,16 @@ learner_characteristics_server <- function(id) {
             ggplot(aes(
               x = characteristic,
               y = as.numeric(count),
-              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ",
-                firstlow(input$measure)),
+              tooltip = paste0(
+                characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ",
+                firstlow(input$measure)
+              ),
               data_id = characteristic
             )) +
-            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1],
-              position = position_dodge(preserve = "single")) +
+            geom_col_interactive(
+              fill = afcolours::af_colours(n = 4)[1],
+              position = position_dodge(preserve = "single")
+            ) +
             coord_flip() +
             labs(title = "Learner with learning difficulties\nor disabilities (LLDD)") +
             xlab("") +
@@ -385,12 +389,16 @@ learner_characteristics_server <- function(id) {
             ggplot(aes(
               x = characteristic,
               y = as.numeric(count),
-              tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ",
-                firstlow(input$measure)),
+              tooltip = paste0(
+                characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ",
+                firstlow(input$measure)
+              ),
               data_id = characteristic
             )) +
-            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1],
-              position = position_dodge2(preserve = "single")) +
+            geom_col_interactive(
+              fill = afcolours::af_colours(n = 4)[1],
+              position = position_dodge2(preserve = "single")
+            ) +
             coord_flip() +
             labs(title = "Ethnicity") +
             xlab("") +

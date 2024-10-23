@@ -107,6 +107,18 @@ lad_map_data <- apps_data %>%
   ungroup() %>%
   as.data.frame()
 
+# Create Region map data ---------------------------------------------------------
+# Preparing the data now so that less processing is needed in the app
+region_map_data <- apps_data %>%
+  group_by(year, provider_name, learner_home_region, delivery_region) %>%
+  summarise(
+    starts = sum(starts, na.rm = TRUE),
+    enrolments = sum(enrolments, na.rm = TRUE),
+    achievements = sum(achievements, na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  as.data.frame()
+
 # Create demographics/characteristics data ------------------------------------
 # Preparing the data now so that less processing is needed in the app
 
@@ -204,6 +216,11 @@ arrow::write_dataset(provider_breakdowns, "data/",
 arrow::write_dataset(lad_map_data, "data/",
   format = "parquet",
   basename_template = "lad_map_data_{i}.parquet"
+)
+
+arrow::write_dataset(region_map_data, "data/",
+                     format = "parquet",
+                     basename_template = "region_map_data_{i}.parquet"
 )
 
 arrow::write_dataset(subjects_and_standards, "data/",

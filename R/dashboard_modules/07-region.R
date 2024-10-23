@@ -1,39 +1,43 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
 # Change
-lad_map_parquet <- arrow::read_parquet("data/lad_map_data_0.parquet") %>%
-  select(year, provider_name, learner_home_lad, delivery_lad, starts, achievements, enrolments)
+region_map_parquet <- arrow::read_parquet("data/region_map_data_0.parquet") %>%
+  select(year, provider_name, learner_home_region, delivery_region, starts, achievements, enrolments)
 
 # Read in boundary files
-lad_boundaries_2024 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
-  rename("lad_name" = LAD24NM)
-lad_boundaries_2023 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2023_UK_BUC_V2_8757178717458576320.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
-  rename("lad_name" = LAD23NM)
-lad_boundaries_2022 <- sf::st_read("data/boundary_files/Local_Authority_Districts_December_2022_UK_BUC_V2_3956567894081366924.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
-  rename("lad_name" = LAD22NM)
+# https://geoportal.statistics.gov.uk/datasets/7c23fbe8e89d4cf79ff7f2a6058e6200_0/explore?location=52.701325%2C-2.489483%2C7.38
+#https://geoportal.statistics.gov.uk/search?collection=Dataset
+# GeoPackage
+
+region_boundaries_2024 <- sf::st_read("data/boundary_files/Regions_December_2023_Boundaries_EN_BFC_9141246588291537595.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
+  rename("region_name" = RGN23NM)
+#region_boundaries_2023 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2023_UK_BUC_V2_8757178717458576320.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
+#  rename("lad_name" = LAD23NM)
+#region_boundaries_2022 <- sf::st_read("data/boundary_files/Local_Authority_Districts_December_2022_UK_BUC_V2_3956567894081366924.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
+#  rename("lad_name" = LAD22NM)
 
 # Create static lists of options for dropdowns
 
-lad_year_choices <- data_choices(data = lad_map_parquet, column = "year")
+region_year_choices <- data_choices(data = region_map_parquet, column = "year")
 # Years should be in descending order order
-lad_year_choices <- sort(lad_year_choices, decreasing = TRUE)
+region_year_choices <- sort(region_year_choices, decreasing = TRUE)
 
-lad_measure_choices <- c("Starts", "Enrolments", "Achievements")
+region_measure_choices <- c("Starts", "Enrolments", "Achievements")
 
-provider_choices <- c("", distinct(lad_map_parquet, provider_name) %>% pull())
+region_provider_choices <- c("", distinct(region_map_parquet, provider_name) %>% pull())
 # Providers should be in alphabetical order
 provider_choices <- sort(provider_choices)
 
-delivery_lad_choices <- c("", distinct(lad_map_parquet, delivery_lad) %>% pull())
-delivery_lad_choices <- sort(delivery_lad_choices)
+delivery_region_choices <- c("", distinct(region_map_parquet, delivery_region) %>% pull())
+delivery_region_choices <- sort(delivery_region_choices)
 
-learner_home_lad_choices <- c("", distinct(lad_map_parquet, learner_home_lad) %>% pull())
-learner_home_lad_choices <- sort(learner_home_lad_choices)
+learner_home_region_choices <- c("", distinct(region_map_parquet, learner_home_region) %>% pull())
+learner_home_region_choices <- sort(learner_home_region_choices)
 
 # Main module code ============================================================
-lad_ui <- function(id) {
+region_ui <- function(id) {
   div(
-    h1("Local authority district breakdowns"),
+    h1("Region breakdowns"),
     # User selection area =====================================================
     div(
       class = "well",
@@ -43,12 +47,12 @@ lad_ui <- function(id) {
         selectInput(
           inputId = NS(id, "measure"),
           label = "Select measure",
-          choices = firstup(lad_measure_choices)
+          choices = firstup(region_measure_choices)
         ),
         selectInput(
           inputId = NS(id, "year"),
           label = "Select academic year",
-          choices = lad_year_choices
+          choices = region_year_choices
         )
       ),
       # Main data area ==========================================================
@@ -64,14 +68,14 @@ lad_ui <- function(id) {
           options = list(maxOptions = 6000)
         ),
         selectizeInput(
-          inputId = NS(id, "delivery_lad"),
-          label = "Search for a delivery LAD",
+          inputId = NS(id, "delivery_region"),
+          label = "Search for a delivery Region",
           choices = NULL,
           options = list(dropdownParent = "body") # force dropdown menu to be in front of other objects
         ),
         selectizeInput(
-          inputId = NS(id, "learner_home_lad"),
-          label = "Search for a learner home LAD",
+          inputId = NS(id, "learner_home_region"),
+          label = "Search for a learner home Region",
           choices = NULL,
           options = list(dropdownParent = "body") # force dropdown menu to be in front of other objects
         )
@@ -83,18 +87,18 @@ lad_ui <- function(id) {
       card(reactable::reactableOutput(NS(id, "prov_selection_table"))),
       ## Tabs -----------------------------------------------------------------
       navset_card_tab(
-        id = "lad_maps_tabs",
+        id = "region_maps_tabs",
         nav_panel(
           "Maps",
           bslib::layout_column_wrap(
             width = "15rem", # Minimum width for each input box before wrapping
             div(
               h2("Delivery map"),
-              leafletOutput(NS(id, "delivery_lad_map"), height = 600)
+              leafletOutput(NS(id, "delivery_region_map"), height = 600)
             ),
             div(
               h2("Learner home map"),
-              leafletOutput(NS(id, "learner_home_lad_map"), height = 600)
+              leafletOutput(NS(id, "learner_home_region_map"), height = 600)
             )
           )
         ),
@@ -102,8 +106,8 @@ lad_ui <- function(id) {
           "Tables",
           bslib::layout_column_wrap(
             width = "15rem", # Minimum width for each input box before wrapping
-            reactable::reactableOutput(NS(id, "delivery_lad_table")),
-            reactable::reactableOutput(NS(id, "learner_home_lad_table"))
+            reactable::reactableOutput(NS(id, "delivery_region_table")),
+            reactable::reactableOutput(NS(id, "learner_home_region_table"))
           )
         ),
         nav_panel(
@@ -130,33 +134,33 @@ lad_ui <- function(id) {
   )
 }
 
-lad_server <- function(id) {
+region_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     # Drop downs ==============================================================
     # Set initial dropdown values
     updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
-    updateSelectizeInput(session, "delivery_lad", choices = delivery_lad_choices, server = TRUE)
-    updateSelectizeInput(session, "learner_home_lad", choices = learner_home_lad_choices, server = TRUE)
+    updateSelectizeInput(session, "delivery_region", choices = delivery_region_choices, server = TRUE)
+    updateSelectizeInput(session, "learner_home_region", choices = learner_home_region_choices, server = TRUE)
 
     # Update dropdown lists, clearing out when other options are selected
     observeEvent(input$provider, {
       if (input$provider != "") {
-        updateSelectizeInput(session, "delivery_lad", choices = delivery_lad_choices, server = TRUE)
-        updateSelectizeInput(session, "learner_home_lad", choices = learner_home_lad_choices, server = TRUE)
+        updateSelectizeInput(session, "delivery_region", choices = delivery_region_choices, server = TRUE)
+        updateSelectizeInput(session, "learner_home_region", choices = learner_home_region_choices, server = TRUE)
       }
     })
 
-    observeEvent(input$delivery_lad, {
-      if (input$delivery_lad != "") {
+    observeEvent(input$delivery_region, {
+      if (input$delivery_region != "") {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
-        updateSelectizeInput(session, "learner_home_lad", choices = learner_home_lad_choices, server = TRUE)
+        updateSelectizeInput(session, "learner_home_region", choices = learner_home_region_choices, server = TRUE)
       }
     })
 
-    observeEvent(input$learner_home_lad, {
-      if (input$learner_home_lad != "") {
+    observeEvent(input$learner_home_region, {
+      if (input$learner_home_region != "") {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
-        updateSelectizeInput(session, "delivery_lad", choices = delivery_lad_choices, server = TRUE)
+        updateSelectizeInput(session, "delivery_region", choices = delivery_region_choices, server = TRUE)
       }
     })
 
@@ -166,20 +170,20 @@ lad_server <- function(id) {
     # all of the flushing of other values happens automatically when the calculations are rerun
     #
     # The 'id' that we pull here pulls from what we set as the 'layerId' in the map function
-    observeEvent(input$delivery_lad_map_shape_click, {
-      map_selected_delivery_lad <- input$delivery_lad_map_shape_click
-      updateSelectizeInput(session, "delivery_lad", selected = map_selected_delivery_lad$id)
+    observeEvent(input$delivery_region_map_shape_click, {
+      map_selected_delivery_region <- input$delivery_region_map_shape_click
+      updateSelectizeInput(session, "delivery_region", selected = map_selected_delivery_region$id)
     })
 
-    observeEvent(input$learner_home_lad_map_shape_click, {
-      map_selected_learner_home_lad <- input$learner_home_lad_map_shape_click
-      updateSelectizeInput(session, "learner_home_lad", selected = map_selected_learner_home_lad$id)
+    observeEvent(input$learner_home_region_map_shape_click, {
+      map_selected_learner_home_region <- input$learner_home_region_map_shape_click
+      updateSelectizeInput(session, "learner_home_region", selected = map_selected_learner_home_region$id)
     })
 
     # Provider selection ======================================================
     # Create the data used for the table on the left you can select providers from
     prov_selection_table <- reactive({
-      prov_selection_table <- lad_map_parquet %>%
+      prov_selection_table <- region_map_parquet %>%
         filter(year == input$year)
 
       # Filter to selected provider if selected
@@ -188,13 +192,13 @@ lad_server <- function(id) {
       }
 
       # Filter based on delivery LAD if selected
-      if (input$delivery_lad != "") {
-        prov_selection_table <- prov_selection_table %>% filter(delivery_lad == input$delivery_lad)
+      if (input$delivery_region != "") {
+        prov_selection_table <- prov_selection_table %>% filter(delivery_region == input$delivery_region)
       }
 
       # Filter based on learner home LAD if selected
-      if (input$learner_home_lad != "") {
-        prov_selection_table <- prov_selection_table %>% filter(learner_home_lad == input$learner_home_lad)
+      if (input$learner_home_region != "") {
+        prov_selection_table <- prov_selection_table %>% filter(learner_home_region == input$learner_home_region)
       }
 
       # Summarise and aggregate the filtered table
@@ -218,57 +222,57 @@ lad_server <- function(id) {
 
     # Region table data =======================================================
     # Delivery regions --------------------------------------------------------
-    delivery_lad_table <- reactive({
-      delivery_lad_table <- map_data()
+    delivery_region_table <- reactive({
+      delivery_region_table <- map_data()
 
       # Filter to selected provider if selected
       if (input$provider != "") {
-        delivery_lad_table <- delivery_lad_table %>% filter(provider_name == input$provider)
+        delivery_region_table <- delivery_region_table %>% filter(provider_name == input$provider)
       }
 
       # Filter based on delivery LAD if selected
-      if (input$delivery_lad != "") {
-        delivery_lad_table <- delivery_lad_table %>% filter(delivery_lad == input$delivery_lad)
+      if (input$delivery_region != "") {
+        delivery_region_table <- delivery_region_table %>% filter(delivery_region == input$delivery_region)
       }
 
       # Filter based on learner home LAD if selected
-      if (input$learner_home_lad != "") {
-        delivery_lad_table <- delivery_lad_table %>% filter(learner_home_lad == input$learner_home_lad)
+      if (input$learner_home_region != "") {
+        delivery_region_table <- delivery_region_table %>% filter(learner_home_region == input$learner_home_region)
       }
 
-      delivery_lad_table <- delivery_lad_table %>%
+      delivery_region_table <- delivery_region_table %>%
         with_groups(
-          delivery_lad,
+          delivery_region,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         filter(`Number of apprenticeships` != 0)
 
-      return(delivery_lad_table)
+      return(delivery_region_table)
     })
 
     # Home regions ------------------------------------------------------------
-    learner_home_lad_table <- reactive({
-      learner_home_lad_table <- map_data()
+    learner_home_region_table <- reactive({
+      learner_home_region_table <- map_data()
 
       # Filter to selected provider if selected
       if (input$provider != "") {
-        learner_home_lad_table <- learner_home_lad_table %>% filter(provider_name == input$provider)
+        learner_home_region_table <- learner_home_region_table %>% filter(provider_name == input$provider)
       }
 
       # Filter based on delivery LAD if selected
-      if (input$delivery_lad != "") {
-        learner_home_lad_table <- learner_home_lad_table %>% filter(delivery_lad == input$delivery_lad)
+      if (input$delivery_region != "") {
+        learner_home_region_table <- learner_home_region_table %>% filter(delivery_region == input$delivery_region)
       }
 
       # Filter based on learner home LAD if selected
-      if (input$learner_home_lad != "") {
-        learner_home_lad_table <- learner_home_lad_table %>% filter(learner_home_lad == input$learner_home_lad)
+      if (input$learner_home_region != "") {
+        learner_home_region_table <- learner_home_region_table %>% filter(learner_home_region == input$learner_home_region)
       }
 
-      learner_home_lad_table <- learner_home_lad_table %>%
+      learner_home_region_table <- learner_home_region_table %>%
         with_groups(
-          learner_home_lad,
+          learner_home_region,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
@@ -282,16 +286,16 @@ lad_server <- function(id) {
       dfe_reactable(prov_selection_table())
     })
 
-    output$learner_home_lad_table <- renderReactable({
-      validate(need(nrow(learner_home_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+    output$learner_home_region_table <- renderReactable({
+      validate(need(nrow(learner_home_region_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
-      dfe_reactable(learner_home_lad_table())
+      dfe_reactable(learner_home_region_table())
     })
 
     output$delivery_lad_table <- renderReactable({
-      validate(need(nrow(delivery_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+      validate(need(nrow(delivery_region_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
-      dfe_reactable(delivery_lad_table())
+      dfe_reactable(delivery_region_table())
     })
 
     # Create maps =============================================================
@@ -300,8 +304,8 @@ lad_server <- function(id) {
       # Set the map boundary file based on the year
       boundary_list <- list(
         "2023/24 (Q3 Aug to Apr)" = lad_boundaries_2024,
-        "2022/23" = lad_boundaries_2023,
-        "2021/22" = lad_boundaries_2022
+        "2022/23" = region_boundaries_2023,
+        "2021/22" = region_boundaries_2022
       )
 
       # Choose the boundary based on the year selection from the user
@@ -311,45 +315,45 @@ lad_server <- function(id) {
     delivery_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
       boundary_data() %>%
-        right_join(delivery_lad_table(), by = join_by("lad_name" == "delivery_lad")) %>%
+        right_join(delivery_region_table(), by = join_by("region_name" == "delivery_region")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
 
     learner_home_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
       boundary_data() %>%
-        right_join(learner_home_lad_table(), by = join_by("lad_name" == "learner_home_lad")) %>%
+        right_join(learner_home_region_table(), by = join_by("region_name" == "learner_home_region")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
 
     # Create the maps themselves ----------------------------------------------
     # dfe_lad_map is defined in R/helper_functions.R
-    output$delivery_lad_map <- renderLeaflet({
-      validate(need(nrow(delivery_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+    output$delivery_region_map <- renderLeaflet({
+      validate(need(nrow(delivery_region_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
-      dfe_lad_map(delivery_map_data(), input$measure, NS(id, "delivery_lad"))
+      dfe_region_map(delivery_map_data(), input$measure, NS(id, "delivery_region"))
     })
 
-    output$learner_home_lad_map <- renderLeaflet({
-      validate(need(nrow(learner_home_lad_table()) > 0, paste0("No ", input$measure, " for these selections.")))
+    output$learner_home_region_map <- renderLeaflet({
+      validate(need(nrow(learner_home_region_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
-      dfe_lad_map(learner_home_map_data(), input$measure, NS(id, "learner_home_lad"))
+      dfe_region_map(learner_home_map_data(), input$measure, NS(id, "learner_home_region"))
     })
 
     # Watch for the reset buttons and clear selection if pressed
-    observeEvent(input$delivery_lad_reset, {
-      updateSelectizeInput(session, "delivery_lad", selected = "")
+    observeEvent(input$delivery_region_reset, {
+      updateSelectizeInput(session, "delivery_region", selected = "")
     })
 
-    observeEvent(input$learner_home_lad_reset, {
-      updateSelectizeInput(session, "learner_home_lad", selected = "")
+    observeEvent(input$learner_home_region_reset, {
+      updateSelectizeInput(session, "learner_home_region", selected = "")
     })
 
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- paste0("lad-", input$year, "-", input$measure)
+        raw_name <- paste0("region-", input$year, "-", input$measure)
         extension <- if (input$file_type == "CSV (Up to 18.42 MB)") {
           ".csv"
         } else {

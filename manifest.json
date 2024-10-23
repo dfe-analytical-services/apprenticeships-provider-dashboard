@@ -4923,7 +4923,7 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "4fc9a403b94d0fd21c71c39165e8246e"
+      "checksum": "4b78869b791eb5c582a01bfabd165de6"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4939,6 +4939,9 @@
     },
     "data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg": {
       "checksum": "462d51753e91e758857b2fadfd88cef1"
+    },
+    "data/boundary_files/Regions_December_2023_Boundaries_EN_BFC_9141246588291537595.gpkg": {
+      "checksum": "057d2918cc1737c02dfab6514b0c2016"
     },
     "data/lad_map_data_0.parquet": {
       "checksum": "ace1b38e436d6423501b2a00578e7904"
@@ -4983,13 +4986,13 @@
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
     },
     "R/dashboard_modules/07-region.R": {
-      "checksum": "e5b9f07979fc7093f924d86e75c73903"
+      "checksum": "f4f8a6b0c213f66b942498c0f96642d3"
     },
     "R/data-prep/check_file_sizes.R": {
       "checksum": "0dacfb94d1f5849f35cec4196bd94b89"
     },
     "R/data-prep/create_data_files.R": {
-      "checksum": "2ea028ef4b9e950224463515359db4c1"
+      "checksum": "e23f2e98ee5f68b3d86a4f02f6453d1a"
     },
     "R/footer_pages/accessibility_page.R": {
       "checksum": "e9351e2d333a66228f36dc3963e2d1bd"
@@ -5013,7 +5016,7 @@
       "checksum": "c4dc320ca8baaaefc7c351b08c8ea8d7"
     },
     "server.R": {
-      "checksum": "4e64b5320a433d75ee5c412a4c2528c0"
+      "checksum": "2da64c2add6ff1ed438014776a7cfabf"
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
@@ -5058,7 +5061,7 @@
       "checksum": "c6a01a506bf278e5a15f61d610eb04b9"
     },
     "ui.R": {
-      "checksum": "e80e22df1fdcb227de7b26c3e64d9041"
+      "checksum": "9f3c95ea2c50ac7f2585e10f5ba3cb38"
     },
     "www/dfe_logo.svg": {
       "checksum": "c23764dae2d73a45a55815d0327be6cb"

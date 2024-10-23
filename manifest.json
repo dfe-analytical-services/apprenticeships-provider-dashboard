@@ -4923,7 +4923,7 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "e0554f060c6e899b0c6202fef02c3ab3"
+      "checksum": "4fc9a403b94d0fd21c71c39165e8246e"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -4983,7 +4983,7 @@
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
     },
     "R/dashboard_modules/07-region.R": {
-      "checksum": "f452fbb95acf6614959b7f4aae71846d"
+      "checksum": "e5b9f07979fc7093f924d86e75c73903"
     },
     "R/data-prep/check_file_sizes.R": {
       "checksum": "0dacfb94d1f5849f35cec4196bd94b89"

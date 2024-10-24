@@ -260,7 +260,7 @@ learner_characteristics_server <- function(id) {
             geom_col_interactive(aes(
               tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", firstlow(input$measure)),
               data_id = characteristic
-            )) +
+            ), color = "white", size = 2, ) +
             coord_polar(theta = "y", start = 0) +
             scale_fill_manual(breaks = c("Male", "Female"), values = afcolours::af_colours("duo")) +
             scale_y_discrete(limit = rev(chars_sex_choices)) +
@@ -281,7 +281,7 @@ learner_characteristics_server <- function(id) {
             css = "cursor:pointer;stroke:black;stroke-width:5px;fill:#ffdd00;"
           ),
           ggiraph::opts_selection(
-            type = "single", css = "fill:afcolours::af_colours;stroke:#12436D;"
+            type = "single", css = "fill:afcolours::af_colours;stroke:afcolours::af_colours;"
           ),
           ggiraph::opts_toolbar(
             saveaspng = FALSE,

@@ -215,7 +215,7 @@ region_server <- function(id) {
 
     # Main reactive data ======================================================
     map_data <- reactive({
-      lad_map_parquet %>%
+      region_map_parquet %>%
         filter(year == input$year) %>%
         collect()
     })

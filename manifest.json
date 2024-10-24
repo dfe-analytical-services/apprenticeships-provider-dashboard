@@ -4923,10 +4923,13 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "a8a8c4f198a030831b4e0df8e68deabc"
+      "checksum": "c953a13a3149908e14258a92b9aa643d"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
+    },
+    "data/apprenticeships_data.csv": {
+      "checksum": "57e986fb0d1c6afaa3253666e23fb406"
     },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "f12e1c07da0a8bc4e6a9855bf3bf9d46"
@@ -4952,11 +4955,14 @@
     "data/provider_breakdowns_0.parquet": {
       "checksum": "8b244a23ea8512e00e4dc186a70f0911"
     },
+    "data/region_map_data_0.parquet": {
+      "checksum": "3ec5bbd1834d70cbcf39a623c8fbc88d"
+    },
     "data/subjects_and_standards_0.parquet": {
       "checksum": "bdb23ef419ac86fd17efd1f7bd103af1"
     },
     "datafiles_log.csv": {
-      "checksum": "8c1c4e91b736315977bdef307e099cb4"
+      "checksum": "62d01e5a616db702caa9d8fd214fddee"
     },
     "debug.log": {
       "checksum": "9a8e5786f13efa56be15b5ac6d4409f7"
@@ -4966,6 +4972,9 @@
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
+    },
+    "R/create_app_data.R": {
+      "checksum": "bd283d4e1bc93beac77e9dc2552869f6"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
       "checksum": "dfadfd75371a30a03bfd30b6e826c3a6"
@@ -4986,7 +4995,7 @@
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
     },
     "R/dashboard_modules/07-region.R": {
-      "checksum": "f4f8a6b0c213f66b942498c0f96642d3"
+      "checksum": "bd331508dd11524343d80067ab4c20ff"
     },
     "R/data-prep/check_file_sizes.R": {
       "checksum": "0dacfb94d1f5849f35cec4196bd94b89"
@@ -5019,7 +5028,7 @@
       "checksum": "2da64c2add6ff1ed438014776a7cfabf"
     },
     "sql/apprenticeships_data.sql": {
-      "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
+      "checksum": "917d0d847d2b1c82d383ac48b4fb8241"
     },
     "sql/apprenticeships_demographics.sql": {
       "checksum": "3ce6538ab919c9c2f191212fda29e8fe"
@@ -5061,7 +5070,7 @@
       "checksum": "c6a01a506bf278e5a15f61d610eb04b9"
     },
     "ui.R": {
-      "checksum": "9f3c95ea2c50ac7f2585e10f5ba3cb38"
+      "checksum": "c947c2e7609b1aee06dec78cd0e16a23"
     },
     "www/dfe_logo.svg": {
       "checksum": "c23764dae2d73a45a55815d0327be6cb"

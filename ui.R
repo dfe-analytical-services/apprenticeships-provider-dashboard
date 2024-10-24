@@ -105,7 +105,7 @@ ui <- function(input, output, session) {
               id = "left_nav",
               nav_panel("provider_breakdowns", prov_breakdowns_ui(id = "prov_breakdowns")),
               nav_panel("local_authority_district", lad_ui(id = "lad")),
-              nav_panel("region", region_ui(id = "lad")),
+              nav_panel("region", region_ui(id = "region")),
               nav_panel("subjects_and_standards", subjects_standards_ui(id = "sas")),
               nav_panel("learner_characteristics", learner_characteristics_ui(id = "learner_characteristics")),
               nav_panel("national_provider_summary", nps_ui(id = "nps")),

@@ -230,9 +230,9 @@ dfe_lad_map <- function(data, measure, input_id) {
     )
   )
 
-  
-  
-  
+
+
+
   # Set a pop up
   hover_labels <- paste0(
     "<strong>", data$lad_name, "</strong><br/>",
@@ -289,16 +289,16 @@ dfe_region_map <- function(data, measure, input_id) {
       max(data$`Number of apprenticeships`)
     )
   )
-  
-  
-  
-  
+
+
+
+
   # Set a pop up
   hover_labels <- paste0(
     "<strong>", data$region_name, "</strong><br/>",
     lapply(data$`Number of apprenticeships`, dfeR::pretty_num), " ", measure
   ) %>% lapply(htmltools::HTML)
-  
+
   # Create the map
   map <- leaflet(
     data,
@@ -330,12 +330,12 @@ dfe_region_map <- function(data, measure, input_id) {
     ) %>%
     # Add a legend to the map
     addLegend("topright",
-              pal = pal_fun,
-              values = ~ data[["Number of apprenticeships"]],
-              title = firstup(measure)
+      pal = pal_fun,
+      values = ~ data[["Number of apprenticeships"]],
+      title = firstup(measure)
     ) %>%
     add_map_reset_button(selectize_input_id = input_id) # add a reset button
-  
+
   return(map)
 }
 

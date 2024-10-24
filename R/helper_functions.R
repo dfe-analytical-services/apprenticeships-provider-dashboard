@@ -230,6 +230,9 @@ dfe_lad_map <- function(data, measure, input_id) {
     )
   )
 
+  
+  
+  
   # Set a pop up
   hover_labels <- paste0(
     "<strong>", data$lad_name, "</strong><br/>",
@@ -273,6 +276,66 @@ dfe_lad_map <- function(data, measure, input_id) {
     ) %>%
     add_map_reset_button(selectize_input_id = input_id) # add a reset button
 
+  return(map)
+}
+
+# Region map =================
+dfe_region_map <- function(data, measure, input_id) {
+  # Set the color scheme and scale
+  pal_fun <- colorNumeric(
+    "Blues",
+    domain = c(
+      min(data$`Number of apprenticeships`),
+      max(data$`Number of apprenticeships`)
+    )
+  )
+  
+  
+  
+  
+  # Set a pop up
+  hover_labels <- paste0(
+    "<strong>", data$region_name, "</strong><br/>",
+    lapply(data$`Number of apprenticeships`, dfeR::pretty_num), " ", measure
+  ) %>% lapply(htmltools::HTML)
+  
+  # Create the map
+  map <- leaflet(
+    data,
+    # Take off annoying scrolling, personal preference
+    options = leafletOptions(scrollWheelZoom = FALSE)
+  ) %>%
+    # Set the basemap (this is a good neutral one)
+    addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+    # Add the shaded regions
+    addPolygons(
+      color = "black",
+      weight = 1,
+      fillColor = pal_fun(data[["Number of apprenticeships"]]),
+      fillOpacity = 1,
+      highlightOptions = highlightOptions(
+        weight = 5,
+        color = "#666",
+        fillOpacity = 0.7,
+        bringToFront = TRUE
+      ),
+      label = hover_labels,
+      labelOptions = labelOptions(
+        style = list("font-weight" = "normal", padding = "3px 8px"),
+        textsize = "15px",
+        direction = "auto",
+        bringToFront = TRUE
+      ),
+      layerId = ~region_name # this is what value is returned when a user clicks on a polygon
+    ) %>%
+    # Add a legend to the map
+    addLegend("topright",
+              pal = pal_fun,
+              values = ~ data[["Number of apprenticeships"]],
+              title = firstup(measure)
+    ) %>%
+    add_map_reset_button(selectize_input_id = input_id) # add a reset button
+  
   return(map)
 }
 

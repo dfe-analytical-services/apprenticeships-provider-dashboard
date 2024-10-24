@@ -53,6 +53,7 @@ server <- function(input, output, session) {
   # Module calls ==============================================================
   prov_breakdowns_server(id = "prov_breakdowns")
   lad_server(id = "lad")
+  region_server(id = "region")
   subject_standards_server(id = "sas")
   learner_characteristics_server(id = "learner_characteristics")
   nps_server(id = "nps")

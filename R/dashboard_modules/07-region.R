@@ -24,7 +24,7 @@ region_year_choices <- sort(region_year_choices, decreasing = TRUE)
 
 region_measure_choices <- c("Starts", "Enrolments", "Achievements")
 
-region_provider_choices <- c("", distinct(region_map_parquet, provider_name) %>% pull())
+provider_choices <- c("", distinct(region_map_parquet, provider_name) %>% pull())
 # Providers should be in alphabetical order
 provider_choices <- sort(provider_choices)
 
@@ -278,7 +278,7 @@ region_server <- function(id) {
         ) %>%
         filter(`Number of apprenticeships` != 0)
 
-      return(learner_home_lad_table)
+      return(learner_home_region_table)
     })
 
     # Output tables ===========================================================
@@ -292,7 +292,7 @@ region_server <- function(id) {
       dfe_reactable(learner_home_region_table())
     })
 
-    output$delivery_lad_table <- renderReactable({
+    output$delivery_region_table <- renderReactable({
       validate(need(nrow(delivery_region_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
       dfe_reactable(delivery_region_table())
@@ -303,9 +303,7 @@ region_server <- function(id) {
     boundary_data <- reactive({
       # Set the map boundary file based on the year
       boundary_list <- list(
-        "2023/24 (Q3 Aug to Apr)" = lad_boundaries_2024,
-        "2022/23" = region_boundaries_2023,
-        "2021/22" = region_boundaries_2022
+        "2023/24 (Q3 Aug to Apr)" = region_boundaries_2024
       )
 
       # Choose the boundary based on the year selection from the user

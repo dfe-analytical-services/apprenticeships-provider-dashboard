@@ -22,7 +22,7 @@ eda_year_choices <- data_choices(data = eda_map_parquet, column = "year")
 # Years should be in descending order order
 eda_year_choices <- sort(eda_year_choices, decreasing = TRUE)
 
-region_measure_choices <- c("Starts", "Enrolments", "Achievements")
+eda_measure_choices <- c("Starts", "Enrolments", "Achievements")
 
 provider_choices <- c("", distinct(eda_map_parquet, provider_name) %>% pull())
 # Providers should be in alphabetical order
@@ -35,9 +35,9 @@ learner_home_eda_choices <- c("", distinct(eda_map_parquet, learner_home_devolve
 learner_home_eda_choices <- sort(learner_home_eda_choices)
 
 # Main module code ============================================================
-region_ui <- function(id) {
+eda_ui <- function(id) {
   div(
-    h1("Englsih Devolved Area breakdowns"),
+    h1("English Devolved Area breakdowns"),
     # User selection area =====================================================
     div(
       class = "well",
@@ -134,7 +134,7 @@ region_ui <- function(id) {
   )
 }
 
-region_server <- function(id) {
+eda_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     # Drop downs ==============================================================
     # Set initial dropdown values

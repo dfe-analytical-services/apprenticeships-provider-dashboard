@@ -68,13 +68,13 @@ eda_ui <- function(id) {
           options = list(maxOptions = 6000)
         ),
         selectizeInput(
-          inputId = NS(id, "delivery_devolved_administration"),
+          inputId = NS(id, "delivery_eda"),
           label = "Search for a delivery devolved_administration",
           choices = NULL,
           options = list(dropdownParent = "body") # force dropdown menu to be in front of other objects
         ),
         selectizeInput(
-          inputId = NS(id, "learner_home_devolved_administration"),
+          inputId = NS(id, "learner_home_eda"),
           label = "Search for a learner home devolved_administration",
           choices = NULL,
           options = list(dropdownParent = "body") # force dropdown menu to be in front of other objects
@@ -139,28 +139,28 @@ eda_server <- function(id) {
     # Drop downs ==============================================================
     # Set initial dropdown values
     updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
-    updateSelectizeInput(session, "delivery_devolved_administration", choices = delivery_eda_choices, server = TRUE)
-    updateSelectizeInput(session, "learner_home_devolved_administration", choices = learner_home_eda_choices, server = TRUE)
+    updateSelectizeInput(session, "delivery_eda", choices = delivery_eda_choices, server = TRUE)
+    updateSelectizeInput(session, "learner_home_eda", choices = learner_home_eda_choices, server = TRUE)
 
     # Update dropdown lists, clearing out when other options are selected
     observeEvent(input$provider, {
       if (input$provider != "") {
-        updateSelectizeInput(session, "delivery_devolved_administration", choices = delivery_eda_choices, server = TRUE)
-        updateSelectizeInput(session, "learner_home_devolved_administration", choices = learner_home_eda_choices, server = TRUE)
+        updateSelectizeInput(session, "delivery_eda", choices = delivery_eda_choices, server = TRUE)
+        updateSelectizeInput(session, "learner_home_eda", choices = learner_home_eda_choices, server = TRUE)
       }
     })
 
     observeEvent(input$delivery_eda, {
       if (input$delivery_eda != "") {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
-        updateSelectizeInput(session, "learner_home_devolved_administration", choices = learner_home_eda_choices, server = TRUE)
+        updateSelectizeInput(session, "learner_home_eda", choices = learner_home_eda_choices, server = TRUE)
       }
     })
 
     observeEvent(input$learner_home_eda, {
       if (input$learner_home_eda != "") {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
-        updateSelectizeInput(session, "delivery_devolved_administration", choices = delivery_eda_choices, server = TRUE)
+        updateSelectizeInput(session, "delivery_eda", choices = delivery_eda_choices, server = TRUE)
       }
     })
 
@@ -172,12 +172,12 @@ eda_server <- function(id) {
     # The 'id' that we pull here pulls from what we set as the 'layerId' in the map function
     observeEvent(input$delivery_eda_map_shape_click, {
       map_selected_delivery_eda <- input$delivery_eda_map_shape_click
-      updateSelectizeInput(session, "delivery_devolved_administration", selected = map_selected_delivery_eda$id)
+      updateSelectizeInput(session, "delivery_eda", selected = map_selected_delivery_eda$id)
     })
 
     observeEvent(input$learner_home_eda_map_shape_click, {
       map_selected_learner_home_eda <- input$learner_home_eda_map_shape_click
-      updateSelectizeInput(session, "learner_home_devolved_administration", selected = map_selected_learner_home_eda$id)
+      updateSelectizeInput(session, "learner_home_eda", selected = map_selected_learner_home_eda$id)
     })
 
     # Provider selection ======================================================

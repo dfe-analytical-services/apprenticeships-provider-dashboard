@@ -60,7 +60,7 @@ apps_data <- data.table::fread("data/apprenticeships_data.csv")
 
 # Create Provider breakdowns data ---------------------------------------------
 # Making a smaller cut from apps_data so less data is loaded into the app
-# Do we need separate provider breakdowns for Region / EDA/ LAD/ LA !!
+
 provider_breakdowns <- apps_data %>%
   group_by(
     year, provider_name, provider_type, apps_Level,

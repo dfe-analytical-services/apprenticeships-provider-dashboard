@@ -87,7 +87,7 @@ eda_ui <- function(id) {
       card(reactable::reactableOutput(NS(id, "prov_selection_table"))),
       ## Tabs -----------------------------------------------------------------
       navset_card_tab(
-        id = "region_maps_tabs",
+        id = "eda_maps_tabs",
         nav_panel(
           "Maps",
           bslib::layout_column_wrap(
@@ -158,7 +158,7 @@ eda_server <- function(id) {
     })
 
     observeEvent(input$learner_home_eda, {
-      if (input$learner_home_region != "") {
+      if (input$learner_home_eda != "") {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
         updateSelectizeInput(session, "delivery_devolved_administration", choices = delivery_eda_choices, server = TRUE)
       }
@@ -215,15 +215,15 @@ eda_server <- function(id) {
 
     # Main reactive data ======================================================
     map_data <- reactive({
-      region_map_parquet %>%
+      eda_map_parquet %>%
         filter(year == input$year) %>%
         collect()
     })
 
     # Region table data =======================================================
     # Delivery regions --------------------------------------------------------
-    delivery_region_table <- reactive({
-      delivery_region_table <- map_data()
+    delivery_eda_table <- reactive({
+      delivery_eda_table <- map_data()
 
       # Filter to selected provider if selected
       if (input$provider != "") {
@@ -278,7 +278,7 @@ eda_server <- function(id) {
         ) %>%
         filter(`Number of apprenticeships` != 0)
 
-      return(learner_home_region_table)
+      return(learner_home_eda_table)
     })
 
     # Output tables ===========================================================
@@ -292,7 +292,7 @@ eda_server <- function(id) {
       dfe_reactable(learner_home_eda_table())
     })
 
-    output$delivery_region_table <- renderReactable({
+    output$delivery_eda_table <- renderReactable({
       validate(need(nrow(delivery_eda_table()) > 0, paste0("No ", input$measure, " for these selections.")))
 
       dfe_reactable(delivery_eda_table())
@@ -341,11 +341,11 @@ eda_server <- function(id) {
     })
 
     # Watch for the reset buttons and clear selection if pressed
-    observeEvent(input$delivery_region_reset, {
-      updateSelectizeInput(session, "delivery_region", selected = "")
+    observeEvent(input$delivery_eda_reset, {
+      updateSelectizeInput(session, "delivery_eda", selected = "")
     })
 
-    observeEvent(input$learner_home_region_reset, {
+    observeEvent(input$learner_home_eda_reset, {
       updateSelectizeInput(session, "learner_home_eda", selected = "")
     })
 

@@ -58,7 +58,7 @@ region_ui <- function(id) {
       # Main data area ==========================================================
       layout_column_wrap(
         width = 1 / 3,
-        
+
         ## Maps and tables and download -----------------------------------------
         ## Dropdown options for LADs
         selectizeInput(
@@ -141,7 +141,7 @@ region_server <- function(id) {
     updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
     updateSelectizeInput(session, "delivery_devolved_administration", choices = delivery_eda_choices, server = TRUE)
     updateSelectizeInput(session, "learner_home_devolved_administration", choices = learner_home_eda_choices, server = TRUE)
-    
+
     # Update dropdown lists, clearing out when other options are selected
     observeEvent(input$provider, {
       if (input$provider != "") {
@@ -149,21 +149,21 @@ region_server <- function(id) {
         updateSelectizeInput(session, "learner_home_devolved_administration", choices = learner_home_eda_choices, server = TRUE)
       }
     })
-    
+
     observeEvent(input$delivery_eda, {
       if (input$delivery_eda != "") {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
         updateSelectizeInput(session, "learner_home_devolved_administration", choices = learner_home_eda_choices, server = TRUE)
       }
     })
-    
+
     observeEvent(input$learner_home_eda, {
       if (input$learner_home_region != "") {
         updateSelectizeInput(session, "provider", choices = provider_choices, server = TRUE)
         updateSelectizeInput(session, "delivery_devolved_administration", choices = delivery_eda_choices, server = TRUE)
       }
     })
-    
+
     # User map selection ------------------------------------------------------
     # While the maps themselves are defined elsewhere, if a user selects an LAD from a map, we capture the value here
     # and then pass into the dropdown as if the user had selected that LAD from the dropdown itself
@@ -174,33 +174,33 @@ region_server <- function(id) {
       map_selected_delivery_eda <- input$delivery_eda_map_shape_click
       updateSelectizeInput(session, "delivery_devolved_administration", selected = map_selected_delivery_eda$id)
     })
-    
+
     observeEvent(input$learner_home_eda_map_shape_click, {
       map_selected_learner_home_eda <- input$learner_home_eda_map_shape_click
       updateSelectizeInput(session, "learner_home_devolved_administration", selected = map_selected_learner_home_eda$id)
     })
-    
+
     # Provider selection ======================================================
     # Create the data used for the table on the left you can select providers from
     prov_selection_table <- reactive({
       prov_selection_table <- eda_map_parquet %>%
         filter(year == input$year)
-      
+
       # Filter to selected provider if selected
       if (input$provider != "") {
         prov_selection_table <- prov_selection_table %>% filter(provider_name == input$provider)
       }
-      
+
       # Filter based on delivery LAD if selected
       if (input$delivery_eda != "") {
         prov_selection_table <- prov_selection_table %>% filter(delivery_eda == input$delivery_eda)
       }
-      
+
       # Filter based on learner home LAD if selected
       if (input$learner_home_eda != "") {
         prov_selection_table <- prov_selection_table %>% filter(learner_home_eda == input$learner_home_eda)
       }
-      
+
       # Summarise and aggregate the filtered table
       prov_selection_table <- prov_selection_table %>%
         with_groups(
@@ -209,37 +209,37 @@ region_server <- function(id) {
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         collect()
-      
+
       return(prov_selection_table)
     })
-    
+
     # Main reactive data ======================================================
     map_data <- reactive({
       region_map_parquet %>%
         filter(year == input$year) %>%
         collect()
     })
-    
+
     # Region table data =======================================================
     # Delivery regions --------------------------------------------------------
     delivery_region_table <- reactive({
       delivery_region_table <- map_data()
-      
+
       # Filter to selected provider if selected
       if (input$provider != "") {
         delivery_eda_table <- delivery_eda_table %>% filter(provider_name == input$provider)
       }
-      
+
       # Filter based on delivery LAD if selected
       if (input$delivery_eda != "") {
         delivery_eda_table <- delivery_eda_table %>% filter(delivery_eda == input$delivery_eda)
       }
-      
+
       # Filter based on learner home LAD if selected
       if (input$learner_home_eda != "") {
         delivery_eda_table <- delivery_eda_table %>% filter(learner_home_eda == input$learner_home_eda)
       }
-      
+
       delivery_eda_table <- delivery_eda_table %>%
         with_groups(
           delivery_eda,
@@ -247,29 +247,29 @@ region_server <- function(id) {
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         filter(`Number of apprenticeships` != 0)
-      
+
       return(delivery_eda_table)
     })
-    
+
     # Home regions ------------------------------------------------------------
     learner_home_eda_table <- reactive({
       learner_home_eda_table <- map_data()
-      
+
       # Filter to selected provider if selected
       if (input$provider != "") {
         learner_home_eda_table <- learner_home_eda_table %>% filter(provider_name == input$provider)
       }
-      
+
       # Filter based on delivery LAD if selected
       if (input$delivery_eda != "") {
         learner_home_eda_table <- learner_home_eda_table %>% filter(delivery_eda == input$delivery_eda)
       }
-      
+
       # Filter based on learner home LAD if selected
       if (input$learner_home_eda != "") {
         learner_home_eda_table <- learner_home_eda_table %>% filter(learner_home_eda == input$learner_home_eda)
       }
-      
+
       learner_home_eda_table <- learner_home_eda_table %>%
         with_groups(
           learner_home_eda,
@@ -277,27 +277,27 @@ region_server <- function(id) {
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         filter(`Number of apprenticeships` != 0)
-      
+
       return(learner_home_region_table)
     })
-    
+
     # Output tables ===========================================================
     output$prov_selection_table <- renderReactable({
       dfe_reactable(prov_selection_table())
     })
-    
+
     output$learner_home_eda_table <- renderReactable({
       validate(need(nrow(learner_home_eda_table()) > 0, paste0("No ", input$measure, " for these selections.")))
-      
+
       dfe_reactable(learner_home_eda_table())
     })
-    
+
     output$delivery_region_table <- renderReactable({
       validate(need(nrow(delivery_eda_table()) > 0, paste0("No ", input$measure, " for these selections.")))
-      
+
       dfe_reactable(delivery_eda_table())
     })
-    
+
     # Create maps =============================================================
     # Reactive data sets used in maps -----------------------------------------
     boundary_data <- reactive({
@@ -307,48 +307,48 @@ region_server <- function(id) {
         "2022/23" = eda_boundaries_2023,
         "2021/22" = eda_boundaries_2023
       )
-      
+
       # Choose the boundary based on the year selection from the user
       return(boundary_list[[input$year]])
     })
-    
+
     delivery_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
       boundary_data() %>%
         right_join(delivery_eda_table(), by = join_by("eda_name" == "delivery_eda")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
-    
+
     learner_home_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table / does learner_home_map_data need to be unique to geographies - Qu for Cam !!
       boundary_data() %>%
         right_join(learner_home_eda_table(), by = join_by("eda_name" == "learner_home_eda")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
-    
+
     # Create the maps themselves ----------------------------------------------
     # dfe_lad_map is defined in R/helper_functions.R
     output$delivery_eda_map <- renderLeaflet({
       validate(need(nrow(delivery_eda_table()) > 0, paste0("No ", input$measure, " for these selections.")))
-      
+
       dfe_eda_map(delivery_map_data(), input$measure, NS(id, "delivery_eda"))
     })
-    
+
     output$learner_home_eda_map <- renderLeaflet({
       validate(need(nrow(learner_home_eda_table()) > 0, paste0("No ", input$measure, " for these selections.")))
-      
+
       dfe_eda_map(learner_home_map_data(), input$measure, NS(id, "learner_home_eda"))
     })
-    
+
     # Watch for the reset buttons and clear selection if pressed
     observeEvent(input$delivery_region_reset, {
       updateSelectizeInput(session, "delivery_region", selected = "")
     })
-    
+
     observeEvent(input$learner_home_region_reset, {
       updateSelectizeInput(session, "learner_home_eda", selected = "")
     })
-    
+
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------

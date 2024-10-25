@@ -1,3 +1,6 @@
+SET ANSI_PADDING OFF 
+SET NOCOUNT ON;
+
 /***********
 Data for Apprenticeships Interactive Tool
 Updated by:      Alison Cooper

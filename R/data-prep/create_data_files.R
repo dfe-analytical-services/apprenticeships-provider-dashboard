@@ -60,6 +60,7 @@ apps_data <- data.table::fread("data/apprenticeships_data.csv")
 
 # Create Provider breakdowns data ---------------------------------------------
 # Making a smaller cut from apps_data so less data is loaded into the app
+# Do we need separate provider breakdowns for Region / EDA/ LAD/ LA !!
 provider_breakdowns <- apps_data %>%
   group_by(
     year, provider_name, provider_type, apps_Level,
@@ -111,6 +112,18 @@ lad_map_data <- apps_data %>%
 # Preparing the data now so that less processing is needed in the app
 region_map_data <- apps_data %>%
   group_by(year, provider_name, learner_home_region, delivery_region) %>%
+  summarise(
+    starts = sum(starts, na.rm = TRUE),
+    enrolments = sum(enrolments, na.rm = TRUE),
+    achievements = sum(achievements, na.rm = TRUE)
+  ) %>%
+  ungroup() %>%
+  as.data.frame()
+
+# Create Region map data ---------------------------------------------------------
+# Preparing the data now so that less processing is needed in the app
+eda_map_data <- apps_data %>%
+  group_by(year, provider_name, learner_home_devolved_administration, delivery_devolved_administration) %>%
   summarise(
     starts = sum(starts, na.rm = TRUE),
     enrolments = sum(enrolments, na.rm = TRUE),
@@ -221,6 +234,11 @@ arrow::write_dataset(lad_map_data, "data/",
 arrow::write_dataset(region_map_data, "data/",
   format = "parquet",
   basename_template = "region_map_data_{i}.parquet"
+)
+
+arrow::write_dataset(eda_map_data, "data/",
+                     format = "parquet",
+                     basename_template = "eda_map_data_{i}.parquet"
 )
 
 arrow::write_dataset(subjects_and_standards, "data/",

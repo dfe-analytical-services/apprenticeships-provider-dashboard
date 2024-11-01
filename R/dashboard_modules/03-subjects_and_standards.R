@@ -218,7 +218,8 @@ subject_standards_server <- function(id) {
     filtered_raw_data_chart <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
-
+      # Only want this filtered by level, otherwise the bar char diasppears when
+      # a subject is selected, if filtered by them
       if (!(is.null(input$level))) {
         data <- data %>% filter(apps_Level %in% input$level)
       }

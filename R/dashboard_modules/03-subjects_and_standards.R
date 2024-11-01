@@ -222,9 +222,6 @@ subject_standards_server <- function(id) {
       if (!(is.null(input$level))) {
         data <- data %>% filter(apps_Level %in% input$level)
       }
-      if (!(is.null(input$standard))) {
-        data <- data %>% filter(std_fwk_name %in% input$standard)
-      }
       return(data)
     })
 
@@ -317,7 +314,11 @@ subject_standards_server <- function(id) {
 
     # Create an interactive chart showing the numbers broken down by subject
     # area
-    output$subject_area_bar <- renderGirafe(
+    output$subject_area_bar <- renderGirafe({
+      # empty message of there are no rows for that provider
+      validate(need(
+        nrow(subject_area_data_chart()) > 0, ""
+      ))
       girafe(
         ggobj =
           subject_area_data_chart() %>%
@@ -367,16 +368,14 @@ subject_standards_server <- function(id) {
         ),
         fonts = list(sans = "Arial")
       )
-    )
+    })
 
     # Expandable table of subject areas.
     output$sas_subject_area_table <- renderReactable({
       # Put in message where there are none of the measure
+      # can be blank as message in provider table
       validate(need(
-        nrow(subject_area_data_table()) > 0,
-        paste0(
-          "No ", firstlow(input$measure), " for these selections."
-        )
+        nrow(subject_area_data_table()) > 0, ""
       ))
 
       subject_data <- subject_area_data_table() %>%

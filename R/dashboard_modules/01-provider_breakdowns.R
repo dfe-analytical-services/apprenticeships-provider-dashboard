@@ -23,44 +23,44 @@ prov_breakdowns_ui <- function(id) {
   div(
     # Page header =============================================================
     h1("Provider breakdowns"),
-    layout_columns(
-      col_widths = c(4, 8),
-      ## Provider table -------------------------------------------------------
-      card(reactable::reactableOutput(NS(id, "prov_selection"))),
-      # User selection area ===================================================
-      column(
-        width = 12,
-        div(
-          class = "well",
-          bslib::layout_column_wrap(
-            width = "15rem", # Minimum width for each input box before wrapping
-            selectInput(
-              inputId = NS(id, "measure"),
-              label = "Select measure",
-              choices = apps_measure_choices
-            ),
-            selectInput(
-              inputId = NS(id, "prov_type"),
-              label = "Select provider type",
-              choices = c("All provider types", apps_prov_type_choices)
-            ),
-            selectInput(
-              inputId = NS(id, "year"),
-              label = "Select academic year",
-              choices = apps_year_choices
-            ),
-            selectInput(
-              inputId = NS(id, "level"),
-              label = "Select level",
-              choices = c("All levels", apps_level_choices)
-            ),
-            selectInput(
-              inputId = NS(id, "age"),
-              label = "Select age group",
-              choices = c("All age groups", apps_age_choices)
-            )
+    # User selection area ===================================================
+    column(
+      width = 12,
+      div(
+        class = "well",
+        bslib::layout_column_wrap(
+          width = "15rem", # Minimum width for each input box before wrapping
+          selectInput(
+            inputId = NS(id, "measure"),
+            label = "Select measure",
+            choices = apps_measure_choices
+          ),
+          selectInput(
+            inputId = NS(id, "prov_type"),
+            label = "Select provider type",
+            choices = c("All provider types", apps_prov_type_choices)
+          ),
+          selectInput(
+            inputId = NS(id, "year"),
+            label = "Select academic year",
+            choices = apps_year_choices
+          ),
+          selectInput(
+            inputId = NS(id, "level"),
+            label = "Select level",
+            choices = c("All levels", apps_level_choices)
+          ),
+          selectInput(
+            inputId = NS(id, "age"),
+            label = "Select age group",
+            choices = c("All age groups", apps_age_choices)
           )
-        ),
+        )
+      ),
+      layout_columns(
+        col_widths = c(4, 8),
+        ## Provider table -------------------------------------------------------
+        card(reactable::reactableOutput(NS(id, "prov_selection"))),
         ## Tabs on right --------------------------------------------------------
         navset_card_tab(
           id = "provider_breakdown_tabs",

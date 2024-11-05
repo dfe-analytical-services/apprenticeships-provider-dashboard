@@ -218,7 +218,7 @@ subject_standards_server <- function(id) {
     filtered_raw_data_chart <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
-      # Only want this filtered by level, otherwise the bar char diasppears when
+      # Only want this filtered by level, otherwise the bar char disappears when
       # a subject is selected, if filtered by them
       if (!(is.null(input$level))) {
         data <- data %>% filter(apps_Level %in% input$level)
@@ -331,7 +331,10 @@ subject_standards_server <- function(id) {
               aes(
                 x = reorder(ssa_t1_desc, values),
                 y = values,
-                tooltip = paste0(ssa_t1_desc, ": ", dfeR::comma_sep(values), " ", input$measure),
+                tooltip = paste0(
+                  ssa_t1_desc, ": ", dfeR::comma_sep(values), " ", input$level, " ",
+                  firstlow(input$measure)
+                ),
                 data_id = ssa_t1_desc
               )
             ) +

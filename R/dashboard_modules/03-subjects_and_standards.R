@@ -218,7 +218,7 @@ subject_standards_server <- function(id) {
     filtered_raw_data_chart <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
-      # Only want this filtered by level, otherwise the bar char disappears when
+      # Only want this filtered by level, otherwise the bar chart disappears when
       # a subject is selected, if filtered by them
       if (!(is.null(input$level))) {
         data <- data %>% filter(apps_Level %in% input$level)
@@ -316,10 +316,13 @@ subject_standards_server <- function(id) {
     # Create an interactive chart showing the numbers broken down by subject
     # area
     output$subject_area_bar <- renderGirafe({
-      # empty message of there are no rows for that provider
+      # empty message if there are no rows for that provider
       validate(need(
         nrow(subject_area_data_chart()) > 0, ""
       ))
+
+
+
       girafe(
         ggobj =
           subject_area_data_chart() %>%
@@ -329,10 +332,14 @@ subject_standards_server <- function(id) {
             ) %>%
             ggplot(
               aes(
-                x = reorder(ssa_t1_desc, values),
+                x = reorder(as.factor(ssa_t1_desc), values),
                 y = values,
                 tooltip = paste0(
-                  ssa_t1_desc, ": ", dfeR::comma_sep(values), " ", input$level, " ",
+                  ssa_t1_desc, ": ", dfeR::comma_sep(values), " ",
+                  # puts the selected levels into the tooltip
+                  if_else(!(is.na(input$level[1])), gsub(".{14}$", "", input$level[1]), ""),
+                  if_else(!(is.na(input$level[2])), gsub(".{14}$", "", paste("&", input$level[2])), ""),
+                  if_else(!(is.na(input$level[3])), gsub(".{14}$", "", paste("&", input$level[3])), ""),
                   firstlow(input$measure)
                 ),
                 data_id = ssa_t1_desc
@@ -343,7 +350,10 @@ subject_standards_server <- function(id) {
             xlab("") +
             ylab(input$measure) +
             scale_y_continuous(labels = dfeR::comma_sep) +
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 30)) +
+            scale_x_discrete(
+              labels = function(x) str_wrap(x, width = 30),
+              drop = FALSE
+            ) +
             ggplot2::theme_minimal() +
             ggplot2::theme(
               legend.position = "top",

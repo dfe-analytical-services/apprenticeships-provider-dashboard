@@ -172,7 +172,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     })
 
     # TODO: Make chart selections update the dropdown
+
     # TODO: Make sure the reactable state in the region tables matches the dropdown selection
+
+
 
     # Table reactive data =====================================================
     ## Provider data ----------------------------------------------------------
@@ -334,21 +337,20 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     })
 
     # Bar chart output object =================================================
-    # TODO: Make this work
-    # observe({
-    #   print(input$regions_bar_selected)
-    #
-    #   if (length(input$regions_bar_selected) != 0) {
-    #     if(input$regions_bar_selected != "All regions"){
-    #       updateSelectizeInput(
-    #         session = session,
-    #         inputId = "region",
-    #         selected = input$regions_bar_selected,
-    #         server = TRUE
-    #       )
-    #     }
-    #   }
-    # })
+    # This observes the selected bar in the bar chart and updates the dropdown
+    observe({
+      print(input$regions_bar_selected)
+
+      selection <- input$regions_bar_selected
+
+      if (is.null(selection) || length(selection) == 0) {
+        selected_value <- ""
+      } else {
+        selected_value <- selection
+      }
+
+      updateSelectizeInput(session, "region", selected = selected_value)
+    })
 
     output$regions_bar <- renderGirafe(
       girafe(

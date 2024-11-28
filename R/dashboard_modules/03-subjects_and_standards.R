@@ -321,7 +321,7 @@ subject_standards_server <- function(id) {
         nrow(subject_area_data_chart()) > 0, ""
       ))
 
-     girafe(
+      girafe(
         ggobj =
           subject_area_data_chart() %>%
             summarise( # nolint: indentation_linter

@@ -198,7 +198,7 @@ subject_standards_server <- function(id) {
 
     # Reactive data ===========================================================
     # Filter subject area data set based on inputs on this page. This reactive
-    # feeds the tables and chart.
+    # feeds the table.
     filtered_raw_data_table <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
@@ -214,7 +214,7 @@ subject_standards_server <- function(id) {
       }
       return(data)
     })
-
+    # Filter subject area data separately. Don't want same filters.
     filtered_raw_data_chart <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
@@ -321,9 +321,7 @@ subject_standards_server <- function(id) {
         nrow(subject_area_data_chart()) > 0, ""
       ))
 
-
-
-      girafe(
+     girafe(
         ggobj =
           subject_area_data_chart() %>%
             summarise( # nolint: indentation_linter

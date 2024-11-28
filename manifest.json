@@ -5799,13 +5799,13 @@
       "checksum": "9a8e5786f13efa56be15b5ac6d4409f7"
     },
     "global.R": {
-      "checksum": "a59e988a44d3336721b62db23c581cc9"
+      "checksum": "6252cf5ae53f641c0ddd80d8f9b2860e"
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
-      "checksum": "dfadfd75371a30a03bfd30b6e826c3a6"
+      "checksum": "688fe88beb466f774a34afd155c0f0a0"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
       "checksum": "f452fbb95acf6614959b7f4aae71846d"
@@ -5814,7 +5814,7 @@
       "checksum": "bbd28195a098273f331289558dad285a"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
-      "checksum": "58d445ad96d6d16ccc11c274eb648293"
+      "checksum": "9aa7164b5f68d362f6f176fa9fc0944b"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "405d30b5c89e3bdd792cf58484d94d06"

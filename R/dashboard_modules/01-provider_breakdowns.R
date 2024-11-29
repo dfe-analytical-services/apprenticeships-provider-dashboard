@@ -230,7 +230,9 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           delivery_region_table <- delivery_region_table %>%
             filter(learner_home_region == sub("_.*", "", input$region))
         } else {
-          # TODO: make all other delivery regions 0 except the one selected
+          # TODO: make all other learner regions 0 except the one selected
+          #   delivery_region_table <- delivery_region_table %>%
+          # mutate(learner_home_region = case_when (grepl("_Learner home$",input$region) & input$region != learner_home_region) ~ 0)
         }
       }
 
@@ -336,7 +338,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       return(regions_bar_data)
     })
 
-    # Bar chart output object =================================================
+
     # This observes the selected bar in the bar chart and updates the dropdown
     observe({
       print(input$regions_bar_selected)
@@ -352,6 +354,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       updateSelectizeInput(session, "region", selected = selected_value)
     })
 
+    # Bar chart output object =================================================
     output$regions_bar <- renderGirafe(
       girafe(
         ggobj =

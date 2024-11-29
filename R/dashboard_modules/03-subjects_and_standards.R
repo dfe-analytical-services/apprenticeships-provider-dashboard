@@ -198,7 +198,7 @@ subject_standards_server <- function(id) {
 
     # Reactive data ===========================================================
     # Filter subject area data set based on inputs on this page. This reactive
-    # feeds the tables and chart.
+    # feeds the table.
     filtered_raw_data_table <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
@@ -214,16 +214,14 @@ subject_standards_server <- function(id) {
       }
       return(data)
     })
-
+    # Filter subject area data separately. Don't want same filters.
     filtered_raw_data_chart <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
-
+      # Only want this filtered by level, otherwise the bar chart disappears when
+      # a subject is selected, if filtered by them
       if (!(is.null(input$level))) {
         data <- data %>% filter(apps_Level %in% input$level)
-      }
-      if (!(is.null(input$standard))) {
-        data <- data %>% filter(std_fwk_name %in% input$standard)
       }
       return(data)
     })
@@ -317,7 +315,12 @@ subject_standards_server <- function(id) {
 
     # Create an interactive chart showing the numbers broken down by subject
     # area
-    output$subject_area_bar <- renderGirafe(
+    output$subject_area_bar <- renderGirafe({
+      # empty message if there are no rows for that provider
+      validate(need(
+        nrow(subject_area_data_chart()) > 0, ""
+      ))
+
       girafe(
         ggobj =
           subject_area_data_chart() %>%
@@ -327,9 +330,16 @@ subject_standards_server <- function(id) {
             ) %>%
             ggplot(
               aes(
-                x = reorder(ssa_t1_desc, values),
+                x = reorder(as.factor(ssa_t1_desc), values),
                 y = values,
-                tooltip = paste0(ssa_t1_desc, ": ", dfeR::comma_sep(values), " ", input$measure),
+                tooltip = paste0(
+                  ssa_t1_desc, ": ", dfeR::comma_sep(values), " ",
+                  # puts the selected levels into the tooltip
+                  if_else(!(is.na(input$level[1])), gsub(".{14}$", "", input$level[1]), ""),
+                  if_else(!(is.na(input$level[2])), gsub(".{14}$", "", paste("&", input$level[2])), ""),
+                  if_else(!(is.na(input$level[3])), gsub(".{14}$", "", paste("&", input$level[3])), ""),
+                  firstlow(input$measure)
+                ),
                 data_id = ssa_t1_desc
               )
             ) +
@@ -338,7 +348,10 @@ subject_standards_server <- function(id) {
             xlab("") +
             ylab(input$measure) +
             scale_y_continuous(labels = dfeR::comma_sep) +
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 30)) +
+            scale_x_discrete(
+              labels = function(x) str_wrap(x, width = 30),
+              drop = FALSE
+            ) +
             ggplot2::theme_minimal() +
             ggplot2::theme(
               legend.position = "top",
@@ -367,16 +380,14 @@ subject_standards_server <- function(id) {
         ),
         fonts = list(sans = "Arial")
       )
-    )
+    })
 
     # Expandable table of subject areas.
     output$sas_subject_area_table <- renderReactable({
       # Put in message where there are none of the measure
+      # can be blank as message in provider table
       validate(need(
-        nrow(subject_area_data_table()) > 0,
-        paste0(
-          "No ", firstlow(input$measure), " for these selections."
-        )
+        nrow(subject_area_data_table()) > 0, ""
       ))
 
       subject_data <- subject_area_data_table() %>%

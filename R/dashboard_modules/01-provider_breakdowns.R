@@ -378,7 +378,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       girafe(
         ggobj =
           regions_bar_data() %>%
-            gplot(
+            ggplot(
               aes(
                 fill = type,
                 x = Region,

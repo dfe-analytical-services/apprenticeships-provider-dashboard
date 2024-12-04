@@ -352,7 +352,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           regions_bar_data$data_id != input$region ~ 0,
         .default = regions_bar_data$count
       )
-      print(regions_bar_data)
+
       return(regions_bar_data)
     })
 
@@ -470,12 +470,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         selection = "single",
         row_style = list(cursor = "pointer")
       )
-
-
-      # filter on a learner home region in the region dropdown
-      # if (substring(input$region, nchar(input$region) - 11) == "Learner home" ) {
-      #  dfe_reactable <- dfe_reactable%>% filter(`Learner home region` == sub(": .*", "", input$region))
-      #   }
     })
 
     # Data download ===========================================================

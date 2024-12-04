@@ -19,8 +19,8 @@ regions <- c(
 
 # Create a list of the region options to use in the dropdown list
 regions_dropdown_choices <- c(
-  paste0(regions, "_Delivery"),
-  paste0(regions, "_Learner home")
+  paste0(regions, ": Delivery"),
+  paste0(regions, ": Learner home")
 )
 
 # Main module code ============================================================
@@ -149,7 +149,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       # Filter to only the selected region using the vector at the top of the script
       # Work out if home or delivery region is selected from a table and update the dropdown
       if (length(regions[getReactableState("home_region", "selected")]) != 0) {
-        selected_region <- paste0(regions[getReactableState("home_region", "selected")], "_Learner home")
+        selected_region <- paste0(regions[getReactableState("home_region", "selected")], ": Learner home")
 
         updateSelectizeInput(
           session = session,
@@ -161,7 +161,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
     observe({
       if (length(regions[getReactableState("delivery_region", "selected")]) != 0) {
-        selected_region <- paste0(regions[getReactableState("delivery_region", "selected")], "_Delivery")
+        selected_region <- paste0(regions[getReactableState("delivery_region", "selected")], ": Delivery")
 
         updateSelectizeInput(
           session = session,
@@ -170,8 +170,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         )
       }
     })
-
-    # TODO: Make chart selections update the dropdown
 
     # TODO: Make sure the reactable state in the region tables matches the dropdown selection
 
@@ -185,12 +183,12 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       # Filter from the regions dropdown
       if (input$region != "All regions") {
         # Check if the region is a delivery or learner home and then filter by it
-        if (grepl("_Delivery$", input$region)) {
+        if (grepl(": Delivery$", input$region)) {
           prov_selection_table <- prov_selection_table %>%
-            filter(delivery_region == sub("_.*", "", input$region))
+            filter(delivery_region == sub(": .*", "", input$region))
         } else {
           prov_selection_table <- prov_selection_table %>%
-            filter(learner_home_region == sub("_.*", "", input$region))
+            filter(learner_home_region == sub(": .*", "", input$region))
         }
       }
 
@@ -215,24 +213,22 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       delivery_region_table <- filtered_raw_data()
 
       # Filter down provider list there is something selected from the providers
-      if (length(selected_providers() != 0)) {
-        delivery_region_table <- delivery_region_table %>% filter(provider_name %in% selected_providers())
-      }
+      #   if (length(selected_providers() != 0)) {
+      #     delivery_region_table <- delivery_region_table %>%
+      #     filter(provider_name %in% selected_providers())
+      #  }
 
       # # Filter to learner home region selection if it exists
-      # if (length(selected_learner_home_region()) == 1) {
-      #   delivery_region_table <- delivery_region_table %>% filter(learner_home_region == selected_learner_home_region())
-      # }
+      #  if (length(selected_learner_home_region()) == 1) {
+      #    delivery_region_table <- delivery_region_table %>%
+      #    filter(learner_home_region == selected_learner_home_region())
+      #  }
 
       # Filter from the regions dropdown
       if (input$region != "") {
-        if (grepl("_Learner home$", input$region)) {
+        if (grepl(": Learner home$", input$region)) {
           delivery_region_table <- delivery_region_table %>%
-            filter(learner_home_region == sub("_.*", "", input$region))
-        } else {
-          # TODO: make all other learner regions 0 except the one selected
-          #   delivery_region_table <- delivery_region_table %>%
-          # mutate(learner_home_region = case_when (grepl("_Learner home$",input$region) & input$region != learner_home_region) ~ 0)
+            filter(learner_home_region == sub(": .*", "", input$region))
         }
       }
 
@@ -269,21 +265,20 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       }
 
       # # Filter to delivery region selection if it exists
-      # if (length(selected_delivery_region()) == 1) {
-      #   home_region_table <- home_region_table %>% filter(delivery_region == selected_delivery_region())
-      # }
+      #   if (length(selected : Delivery_region()) == 1) {
+      #     home_region_table <- home_region_table %>% filter(delivery_region == selected : Delivery_region())
+      #   }
 
       # Filter from the regions dropdown
       if (input$region != "All regions") {
         # Check if the region is a delivery and then filter by it
-        if (grepl("_Delivery$", input$region)) {
+        if (grepl(": Delivery$", input$region)) {
           home_region_table <- home_region_table %>%
-            filter(delivery_region == sub("_.*", "", input$region))
+            filter(delivery_region == sub(": .*", "", input$region))
         } else {
           # TODO: make all other learner home regions 0 except the one selected
         }
       }
-
 
       home_region_table <- home_region_table %>%
         with_groups(
@@ -333,13 +328,36 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       regions_bar_data$Region <- forcats::fct_rev(factor(regions_bar_data$Region, levels = regions))
 
       # Create a unique column used for the hover on each bar
-      regions_bar_data$data_id <- paste(regions_bar_data$Region, regions_bar_data$type, sep = "_")
+      regions_bar_data$data_id <- paste(regions_bar_data$Region, regions_bar_data$type, sep = ": ")
 
+
+      # make all other delivery regions 0 except the one selected
+      regions_bar_data$count <- case_when(
+        input$region != "All regions" &
+          input$region != "" &
+          regions_bar_data$type == "Delivery" &
+          substring(input$region, nchar(input$region) - 7) == "Delivery" &
+          regions_bar_data$Region != sub(": .*", "", input$region) &
+          regions_bar_data$data_id != input$region ~ 0,
+        .default = regions_bar_data$count
+      )
+
+      # and the same when it's a learner home region selected
+      regions_bar_data$count <- case_when(
+        input$region != "All regions" &
+          input$region != "" &
+          regions_bar_data$type == "Learner home" &
+          substring(input$region, nchar(input$region) - 11) == "Learner home" &
+          regions_bar_data$Region != sub(": .*", "", input$region) &
+          regions_bar_data$data_id != input$region ~ 0,
+        .default = regions_bar_data$count
+      )
+      print(regions_bar_data)
       return(regions_bar_data)
     })
 
-
     # This observes the selected bar in the bar chart and updates the dropdown
+    # for region
     observe({
       print(input$regions_bar_selected)
 
@@ -354,12 +372,13 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       updateSelectizeInput(session, "region", selected = selected_value)
     })
 
+
     # Bar chart output object =================================================
     output$regions_bar <- renderGirafe(
       girafe(
         ggobj =
           regions_bar_data() %>%
-            ggplot(
+            gplot(
               aes(
                 fill = type,
                 x = Region,
@@ -442,6 +461,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       )
     })
 
+
     output$home_region <- renderReactable({
       dfe_reactable(
         home_region_table() |>
@@ -450,6 +470,12 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         selection = "single",
         row_style = list(cursor = "pointer")
       )
+
+
+      # filter on a learner home region in the region dropdown
+      # if (substring(input$region, nchar(input$region) - 11) == "Learner home" ) {
+      #  dfe_reactable <- dfe_reactable%>% filter(`Learner home region` == sub(": .*", "", input$region))
+      #   }
     })
 
     # Data download ===========================================================

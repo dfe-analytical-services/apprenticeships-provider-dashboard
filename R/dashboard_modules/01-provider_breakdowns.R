@@ -29,49 +29,49 @@ prov_breakdowns_ui <- function(id) {
   div(
     # Page header =============================================================
     h1("Provider breakdowns"),
-    layout_columns(
-      col_widths = c(4, 8),
-      ## Provider table -------------------------------------------------------
-      card(reactable::reactableOutput(NS(id, "prov_selection"))),
-      # User selection area ===================================================
-      column(
-        width = 12,
-        div(
-          class = "well",
-          bslib::layout_column_wrap(
-            width = "15rem", # Minimum width for each input box before wrapping
-            selectInput(
-              inputId = NS(id, "measure"),
-              label = "Select measure",
-              choices = apps_measure_choices
-            ),
-            selectInput(
-              inputId = NS(id, "prov_type"),
-              label = "Select provider type",
-              choices = c("All provider types", apps_prov_type_choices)
-            ),
-            selectInput(
-              inputId = NS(id, "year"),
-              label = "Select academic year",
-              choices = apps_year_choices
-            ),
-            selectInput(
-              inputId = NS(id, "level"),
-              label = "Select level",
-              choices = c("All levels", apps_level_choices)
-            ),
-            selectInput(
-              inputId = NS(id, "age"),
-              label = "Select age group",
-              choices = c("All age groups", apps_age_choices)
-            ),
-            selectInput(
-              inputId = NS(id, "region"),
-              label = "Select region",
-              choices = c("All regions", regions_dropdown_choices)
-            )
+    # User selection area ===================================================
+    column(
+      width = 12,
+      div(
+        class = "well",
+        bslib::layout_column_wrap(
+          width = "25rem", # Minimum width for each input box before wrapping
+          selectInput(
+            inputId = NS(id, "measure"),
+            label = "Select measure",
+            choices = apps_measure_choices
+          ),
+          selectInput(
+            inputId = NS(id, "prov_type"),
+            label = "Select provider type",
+            choices = c("All provider types", apps_prov_type_choices)
+          ),
+          selectInput(
+            inputId = NS(id, "year"),
+            label = "Select academic year",
+            choices = apps_year_choices
+          ),
+          selectInput(
+            inputId = NS(id, "level"),
+            label = "Select level",
+            choices = c("All levels", apps_level_choices)
+          ),
+          selectInput(
+            inputId = NS(id, "age"),
+            label = "Select age group",
+            choices = c("All age groups", apps_age_choices)
+          ),
+          selectInput(
+            inputId = NS(id, "region"),
+            label = "Select region",
+            choices = c("All regions", regions_dropdown_choices)
           )
-        ),
+        )
+      ),
+      layout_columns(
+        col_widths = c(4, 8),
+        ## Provider table -------------------------------------------------------
+        card(reactable::reactableOutput(NS(id, "prov_selection"))),
         ## Tabs on right --------------------------------------------------------
         navset_card_tab(
           id = "provider_breakdown_tabs",
@@ -231,6 +231,15 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             filter(learner_home_region == sub(": .*", "", input$region))
         }
       }
+      print(delivery_region_table)
+      # select from dropdown
+      #  if (input$region != "") {
+      # if (grepl(": Delivery$", input$region)) {
+      # delivery_region_table <- delivery_region_table %>%
+      # (delivery_region == sub(": .*", "", input$region))
+      # }
+      # }
+
 
       delivery_region_table <- delivery_region_table %>%
         with_groups(
@@ -275,8 +284,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         if (grepl(": Delivery$", input$region)) {
           home_region_table <- home_region_table %>%
             filter(delivery_region == sub(": .*", "", input$region))
-        } else {
-          # TODO: make all other learner home regions 0 except the one selected
         }
       }
 
@@ -373,6 +380,20 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     })
 
 
+    #  observe({
+    #   # Filter data
+    #  filtered <- if (substring(input$region, nchar(input$region) - 7) == "Delivery" ) {
+    #      delivery_region_table |>
+    #    filter(Region == sub(": .*", "", input$region )  )
+    #   } else {
+    #    delivery_region_table
+    #  }
+    #  updateReactable("delivery_region_table", data = filtered)
+    # })
+
+
+
+
     # Bar chart output object =================================================
     output$regions_bar <- renderGirafe(
       girafe(
@@ -460,6 +481,16 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         row_style = list(cursor = "pointer")
       )
     })
+
+    # delivery_region_table < delivery_region_table |>
+    # filter(substring(input$region, nchar(input$region) - 7) == "Delivery" &
+    # delivery_region_table$Region == sub(": .*", "", input$region)   )
+
+    print(delivery_region_table)
+
+
+
+
 
 
     output$home_region <- renderReactable({

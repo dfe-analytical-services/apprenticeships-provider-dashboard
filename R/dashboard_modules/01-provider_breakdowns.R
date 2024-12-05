@@ -231,7 +231,8 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             filter(learner_home_region == sub(": .*", "", input$region))
         }
       }
-      print(delivery_region_table)
+
+
       # select from dropdown
       #  if (input$region != "") {
       # if (grepl(": Delivery$", input$region)) {
@@ -379,21 +380,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       updateSelectizeInput(session, "region", selected = selected_value)
     })
 
-
-    #  observe({
-    #   # Filter data
-    #  filtered <- if (substring(input$region, nchar(input$region) - 7) == "Delivery" ) {
-    #      delivery_region_table |>
-    #    filter(Region == sub(": .*", "", input$region )  )
-    #   } else {
-    #    delivery_region_table
-    #  }
-    #  updateReactable("delivery_region_table", data = filtered)
-    # })
-
-
-
-
     # Bar chart output object =================================================
     output$regions_bar <- renderGirafe(
       girafe(
@@ -482,13 +468,15 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       )
     })
 
-    # delivery_region_table < delivery_region_table |>
-    # filter(substring(input$region, nchar(input$region) - 7) == "Delivery" &
-    # delivery_region_table$Region == sub(": .*", "", input$region)   )
 
-    print(delivery_region_table)
-
-
+    # TODO get this working, to update the delivery region table with the region dropdown
+    observe({
+      if (grepl("Delivery$", input$region)) {
+        delivery_region_selected <- case_when(sub(": .*", "", input$region) == "North East" ~ 1)
+        updateReactable("delivery_region", select = delivery_region_selected)
+        print(delivery_region_selected)
+      }
+    })
 
 
 

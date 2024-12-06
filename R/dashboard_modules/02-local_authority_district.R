@@ -297,14 +297,17 @@ lad_server <- function(id) {
     # Reactive data sets used in maps -----------------------------------------
     boundary_data <- reactive({
       # Set the map boundary file based on the year
+      # this would be better not hard coded - values change for the latest year according to qr
       boundary_list <- list(
-        "2023/24 (Q3 Aug to Apr)" = lad_boundaries_2024,
+        "2023/24" = lad_boundaries_2024,
         "2022/23" = lad_boundaries_2023,
         "2021/22" = lad_boundaries_2022
       )
 
       # Choose the boundary based on the year selection from the user
-      return(boundary_list[[input$year]])
+      # think this will sort the hard -coding for the boundary list 
+      # will match to the first bit of the string - just the academic year & not qr
+      return(boundary_list[[substring(input$year,1,7)]])
     })
 
     delivery_map_data <- reactive({

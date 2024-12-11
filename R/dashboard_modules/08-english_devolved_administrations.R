@@ -2,8 +2,8 @@
 # Functions used here are created in the R/read_data.R file
 # Change
 eda_map_parquet <- arrow::read_parquet("data/eda_map_data_0.parquet") %>%
-  select(year, provider_name, learner_home_devolved_administration, delivery_devolved_administration, starts, achievements, enrolments) %>% 
-  rename("delivery_eda"=delivery_devolved_administration,"learner_home_eda"=learner_home_devolved_administration)
+  select(year, provider_name, learner_home_devolved_administration, delivery_devolved_administration, starts, achievements, enrolments) %>%
+  rename("delivery_eda" = delivery_devolved_administration, "learner_home_eda" = learner_home_devolved_administration)
 
 # Read in boundary files
 # https://geoportal.statistics.gov.uk/datasets/7fdacaa99fce4d299d69f777d6e9c003_0/explore?location=53.383047%2C-2.634220%2C6.69

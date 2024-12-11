@@ -1,7 +1,7 @@
 {
   "version": 1,
   "locale": "en_GB",
-  "platform": "4.4.1",
+  "platform": "4.4.2",
   "metadata": {
     "appmode": "shiny",
     "primary_rmd": null,
@@ -88,7 +88,7 @@
         "Maintainer": "Brian Ripley <ripley@stats.ox.ac.uk>",
         "Repository": "CRAN",
         "Date/Publication": "2024-05-17 09:28:22",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-14 08:34:11 UTC; windows",
+        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:58:05 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -151,9 +151,9 @@
         "Packaged": "2024-03-19 17:15:14 UTC; maechler",
         "Author": "Douglas Bates [aut] (<https://orcid.org/0000-0001-8316-9503>),\n  Martin Maechler [aut, cre] (<https://orcid.org/0000-0002-8685-9910>),\n  Mikael Jagan [aut] (<https://orcid.org/0000-0002-3542-2938>),\n  Timothy A. Davis [ctb] (<https://orcid.org/0000-0001-7614-6899>,\n    SuiteSparse libraries, collaborators listed in\n    dir(system.file(\"doc\", \"SuiteSparse\", package=\"Matrix\"),\n    pattern=\"License\", full.names=TRUE, recursive=TRUE)),\n  George Karypis [ctb] (<https://orcid.org/0000-0003-2753-1437>, METIS\n    library, Copyright: Regents of the University of Minnesota),\n  Jason Riedy [ctb] (<https://orcid.org/0000-0002-4345-4200>, GNU\n    Octave's condest() and onenormest(), Copyright: Regents of the\n    University of California),\n  Jens Oehlschlägel [ctb] (initial nearPD()),\n  R Core Team [ctb] (base R's matrix implementation)",
         "Maintainer": "Martin Maechler <mmaechler+Matrix@gmail.com>",
-        "Repository": "CRAN",
+        "Repository": "RSPM",
         "Date/Publication": "2024-04-26 12:03:02 UTC",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-14 08:26:22 UTC; windows",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-29 22:30:29 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -831,7 +831,7 @@
         "Maintainer": "Brian Ripley <ripley@stats.ox.ac.uk>",
         "Repository": "CRAN",
         "Date/Publication": "2023-05-03 11:01:28 UTC",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-14 08:34:33 UTC; windows",
+        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:58:26 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -940,7 +940,7 @@
         "Packaged": "2024-03-31 18:18:09 UTC; luke",
         "Repository": "CRAN",
         "Date/Publication": "2024-03-31 20:10:06 UTC",
-        "Built": "R 4.4.1; ; 2024-06-14 08:33:57 UTC; windows"
+        "Built": "R 4.4.2; ; 2024-10-31 16:57:50 UTC; windows"
       }
     },
     "colorspace": {
@@ -2419,7 +2419,7 @@
         "Maintainer": "Deepayan Sarkar <deepayan.sarkar@r-project.org>",
         "Repository": "CRAN",
         "Date/Publication": "2024-03-20 06:10:02 UTC",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-14 08:26:06 UTC; windows",
+        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:49:37 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -2700,7 +2700,7 @@
         "Packaged": "2023-12-20 10:39:06 UTC; sw283",
         "Repository": "CRAN",
         "Date/Publication": "2023-12-21 00:30:02 UTC",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-14 08:34:48 UTC; windows",
+        "Built": "R 4.4.2; x86_64-w64-mingw32; 2024-10-31 16:58:42 UTC; windows",
         "Archs": "x64"
       }
     },
@@ -4923,13 +4923,13 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "bed4aea2bf2b5a9999be43fd7504fbb0"
+      "checksum": "2015c263dedfe566b267fa46bcf4f700"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
     },
     "data/apprenticeships_data.csv": {
-      "checksum": "c11d60fde5cb23f7088bf95819447dff"
+      "checksum": "d87bc3908e5609d8902238d1241faabe"
     },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "f12e1c07da0a8bc4e6a9855bf3bf9d46"
@@ -5007,7 +5007,7 @@
       "checksum": "447f3709b0d6775a235a4f2dae186cd8"
     },
     "R/dashboard_modules/08-english_devolved_administrations.R": {
-      "checksum": "89adbda5aed81997b7c8c0c838615c59"
+      "checksum": "1a40c51db8557189c3ff55c9db390b9f"
     },
     "R/data-prep/check_file_sizes.R": {
       "checksum": "0dacfb94d1f5849f35cec4196bd94b89"
@@ -5037,7 +5037,7 @@
       "checksum": "c4dc320ca8baaaefc7c351b08c8ea8d7"
     },
     "server.R": {
-      "checksum": "e9cc8c93d2e70b7e050cb2715946428d"
+      "checksum": "9cedd4f3960187edd793934565bd7fe2"
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "917d0d847d2b1c82d383ac48b4fb8241"
@@ -5082,7 +5082,7 @@
       "checksum": "c6a01a506bf278e5a15f61d610eb04b9"
     },
     "ui.R": {
-      "checksum": "2a4f146aab2b6895e8674abfffdcf83e"
+      "checksum": "bcf8331aa2c7292327d4f130f19eefa1"
     },
     "www/dfe_logo.svg": {
       "checksum": "c23764dae2d73a45a55815d0327be6cb"

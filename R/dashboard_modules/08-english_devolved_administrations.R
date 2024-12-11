@@ -2,7 +2,8 @@
 # Functions used here are created in the R/read_data.R file
 # Change
 eda_map_parquet <- arrow::read_parquet("data/eda_map_data_0.parquet") %>%
-  select(year, provider_name, learner_home_devolved_administration, delivery_devolved_administration, starts, achievements, enrolments)
+  select(year, provider_name, learner_home_devolved_administration, delivery_devolved_administration, starts, achievements, enrolments) %>% 
+  rename("delivery_eda"=delivery_devolved_administration,"learner_home_eda"=learner_home_devolved_administration)
 
 # Read in boundary files
 # https://geoportal.statistics.gov.uk/datasets/7fdacaa99fce4d299d69f777d6e9c003_0/explore?location=53.383047%2C-2.634220%2C6.69
@@ -28,10 +29,10 @@ provider_choices <- c("", distinct(eda_map_parquet, provider_name) %>% pull())
 # Providers should be in alphabetical order
 provider_choices <- sort(provider_choices)
 
-delivery_eda_choices <- c("", distinct(eda_map_parquet, delivery_devolved_administration) %>% pull())
+delivery_eda_choices <- c("", distinct(eda_map_parquet, delivery_eda) %>% pull())
 delivery_eda_choices <- sort(delivery_eda_choices)
 
-learner_home_eda_choices <- c("", distinct(eda_map_parquet, learner_home_devolved_administration) %>% pull())
+learner_home_eda_choices <- c("", distinct(eda_map_parquet, learner_home_eda) %>% pull())
 learner_home_eda_choices <- sort(learner_home_eda_choices)
 
 # Main module code ============================================================

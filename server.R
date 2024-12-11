@@ -21,7 +21,7 @@ server <- function(input, output, session) {
   observeEvent(input$provider_breakdowns, nav_select("left_nav", "provider_breakdowns"))
   observeEvent(input$local_authority_district, nav_select("left_nav", "local_authority_district"))
   observeEvent(input$region, nav_select("left_nav", "region"))
-  observeEvent(input$eda, nav_select("left_nav", "eda"))
+  observeEvent(input$english_devolved_areas, nav_select("left_nav", "english_devolved_areas"))
   observeEvent(input$subjects_and_standards, nav_select("left_nav", "subjects_and_standards"))
   observeEvent(input$learner_characteristics, nav_select("left_nav", "learner_characteristics"))
   observeEvent(input$national_provider_summary, nav_select("left_nav", "national_provider_summary"))

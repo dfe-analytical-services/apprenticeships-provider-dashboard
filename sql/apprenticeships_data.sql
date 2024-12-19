@@ -2,7 +2,7 @@
 Data for Apprenticeships Interactive Tool
 Updated by:      Alison Cooper
 Year:            2024
-Quarter:         Q3 (August to April)
+Quarter:         Q4 (August to April)
 Snapshot:        10  
 Approx run time: 1-2 mins
 ***********/
@@ -11,7 +11,7 @@ Approx run time: 1-2 mins
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 
-SET @CurrentSnapshot =  10 -- **UPDATE** for each quarter
+SET @CurrentSnapshot =  14 -- **UPDATE** for each quarter
 SET @CurrentYear = 202324 -- **UPDATE** for each academic year
 
 --Select latest IFA routes data
@@ -20,7 +20,7 @@ SELECT
 [std_fwk_name] as std_fwk_name_routes,
 [std_lars_code]
 INTO  #Routes_IFA
-FROM  [MA_FEDU_S_DATADEV].[REF].[Routes_IFA] 
+FROM  MA_FEDU_S_DATA.[REF].[Routes_IFA] 
 WHERE [Snapshot]= @CurrentSnapshot AND [academic_year]= @CurrentYear
 
 
@@ -37,13 +37,13 @@ age_summary as age_group,
 CASE WHEN age_summary = 'Under 19' then 1
      WHEN age_summary = '19-24' then 2
 	 WHEN age_summary = '25+' then 3
-	 ELSE 'Other' END as age_group_order,
+	 else 4 END as age_group_order,
 
 apps_Level,
 CASE WHEN apps_Level = 'Intermediate Apprenticeship' then 1
      WHEN apps_Level = 'Advanced Apprenticeship' then 2
 	 WHEN apps_Level = 'Higher Apprenticeship' then 3
-	 ELSE 99 END as apps_level_order,
+	 else 4 END as apps_level_order,
 apps_level_detailed,
 CASE WHEN std_fwk_flag='Standard' THEN r.std_fwk_name_routes  ELSE std_fwk_name END AS std_fwk_name,
 ssa_t1_desc,
@@ -62,7 +62,7 @@ CASE WHEN learner_home_region = 'North East' then 1
 	 WHEN learner_home_region = 'South East' then 8
 	 WHEN learner_home_region = 'South West' then 9
 	 WHEN learner_home_region = 'Outside of England and unknown' then 10
-     ELSE 'Other' END as learner_home_region_order,
+     ELSE 11 END as learner_home_region_order,
 learner_home_la,
 learner_home_lad,
 learner_home_devolved_administration,
@@ -79,7 +79,7 @@ CASE WHEN learner_home_devolved_administration = 'Cambridgeshire and Peterboroug
 	 WHEN learner_home_devolved_administration = 'West of England' then 11
 	 WHEN learner_home_devolved_administration = 'West Yorkshire' then 12
 	 WHEN learner_home_devolved_administration = 'Outside of an English Devolved Area and unknown' then 13
-ELSE 'Other' END as learner_home_devolved_administration_order,
+ELSE 14 END as learner_home_devolved_administration_order,
 delivery_region,
 CASE WHEN delivery_region = 'North East' then 1
      WHEN delivery_region = 'North West' then 2
@@ -91,7 +91,7 @@ CASE WHEN delivery_region = 'North East' then 1
 	 WHEN delivery_region = 'South East' then 8
 	 WHEN delivery_region = 'South West' then 9
 	 WHEN delivery_region = 'Outside of England and unknown' then 10
-     ELSE 'Other' END as delivery_region_order,
+     ELSE 11 END as delivery_region_order,
 delivery_la,
 delivery_lad,
 delivery_devolved_administration,
@@ -108,7 +108,7 @@ CASE WHEN delivery_devolved_administration = 'Cambridgeshire and Peterborough' t
 	 WHEN delivery_devolved_administration = 'West of England' then 11
 	 WHEN delivery_devolved_administration = 'West Yorkshire' then 12
 	 WHEN delivery_devolved_administration = 'Outside of an English Devolved Area and unknown' then 13
-ELSE 'Other' END as delivery_devolved_administration_order,
+ELSE 14 END as delivery_devolved_administration_order,
 starts_sr as [starts],
 achievements_sr as [achievements],
 CASE WHEN [year]=@CurrentYear AND @CurrentSnapshot=4  THEN [enrols_Q1]
@@ -116,7 +116,7 @@ CASE WHEN [year]=@CurrentYear AND @CurrentSnapshot=4  THEN [enrols_Q1]
      WHEN [year]=@CurrentYear AND @CurrentSnapshot=10 THEN [enrols_Q1to3]
 	 ELSE [enrols_Q1to4] END AS [enrolments]
 INTO #APPS 
-FROM [MA_FEDU_S_DATADEV].[MST].[vw_Apprenticeship_Start_Ach_IL_EES] a
+FROM MA_FEDU_S_DATA.[MST].[vw_Apprenticeship_Start_Ach_IL_EES] a
 LEFT JOIN #Routes_IFA r
 on a.std_fwk_flag = 'Standard' and a.std_fwk_code = r.std_lars_code
 WHERE

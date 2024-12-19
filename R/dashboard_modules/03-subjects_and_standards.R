@@ -82,7 +82,7 @@ subjects_standards_ui <- function(id) {
             label = h2("Choose download file format"),
             hint_label = "This will download all data related to the providers and options selected.
           The XLSX format is designed for use in Microsoft Excel",
-            choices = c("CSV (Up to 13.18 MB)", "XLSX (Up to 2.12 MB)"),
+            choices = c("CSV (Up to 13.18 MB)", "XLSX (Up to 2.13 MB)"),
             selected = "CSV (Up to 13.18 MB)"
           ),
           # Bit of a hack to force the button not to be full width

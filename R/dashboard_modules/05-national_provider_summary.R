@@ -110,6 +110,11 @@ nps_server <- function(id) {
 
     # Table ===================================================================
     output$nps_table <- renderReactable({
+      # Put in message where there are none of the measure
+      validate(need(
+        nrow(nps_reactive_table()) > 0,
+        paste0("No results for this provider in this year.")
+      ))
       dfe_reactable(nps_reactive_table())
     })
 

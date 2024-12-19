@@ -293,6 +293,7 @@ lad_server <- function(id) {
       dfe_reactable(delivery_lad_table())
     })
 
+
     # Create maps =============================================================
     # Reactive data sets used in maps -----------------------------------------
     boundary_data <- reactive({
@@ -305,9 +306,9 @@ lad_server <- function(id) {
       )
 
       # Choose the boundary based on the year selection from the user
-      # think this will sort the hard -coding for the boundary list 
+      # think this will sort the hard -coding for the boundary list
       # will match to the first bit of the string - just the academic year & not qr
-      return(boundary_list[[substring(input$year,1,7)]])
+      return(boundary_list[[substring(input$year, 1, 7)]])
     })
 
     delivery_map_data <- reactive({

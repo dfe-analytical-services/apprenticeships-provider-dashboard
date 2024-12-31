@@ -346,32 +346,6 @@
         "Built": "R 4.4.0; ; 2024-04-25 19:44:24 UTC; windows"
       }
     },
-    "RCurl": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "RCurl",
-        "Version": "1.98-1.16",
-        "Title": "General Network (HTTP/FTP/...) Client Interface for R",
-        "Authors@R": "c(person(\"CRAN Team\", role = c('ctb', 'cre'),\n                    email = \"CRAN@r-project.org\",\n                    comment = \"de facto maintainer since 2013\"),\n             person(\"Duncan\", \"Temple Lang\", role = \"aut\",\n                    email = \"duncan@r-project.org\",\n                    comment = c(ORCID = \"0000-0003-0159-1546\")))",
-        "SystemRequirements": "GNU make, libcurl",
-        "Description": "A wrapper for 'libcurl' <https://curl.se/libcurl/>\n\tProvides functions to allow one to compose general HTTP requests\n        and provides convenient functions to fetch URIs, get & post\n        forms, etc. and process the results returned by the Web server.\n        This provides a great deal of control over the HTTP/FTP/...\n        connection and the form of the request while providing a\n        higher-level interface than is available just using R socket\n        connections.  Additionally, the underlying implementation is\n        robust and extensive, supporting FTP/FTPS/TFTP (uploads and\n        downloads), SSL/HTTPS, telnet, dict, ldap, and also supports\n        cookies, redirects, authentication, etc.",
-        "License": "BSD_3_clause + file LICENSE",
-        "Depends": "R (>= 3.4.0), methods",
-        "Imports": "bitops",
-        "Suggests": "XML",
-        "Collate": "aclassesEnums.R bitClasses.R xbits.R base64.R binary.S\nclasses.S curl.S curlAuthConstants.R curlEnums.R curlError.R\ncurlInfo.S dynamic.R form.S getFormParams.R getURLContent.R\nheader.R http.R httpError.R httpErrors.R iconv.R info.S mime.R\nmulti.S options.S scp.R support.S upload.R urlExists.R zclone.R\nzzz.R",
-        "NeedsCompilation": "yes",
-        "Packaged": "2024-07-11 10:39:12 UTC; tomas",
-        "Author": "CRAN Team [ctb, cre] (de facto maintainer since 2013),\n  Duncan Temple Lang [aut] (<https://orcid.org/0000-0003-0159-1546>)",
-        "Maintainer": "CRAN Team <CRAN@r-project.org>",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-07-11 13:00:02 UTC",
-        "Encoding": "UTF-8",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-07-12 04:21:02 UTC; windows",
-        "Archs": "x64"
-      }
-    },
     "Rcpp": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -646,36 +620,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "4.5.2"
-      }
-    },
-    "bitops": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "bitops",
-        "Version": "1.0-8",
-        "Date": "2024-07-29",
-        "Authors@R": "c(\n   person(\"Steve\", \"Dutky\", role = \"aut\", email = \"sdutky@terpalum.umd.edu\",\n    \t     comment = \"S original; then (after MM's port) revised and modified\"),\n   person(\"Martin\", \"Maechler\", role = c(\"cre\", \"aut\"), email = \"maechler@stat.math.ethz.ch\",\n\t     comment = c(\"Initial R port; tweaks\", ORCID = \"0000-0002-8685-9910\")))",
-        "Title": "Bitwise Operations",
-        "Description": "Functions for bitwise operations on integer vectors.",
-        "License": "GPL (>= 2)",
-        "URL": "https://github.com/mmaechler/R-bitops",
-        "BugReports": "https://github.com/mmaechler/R-bitops/issues",
-        "NeedsCompilation": "yes",
-        "Packaged": "2024-07-29 13:37:29 UTC; maechler",
-        "Author": "Steve Dutky [aut] (S original; then (after MM's port) revised and\n    modified),\n  Martin Maechler [cre, aut] (Initial R port; tweaks,\n    <https://orcid.org/0000-0002-8685-9910>)",
-        "Maintainer": "Martin Maechler <maechler@stat.math.ethz.ch>",
-        "Repository": "CRAN",
-        "Date/Publication": "2024-07-29 15:10:06 UTC",
-        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-07-30 23:50:47 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemotePkgRef": "bitops",
-        "RemoteRef": "bitops",
-        "RemoteRepos": "https://cran.rstudio.com",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "1.0-8"
       }
     },
     "brio": {
@@ -1365,35 +1309,35 @@
       "description": {
         "Package": "dfeshiny",
         "Title": "DfE R Shiny Standards",
-        "Version": "0.4.2",
+        "Version": "0.5.3",
         "Authors@R": "c(\n    person(\"Rich\", \"Bielby\", , \"richard.bielby@education.gov.uk\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0001-9070-9969\")),\n    person(\"Charlotte\", \"Foster\", , \"charlotte.foster@education.gov.uk\", role = \"aut\"),\n    person(\"Cam\", \"Race\", , \"cameron.race@education.gov.uk\", role = \"aut\")\n  )",
         "Description": "R package containing preferred methods for creating official\n    DfE R-Shiny dashboards.",
         "License": "GPL (>= 3)",
-        "Imports": "magrittr,\ncheckmate,\nglue,\nhtmltools,\nRCurl,\nshiny,\nshinyGovstyle,\nshinyjs,\nstringr,\nstyler",
-        "Suggests": "diffviewer,\nknitr,\nrmarkdown,\nshinytest2,\ndevtools,\ntestthat (>= 3.0.0),\nspelling",
+        "URL": "https://dfe-analytical-services.github.io/dfeshiny/\nhttps://www.github.com/dfe-analytical-services/dfeshiny/",
+        "Depends": "R (>= 2.10)",
+        "Imports": "checkmate,\nglue,\nhtmltools,\nlubridate,\nmagrittr,\nshiny,\nshinyGovstyle,\nshinyjs,\nstringr,\nstyler",
+        "Suggests": "devtools,\ndiffviewer,\nknitr,\nrmarkdown,\nshinytest2,\nspelling,\ntestthat (>= 3.0.0)",
+        "VignetteBuilder": "knitr",
         "Config/testthat/edition": "3",
         "Encoding": "UTF-8",
+        "Language": "en-US",
+        "LazyData": "true",
         "Roxygen": "list(markdown = TRUE)",
         "RoxygenNote": "7.3.2",
-        "URL": "https://dfe-analytical-services.github.io/dfeshiny/\nhttps://www.github.com/dfe-analytical-services/dfeshiny/",
-        "VignetteBuilder": "knitr",
-        "Depends": "R (>= 2.10)",
-        "LazyData": "true",
-        "Language": "en-US",
         "Author": "Rich Bielby [aut, cre] (<https://orcid.org/0000-0001-9070-9969>),\n  Charlotte Foster [aut],\n  Cam Race [aut]",
         "Maintainer": "Rich Bielby <richard.bielby@education.gov.uk>",
-        "Built": "R 4.4.1; ; 2024-10-01 16:34:24 UTC; windows",
+        "Built": "R 4.4.2; ; 2024-12-31 16:45:11 UTC; windows",
         "RemoteType": "github",
         "RemoteHost": "api.github.com",
         "RemoteUsername": "dfe-analytical-services",
         "RemoteRepo": "dfeshiny",
         "RemoteRef": "main",
-        "RemoteSha": "a97980297b9d45afd5100c424a39c0e180e63524",
+        "RemoteSha": "82b95665fb0da5b7b554b4ac4843c30fff092608",
         "GithubHost": "api.github.com",
         "GithubRepo": "dfeshiny",
         "GithubUsername": "dfe-analytical-services",
         "GithubRef": "main",
-        "GithubSHA1": "a97980297b9d45afd5100c424a39c0e180e63524"
+        "GithubSHA1": "82b95665fb0da5b7b554b4ac4843c30fff092608"
       }
     },
     "diffobj": {
@@ -2674,6 +2618,48 @@
         "Repository": "RSPM",
         "Date/Publication": "2024-03-25 06:10:02 UTC",
         "Built": "R 4.4.0; ; 2024-04-25 22:01:43 UTC; windows"
+      }
+    },
+    "lubridate": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Type": "Package",
+        "Package": "lubridate",
+        "Title": "Make Dealing with Dates a Little Easier",
+        "Version": "1.9.4",
+        "Authors@R": "c(\n    person(\"Vitalie\", \"Spinu\", , \"spinuvit@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Garrett\", \"Grolemund\", role = \"aut\"),\n    person(\"Hadley\", \"Wickham\", role = \"aut\"),\n    person(\"Davis\", \"Vaughan\", role = \"ctb\"),\n    person(\"Ian\", \"Lyttle\", role = \"ctb\"),\n    person(\"Imanuel\", \"Costigan\", role = \"ctb\"),\n    person(\"Jason\", \"Law\", role = \"ctb\"),\n    person(\"Doug\", \"Mitarotonda\", role = \"ctb\"),\n    person(\"Joseph\", \"Larmarange\", role = \"ctb\"),\n    person(\"Jonathan\", \"Boiser\", role = \"ctb\"),\n    person(\"Chel Hee\", \"Lee\", role = \"ctb\")\n  )",
+        "Maintainer": "Vitalie Spinu <spinuvit@gmail.com>",
+        "Description": "Functions to work with date-times and time-spans: fast and\n    user friendly parsing of date-time data, extraction and updating of\n    components of a date-time (years, months, days, hours, minutes, and\n    seconds), algebraic manipulation on date-time and time-span objects.\n    The 'lubridate' package has a consistent and memorable syntax that\n    makes working with dates easy and fun.",
+        "License": "GPL (>= 2)",
+        "URL": "https://lubridate.tidyverse.org,\nhttps://github.com/tidyverse/lubridate",
+        "BugReports": "https://github.com/tidyverse/lubridate/issues",
+        "Depends": "methods, R (>= 3.2)",
+        "Imports": "generics, timechange (>= 0.3.0)",
+        "Suggests": "covr, knitr, rmarkdown, testthat (>= 2.1.0), vctrs (>= 0.6.5)",
+        "Enhances": "chron, data.table, timeDate, tis, zoo",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "RoxygenNote": "7.2.3",
+        "SystemRequirements": "C++11, A system with zoneinfo data (e.g.\n/usr/share/zoneinfo). On Windows the zoneinfo included with R\nis used.",
+        "Collate": "'Dates.r' 'POSIXt.r' 'util.r' 'parse.r' 'timespans.r'\n'intervals.r' 'difftimes.r' 'durations.r' 'periods.r'\n'accessors-date.R' 'accessors-day.r' 'accessors-dst.r'\n'accessors-hour.r' 'accessors-minute.r' 'accessors-month.r'\n'accessors-quarter.r' 'accessors-second.r' 'accessors-tz.r'\n'accessors-week.r' 'accessors-year.r' 'am-pm.r' 'time-zones.r'\n'numeric.r' 'coercion.r' 'constants.r' 'cyclic_encoding.r'\n'data.r' 'decimal-dates.r' 'deprecated.r' 'format_ISO8601.r'\n'guess.r' 'hidden.r' 'instants.r' 'leap-years.r'\n'ops-addition.r' 'ops-compare.r' 'ops-division.r'\n'ops-integer-division.r' 'ops-m+.r' 'ops-modulo.r'\n'ops-multiplication.r' 'ops-subtraction.r' 'package.r'\n'pretty.r' 'round.r' 'stamp.r' 'tzdir.R' 'update.r' 'vctrs.R'\n'zzz.R'",
+        "NeedsCompilation": "yes",
+        "Packaged": "2024-12-07 23:41:45 UTC; vitalie",
+        "Author": "Vitalie Spinu [aut, cre],\n  Garrett Grolemund [aut],\n  Hadley Wickham [aut],\n  Davis Vaughan [ctb],\n  Ian Lyttle [ctb],\n  Imanuel Costigan [ctb],\n  Jason Law [ctb],\n  Doug Mitarotonda [ctb],\n  Joseph Larmarange [ctb],\n  Jonathan Boiser [ctb],\n  Chel Hee Lee [ctb]",
+        "Repository": "RSPM",
+        "Date/Publication": "2024-12-08 12:10:02 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-12-09 21:48:59 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "lubridate",
+        "RemoteRef": "lubridate",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "1.9.4"
       }
     },
     "magrittr": {
@@ -4548,6 +4534,34 @@
         "Built": "R 4.4.0; ; 2024-04-25 20:19:04 UTC; windows"
       }
     },
+    "timechange": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "timechange",
+        "Title": "Efficient Manipulation of Date-Times",
+        "Version": "0.3.0",
+        "Authors@R": "c(person(\"Vitalie\", \"Spinu\", email = \"spinuvit@gmail.com\", role = c(\"aut\", \"cre\")),\n             person(\"Google Inc.\", role = c(\"ctb\", \"cph\")))",
+        "Description": "Efficient routines for manipulation of date-time objects while\n   accounting for time-zones and daylight saving times. The package includes\n   utilities for updating of date-time components (year, month, day etc.),\n   modification of time-zones, rounding of date-times, period addition and\n   subtraction etc. Parts of the 'CCTZ' source code, released under the Apache\n   2.0 License, are included in this package. See\n   <https://github.com/google/cctz> for more details.",
+        "Depends": "R (>= 3.3)",
+        "License": "GPL (>= 3)",
+        "Encoding": "UTF-8",
+        "LinkingTo": "cpp11 (>= 0.2.7)",
+        "Suggests": "testthat (>= 0.7.1.99), knitr",
+        "SystemRequirements": "A system with zoneinfo data (e.g.\n/usr/share/zoneinfo) as well as a recent-enough C++11 compiler\n(such as g++-4.8 or later). On Windows the zoneinfo included\nwith R is used.",
+        "BugReports": "https://github.com/vspinu/timechange/issues",
+        "URL": "https://github.com/vspinu/timechange/",
+        "RoxygenNote": "7.2.1",
+        "NeedsCompilation": "yes",
+        "Packaged": "2024-01-18 08:57:24 UTC; vspinu",
+        "Author": "Vitalie Spinu [aut, cre],\n  Google Inc. [ctb, cph]",
+        "Maintainer": "Vitalie Spinu <spinuvit@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-01-18 09:20:02 UTC",
+        "Built": "R 4.4.1; x86_64-w64-mingw32; 2024-06-25 01:13:18 UTC; windows",
+        "Archs": "x64"
+      }
+    },
     "tinytex": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -5151,7 +5165,7 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "d519c12756f5724670b2656531d176a0"
+      "checksum": "a1330b74ce3a39ddff1204f3d4f59889"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5235,10 +5249,10 @@
       "checksum": "71d55aa8ff60818856109e87b8eda05b"
     },
     "renv.lock": {
-      "checksum": "56e537fab7ddf6b51271e9c9ce794796"
+      "checksum": "f5f6b7847f49065f3ee8d759fd521678"
     },
     "server.R": {
-      "checksum": "f51c101bcc765995f3117398c57c945c"
+      "checksum": "371e9cbab0a64b04699ebccb3e4ff7eb"
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"

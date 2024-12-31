@@ -49,6 +49,13 @@ ui <- function(input, output, session) {
       )
     ),
 
+    ## Cookie consent ---------------------------------------------------------
+    dfeshiny::dfe_cookies_script(),
+    shinyjs::useShinyjs(),
+    dfeshiny::cookies_banner_ui(
+      name = "Apprenticeships provider dashboard"
+    ),
+
     ## Custom disconnect function ---------------------------------------------
     # Variables used here are set in the global.R file
     dfeshiny::custom_disconnect_message(

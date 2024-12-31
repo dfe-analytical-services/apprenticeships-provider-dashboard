@@ -55,4 +55,16 @@ server <- function(input, output, session) {
   subject_standards_server(id = "sas")
   learner_characteristics_server(id = "learner_characteristics")
   nps_server(id = "nps")
+
+  # Cookie consent ============================================================
+  output$cookies_status <- dfeshiny::cookies_banner_server(
+    input_cookies = shiny::reactive(input$cookies),
+    parent_session = session,
+    google_analytics_key = google_analytics_key
+  )
+
+  dfeshiny::cookies_panel_server(
+    input_cookies = shiny::reactive(input$cookies),
+    google_analytics_key = google_analytics_key,
+  )
 }

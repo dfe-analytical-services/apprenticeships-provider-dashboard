@@ -86,4 +86,4 @@ feedback_form_url <- "" # TODO
 site_primary <- "https://department-for-education.shinyapps.io/apprenticeships-provider-dashboard/"
 
 ## Google Analytics tracking
-google_analytics_key <- "XXXXXXXXXX" # TODO
+google_analytics_key <- "G-0PDKH604B2"

@@ -7,6 +7,6 @@ cookies_page <- function() {
     actionLink(class = "govuk-back-link", style = "margin: 0", "cookies_to_dashboard", "Back to dashboard"),
 
     # Main text content -------------------------------------------------------
-    h1("Cookies")
+    dfeshiny::cookies_panel_ui(google_analytics_key = google_analytics_key) # set in global.R
   )
 }

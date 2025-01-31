@@ -7,7 +7,7 @@
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 SET @CurrentYear = 202324  -- **UPDATE** for each academic year
-SET @CurrentSnapshot = 10  -- **UPDATE** for each quarter
+SET @CurrentSnapshot = 14  -- **UPDATE** for each quarter
 
 --Select required fields for latest 3 years
 IF OBJECT_ID('tempdb..#PARTICIPATION') IS NOT NULL DROP TABLE #PARTICIPATION
@@ -30,7 +30,7 @@ apps_total,
 cl_total,
 eandt_total
 INTO #PARTICIPATION
-FROM [MA_FEDU_S_DATADEV].[MST].[tDM_Learner_table_EES]
+FROM MA_FEDU_S_DATA.[MST].[tDM_Learner_table_EES]
 WHERE
 ([Snapshot]=14 AND [year] IN (@CurrentYear-202, @CurrentYear-101)) --final data for previous 2 years
 OR

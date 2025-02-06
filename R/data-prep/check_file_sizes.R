@@ -6,6 +6,48 @@
 # Load data and dependencies
 source("global.R")
 
+# 1. Provider breakdowns data
+if (!is.null(prov_breakdowns_parquet)) {
+  openxlsx::write.xlsx(
+    prov_breakdowns_parquet %>%
+      filter(year == "2021/22") %>%
+      collect(),
+    "data/test.xlsx",
+    colWidths = "auto"
+  )
+  data.table::fwrite(prov_breakdowns_parquet %>% filter(year == "2021/22") %>% collect(), "data/test.csv")
+
+  # Print the file sizes to console
+  message("Max XLSX breakdown file size: ", dfeR::pretty_filesize(file.size("data/test.xlsx")))
+  message("Max CSV breakdown file size: ", dfeR::pretty_filesize(file.size("data/test.csv")))
+
+  openxlsx::write.xlsx(
+    prov_breakdowns_parquet %>%
+      filter(year == "2022/23") %>%
+      collect(),
+    "data/test.xlsx",
+    colWidths = "auto"
+  )
+  data.table::fwrite(prov_breakdowns_parquet %>% filter(year == "2022/23") %>% collect(), "data/test.csv")
+
+  # Print the file sizes to console
+  message("Max XLSX breakdown file size: ", dfeR::pretty_filesize(file.size("data/test.xlsx")))
+  message("Max CSV breakdown file size: ", dfeR::pretty_filesize(file.size("data/test.csv")))
+
+  openxlsx::write.xlsx(
+    prov_breakdowns_parquet %>%
+      filter(year == "2023/24") %>%
+      collect(),
+    "data/test.xlsx",
+    colWidths = "auto"
+  )
+  data.table::fwrite(prov_breakdowns_parquet %>% filter(year == "2023/24") %>% collect(), "data/test.csv")
+
+  # Print the file sizes to console
+  message("Max XLSX breakdown file size: ", dfeR::pretty_filesize(file.size("data/test.xlsx")))
+  message("Max CSV breakdown file size: ", dfeR::pretty_filesize(file.size("data/test.csv")))
+}
+
 
 # 2. LAD data
 if (!is.null(lad_map_parquet)) {

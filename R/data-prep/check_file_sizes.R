@@ -170,7 +170,39 @@ if (!is.null(sas_parquet)) {
 
 # 4. Demographics data
 if (!is.null(chars_parquet)) {
-  # Create example files
+  # Doing this filtered by each year to work out the maximum as otherwise we'd get ~ 3x the actual max size
+  openxlsx::write.xlsx(chars_parquet %>%
+    filter(year == "2022/23") %>%
+    filter(measure == "Starts") %>%
+    collect(), "data/chars_full.xlsx", colWidths = "auto")
+  data.table::fwrite(chars_parquet %>%
+    filter(year == "2022/23") %>%
+    filter(measure == "Starts") %>%
+    collect(), "data/chars_full.csv")
+  # Print the file sizes to console
+  message("Max XLSX characteristics file size: ", dfeR::pretty_filesize(file.size("data/chars_full.xlsx")))
+  message("Max CSV characteristics file size: ", dfeR::pretty_filesize(file.size("data/chars_full.csv")))
+
+  # Clean up afterwards
+  file.remove("data/chars_full.xlsx")
+  file.remove("data/chars_full.csv")
+
+  openxlsx::write.xlsx(chars_parquet %>%
+    filter(year == "2023/24") %>%
+    filter(measure == "Starts") %>%
+    collect(), "data/chars_full.xlsx", colWidths = "auto")
+  data.table::fwrite(chars_parquet %>%
+    filter(year == "2023/24") %>%
+    filter(measure == "Starts") %>%
+    collect(), "data/chars_full.csv")
+  # Print the file sizes to console
+  message("Max XLSX characteristics file size: ", dfeR::pretty_filesize(file.size("data/chars_full.xlsx")))
+  message("Max CSV characteristics file size: ", dfeR::pretty_filesize(file.size("data/chars_full.csv")))
+
+  # Clean up afterwards
+  file.remove("data/chars_full.xlsx")
+  file.remove("data/chars_full.csv")
+
   openxlsx::write.xlsx(chars_parquet %>%
     filter(year == "2024/25 (Aug to Oct)") %>%
     filter(measure == "Starts") %>%

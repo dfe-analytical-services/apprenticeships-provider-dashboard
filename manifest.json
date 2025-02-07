@@ -5589,7 +5589,7 @@
       "checksum": "a775eb3b0bd5cbe54a0f3516b8644f75"
     },
     ".Rprofile": {
-      "checksum": "35d82392857bf0e778e067a3e728657a"
+      "checksum": "39e9efca80daf77d93b60e8cee54887a"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5643,13 +5643,13 @@
       "checksum": "09d4a4b6053ff61191d4b386cd134239"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
-      "checksum": "863879d9c7c371769f5053442accf57b"
+      "checksum": "65b80cbdc40fed0d31e35f5def3d3783"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
       "checksum": "229088b523df3599853ac475931efa08"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
-      "checksum": "7cb5848c82523d042397e2541040728e"
+      "checksum": "90d54e2a4d55c8395cb954dc9fff3661"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "405d30b5c89e3bdd792cf58484d94d06"
@@ -5658,7 +5658,7 @@
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
     },
     "R/data-prep/check_file_sizes.R": {
-      "checksum": "45566d86b5793445d76ef098c9cfbcb5"
+      "checksum": "7ea31d60113a4ce7684528db22574858"
     },
     "R/data-prep/create_data_files.R": {
       "checksum": "2ea028ef4b9e950224463515359db4c1"

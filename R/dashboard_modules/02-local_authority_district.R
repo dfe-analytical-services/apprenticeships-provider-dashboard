@@ -298,10 +298,16 @@ lad_server <- function(id) {
     boundary_data <- reactive({
       # Set the map boundary file based on the year
       # this would be better not hard coded - values change for the latest year according to qr
+      # have made sure in the code below that the quarter doesn't matter
+      # don't want to further hard code as this will change as boundaries change
+      # want to stay aware of this
+      # lad_boundaries_2024 is OK for Q1 2024/25 - no empty LADs
+      # as soon as empty LADs appear, need to update
+
       boundary_list <- list(
-        "2024/25 (Aug to Oct)" = lad_boundaries_2024,
-        "2023/24" = lad_boundaries_2023,
-        "2022/23" = lad_boundaries_2022
+        "2024/25" = lad_boundaries_2024,
+        "2023/24" = lad_boundaries_2024,
+        "2022/23" = lad_boundaries_2023
       )
 
       # Choose the boundary based on the year selection from the user
@@ -309,6 +315,7 @@ lad_server <- function(id) {
       # will match to the first bit of the string - just the academic year & not qr
       return(boundary_list[[substring(input$year, 1, 7)]])
     })
+
 
     delivery_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table

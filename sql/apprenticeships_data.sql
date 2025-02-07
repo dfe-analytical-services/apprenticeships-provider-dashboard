@@ -1,9 +1,9 @@
 /***********
 Data for Apprenticeships Interactive Tool
 Updated by:      Alison Cooper
-Year:            2024
-Quarter:         Q4 (August to April)
-Snapshot:        10  
+Year:            2025
+Quarter:         Q1 (August to October)
+Snapshot:        4  
 Approx run time: 1-2 mins
 ***********/
 
@@ -11,8 +11,8 @@ Approx run time: 1-2 mins
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 
-SET @CurrentSnapshot =  14 -- **UPDATE** for each quarter
-SET @CurrentYear = 202324 -- **UPDATE** for each academic year
+SET @CurrentSnapshot =  4 -- **UPDATE** for each quarter
+SET @CurrentYear = 202425 -- **UPDATE** for each academic year
 
 --Select latest IFA routes data
 IF OBJECT_ID('tempdb..#Routes_IFA') IS NOT NULL DROP TABLE #Routes_IFA
@@ -28,9 +28,9 @@ WHERE [Snapshot]= @CurrentSnapshot AND [academic_year]= @CurrentYear
 IF OBJECT_ID('tempdb..#APPS') IS NOT NULL DROP TABLE #APPS
 SELECT 
 CASE WHEN [year]= @CurrentYear THEN
-CASE WHEN @CurrentSnapshot=4   THEN CONCAT([year],' (Q1 Aug to Oct)')
-	 WHEN @CurrentSnapshot=6   THEN CONCAT([year],' (Q2 Aug to Jan)')
-	 WHEN @CurrentSnapshot=10  THEN CONCAT([year],' (Q3 Aug to Apr)')
+CASE WHEN @CurrentSnapshot=4   THEN CONCAT([year],' (Aug to Oct)')
+	 WHEN @CurrentSnapshot=6   THEN CONCAT([year],' (Aug to Jan)')
+	 WHEN @CurrentSnapshot=10  THEN CONCAT([year],' (Aug to Apr)')
 	 ELSE [year] END ELSE [year] END AS [year],
 
 age_summary as age_group,

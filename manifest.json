@@ -1918,43 +1918,6 @@
         "Archs": "x64"
       }
     },
-    "ggfittext": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "ggfittext",
-        "Title": "Fit Text Inside a Box in 'ggplot2'",
-        "Version": "0.10.2",
-        "Authors@R": "c(person(\"David\", \"Wilkins\", email = \"david@wilkox.org\",\n                  role = c(\"aut\", \"cre\")), \n             person(\"Brady\", \"Johnston\", email = \"brady.johnston@me.com\", \n                  role = c(\"ctb\"))\n             )",
-        "Description": "A 'ggplot2' extension to fit text into a box by growing, shrinking or wrapping the text.",
-        "Depends": "R (>= 3.6)",
-        "License": "GPL-2",
-        "LazyData": "true",
-        "Imports": "grid (>= 3.1), stringi (>= 1.1.2), shades (>= 1.3.1), gridtext\n(>= 0.1.4), ggplot2 (>= 2.2.1), cli (>= 3.6.1)",
-        "RoxygenNote": "7.3.1",
-        "URL": "https://wilkox.org/ggfittext/",
-        "BugReports": "https://github.com/wilkox/ggfittext/issues/",
-        "Suggests": "knitr, rmarkdown, testthat (>= 3.0.0), vdiffr, spelling",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "Language": "en-GB",
-        "Config/testthat/edition": "3",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-02-01 00:21:27 UTC; wilkox",
-        "Author": "David Wilkins [aut, cre],\n  Brady Johnston [ctb]",
-        "Maintainer": "David Wilkins <david@wilkox.org>",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-02-01 00:50:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-25 23:58:14 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "ggfittext",
-        "RemoteRef": "ggfittext",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.10.2"
-      }
-    },
     "ggiraph": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -2031,6 +1994,42 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "3.5.1"
+      }
+    },
+    "ggrepel": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "ggrepel",
+        "Version": "0.9.6",
+        "Authors@R": "c(\n    person(\"Kamil\", \"Slowikowski\", email = \"kslowikowski@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0002-2843-6370\")),\n    person(\"Alicia\", \"Schep\", role = \"ctb\", comment = c(ORCID = \"0000-0002-3915-0618\")),\n    person(\"Sean\", \"Hughes\", role = \"ctb\", comment = c(ORCID = \"0000-0002-9409-9405\")),\n    person(\"Trung Kien\", \"Dang\", role = \"ctb\", comment = c(ORCID = \"0000-0001-7562-6495\")),\n    person(\"Saulius\", \"Lukauskas\", role = \"ctb\"),\n    person(\"Jean-Olivier\", \"Irisson\", role = \"ctb\", comment = c(ORCID = \"0000-0003-4920-3880\")),\n    person(\"Zhian N\", \"Kamvar\", role = \"ctb\", comment = c(ORCID = \"0000-0003-1458-7108\")),\n    person(\"Thompson\", \"Ryan\", role = \"ctb\", comment = c(ORCID = \"0000-0002-0450-8181\")),\n    person(\"Dervieux\", \"Christophe\", role = \"ctb\", comment = c(ORCID = \"0000-0003-4474-2498\")),\n    person(\"Yutani\", \"Hiroaki\", role = \"ctb\"),\n    person(\"Pierre\", \"Gramme\", role = \"ctb\"),\n    person(\"Amir Masoud\", \"Abdol\", role = \"ctb\"),\n    person(\"Malcolm\", \"Barrett\", role = \"ctb\", comment = c(ORCID = \"0000-0003-0299-5825\")),\n    person(\"Robrecht\", \"Cannoodt\", role = \"ctb\", comment = c(ORCID = \"0000-0003-3641-729X\")),\n    person(\"Michał\", \"Krassowski\", role = \"ctb\", comment = c(ORCID = \"0000-0002-9638-7785\")),\n    person(\"Michael\", \"Chirico\", role = \"ctb\", comment = c(ORCID = \"0000-0003-0787-087X\")),\n    person(\"Pedro\", \"Aphalo\", role = \"ctb\", comment = c(ORCID = \"0000-0003-3385-972X\")),\n    person(\"Francis\", \"Barton\", role = \"ctb\")\n    )",
+        "Title": "Automatically Position Non-Overlapping Text Labels with\n'ggplot2'",
+        "Description": "Provides text and label geoms for 'ggplot2' that help to avoid\n    overlapping text labels. Labels repel away from each other and away from the\n    data points.",
+        "Depends": "R (>= 3.0.0), ggplot2 (>= 2.2.0)",
+        "Imports": "grid, Rcpp, rlang (>= 0.3.0), scales (>= 0.5.0), withr (>=\n2.5.0)",
+        "Suggests": "knitr, rmarkdown, testthat, svglite, vdiffr, gridExtra, ggpp,\npatchwork, devtools, prettydoc, ggbeeswarm, dplyr, magrittr,\nreadr, stringr",
+        "VignetteBuilder": "knitr",
+        "License": "GPL-3 | file LICENSE",
+        "URL": "https://ggrepel.slowkow.com/, https://github.com/slowkow/ggrepel",
+        "BugReports": "https://github.com/slowkow/ggrepel/issues",
+        "RoxygenNote": "7.3.1",
+        "LinkingTo": "Rcpp",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "yes",
+        "Packaged": "2024-09-07 20:12:01 UTC; ks38",
+        "Author": "Kamil Slowikowski [aut, cre] (<https://orcid.org/0000-0002-2843-6370>),\n  Alicia Schep [ctb] (<https://orcid.org/0000-0002-3915-0618>),\n  Sean Hughes [ctb] (<https://orcid.org/0000-0002-9409-9405>),\n  Trung Kien Dang [ctb] (<https://orcid.org/0000-0001-7562-6495>),\n  Saulius Lukauskas [ctb],\n  Jean-Olivier Irisson [ctb] (<https://orcid.org/0000-0003-4920-3880>),\n  Zhian N Kamvar [ctb] (<https://orcid.org/0000-0003-1458-7108>),\n  Thompson Ryan [ctb] (<https://orcid.org/0000-0002-0450-8181>),\n  Dervieux Christophe [ctb] (<https://orcid.org/0000-0003-4474-2498>),\n  Yutani Hiroaki [ctb],\n  Pierre Gramme [ctb],\n  Amir Masoud Abdol [ctb],\n  Malcolm Barrett [ctb] (<https://orcid.org/0000-0003-0299-5825>),\n  Robrecht Cannoodt [ctb] (<https://orcid.org/0000-0003-3641-729X>),\n  Michał Krassowski [ctb] (<https://orcid.org/0000-0002-9638-7785>),\n  Michael Chirico [ctb] (<https://orcid.org/0000-0003-0787-087X>),\n  Pedro Aphalo [ctb] (<https://orcid.org/0000-0003-3385-972X>),\n  Francis Barton [ctb]",
+        "Maintainer": "Kamil Slowikowski <kslowikowski@gmail.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2024-09-07 21:50:02 UTC",
+        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-09-08 04:06:35 UTC; windows",
+        "Archs": "x64",
+        "RemoteType": "standard",
+        "RemotePkgRef": "ggrepel",
+        "RemoteRef": "ggrepel",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
+        "RemoteReposName": "CRAN",
+        "RemotePkgPlatform": "x86_64-w64-mingw32",
+        "RemoteSha": "0.9.6"
       }
     },
     "gh": {
@@ -2214,43 +2213,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "1.7.0"
-      }
-    },
-    "gridtext": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "gridtext",
-        "Type": "Package",
-        "Title": "Improved Text Rendering Support for 'Grid' Graphics",
-        "Version": "0.1.5",
-        "Authors@R": "\n    c(\n      person(\n        given = \"Claus O.\",\n        family = \"Wilke\",\n        role = c(\"aut\"),\n        email = \"wilke@austin.utexas.edu\",\n        comment = c(ORCID = \"0000-0002-7470-9261\")\n      ),\n      person(\n        given = \"Brenton M.\",\n        family = \"Wiernik\",\n        role = c(\"aut\", \"cre\"),\n        email = \"brenton@wiernik.org\",\n        comment = c(ORCID = \"0000-0001-9560-6336\", Twitter = \"@bmwiernik\")\n      )\n    )",
-        "Description": "Provides support for rendering of formatted text using 'grid' graphics. Text can be\n    formatted via a minimal subset of 'Markdown', 'HTML', and inline 'CSS' directives, and it can be\n    rendered both with and without word wrap.",
-        "URL": "https://wilkelab.org/gridtext/",
-        "BugReports": "https://github.com/wilkelab/gridtext/issues",
-        "License": "MIT + file LICENSE",
-        "Depends": "R (>= 3.5)",
-        "Imports": "curl, grid, grDevices, markdown, rlang, Rcpp, png, jpeg,\nstringr, xml2",
-        "Suggests": "covr, knitr, rmarkdown, testthat, vdiffr",
-        "LinkingTo": "Rcpp",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.1.1",
-        "SystemRequirements": "C++11",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-09-15 13:49:42 UTC; brentonw",
-        "Author": "Claus O. Wilke [aut] (<https://orcid.org/0000-0002-7470-9261>),\n  Brenton M. Wiernik [aut, cre] (<https://orcid.org/0000-0001-9560-6336>,\n    @bmwiernik)",
-        "Maintainer": "Brenton M. Wiernik <brenton@wiernik.org>",
-        "Repository": "RSPM",
-        "Date/Publication": "2022-09-16 11:16:15 UTC",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-07-18 06:28:15 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemotePkgRef": "gridtext",
-        "RemoteRef": "gridtext",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.1.5"
       }
     },
     "gtable": {
@@ -2570,37 +2532,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "0.2.7"
-      }
-    },
-    "jpeg": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "jpeg",
-        "Version": "0.1-10",
-        "Title": "Read and write JPEG images",
-        "Author": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-        "Maintainer": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-        "Depends": "R (>= 2.9.0)",
-        "Description": "This package provides an easy and simple way to read, write and display bitmap images stored in the JPEG format. It can read and write both files and in-memory raw vectors.",
-        "License": "GPL-2 | GPL-3",
-        "SystemRequirements": "libjpeg",
-        "URL": "https://www.rforge.net/jpeg/",
-        "BugReports": "https://github.com/s-u/jpeg/issues",
-        "NeedsCompilation": "yes",
-        "Packaged": "2022-11-29 09:23:09 UTC; rforge",
-        "Repository": "RSPM",
-        "Date/Publication": "2022-11-29 11:12:52 UTC",
-        "Encoding": "UTF-8",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-04-25 20:30:54 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemotePkgRef": "jpeg",
-        "RemoteRef": "jpeg",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.1-10"
       }
     },
     "jquerylib": {
@@ -2998,40 +2929,6 @@
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
         "RemoteSha": "2.0.3"
-      }
-    },
-    "markdown": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "markdown",
-        "Type": "Package",
-        "Title": "Render Markdown with 'commonmark'",
-        "Version": "1.13",
-        "Authors@R": "c(\n   person(\"Yihui\", \"Xie\", role = c(\"aut\", \"cre\"), email = \"xie@yihui.name\", comment = c(ORCID = \"0000-0003-0645-5666\")),\n   person(\"JJ\", \"Allaire\", role = \"aut\"),\n   person(\"Jeffrey\", \"Horner\", role = \"aut\"),\n   person(\"Henrik\", \"Bengtsson\", role = \"ctb\"),\n   person(\"Jim\", \"Hester\", role = \"ctb\"),\n   person(\"Yixuan\", \"Qiu\", role = \"ctb\"),\n   person(\"Kohske\", \"Takahashi\", role = \"ctb\"),\n   person(\"Adam\", \"November\", role = \"ctb\"),\n   person(\"Nacho\", \"Caballero\", role = \"ctb\"),\n   person(\"Jeroen\", \"Ooms\", role = \"ctb\"),\n   person(\"Thomas\", \"Leeper\", role = \"ctb\"),\n   person(\"Joe\", \"Cheng\", role = \"ctb\"),\n   person(\"Andrzej\", \"Oles\", role = \"ctb\"),\n   person(given = \"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n   )",
-        "Description": "Render Markdown to full and lightweight HTML/LaTeX documents with\n    the 'commonmark' package. This package has been superseded by 'litedown'.",
-        "Depends": "R (>= 2.11.1)",
-        "Imports": "utils, commonmark (>= 1.9.0), xfun (>= 0.38)",
-        "Suggests": "knitr, rmarkdown (>= 2.18), yaml, RCurl",
-        "License": "MIT + file LICENSE",
-        "URL": "https://github.com/rstudio/markdown",
-        "BugReports": "https://github.com/rstudio/markdown/issues",
-        "RoxygenNote": "7.3.1",
-        "Encoding": "UTF-8",
-        "NeedsCompilation": "no",
-        "Packaged": "2024-06-04 15:36:56 UTC; yihui",
-        "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),\n  JJ Allaire [aut],\n  Jeffrey Horner [aut],\n  Henrik Bengtsson [ctb],\n  Jim Hester [ctb],\n  Yixuan Qiu [ctb],\n  Kohske Takahashi [ctb],\n  Adam November [ctb],\n  Nacho Caballero [ctb],\n  Jeroen Ooms [ctb],\n  Thomas Leeper [ctb],\n  Joe Cheng [ctb],\n  Andrzej Oles [ctb],\n  Posit Software, PBC [cph, fnd]",
-        "Maintainer": "Yihui Xie <xie@yihui.name>",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-06-04 20:50:02 UTC",
-        "Built": "R 4.4.0; ; 2024-06-05 12:00:49 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "markdown",
-        "RemoteRef": "markdown",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "1.13"
       }
     },
     "memoise": {
@@ -4436,38 +4333,6 @@
         "Built": "R 4.4.0; ; 2024-04-25 22:11:25 UTC; windows"
       }
     },
-    "shades": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "shades",
-        "Version": "1.4.0",
-        "Date": "2019-08-02",
-        "Title": "Simple Colour Manipulation",
-        "Author": "Jon Clayden",
-        "Maintainer": "Jon Clayden <code@clayden.org>",
-        "Description": "Functions for easily manipulating colours, creating colour scales and calculating colour distances.",
-        "Suggests": "testthat, covr, ggplot2",
-        "Enhances": "colorspace",
-        "Encoding": "UTF-8",
-        "License": "BSD_3_clause + file LICENCE",
-        "URL": "https://github.com/jonclayden/shades",
-        "BugReports": "https://github.com/jonclayden/shades/issues",
-        "RoxygenNote": "6.1.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2019-08-02 14:53:11 UTC; jon",
-        "Repository": "RSPM",
-        "Date/Publication": "2019-08-02 16:00:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-25 18:30:59 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "shades",
-        "RemoteRef": "shades",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "1.4.0"
-      }
-    },
     "shiny": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -5093,42 +4958,6 @@
         "Built": "R 4.4.0; ; 2024-09-16 04:25:53 UTC; windows"
       }
     },
-    "treemapify": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "treemapify",
-        "Title": "Draw Treemaps in 'ggplot2'",
-        "Version": "2.5.6",
-        "Authors@R": "c(\n  person(\"David\", \"Wilkins\", , \"david@wilkox.org\", role = c(\"aut\", \"cre\"),\n         comment = c(ORCID = \"0000-0002-3385-8981\")),\n  person(\"Bob\", \"Rudis\", , \"bob@rud.is\", role = c(\"ctb\"),\n         comment = c(ORCID = \"0000-0001-5670-2640\"))\n  )",
-        "URL": "https://wilkox.org/treemapify/",
-        "BugReports": "https://github.com/wilkox/treemapify/issues/",
-        "Description": "Provides 'ggplot2' geoms for drawing treemaps.",
-        "Depends": "R (>= 3.6)",
-        "Imports": "ggplot2 (>= 2.2.1), ggfittext (>= 0.5.0), grid (>= 3.1), cli\n(>= 3.6.1)",
-        "Suggests": "knitr, rmarkdown, testthat, vdiffr, spelling",
-        "License": "GPL (>= 3)",
-        "LazyData": "true",
-        "RoxygenNote": "7.2.3",
-        "VignetteBuilder": "knitr",
-        "Encoding": "UTF-8",
-        "Language": "en-GB",
-        "NeedsCompilation": "no",
-        "Packaged": "2023-09-30 07:12:19 UTC; wilkox",
-        "Author": "David Wilkins [aut, cre] (<https://orcid.org/0000-0002-3385-8981>),\n  Bob Rudis [ctb] (<https://orcid.org/0000-0001-5670-2640>)",
-        "Maintainer": "David Wilkins <david@wilkox.org>",
-        "Repository": "RSPM",
-        "Date/Publication": "2023-09-30 07:40:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-26 00:11:53 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "treemapify",
-        "RemoteRef": "treemapify",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "2.5.6"
-      }
-    },
     "units": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -5732,6 +5561,9 @@
     ".RDataTmp12": {
       "checksum": "a5b75f3291fa766ae15081ee5f5592fc"
     },
+    ".RDataTmp13": {
+      "checksum": "2bceea1f09cd70f93bd6fbc9819fa22a"
+    },
     ".RDataTmp2": {
       "checksum": "735e0a649eba0b974e2f6df560385d64"
     },
@@ -5757,19 +5589,19 @@
       "checksum": "a775eb3b0bd5cbe54a0f3516b8644f75"
     },
     ".Rprofile": {
-      "checksum": "a08dcafcb64522fcc8fcd96964634ea6"
+      "checksum": "38ec56aa77ca38aba22e45b29ce65d2b"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
     },
     "data/apprenticeships_data.csv": {
-      "checksum": "0c6406540bfad516982f2b44c60179db"
+      "checksum": "cd56297f55d310ada8c465e6585e4974"
     },
     "data/apprenticeships_demographics.csv": {
-      "checksum": "532b00690beb2aadcda18a83d7aeac23"
+      "checksum": "0dfa77f5bf5173a6bc0da3e5f68cf3b3"
     },
     "data/apprenticeships_demographics_0.parquet": {
-      "checksum": "f12e1c07da0a8bc4e6a9855bf3bf9d46"
+      "checksum": "0a47bfa7425b1a35e8078e49fb3059a7"
     },
     "data/boundary_files/Local_Authority_Districts_December_2022_UK_BUC_V2_3956567894081366924.gpkg": {
       "checksum": "77baaf077b9d8eb9ee57c4c8bdb3c1cf"
@@ -5781,22 +5613,22 @@
       "checksum": "462d51753e91e758857b2fadfd88cef1"
     },
     "data/lad_map_data_0.parquet": {
-      "checksum": "ace1b38e436d6423501b2a00578e7904"
+      "checksum": "2b2d79c346a0c566ca0e706766498d08"
     },
     "data/national_provider_summary.csv": {
-      "checksum": "5225ddba486b35c1113313bec5b56cef"
+      "checksum": "62885f9cd23480fcaaad2c1d9607fe53"
     },
     "data/national_provider_summary_0.parquet": {
-      "checksum": "3d44316b7023f761d8c782609031488f"
+      "checksum": "8a1611d018e6ec226ab03cadb312d363"
     },
     "data/provider_breakdowns_0.parquet": {
-      "checksum": "8b244a23ea8512e00e4dc186a70f0911"
+      "checksum": "f204fe6ea6baa89b9f72e55f9b56f20f"
     },
     "data/subjects_and_standards_0.parquet": {
-      "checksum": "bdb23ef419ac86fd17efd1f7bd103af1"
+      "checksum": "07849bafc8028cd5246e009980420789"
     },
     "datafiles_log.csv": {
-      "checksum": "8c1c4e91b736315977bdef307e099cb4"
+      "checksum": "a96ce73348ae61fac79e8eb77e65a77f"
     },
     "debug.log": {
       "checksum": "9a8e5786f13efa56be15b5ac6d4409f7"
@@ -5808,13 +5640,13 @@
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
-      "checksum": "688fe88beb466f774a34afd155c0f0a0"
+      "checksum": "09d4a4b6053ff61191d4b386cd134239"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
-      "checksum": "f452fbb95acf6614959b7f4aae71846d"
+      "checksum": "bd093ee0b980261dc4b66ad64ef2de4f"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "bbd28195a098273f331289558dad285a"
+      "checksum": "acdd56412a5ec27698c6459dac6f336d"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
       "checksum": "9aa7164b5f68d362f6f176fa9fc0944b"
@@ -5826,7 +5658,7 @@
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
     },
     "R/data-prep/check_file_sizes.R": {
-      "checksum": "0dacfb94d1f5849f35cec4196bd94b89"
+      "checksum": "3ae23334e06875b96e7d29fec7b80c51"
     },
     "R/data-prep/create_data_files.R": {
       "checksum": "2ea028ef4b9e950224463515359db4c1"
@@ -5850,19 +5682,19 @@
       "checksum": "71d55aa8ff60818856109e87b8eda05b"
     },
     "renv.lock": {
-      "checksum": "c4dc320ca8baaaefc7c351b08c8ea8d7"
+      "checksum": "304e613d69bf77e4a1c6f4c2405ee868"
     },
     "server.R": {
       "checksum": "4e64b5320a433d75ee5c412a4c2528c0"
     },
     "sql/apprenticeships_data.sql": {
-      "checksum": "1b5a3e2bce4596a8e0d92a078c2e458c"
+      "checksum": "f7ff821441a4fd7db9ca4ff2b2bed45a"
     },
     "sql/apprenticeships_demographics.sql": {
-      "checksum": "3ce6538ab919c9c2f191212fda29e8fe"
+      "checksum": "5c38ba483960f2a7dfe69f62712dc2e0"
     },
     "sql/national_provider_summary.sql": {
-      "checksum": "cda7d17984e43c4f5d56bf9b7408f665"
+      "checksum": "fdadb8dc9c89aff0a9e8c669022363a1"
     },
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
@@ -5899,6 +5731,9 @@
     },
     "ui.R": {
       "checksum": "e80e22df1fdcb227de7b26c3e64d9041"
+    },
+    "www/cookie-consent.js": {
+      "checksum": "dd507a9ad0d33b3b3f97546ffc357f23"
     },
     "www/dfe_logo.svg": {
       "checksum": "c23764dae2d73a45a55815d0327be6cb"

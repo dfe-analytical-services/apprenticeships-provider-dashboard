@@ -1,7 +1,7 @@
 /***********
 Demographics Data for Apprenticeships Interactive Tool
 Updated by:      Alison Cooper - to include provider name rather than learner lad, and now to have 'low' rather than zeros for suppressed values
-Quarter:         Q3 (August to April) 2024
+Quarter:         Q4 (August to April) 2024
 Snapshot:        10  
 Approx run time: 1-2 mins
 ***********/
@@ -13,7 +13,7 @@ Approx run time: 1-2 mins
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 
-SET @CurrentSnapshot =  10 -- **UPDATE** for each quarter
+SET @CurrentSnapshot =  14 -- **UPDATE** for each quarter
 SET @CurrentYear = 202324 -- **UPDATE** for each academic year
 
 --Select latest IFA routes data
@@ -22,7 +22,7 @@ SELECT
 [std_fwk_name] as std_fwk_name_routes,
 [std_lars_code]
 INTO  #Routes_IFA
-FROM  [MA_FEDU_S_DATADEV].[REF].[Routes_IFA] 
+FROM  [MA_FEDU_S_DATA].[REF].[Routes_IFA] 
 WHERE [Snapshot]= @CurrentSnapshot AND [academic_year]= @CurrentYear
 
 
@@ -47,7 +47,7 @@ CASE WHEN [year]=@CurrentYear AND @CurrentSnapshot=4  THEN [enrols_Q1]
      WHEN [year]=@CurrentYear AND @CurrentSnapshot=10 THEN [enrols_Q1to3]
 	 ELSE [enrols_Q1to4] END AS [enrolments]
 INTO #APPS 
-FROM [MA_FEDU_S_DATADEV].[MST].[vw_Apprenticeship_Start_Ach_IL_EES] a
+FROM [MA_FEDU_S_DATA].[MST].[vw_Apprenticeship_Start_Ach_IL_EES] a
 LEFT JOIN #Routes_IFA r
 on a.std_fwk_flag = 'Standard' and a.std_fwk_code = r.std_lars_code
 WHERE

@@ -84,8 +84,8 @@ prov_breakdowns_ui <- function(id) {
                 "This will download all data related to the providers and options selected.",
                 " The XLSX format is designed for use in Microsoft Excel."
               ),
-              choices = c("CSV (Up to X MB)", "XLSX (Up to X MB)"),
-              selected = "CSV (Up to X MB)"
+              choices = c("CSV (Up to 7.82 MB)", "XLSX (Up to 1.96 MB)"),
+              selected = "CSV (Up to 7.82 MB)"
             ),
             downloadButton(
               NS(id, "download_data"),
@@ -401,7 +401,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$year, "-", input$level, "-", input$age, "-provider_breakdowns")
-        extension <- if (input$file_type == "CSV (Up to X MB)") {
+        extension <- if (input$file_type == "CSV (Up to 7.82 MB)") {
           ".csv"
         } else {
           ".xlsx"

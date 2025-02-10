@@ -4794,16 +4794,20 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "6d5d46b3ccf284f5b29ce4f4e173e2c7"
+
+      "checksum": "39e9efca80daf77d93b60e8cee54887a"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
     },
     "data/apprenticeships_data.csv": {
-      "checksum": "d87bc3908e5609d8902238d1241faabe"
+      "checksum": "c7fcb48720e3d6f8d2f61f5fbdf3bbaf"
+    },
+    "data/apprenticeships_demographics.csv": {
+      "checksum": "0dfa77f5bf5173a6bc0da3e5f68cf3b3"
     },
     "data/apprenticeships_demographics_0.parquet": {
-      "checksum": "0a47bfa7425b1a35e8078e49fb3059a7"
+      "checksum": "569ba1f079edfdeeac926f4d734eb85b"
     },
     "data/boundary_files/Local_Authority_Districts_December_2022_UK_BUC_V2_3956567894081366924.gpkg": {
       "checksum": "77baaf077b9d8eb9ee57c4c8bdb3c1cf"
@@ -4815,16 +4819,16 @@
       "checksum": "462d51753e91e758857b2fadfd88cef1"
     },
     "data/lad_map_data_0.parquet": {
-      "checksum": "2b2d79c346a0c566ca0e706766498d08"
+      "checksum": "9a9fa648eb6dd403fddb908e84716fa3"
     },
     "data/national_provider_summary_0.parquet": {
-      "checksum": "8a1611d018e6ec226ab03cadb312d363"
+      "checksum": "65dcbf46e496e6957db97f9c10527d9e"
     },
     "data/provider_breakdowns_0.parquet": {
-      "checksum": "f204fe6ea6baa89b9f72e55f9b56f20f"
+      "checksum": "8c5bd123b3d937dd27aa1a0b1864fa51"
     },
     "data/subjects_and_standards_0.parquet": {
-      "checksum": "07849bafc8028cd5246e009980420789"
+      "checksum": "b8cc9b1ecb0f06d98190810a34dc9e95"
     },
     "datafiles_log.csv": {
       "checksum": "a96ce73348ae61fac79e8eb77e65a77f"
@@ -4842,13 +4846,13 @@
       "checksum": "09d4a4b6053ff61191d4b386cd134239"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
-      "checksum": "bd093ee0b980261dc4b66ad64ef2de4f"
+      "checksum": "65b80cbdc40fed0d31e35f5def3d3783"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
-      "checksum": "acdd56412a5ec27698c6459dac6f336d"
+      "checksum": "229088b523df3599853ac475931efa08"
     },
     "R/dashboard_modules/04-learner_characteristics.R": {
-      "checksum": "9aa7164b5f68d362f6f176fa9fc0944b"
+      "checksum": "90d54e2a4d55c8395cb954dc9fff3661"
     },
     "R/dashboard_modules/05-national_provider_summary.R": {
       "checksum": "ee987ce985039ea482e1dff8be5564da"
@@ -4857,7 +4861,7 @@
       "checksum": "8c30d6f8f6fd0536bfd4a683864ec556"
     },
     "R/data-prep/check_file_sizes.R": {
-      "checksum": "3ae23334e06875b96e7d29fec7b80c51"
+      "checksum": "7ea31d60113a4ce7684528db22574858"
     },
     "R/data-prep/create_data_files.R": {
       "checksum": "2ea028ef4b9e950224463515359db4c1"
@@ -4887,13 +4891,13 @@
       "checksum": "4e64b5320a433d75ee5c412a4c2528c0"
     },
     "sql/apprenticeships_data.sql": {
-      "checksum": "f7ff821441a4fd7db9ca4ff2b2bed45a"
+      "checksum": "be0092e9fc1df386cd3fe9fce89d6e37"
     },
     "sql/apprenticeships_demographics.sql": {
-      "checksum": "5c38ba483960f2a7dfe69f62712dc2e0"
+      "checksum": "1ab5f11566c531aaeb030488ac5d3ace"
     },
     "sql/national_provider_summary.sql": {
-      "checksum": "fdadb8dc9c89aff0a9e8c669022363a1"
+      "checksum": "dbe0bc8beb5b0071c85f28447ed1fd62"
     },
     "tests/testthat.R": {
       "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"

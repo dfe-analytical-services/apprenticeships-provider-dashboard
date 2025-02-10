@@ -114,8 +114,8 @@ lad_ui <- function(id) {
               "This will download data for all providers and local authority districts based on the ",
               "options selected. The XLSX format is designed for use in Microsoft Excel."
             ),
-            choices = c("CSV (Up to 18.42 MB)", "XLSX (Up to 5.92 MB)"),
-            selected = "CSV (Up to 18.42 MB)"
+            choices = c("CSV (Up to 15.89 MB)", "XLSX (Up to 5.97 MB)"),
+            selected = "CSV (Up to 15.89 MB)"
           ),
           downloadButton(
             NS(id, "download_data"),
@@ -298,10 +298,16 @@ lad_server <- function(id) {
     boundary_data <- reactive({
       # Set the map boundary file based on the year
       # this would be better not hard coded - values change for the latest year according to qr
+      # have made sure in the code below that the quarter doesn't matter
+      # don't want to further hard code as this will change as boundaries change
+      # want to stay aware of this
+      # lad_boundaries_2024 is OK for Q1 2024/25 - no empty LADs
+      # as soon as empty LADs appear, need to update
+
       boundary_list <- list(
+        "2024/25" = lad_boundaries_2024,
         "2023/24" = lad_boundaries_2024,
-        "2022/23" = lad_boundaries_2023,
-        "2021/22" = lad_boundaries_2022
+        "2022/23" = lad_boundaries_2023
       )
 
       # Choose the boundary based on the year selection from the user
@@ -309,6 +315,7 @@ lad_server <- function(id) {
       # will match to the first bit of the string - just the academic year & not qr
       return(boundary_list[[substring(input$year, 1, 7)]])
     })
+
 
     delivery_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
@@ -352,7 +359,7 @@ lad_server <- function(id) {
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0("lad-", input$year, "-", input$measure)
-        extension <- if (input$file_type == "CSV (Up to 18.42 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 15.89 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -361,7 +368,7 @@ lad_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 18.42 MB)") {
+        if (input$file_type == "CSV (Up to 15.89 MB)") {
           data.table::fwrite(map_data(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

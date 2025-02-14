@@ -435,7 +435,7 @@ subject_standards_server <- function(id) {
       filename = function(name) {
         raw_name <- paste0(
           input$year, "-", input$measure, "-", input$subject, "-",
-          input$level, "-subjects-and-standards"
+          input$level, input$provider, "-subjects-and-standards"
         )
         extension <- if (input$file_type == "CSV (Up to 11.58 MB)") {
           ".csv"

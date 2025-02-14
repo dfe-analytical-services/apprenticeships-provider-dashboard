@@ -473,7 +473,7 @@ learner_characteristics_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 2.07 MB)" & input$provider != "Total (All providers)") {
+        if (input$file_type == "CSV (Up to 2.13 MB)" & input$provider != "Total (All providers)") {
           data.table::fwrite(chars_reactive_table(), file)
         } else if (input$file_type == "CSV (Up to 2.13 MB)" & input$provider == "Total (All providers)") {
           data.table::fwrite(chars_parquet %>%

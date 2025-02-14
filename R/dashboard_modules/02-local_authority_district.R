@@ -111,8 +111,8 @@ lad_ui <- function(id) {
             inputId = NS(id, "file_type"),
             label = h2("Choose download file format"),
             hint_label = paste0(
-              "This will download data for all providers and local authority districts based on the ",
-              "options selected. The XLSX format is designed for use in Microsoft Excel."
+              "This will download data for all local authority districts based on the ",
+              "year and provider selected. The XLSX format is designed for use in Microsoft Excel."
             ),
             choices = c("CSV (Up to 15.89 MB)", "XLSX (Up to 5.97 MB)"),
             selected = "CSV (Up to 15.89 MB)"
@@ -353,12 +353,11 @@ lad_server <- function(id) {
     observeEvent(input$learner_home_lad_reset, {
       updateSelectizeInput(session, "learner_home_lad", selected = "")
     })
-
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- paste0("lad-", input$year, "-", input$measure)
+        raw_name <- paste0("lad-", input$year, "-", input$provider)
         extension <- if (input$file_type == "CSV (Up to 15.89 MB)") {
           ".csv"
         } else {
@@ -368,12 +367,23 @@ lad_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 15.89 MB)") {
+        if (input$file_type == "CSV (Up to 15.89 MB)" & input$provider == "") {
           data.table::fwrite(map_data(), file)
-        } else {
+        } else if (input$file_type == "CSV (Up to 15.89 MB)" & input$provider != "") {
+          data.table::fwrite(map_data() %>%
+            filter(year %in% input$year) %>%
+            filter(provider_name %in% input$provider), file)
+        } else if (input$file_type == "XLSX (Up to 5.97 KB)" & input$provider != "") {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
-          openxlsx::write.xlsx(map_data(), file, colWidths = "Auto")
+          openxlsx::write.xlsx(map_data() %>%
+            filter(year %in% input$year) %>%
+            filter(provider_name %in% input$provider), file, colWidths = "Auto")
+          on.exit(removeNotification(pop_up), add = TRUE)
+        } else {
+          pop_up <- showNotification("Generating download file", duration = NULL)
+          openxlsx::write.xlsx(map_data() %>%
+            filter(year %in% input$year), file, colWidths = "Auto")
           on.exit(removeNotification(pop_up), add = TRUE)
         }
       }

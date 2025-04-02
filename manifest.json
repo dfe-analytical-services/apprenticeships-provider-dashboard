@@ -5382,14 +5382,11 @@
     ".github/workflows/lintr.yml": {
       "checksum": "c615ed4f368038f8cef3b74845527b98"
     },
-    ".hooks/pre-commit.R": {
-      "checksum": "ee7e229f54e456f743dc8601e0c1c070"
-    },
     ".lintr": {
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "d54b331e5c9344104971c10f81a8f381"
+      "checksum": "33df5b28027982c33c0832020c141ea4"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"

@@ -5498,10 +5498,13 @@
       "checksum": "94d500fe8e3a1b354b217ebd3279ba5c"
     },
     ".github/workflows/automated-tests.yaml": {
-      "checksum": "15d0c8da302b04112d8edc9070fa2d73"
+      "checksum": "7fec9834ee9927cf76307a613d0e699e"
+    },
+    ".github/workflows/create-trello-ticket.yaml": {
+      "checksum": "020226f1120169ad15fd621a6d357f0e"
     },
     ".github/workflows/deploy-shiny.yaml": {
-      "checksum": "d771bbce5a27e25cd632e74eb8e80988"
+      "checksum": "703a6549e79ed4c801a2c0f1302bdc24"
     },
     ".github/workflows/lintr.yml": {
       "checksum": "c615ed4f368038f8cef3b74845527b98"
@@ -5513,7 +5516,7 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "d3df9205ae7d4840fcb63fcc7e4006c1"
+      "checksum": "22a17f58edd67cafbf715c0ed6746a2e"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5547,6 +5550,9 @@
     },
     "debug.log": {
       "checksum": "9a8e5786f13efa56be15b5ac6d4409f7"
+    },
+    "deploy-parameters.yaml": {
+      "checksum": "7b056e4a33f2bf904627dd89d488b4da"
     },
     "global.R": {
       "checksum": "22cda90fde833f702d0f33380e348ee5"
@@ -5645,7 +5651,7 @@
       "checksum": "693f3137a724e21f3d2f3c0569e13f33"
     },
     "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "c6a01a506bf278e5a15f61d610eb04b9"
+      "checksum": "4a68b82feb3209e02004290357e5c8b0"
     },
     "ui.R": {
       "checksum": "cfa67b3a2a2022f9c11569e8841b7592"

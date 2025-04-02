@@ -5513,7 +5513,7 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "51d68cd11922b4d3a00bda92277d6906"
+      "checksum": "d3df9205ae7d4840fcb63fcc7e4006c1"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5549,10 +5549,10 @@
       "checksum": "9a8e5786f13efa56be15b5ac6d4409f7"
     },
     "global.R": {
-      "checksum": "6252cf5ae53f641c0ddd80d8f9b2860e"
+      "checksum": "22cda90fde833f702d0f33380e348ee5"
     },
     "google-analytics.html": {
-      "checksum": "28636966bf4ff35e9f8d6f948baf7cc4"
+      "checksum": "bfdb745c396a21f318e4642895f0d2a0"
     },
     "LICENSE": {
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
@@ -5585,7 +5585,7 @@
       "checksum": "e9351e2d333a66228f36dc3963e2d1bd"
     },
     "R/footer_pages/cookies_page.R": {
-      "checksum": "d15b7a880007ded5eec1cb9e6266c5ae"
+      "checksum": "eb5b3d69ad31c21f9f689eab4165c31e"
     },
     "R/footer_pages/footnotes_page.R": {
       "checksum": "a6f641020e89c72a9b698213982c713d"
@@ -5594,7 +5594,7 @@
       "checksum": "4fb06508719a86445bed410f6640a071"
     },
     "R/helper_functions.R": {
-      "checksum": "8966d1ed6f96a592405dc1de86026019"
+      "checksum": "393a0699bba5d06e5c3b58a9825ac16a"
     },
     "README.md": {
       "checksum": "71d55aa8ff60818856109e87b8eda05b"
@@ -5603,7 +5603,7 @@
       "checksum": "eb527e5b026957dc195fa2c748e73aa0"
     },
     "server.R": {
-      "checksum": "4e64b5320a433d75ee5c412a4c2528c0"
+      "checksum": "581456db873e855a644c9941bd3171c7"
     },
     "sql/apprenticeships_data.sql": {
       "checksum": "be0092e9fc1df386cd3fe9fce89d6e37"
@@ -5648,7 +5648,7 @@
       "checksum": "c6a01a506bf278e5a15f61d610eb04b9"
     },
     "ui.R": {
-      "checksum": "00221279cad75a3263d51b3ff38f9fb3"
+      "checksum": "cfa67b3a2a2022f9c11569e8841b7592"
     },
     "www/cookie-consent.js": {
       "checksum": "dd507a9ad0d33b3b3f97546ffc357f23"
@@ -5657,7 +5657,7 @@
       "checksum": "c23764dae2d73a45a55815d0327be6cb"
     },
     "www/dfe_shiny_gov_style.css": {
-      "checksum": "d36df853777cb37265b4ce44bfdac0bb"
+      "checksum": "42cbbb82a5803ed48ee11d6a1267be10"
     },
     "www/dfefavicon.png": {
       "checksum": "179db108199253ed0617024df291473b"

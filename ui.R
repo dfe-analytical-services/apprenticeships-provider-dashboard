@@ -57,6 +57,11 @@ ui <- function(input, output, session) {
       publication_link = parent_publication
     ),
     tags$head(includeHTML(("google-analytics.html"))),
+    shinyjs::useShinyjs(),
+    dfeshiny::dfe_cookies_script(),
+    dfeshiny::cookies_banner_ui(
+      name = site_title
+    ),
 
     ## Header -----------------------------------------------------------------
     shinyGovstyle::header(
@@ -124,7 +129,7 @@ ui <- function(input, output, session) {
         nav_panel("footnotes", footnotes_page()),
         nav_panel("support", support_page()),
         nav_panel("accessibility_statement", accessibility_page()),
-        nav_panel("cookies", cookies_page())
+        nav_panel("cookies_statement", cookies_page())
       )
     ),
 
@@ -134,7 +139,7 @@ ui <- function(input, output, session) {
         "Footnotes",
         "Support",
         "Accessibility statement",
-        "Cookies"
+        "Cookies statement"
       )
     )
   )

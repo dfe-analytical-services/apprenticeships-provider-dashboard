@@ -1,2 +1,2 @@
-dashboard_name:apprenticeships - provider - dashboard
-deploy_target:shinyapps
+dashboard_name:"apprenticeships-provider-dashboard"
+deploy_target:"shinyapps"

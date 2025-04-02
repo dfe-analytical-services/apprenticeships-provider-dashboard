@@ -56,6 +56,12 @@ ui <- function(input, output, session) {
       publication_name = parent_pub_name,
       publication_link = parent_publication
     ),
+    tags$head(includeHTML(("google-analytics.html"))),
+    shinyjs::useShinyjs(),
+    dfeshiny::dfe_cookies_script(),
+    dfeshiny::cookies_banner_ui(
+      name = site_title
+    ),
 
     ## Header -----------------------------------------------------------------
     shinyGovstyle::header(
@@ -89,23 +95,31 @@ ui <- function(input, output, session) {
             col_widths = breakpoints(sm = c(4, 8), md = c(3, 9), lg = c(2, 9)),
             ## Left navigation ------------------------------------------------
             dfe_contents_links(
-              links_list =
-                c(
-                  "Provider breakdowns",
-                  "Local authority district",
-                  "Subjects and standards",
-                  "Learner characteristics",
-                  "National provider summary",
-                  "User guide"
-                )
+              links_list = c(
+                "Provider breakdowns",
+                "Local authority district",
+                "Subjects and standards",
+                "Learner characteristics",
+                "National provider summary",
+                "User guide"
+              )
             ),
             ## Dashboard panels -----------------------------------------------
             bslib::navset_hidden(
               id = "left_nav",
-              nav_panel("provider_breakdowns", prov_breakdowns_ui(id = "prov_breakdowns")),
+              nav_panel(
+                "provider_breakdowns",
+                prov_breakdowns_ui(id = "prov_breakdowns")
+              ),
               nav_panel("local_authority_district", lad_ui(id = "lad")),
-              nav_panel("subjects_and_standards", subjects_standards_ui(id = "sas")),
-              nav_panel("learner_characteristics", learner_characteristics_ui(id = "learner_characteristics")),
+              nav_panel(
+                "subjects_and_standards",
+                subjects_standards_ui(id = "sas")
+              ),
+              nav_panel(
+                "learner_characteristics",
+                learner_characteristics_ui(id = "learner_characteristics")
+              ),
               nav_panel("national_provider_summary", nps_ui(id = "nps")),
               nav_panel("user_guide", user_guide())
             )
@@ -115,11 +129,18 @@ ui <- function(input, output, session) {
         nav_panel("footnotes", footnotes_page()),
         nav_panel("support", support_page()),
         nav_panel("accessibility_statement", accessibility_page()),
-        nav_panel("cookies", cookies_page())
+        nav_panel("cookies_statement", cookies_page())
       )
     ),
 
     # Footer ==================================================================
-    dfe_footer(links_list = c("Footnotes", "Support", "Accessibility statement", "Cookies"))
+    dfe_footer(
+      links_list = c(
+        "Footnotes",
+        "Support",
+        "Accessibility statement",
+        "Cookies statement"
+      )
+    )
   )
 }

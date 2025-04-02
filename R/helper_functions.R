@@ -12,7 +12,11 @@
 # Note the advice on trying to keep to a maximum of 4 series in a single plot
 # AF colours package guidance here: https://best-practice-and-impact.github.io/afcolours/
 suppressMessages(
-  gss_colour_pallette <- afcolours::af_colours("categorical", colour_format = "hex", n = 4)
+  gss_colour_pallette <- afcolours::af_colours(
+    "categorical",
+    colour_format = "hex",
+    n = 4
+  )
 )
 
 # Custom footer ===============================================================
@@ -64,30 +68,36 @@ dfe_footer <- function(links_list) {
           shiny::tagList(
             shiny::div(
               class = "govuk-footer__meta-item govuk-footer__meta-item--grow",
-              shiny::tag("svg", list(
-                role = "presentation",
-                focusable = "false",
-                class = "govuk-footer__licence-logo",
-                xmlns = "http://www.w3.org/2000/svg",
-                viewbox = "0 0 483.2 195.7",
-                height = "17",
-                width = "41",
-                shiny::tag("path", list(
-                  fill = "currentColor",
-                  d = paste0(
-                    "M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7",
-                    "zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21",
-                    ".1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7",
-                    "-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1",
-                    "-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97",
-                    ".8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.",
-                    "7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8",
-                    "h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47",
-                    ".1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145",
-                    " 97.8 145"
+              shiny::tag(
+                "svg",
+                list(
+                  role = "presentation",
+                  focusable = "false",
+                  class = "govuk-footer__licence-logo",
+                  xmlns = "http://www.w3.org/2000/svg",
+                  viewbox = "0 0 483.2 195.7",
+                  height = "17",
+                  width = "41",
+                  shiny::tag(
+                    "path",
+                    list(
+                      fill = "currentColor",
+                      d = paste0(
+                        "M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7",
+                        "zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21",
+                        ".1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7",
+                        "-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1",
+                        "-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97",
+                        ".8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.",
+                        "7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8",
+                        "h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47",
+                        ".1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145",
+                        " 97.8 145"
+                      )
+                    )
                   )
-                ))
-              )),
+                )
+              ),
               shiny::tags$span(
                 class = "govuk-footer__licence-description",
                 "All content is available under the",
@@ -105,11 +115,10 @@ dfe_footer <- function(links_list) {
               class = "govuk-footer__meta-item",
               shiny::tags$a(
                 class = "govuk-footer__link govuk-footer__copyright-logo",
-                href =
-                  paste0(
-                    "https://www.nationalarchives.gov.uk/information-management/",
-                    "re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
-                  ),
+                href = paste0(
+                  "https://www.nationalarchives.gov.uk/information-management/",
+                  "re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+                ),
                 "\u00A9 Crown copyright"
               )
             )
@@ -121,9 +130,13 @@ dfe_footer <- function(links_list) {
 }
 
 # dfe reactable ===============================================================
-dfe_reactable <- function(data, on_click = NULL, selection = NULL,
-                          row_style = NULL, searchable = FALSE,
-                          default_page_size = 10) {
+dfe_reactable <- function(
+    data,
+    on_click = NULL,
+    selection = NULL,
+    row_style = NULL,
+    searchable = FALSE,
+    default_page_size = 10) {
   reactable(
     data,
 
@@ -148,14 +161,23 @@ dfe_reactable <- function(data, on_click = NULL, selection = NULL,
 dfe_contents_links <- function(links_list) {
   # Add the HTML around the link and make an id by snake casing
   create_sidelink <- function(link_text) {
-    tags$li("—", actionLink(tolower(gsub(" ", "_", link_text)), link_text, class = "contents_link"))
+    tags$li(
+      "—",
+      actionLink(
+        tolower(gsub(" ", "_", link_text)),
+        link_text,
+        `data-value` = link_text,
+        class = "contents_link"
+      )
+    )
   }
 
   # The HTML div to be returned
   tags$div(
     style = "position: sticky; top: 0.5rem; padding: 0.25rem;", # Make it stick!
     h2("Contents"),
-    tags$ol(
+    tags$ul(
+      id = "contents_links",
       style = "list-style-type: none; padding-left: 0; font-size: 1rem;", # remove the circle bullets
       lapply(links_list, create_sidelink)
     )
@@ -199,7 +221,8 @@ add_map_reset_button <- function(leaf, selectize_input_id = NULL) {
                 Shiny.setInputValue('%s_reset', Math.random());
               }
             }",
-            selectize_input_id, selectize_input_id
+            selectize_input_id,
+            selectize_input_id
           )
         )
       )
@@ -232,9 +255,14 @@ dfe_lad_map <- function(data, measure, input_id) {
 
   # Set a pop up
   hover_labels <- paste0(
-    "<strong>", data$lad_name, "</strong><br/>",
-    lapply(data$`Number of apprenticeships`, dfeR::pretty_num), " ", measure
-  ) %>% lapply(htmltools::HTML)
+    "<strong>",
+    data$lad_name,
+    "</strong><br/>",
+    lapply(data$`Number of apprenticeships`, dfeR::pretty_num),
+    " ",
+    measure
+  ) %>%
+    lapply(htmltools::HTML)
 
   # Create the map
   map <- leaflet(
@@ -266,7 +294,8 @@ dfe_lad_map <- function(data, measure, input_id) {
       layerId = ~lad_name # this is what value is returned when a user clicks on a polygon
     ) %>%
     # Add a legend to the map
-    addLegend("topright",
+    addLegend(
+      "topright",
       pal = pal_fun,
       values = ~ data[["Number of apprenticeships"]],
       title = firstup(measure)

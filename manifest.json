@@ -170,30 +170,6 @@
         "RemoteSha": "1.7-3"
       }
     },
-    "PKI": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "PKI",
-        "Version": "0.1-14",
-        "Title": "Public Key Infrastucture for R Based on the X.509 Standard",
-        "Author": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-        "Maintainer": "Simon Urbanek <Simon.Urbanek@r-project.org>",
-        "Depends": "R (>= 2.9.0), base64enc",
-        "Enhances": "gmp",
-        "Description": "Public Key Infrastucture functions such as verifying certificates, RSA encription and signing which can be used to build PKI infrastructure and perform cryptographic tasks.",
-        "License": "GPL-2 | GPL-3 | file LICENSE",
-        "URL": "http://www.rforge.net/PKI",
-        "SystemRequirements": "OpenSSL library and headers (openssl-dev or\nsimilar)",
-        "NeedsCompilation": "yes",
-        "Packaged": "2024-06-15 19:22:05 UTC; rforge",
-        "Repository": "RSPM",
-        "Date/Publication": "2024-06-15 19:40:02 UTC",
-        "Encoding": "UTF-8",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2024-06-16 04:59:25 UTC; windows",
-        "Archs": "x64"
-      }
-    },
     "R.cache": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -1957,43 +1933,6 @@
         "RemoteSha": "1.4.1"
       }
     },
-    "git2r": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Type": "Package",
-        "Package": "git2r",
-        "Title": "Provides Access to Git Repositories",
-        "Authors@R": "c(person(\"Stefan\", \"Widgren\", role = c(\"aut\", \"cre\"),\n                    email = \"stefan.widgren@gmail.com\",\n                    comment = c(ORCID = \"0000-0001-5745-2284\")),\n             person(\"Gabor\", \"Csardi\", role = \"ctb\"),\n             person(\"Gregory\", \"Jefferis\", role = \"ctb\"),\n             person(\"Jennifer\", \"Bryan\", role = \"ctb\"),\n             person(\"Jeroen\", \"Ooms\", role = \"ctb\"),\n             person(\"Jim\", \"Hester\", role = \"ctb\"),\n             person(\"John\", \"Blischak\", role = \"ctb\"),\n             person(\"Karthik\", \"Ram\", role = \"ctb\"),\n             person(\"Peter\", \"Carbonetto\", role = \"ctb\"),\n             person(\"Scott\", \"Chamberlain\", role = \"ctb\"),\n             person(\"Thomas\", \"Rosendal\", role = \"ctb\"))",
-        "Description": "Interface to the 'libgit2' library, which is a pure C\n    implementation of the 'Git' core methods. Provides access to 'Git'\n    repositories to extract data and running some basic 'Git'\n    commands.",
-        "Version": "0.36.2",
-        "License": "GPL-2",
-        "URL": "https://docs.ropensci.org/git2r/,\nhttps://github.com/ropensci/git2r",
-        "BugReports": "https://github.com/ropensci/git2r/issues",
-        "Imports": "graphics, utils",
-        "Depends": "R (>= 4.0)",
-        "Suggests": "getPass",
-        "NeedsCompilation": "yes",
-        "SystemRequirements": "libgit2 (>= 1.0) and its dependencies libssh2 and\nopenssl header and libraries.",
-        "Collate": "'blame.R' 'blob.R' 'branch.R' 'bundle_r_package.R'\n'checkout.R' 'commit.R' 'config.R' 'contributions.R'\n'credential.R' 'diff.R' 'fetch.R' 'git2r.R' 'index.R'\n'libgit2.R' 'merge.R' 'note.R' 'odb.R' 'plot.R' 'pull.R'\n'punch_card.R' 'push.R' 'reference.R' 'reflog.R' 'refspec.R'\n'remote.R' 'repository.R' 'reset.R' 'revparse.R' 'sha.R'\n'signature.R' 'stash.R' 'status.R' 'tag.R' 'time.R' 'tree.R'\n'when.R'",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.3.2",
-        "Packaged": "2025-03-29 09:17:55 UTC; stefan",
-        "Author": "Stefan Widgren [aut, cre] (<https://orcid.org/0000-0001-5745-2284>),\n  Gabor Csardi [ctb],\n  Gregory Jefferis [ctb],\n  Jennifer Bryan [ctb],\n  Jeroen Ooms [ctb],\n  Jim Hester [ctb],\n  John Blischak [ctb],\n  Karthik Ram [ctb],\n  Peter Carbonetto [ctb],\n  Scott Chamberlain [ctb],\n  Thomas Rosendal [ctb]",
-        "Maintainer": "Stefan Widgren <stefan.widgren@gmail.com>",
-        "Repository": "RSPM",
-        "Date/Publication": "2025-03-29 10:00:02 UTC",
-        "Built": "R 4.4.0; x86_64-w64-mingw32; 2025-03-30 04:32:02 UTC; windows",
-        "Archs": "x64",
-        "RemoteType": "standard",
-        "RemoteRef": "git2r",
-        "RemotePkgRef": "git2r",
-        "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "0.36.2"
-      }
-    },
     "gitcreds": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -3063,34 +3002,6 @@
         "RemoteSha": "4.2.8"
       }
     },
-    "packrat": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Type": "Package",
-        "Package": "packrat",
-        "Title": "A Dependency Management System for Projects and their R Package\nDependencies",
-        "Version": "0.9.2",
-        "Authors@R": "c(\n    person(\"Aron\", \"Atkins\", , \"aron@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Toph\", \"Allen\", role = \"aut\"),\n    person(\"Kevin\", \"Ushey\", role = \"aut\"),\n    person(\"Jonathan\", \"McPherson\", role = \"aut\"),\n    person(\"Joe\", \"Cheng\", role = \"aut\"),\n    person(\"JJ\", \"Allaire\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
-        "Description": "Manage the R packages your project depends on in an isolated,\n    portable, and reproducible way.",
-        "License": "GPL-2",
-        "URL": "https://github.com/rstudio/packrat",
-        "BugReports": "https://github.com/rstudio/packrat/issues",
-        "Depends": "R (>= 3.0.0)",
-        "Imports": "tools, utils",
-        "Suggests": "devtools, httr, knitr, mockery, rmarkdown, testthat (>=\n3.0.0)",
-        "Config/testthat/edition": "3",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.2.3",
-        "NeedsCompilation": "no",
-        "Packaged": "2023-09-05 11:45:33 UTC; aron",
-        "Author": "Aron Atkins [aut, cre],\n  Toph Allen [aut],\n  Kevin Ushey [aut],\n  Jonathan McPherson [aut],\n  Joe Cheng [aut],\n  JJ Allaire [aut],\n  Posit Software, PBC [cph, fnd]",
-        "Maintainer": "Aron Atkins <aron@posit.co>",
-        "Repository": "RSPM",
-        "Date/Publication": "2023-09-05 13:00:02 UTC",
-        "Built": "R 4.4.0; ; 2024-04-25 19:01:46 UTC; windows"
-      }
-    },
     "pillar": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -3911,44 +3822,6 @@
         "Repository": "RSPM",
         "Date/Publication": "2023-11-05 10:20:02 UTC",
         "Built": "R 4.4.0; ; 2024-04-25 19:45:07 UTC; windows"
-      }
-    },
-    "rsconnect": {
-      "Source": "CRAN",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Type": "Package",
-        "Package": "rsconnect",
-        "Title": "Deploy Docs, Apps, and APIs to 'Posit Connect', 'shinyapps.io',\nand 'RPubs'",
-        "Version": "1.3.4",
-        "Authors@R": "c(\n    person(\"Aron\", \"Atkins\", , \"aron@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Toph\", \"Allen\", role = \"aut\"),\n    person(\"Hadley\", \"Wickham\", role = \"aut\"),\n    person(\"Jonathan\", \"McPherson\", role = \"aut\"),\n    person(\"JJ\", \"Allaire\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
-        "Description": "Programmatic deployment interface for 'RPubs',\n    'shinyapps.io', and 'Posit Connect'. Supported content types include R\n    Markdown documents, Shiny applications, Plumber APIs, plots, and\n    static web content.",
-        "License": "GPL-2",
-        "URL": "https://rstudio.github.io/rsconnect/,\nhttps://github.com/rstudio/rsconnect",
-        "BugReports": "https://github.com/rstudio/rsconnect/issues",
-        "Depends": "R (>= 3.5.0)",
-        "Imports": "cli, curl, digest, jsonlite, lifecycle, openssl (>= 2.0.0),\nPKI, packrat (>= 0.6), renv (>= 1.0.0), rlang (>= 1.0.0),\nrstudioapi (>= 0.5), tools, yaml (>= 2.1.5)",
-        "Suggests": "Biobase, BiocManager, foreign, knitr, MASS, plumber (>=\n0.3.2), quarto, RCurl, reticulate, rmarkdown (>= 1.1), shiny,\ntestthat (>= 3.1.9), webfakes, withr",
-        "VignetteBuilder": "knitr, rmarkdown",
-        "Config/Needs/website": "tidyverse/tidytemplate",
-        "Config/testthat/edition": "3",
-        "Config/testthat/parallel": "true",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.3.1",
-        "NeedsCompilation": "no",
-        "Packaged": "2025-01-22 14:01:14 UTC; aron",
-        "Author": "Aron Atkins [aut, cre],\n  Toph Allen [aut],\n  Hadley Wickham [aut],\n  Jonathan McPherson [aut],\n  JJ Allaire [aut],\n  Posit Software, PBC [cph, fnd]",
-        "Maintainer": "Aron Atkins <aron@posit.co>",
-        "Repository": "CRAN",
-        "Date/Publication": "2025-01-22 14:30:02 UTC",
-        "Built": "R 4.4.2; ; 2025-01-24 16:46:56 UTC; windows",
-        "RemoteType": "standard",
-        "RemotePkgRef": "rsconnect",
-        "RemoteRef": "rsconnect",
-        "RemoteRepos": "https://cran.rstudio.com",
-        "RemoteReposName": "CRAN",
-        "RemotePkgPlatform": "source",
-        "RemoteSha": "1.3.4"
       }
     },
     "rstudioapi": {
@@ -5516,7 +5389,7 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "a12f800bff5bf27e4013104665b24ebb"
+      "checksum": "d54b331e5c9344104971c10f81a8f381"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5555,7 +5428,7 @@
       "checksum": "184a1e10174da9155838bb5fe237c105"
     },
     "global.R": {
-      "checksum": "22cda90fde833f702d0f33380e348ee5"
+      "checksum": "2d257db7e788974bc43d76ca2a143e48"
     },
     "google-analytics.html": {
       "checksum": "bfdb745c396a21f318e4642895f0d2a0"
@@ -5606,7 +5479,7 @@
       "checksum": "71d55aa8ff60818856109e87b8eda05b"
     },
     "renv.lock": {
-      "checksum": "d504363c983dbd70595d4f0ab0ce66b2"
+      "checksum": "5d1e3d730429a0b0aa445f44ba9ac677"
     },
     "server.R": {
       "checksum": "581456db873e855a644c9941bd3171c7"

@@ -87,5 +87,3 @@ site_primary <- "https://department-for-education.shinyapps.io/apprenticeships-p
 
 ## Google Analytics tracking
 google_analytics_key <- "XXXXXXXXXX" # TODO
-
-

@@ -1,9 +1,10 @@
 /***********
 Demographics Data for Apprenticeships Interactive Tool
-Updated by:      Alison Cooper - to include provider name rather than learner lad, and now to have 'low' rather than zeros for suppressed values
-Quarter:         Q1 (August to October) 2025
-Snapshot:        4  
+Updated by:      Jon Holman - to include provider name rather than learner lad, and now to have 'low' rather than zeros for suppressed values
+Quarter:         Q2 (August to January) 2025
+Snapshot:        6  
 Approx run time: 1-2 mins
+Rows:			62,040
 ***********/
 
 --Update
@@ -13,7 +14,7 @@ Approx run time: 1-2 mins
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 
-SET @CurrentSnapshot =  4 -- **UPDATE** for each quarter
+SET @CurrentSnapshot =  6 -- **UPDATE** for each quarter
 SET @CurrentYear = 202425 -- **UPDATE** for each academic year
 
 --Select latest IFA routes data

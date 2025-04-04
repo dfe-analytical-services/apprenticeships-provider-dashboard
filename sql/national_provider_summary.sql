@@ -1,18 +1,21 @@
 /***********
 National Provider Summary for Apprenticeships and Education & Training and community learning
-Updated by:      Mark Taylor
+Updated by:      Jon Holman
 Year:            2025
-Update period:   August to October
-Snapshot:        4 
+Update period:   Q2 August to January
+Snapshot:        6 
 Approx run time: 1-2 mins
+Rows:			 83,656
 ***********/
 --** Note for 2024/25 - you will need to update the year in the final table at the end of of this code, as well the year and snapshot immediately below.** MT 19/12/2024
 
 --Declare and set year and snapshot
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
+DECLARE @CurrentPeriod VARCHAR(25)
 SET @CurrentYear = 202425  -- **UPDATE** for each academic year
-SET @CurrentSnapshot =  4  -- **UPDATE** for each quarter
+SET @CurrentSnapshot =  6  -- **UPDATE** for each quarter
+SET @CurrentPeriod =  '2024/25 (Aug to Jan)'  -- **UPDATE** for each quarter
 
 --Select required fields for latest 3 years
 IF OBJECT_ID('tempdb..#PARTICIPATION') IS NOT NULL DROP TABLE #PARTICIPATION
@@ -384,7 +387,9 @@ ukprn  As UKPRN,
 category as 'Learner characteristic',
 case when apps in (0,1,2,3,4) then 0 else round(apps,-1) end as Apprenticeships,
 case when et   in (0,1,2,3,4) then 0 else round(et,-1)   end as 'Education and Training',
-case when [year] <> '2024/25 (Aug to Oct)' then 0  else tl   end as 'Tailored Learning', --update for each quarter
-case when [year]  = '2024/25 (Aug to Oct)' then 0  else cl   end as 'Community Learning' --update for each quarter
+--case when [year] <> '2024/25 (Aug to Jan)' then 0  else tl   end as 'Tailored Learning', --update for each quarter
+--case when [year]  = '2024/25 (Aug to Jan)' then 0  else cl   end as 'Community Learning' --update for each quarter
+case when [year] <> @CurrentPeriod then 0  else tl   end as 'Tailored Learning', --update for each quarter
+case when [year]  = @CurrentPeriod then 0  else cl   end as 'Community Learning' --update for each quarter
 FROM #ALL_FINAL
 ORDER BY [year] desc, order_ref, provider_name, order_detailed

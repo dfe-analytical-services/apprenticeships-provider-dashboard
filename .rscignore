@@ -7,3 +7,4 @@ data/national_provider_summary.csv
 README.html
 data/apprenticeships_data.csv
 data/apprenticeships_demographics.csv
+.hooks

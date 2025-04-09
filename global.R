@@ -58,10 +58,6 @@ if (FALSE) {
   # Code linting and styling
   shhh(library(lintr))
   shhh(library(styler))
-
-  # Pre commit hooks
-  shhh(library(rsconnect))
-  shhh(library(git2r))
 }
 
 # Source R scripts ============================================================
@@ -71,7 +67,10 @@ if (FALSE) {
 source("R/helper_functions.R")
 
 # Source all files in the dashboard modules and footer pages folders
-lapply(list.files("R/dashboard_modules/", full.names = TRUE, recursive = TRUE), source)
+lapply(
+  list.files("R/dashboard_modules/", full.names = TRUE, recursive = TRUE),
+  source
+)
 lapply(list.files("R/footer_pages/", full.names = TRUE), source)
 
 # Set global variables ========================================================
@@ -86,4 +85,4 @@ feedback_form_url <- "" # TODO
 site_primary <- "https://department-for-education.shinyapps.io/apprenticeships-provider-dashboard/"
 
 ## Google Analytics tracking
-google_analytics_key <- "XXXXXXXXXX" # TODO
+google_analytics_key <- "HQTQE5QDNS" # TODO

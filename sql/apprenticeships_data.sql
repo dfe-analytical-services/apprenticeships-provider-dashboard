@@ -1,17 +1,18 @@
 /***********
 Data for Apprenticeships Interactive Tool
-Updated by:      Alison Cooper
+Updated by:      Jon Holman
 Year:            2025
-Quarter:         Q1 (August to October)
-Snapshot:        4  
-Approx run time: 1-2 mins
+Quarter:         Q2 (August to January)
+Snapshot:        6  
+Approx run time: 5 mins
+Rows:			1,323,731
 ***********/
 
 
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 
-SET @CurrentSnapshot =  4 -- **UPDATE** for each quarter
+SET @CurrentSnapshot =  6 -- **UPDATE** for each quarter
 SET @CurrentYear = 202425 -- **UPDATE** for each academic year
 
 --Select latest IFA routes data

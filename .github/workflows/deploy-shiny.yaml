@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - development
+      - eesp/add_ga_token
   pull_request:
     branches:
       - main

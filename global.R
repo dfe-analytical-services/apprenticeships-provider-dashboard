@@ -66,6 +66,14 @@ if (FALSE) {
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 source("R/helper_functions.R")
 
+# Setting up fonts for charts to work across different platforms
+gdtools::register_gfont("Noto Sans")
+sysfonts::font_add_google("Noto Sans")
+showtext::showtext_auto()
+dfe_font <- "Noto Sans"
+message("Selected ", dfe_font, " for plots")
+
+
 # Source all files in the dashboard modules and footer pages folders
 lapply(
   list.files("R/dashboard_modules/", full.names = TRUE, recursive = TRUE),

@@ -29,6 +29,10 @@ shhh(library(ggiraph))
 shhh(library(leaflet))
 shhh(library(plotly))
 shhh(library(ggrepel))
+shhh(library(gfonts))
+shhh(library(gdtools))
+shhh(library(sysfonts))
+
 
 ## Data and string manipulation -----------------------------------------------
 shhh(library(arrow))

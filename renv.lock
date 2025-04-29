@@ -1447,7 +1447,7 @@
       "RemoteUsername": "dfe-analytical-services",
       "RemoteRepo": "dfeshiny",
       "RemoteRef": "bugfix/cookie-banner-margins",
-      "RemoteSha": "e6520800d2d425f17374eedec98179885424454a"
+      "RemoteSha": "6461dbdeceb007c8132a33e1d05e42ab2bda777e"
     },
     "diffobj": {
       "Package": "diffobj",

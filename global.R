@@ -71,11 +71,11 @@ if (FALSE) {
 source("R/helper_functions.R")
 
 # Setting up fonts for charts to work across different platforms
-gdtools::register_gfont("Noto Sans")
-sysfonts::font_add_google("Noto Sans")
+gdtools::register_gfont("Roboto")
+sysfonts::font_add_google("Roboto")
 showtext::showtext_auto()
-dfe_font <- "Noto Sans"
-message("Selected ", dfe_font, " for plots")
+dfe_font <- "Roboto"
+message("Selected ", dfe_font, " font for plots")
 
 
 # Source all files in the dashboard modules and footer pages folders

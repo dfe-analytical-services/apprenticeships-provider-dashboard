@@ -14,8 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      packages: write
+      actions: write
       contents: read
+      packages: write
+      pull-requests: write
       security-events: write
       
     container:

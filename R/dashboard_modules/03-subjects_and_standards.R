@@ -359,9 +359,10 @@ subject_standards_server <- function(id) {
               panel.grid = element_blank(),
               panel.grid.minor = element_blank(),
               panel.grid.major.x = element_blank(),
-              axis.title.x = element_text(family = "Arial", size = 10, face = "bold", margin = margin(t = 10)),
-              axis.text.x = element_text(family = "Arial", size = 10),
-              axis.text.y = element_text(family = "Arial", size = 10)
+              axis.title.x = element_text(size = 10, face = "bold", margin = margin(t = 10)),
+              axis.text.x = element_text(size = 10),
+              axis.text.y = element_text(size = 10),
+              text = element_text(family = dfe_font)
             ),
         options = list(
           # Set styling for bars on hover and when selected
@@ -378,7 +379,7 @@ subject_standards_server <- function(id) {
             hidden = c("lasso_select", "lasso_deselect")
           )
         ),
-        fonts = list(sans = "Arial")
+        fonts = list(sans = dfe_font)
       )
     })
 

@@ -337,9 +337,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               panel.grid = element_blank(),
               panel.grid.minor = element_blank(),
               panel.grid.major.x = element_blank(),
-              axis.title.x = element_text(family = "Arial", size = 10, face = "bold", margin = margin(t = 10)),
-              axis.text.x = element_text(family = "Arial", size = 10),
-              axis.text.y = element_text(family = "Arial", size = 10)
+              axis.title.x = element_text(size = 10, face = "bold", margin = margin(t = 10)),
+              axis.text.x = element_text(size = 10),
+              axis.text.y = element_text(size = 10),
+              text = element_text(family = dfe_font)
             ),
         # TODO: break out custom options to function to reuse for dfeshiny
         options = list(
@@ -358,7 +359,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
           )
         ),
-        fonts = list(sans = "Arial")
+        fonts = list(sans = dfe_font)
       )
     )
 

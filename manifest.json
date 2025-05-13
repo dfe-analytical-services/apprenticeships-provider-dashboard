@@ -5687,6 +5687,9 @@
     ".RDataTmp14": {
       "checksum": "0c2722c134860789098752c8c3c8c547"
     },
+    ".RDataTmp15": {
+      "checksum": "da0d8a8a178983c60e5d231a82da35b5"
+    },
     ".RDataTmp2": {
       "checksum": "735e0a649eba0b974e2f6df560385d64"
     },
@@ -5712,7 +5715,7 @@
       "checksum": "a775eb3b0bd5cbe54a0f3516b8644f75"
     },
     ".Rprofile": {
-      "checksum": "a8aa60a546c1577b732f1b51200ae52b"
+      "checksum": "017e7f5871133a3ab71e8dcc32b25816"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5760,7 +5763,7 @@
       "checksum": "97ec6733827815344b136d0b501bd2e6"
     },
     "global.R": {
-      "checksum": "eba0d6035bec7e9fe20ebdddaf24959e"
+      "checksum": "38279e1eb919df58999c176948ce7f0b"
     },
     "google-analytics.html": {
       "checksum": "da6185683f6f64e42e26f05af89ada16"
@@ -5799,7 +5802,7 @@
       "checksum": "31cfd48326394580dd86f928cd697d39"
     },
     "R/footer_pages/footnotes_page.R": {
-      "checksum": "2e31b5ce9fa95fe2d97d763715c666f3"
+      "checksum": "a853f531c52079901cb148a689c12842"
     },
     "R/footer_pages/support_page.R": {
       "checksum": "4fb06508719a86445bed410f6640a071"

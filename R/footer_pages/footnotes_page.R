@@ -9,27 +9,27 @@ footnote_year_2 <- footnote_years[2]
 footnote_year_3 <- footnote_years[3]
 
 
-if (substr(most_recent_year_months, 10, 19) == "Aug to Oct") {
+if (substr(footnote_most_recent_year_months, 10, 19) == "Aug to Oct") {
   footnote_months <- "cover the year to date (i.e. cumulative data for the 3 months from 1 August to 31 October)."
   provisional_final <- "provisional"
 }
 
-if (substr(most_recent_year_months, 10, 19) == "Aug to Jan") {
+if (substr(footnote_most_recent_year_months, 10, 19) == "Aug to Jan") {
   footnote_months <- "cover the year to date (i.e. cumulative data for the 6 months from 1 August to 31 January)."
   provisional_final <- "provisional"
 }
 
-if (substr(most_recent_year_months, 10, 19) == "Aug to Apr") {
+if (substr(footnote_most_recent_year_months, 10, 19) == "Aug to Apr") {
   footnote_months <- "cover the year to date (i.e. cumulative data for the 9 months from 1 August to 30 April)."
   provisional_final <- "provisional"
 }
 
-if (substr(most_recent_year_months, 10, 19) == "") {
+if (substr(footnote_most_recent_year_months, 10, 19) == "") {
   footnote_months <- "cover the whole year (i.e. data from August to July). "
   provisional_final <- "final"
 }
 
-footnote_most_recent_year <- substr(most_recent_year_months, 1, 7)
+footnote_most_recent_year <- substr(footnote_most_recent_year_months, 1, 7)
 
 
 

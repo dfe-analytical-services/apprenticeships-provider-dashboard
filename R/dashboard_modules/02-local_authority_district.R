@@ -114,8 +114,8 @@ lad_ui <- function(id) {
               "This will download data for all local authority districts based on the ",
               "year and provider selected. The XLSX format is designed for use in Microsoft Excel."
             ),
-            choices = c("CSV (Up to 15.89 MB)", "XLSX (Up to 5.97 MB)"),
-            selected = "CSV (Up to 15.89 MB)"
+            choices = c("CSV (Up to 16.66 MB)", "XLSX (Up to 5.97 MB)"),
+            selected = "CSV (Up to 16.66 MB)"
           ),
           downloadButton(
             NS(id, "download_data"),
@@ -358,7 +358,7 @@ lad_server <- function(id) {
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0("lad-", input$year, "-", input$provider)
-        extension <- if (input$file_type == "CSV (Up to 15.89 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 16.66 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -367,9 +367,9 @@ lad_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 15.89 MB)" & input$provider == "") {
+        if (input$file_type == "CSV (Up to 16.66 MB)" & input$provider == "") {
           data.table::fwrite(map_data(), file)
-        } else if (input$file_type == "CSV (Up to 15.89 MB)" & input$provider != "") {
+        } else if (input$file_type == "CSV (Up to16.66 MB)" & input$provider != "") {
           data.table::fwrite(map_data() %>%
             filter(year %in% input$year) %>%
             filter(provider_name %in% input$provider), file)

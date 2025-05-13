@@ -84,8 +84,8 @@ prov_breakdowns_ui <- function(id) {
                 "This will download data for all providers related to the options selected.",
                 " The XLSX format is designed for use in Microsoft Excel."
               ),
-              choices = c("CSV (Up to 7.82 MB)", "XLSX (Up to 1.96 MB)"),
-              selected = "CSV (Up to 7.82 MB)"
+              choices = c("CSV (Up to 7.83 MB)", "XLSX (Up to 1.96 MB)"),
+              selected = "CSV (Up to 7.83 MB)"
             ),
             downloadButton(
               NS(id, "download_data"),
@@ -402,7 +402,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$year, "-", input$level, "-", input$age, "-provider_breakdowns")
-        extension <- if (input$file_type == "CSV (Up to 7.82 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 7.83 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -411,7 +411,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 7.82 MB)") {
+        if (input$file_type == "CSV (Up to 7.83 MB)") {
           data.table::fwrite(filtered_raw_data(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

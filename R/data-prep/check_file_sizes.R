@@ -36,12 +36,12 @@ if (!is.null(prov_breakdowns_parquet)) {
 
   openxlsx::write.xlsx(
     prov_breakdowns_parquet %>%
-      filter(year == "2024/25 (Aug to Oct)") %>%
+      filter(year == "2024/25 (Aug to Jan)") %>%
       collect(),
     "data/test.xlsx",
     colWidths = "auto"
   )
-  data.table::fwrite(prov_breakdowns_parquet %>% filter(year == "2024/25 (Aug to Oct)") %>% collect(), "data/test.csv")
+  data.table::fwrite(prov_breakdowns_parquet %>% filter(year == "2024/25 (Aug to Jan)") %>% collect(), "data/test.csv")
 
   # Print the file sizes to console
   message("Max XLSX breakdown file size: ", dfeR::pretty_filesize(file.size("data/test.xlsx")))
@@ -92,12 +92,12 @@ if (!is.null(lad_map_parquet)) {
   # Create example files without any filters (so the maximum a user could download)
   openxlsx::write.xlsx(
     lad_map_parquet %>%
-      filter(year == "2024/25 (Aug to Oct)") %>%
+      filter(year == "2024/25 (Aug to Jan)") %>%
       collect(),
     "data/test.xlsx",
     colWidths = "auto"
   )
-  data.table::fwrite(lad_map_parquet %>% filter(year == "2024/25 (Aug to Oct)") %>% collect(), "data/test.csv")
+  data.table::fwrite(lad_map_parquet %>% filter(year == "2024/25 (Aug to Jan)") %>% collect(), "data/test.csv")
 
   # Print the file sizes to console
   message("Max XLSX LAD file size: ", dfeR::pretty_filesize(file.size("data/test.xlsx")))
@@ -152,12 +152,12 @@ if (!is.null(sas_parquet)) {
   # Create example files without any filters (so the maximum a user could download)
   openxlsx::write.xlsx(
     sas_parquet %>%
-      filter(year == "2024/25 (Aug to Oct)") %>%
+      filter(year == "2024/25 (Aug to Jan)") %>%
       collect(),
     "data/test.xlsx",
     colWidths = "auto"
   )
-  data.table::fwrite(sas_parquet %>% filter(year == "2024/25 (Aug to Oct)") %>% collect(), "data/test.csv")
+  data.table::fwrite(sas_parquet %>% filter(year == "2024/25 (Aug to Jan)") %>% collect(), "data/test.csv")
 
   # Print the file sizes to console
   message("Max XLSX LAD file size: ", dfeR::pretty_filesize(file.size("data/test.xlsx")))
@@ -204,11 +204,11 @@ if (!is.null(chars_parquet)) {
   file.remove("data/chars_full.csv")
 
   openxlsx::write.xlsx(chars_parquet %>%
-    filter(year == "2024/25 (Aug to Oct)") %>%
+    filter(year == "2024/25 (Aug to Jan)") %>%
     filter(measure == "Starts") %>%
     collect(), "data/chars_full.xlsx", colWidths = "auto")
   data.table::fwrite(chars_parquet %>%
-    filter(year == "2024/25 (Aug to Oct)") %>%
+    filter(year == "2024/25 (Aug to Jan)") %>%
     filter(measure == "Starts") %>%
     collect(), "data/chars_full.csv")
   # Print the file sizes to console

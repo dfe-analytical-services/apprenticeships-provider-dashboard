@@ -4,32 +4,32 @@ footnote_years <- sort(data_choices(data = prov_breakdowns_parquet, column = "ye
 )
 
 footnote_years <- unlist(footnote_years)
-footnote_most_recent_year_months <- footnote_years[1]
+footnote_most_recent_yr_mth <- footnote_years[1]
 footnote_year_2 <- footnote_years[2]
 footnote_year_3 <- footnote_years[3]
 
 
-if (substr(footnote_most_recent_year_months, 10, 19) == "Aug to Oct") {
+if (substr(footnote_most_recent_yr_mth, 10, 19) == "Aug to Oct") {
   footnote_months <- "cover the year to date (i.e. cumulative data for the 3 months from 1 August to 31 October)."
   provisional_final <- "provisional"
 }
 
-if (substr(footnote_most_recent_year_months, 10, 19) == "Aug to Jan") {
+if (substr(footnote_most_recent_yr_mth, 10, 19) == "Aug to Jan") {
   footnote_months <- "cover the year to date (i.e. cumulative data for the 6 months from 1 August to 31 January)."
   provisional_final <- "provisional"
 }
 
-if (substr(footnote_most_recent_year_months, 10, 19) == "Aug to Apr") {
+if (substr(footnote_most_recent_yr_mth, 10, 19) == "Aug to Apr") {
   footnote_months <- "cover the year to date (i.e. cumulative data for the 9 months from 1 August to 30 April)."
   provisional_final <- "provisional"
 }
 
-if (substr(footnote_most_recent_year_months, 10, 19) == "") {
+if (substr(footnote_most_recent_yr_mth, 10, 19) == "") {
   footnote_months <- "cover the whole year (i.e. data from August to July). "
   provisional_final <- "final"
 }
 
-footnote_most_recent_year <- substr(footnote_most_recent_year_months, 1, 7)
+footnote_most_recent_year <- substr(footnote_most_recent_yr_mth, 1, 7)
 
 
 
@@ -59,7 +59,8 @@ footnotes_page <- function() {
               apprenticeship.  Age for enrolments is based on the learner's age at 31 August of the academic year."),
       tags$li(paste0(
         "Figures for ", footnote_most_recent_year, " are ", provisional_final, " and ", footnote_months,
-        " Those for ", footnote_year_2, " and ", footnote_year_3, " are final and cover the full academic year (1 August to 31 July)."
+        " Those for ", footnote_year_2, " and ", footnote_year_3, " are final and cover the full academic year
+        (1 August to 31 July)."
       )),
       tags$li(
         "For more data and information on these statistics please refer to the department's main ",

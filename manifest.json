@@ -5715,7 +5715,7 @@
       "checksum": "a775eb3b0bd5cbe54a0f3516b8644f75"
     },
     ".Rprofile": {
-      "checksum": "513a492b577507a4de5c7e4835d66e18"
+      "checksum": "397c85ed50f1dd8c3621e5efe496e322"
     },
     "azure-pipelines.yml": {
       "checksum": "1dd237db3691665ae9b9b2150087ac75"
@@ -5802,13 +5802,13 @@
       "checksum": "31cfd48326394580dd86f928cd697d39"
     },
     "R/footer_pages/footnotes_page.R": {
-      "checksum": "a853f531c52079901cb148a689c12842"
+      "checksum": "9b5e71db3febfe97cd5ca6f894094fc3"
     },
     "R/footer_pages/support_page.R": {
       "checksum": "4fb06508719a86445bed410f6640a071"
     },
     "R/helper_functions.R": {
-      "checksum": "393a0699bba5d06e5c3b58a9825ac16a"
+      "checksum": "beb4c3ae7ee02da07e4ca6921ed2a059"
     },
     "README.md": {
       "checksum": "71d55aa8ff60818856109e87b8eda05b"

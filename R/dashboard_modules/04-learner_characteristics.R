@@ -59,7 +59,7 @@ learner_characteristics_ui <- function(id) {
           inputId = NS(id, "year"),
           label = "Select academic year",
           choices = c(chars_year_choices),
-          selected = "2023/24 (Q3 Aug to Apr)"
+          selected = "2024/25 (Aug to Jan)"
         ),
         selectInput(
           inputId = NS(id, "measure"),
@@ -100,8 +100,8 @@ learner_characteristics_ui <- function(id) {
           that provider and selections. Selecting Total (all providers) will download
           data for all providers relating to the selected year and measure.
           The XLSX format is designed for use in Microsoft Excel.",
-          choices = c("CSV (Up to 2.13 MB)", "XLSX (Up to 586.74 KB)"),
-          selected = "CSV (Up to 2.13 MB)"
+          choices = c("CSV (Up to 2.14 MB)", "XLSX (Up to 586.74 KB)"),
+          selected = "CSV (Up to 2.14 MB)"
         ),
         # Bit of a hack to force the button not to be full width
         layout_columns(
@@ -468,7 +468,7 @@ learner_characteristics_server <- function(id) {
           input$provider, "-", input$year, "-", input$measure, "-",
           input$characteristic_type, "-learner-characteristics-provider-summary"
         )
-        extension <- if (input$file_type == "CSV (Up to 2.13 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 2.14 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -477,9 +477,9 @@ learner_characteristics_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 2.13 MB)" & input$provider != "Total (All providers)") {
+        if (input$file_type == "CSV (Up to 2.14 MB)" & input$provider != "Total (All providers)") {
           data.table::fwrite(chars_reactive_table(), file)
-        } else if (input$file_type == "CSV (Up to 2.13 MB)" & input$provider == "Total (All providers)") {
+        } else if (input$file_type == "CSV (Up to 2.14 MB)" & input$provider == "Total (All providers)") {
           data.table::fwrite(chars_parquet %>%
             filter(year %in% input$year) %>%
             filter(measure %in% input$measure), file)

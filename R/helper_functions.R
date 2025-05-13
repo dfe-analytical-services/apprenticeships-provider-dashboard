@@ -301,7 +301,6 @@ dfe_lad_map <- function(data, measure, input_id) {
       title = firstup(measure)
     ) %>%
     add_map_reset_button(selectize_input_id = input_id) # add a reset button
-
   return(map)
 }
 

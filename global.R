@@ -91,7 +91,7 @@ parent_pub_name <- "Apprenticeships"
 parent_publication <- "https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships"
 team_email <- "fe.officialstatistics@education.gov.uk"
 repo_name <- "https://github.com/dfe-analytical-services/apprenticeships-provider-dashboard"
-feedback_form_url <- "" # TODO
+feedback_form_url <- "https://forms.office.com/e/wL1aV83LAn"
 
 ## Set the URLs that the site will be published to
 site_primary <- "https://department-for-education.shinyapps.io/apprenticeships-provider-dashboard/"

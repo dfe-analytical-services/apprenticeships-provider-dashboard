@@ -64,13 +64,8 @@ ui <- function(input, output, session) {
     ),
 
     ## Header -----------------------------------------------------------------
-    shinyGovstyle::header(
-      main_text = "",
-      main_link = "https://www.gov.uk/government/organisations/department-for-education",
-      secondary_text = "Apprenticeships provider dashboard",
-      logo = "images/DfE_logo_landscape.png",
-      logo_width = 150,
-      logo_height = 32
+    dfeshiny::header(
+      header = "Apprenticeships provider dashboard"
     ),
 
     ## Beta banner ------------------------------------------------------------

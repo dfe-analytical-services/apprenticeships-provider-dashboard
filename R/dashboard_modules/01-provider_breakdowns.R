@@ -72,7 +72,10 @@ prov_breakdowns_ui <- function(id) {
             "Tables",
             bslib::layout_column_wrap(
               reactable::reactableOutput(NS(id, "delivery_region")),
-              reactable::reactableOutput(NS(id, "home_region"))
+              actionButton(inputId = "clear_reactable", label = "Clear Selection"), # put this in UI part
+
+              reactable::reactableOutput(NS(id, "home_region")),
+              actionButton(inputId = "clear_reactable", label = "Clear Selection") # put this in UI part
             )
           ),
           nav_panel(
@@ -342,7 +345,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               axis.text.y = element_text(size = 10),
               text = element_text(family = dfe_font)
             ),
-        # TODO: break out custom options to function to reuse for dfeshiny
         options = list(
           # Turn off toolbar options (as they're bad for accessibility / confusing for users)
           ggiraph::opts_toolbar(

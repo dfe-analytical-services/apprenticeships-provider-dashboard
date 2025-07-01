@@ -203,6 +203,7 @@ lad_server <- function(id) {
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
+        rename(`Provider name` = provider_name) %>%
         collect()
 
       return(prov_selection_table)

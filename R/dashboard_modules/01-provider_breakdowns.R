@@ -23,6 +23,7 @@ prov_breakdowns_ui <- function(id) {
   div(
     # Page header =============================================================
     h1("Provider breakdowns"),
+    p("Select options from the top first, before providers. Selections from the top will reset the providers chosen."),
     # User selection area ===================================================
     column(
       width = 12,
@@ -63,19 +64,17 @@ prov_breakdowns_ui <- function(id) {
         card(reactable::reactableOutput(NS(id, "prov_selection"))),
         ## Tabs on right --------------------------------------------------------
         navset_card_tab(
-          id = "provider_breakdown_tabs",
+          id = "main_col",
           nav_panel(
             "Bar chart",
+            "Select and deselect delivery and learner home regions using the buttons in the table.",
             girafeOutput(NS(id, "regions_bar")),
           ),
           nav_panel(
             "Tables",
             bslib::layout_column_wrap(
               reactable::reactableOutput(NS(id, "delivery_region")),
-              actionButton(inputId = "clear_reactable", label = "Clear Selection"), # put this in UI part
-
               reactable::reactableOutput(NS(id, "home_region")),
-              actionButton(inputId = "clear_reactable", label = "Clear Selection") # put this in UI part
             )
           ),
           nav_panel(

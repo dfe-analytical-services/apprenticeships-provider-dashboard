@@ -10,6 +10,7 @@ sas_subject_choices <- data_choices(data = sas_parquet, column = "ssa_t1_desc")
 sas_measure_choices <- data_choices(data = sas_parquet, column = "measure")
 sas_level_choices <- data_choices(data = sas_parquet, column = "apps_Level")
 sas_provider_choices <- sort(data_choices(data = sas_parquet, column = "provider_name"))
+sas_standard_choices <- sort(data_choices(data = sas_parquet, column = "std_fwk_name"))
 
 # Creating a table of levels and subjects to standards so we can filter the
 # standards options based on level and subject selection
@@ -21,6 +22,9 @@ sas_standard_table <- sas_parquet |>
 subjects_standards_ui <- function(id) {
   div(
     h1("Subjects and standards"),
+    p("Select options as required. If you select a standard before level(s) and subject(s),
+      it will default to a list of standards relating to the level and subject. The standard required
+      can then be reselected."),
     div(
       class = "well",
       style = "min-height: 100%; height: 100%; overflow-y: visible;",
@@ -49,6 +53,7 @@ subjects_standards_ui <- function(id) {
       style = "min-height: 100%; height: 100%; overflow-y: visible;",
       bslib::layout_column_wrap(
         width = "15rem", # Minimum width for each input box before wrapping
+        heights_equal = "row",
         selectizeInput(
           inputId = NS(id, "provider"),
           label = NULL,
@@ -64,7 +69,7 @@ subjects_standards_ui <- function(id) {
         ),
         selectizeInput(
           inputId = NS(id, "standard"),
-          label = "Search for standard",
+          label = NULL,
           choices = NULL,
           multiple = TRUE,
           options = list(maxOptions = 6000)
@@ -149,10 +154,11 @@ subject_standards_server <- function(id) {
           unique()
       }
     })
-
     # Ensure the level/subject is based on a selection in the standard dropdown
     # if there is one
     observeEvent(input$standard, {
+      remember_standard <- input$standard
+
       relevant_level <- sas_standard_table %>%
         filter(std_fwk_name %in% input$standard) %>%
         pull(apps_Level)
@@ -162,6 +168,22 @@ subject_standards_server <- function(id) {
         filter(std_fwk_name %in% input$standard) %>%
         pull(ssa_t1_desc)
       updateSelectizeInput(session, "subject", selected = relevant_subject)
+
+      updateSelectizeInput(session, "standard", selected = remember_standard)
+    })
+
+    observeEvent(input$subject, {
+      relevant_standard <- sas_standard_table %>%
+        filter(ssa_t1_desc %in% input$subject) %>%
+        pull(std_fwk_name)
+      updateSelectizeInput(session, "standard", selected = relevant_standard)
+    })
+
+    observeEvent(input$level, {
+      relevant_standard <- sas_standard_table %>%
+        filter(apps_Level %in% input$level) %>%
+        pull(std_fwk_name)
+      updateSelectizeInput(session, "standard", selected = relevant_standard)
     })
 
     # This dropdown needs to watch (observe) and update when a level
@@ -172,7 +194,6 @@ subject_standards_server <- function(id) {
         inputId = "standard",
         label = "Search for standard",
         choices = sas_std_choices(),
-        heights_equal = "row",
         server = TRUE
       )
     })
@@ -183,9 +204,11 @@ subject_standards_server <- function(id) {
       inputId = "provider",
       label = "Search for providers",
       choices = sas_provider_choices,
-      heights_equal = "row",
       server = TRUE
     )
+
+
+
 
     # Reactive data ===========================================================
     # Filter subject area data set based on inputs on this page. This reactive
@@ -290,7 +313,6 @@ subject_standards_server <- function(id) {
             ) %>%
             ggplot(
               aes(
-                #  x = reorder(as.factor(ssa_t1_desc), values),
                 x = reorder(as.factor(ssa_t1_desc), values),
                 y = values,
                 tooltip = paste0(
@@ -334,11 +356,11 @@ subject_standards_server <- function(id) {
             type = "multiple",
             selected = input$subject,
             css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
-          ) # ,
-          # ggiraph::opts_toolbar(
-          #  saveaspng = FALSE#,
-          # hidden = c("lasso_select", "lasso_deselect")
-          # )
+          ),
+          ggiraph::opts_toolbar(
+            saveaspng = FALSE,
+            hidden = c("lasso_select", "lasso_deselect")
+          )
         ),
         fonts = list(sans = dfe_font)
       )

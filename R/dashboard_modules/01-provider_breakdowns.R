@@ -23,6 +23,7 @@ prov_breakdowns_ui <- function(id) {
   div(
     # Page header =============================================================
     h1("Provider breakdowns"),
+    p("Select options from the top first, before providers. Selections from the top will reset the providers chosen."),
     # User selection area ===================================================
     column(
       width = 12,
@@ -63,16 +64,17 @@ prov_breakdowns_ui <- function(id) {
         card(reactable::reactableOutput(NS(id, "prov_selection"))),
         ## Tabs on right --------------------------------------------------------
         navset_card_tab(
-          id = "provider_breakdown_tabs",
+          id = "main_col",
           nav_panel(
             "Bar chart",
+            "Select and deselect delivery and learner home regions using the buttons in the table.",
             girafeOutput(NS(id, "regions_bar")),
           ),
           nav_panel(
             "Tables",
             bslib::layout_column_wrap(
               reactable::reactableOutput(NS(id, "delivery_region")),
-              reactable::reactableOutput(NS(id, "home_region"))
+              reactable::reactableOutput(NS(id, "home_region")),
             )
           ),
           nav_panel(
@@ -342,7 +344,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               axis.text.y = element_text(size = 10),
               text = element_text(family = dfe_font)
             ),
-        # TODO: break out custom options to function to reuse for dfeshiny
         options = list(
           # Turn off toolbar options (as they're bad for accessibility / confusing for users)
           ggiraph::opts_toolbar(

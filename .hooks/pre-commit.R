@@ -98,8 +98,17 @@ if (any(style_output)) {
   message("\n")
 }
 
+
+
 message("4. Generating new manifest.json for internal deployment...\n")
-if (system.file(package = "rsconnect") != "" & system.file(package = "git2r") != "") {
+if (system.file(package = "git2r") != "") {
+  renv::install("git2r")
+}
+if (system.file(package = "rsconnect") != "") {
+  renv::install("rsconnect")
+}
+
+if (system.file(package = "rsconnect") != "") {
   if (!any(grepl("manifest.json", git2r::status()))) {
     rsconnect::writeManifest()
     git2r::add(path = "manifest.json")

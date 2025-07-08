@@ -1,8 +1,8 @@
 /***********
 Demographics Data for Apprenticeships Interactive Tool
 Updated by:      Jon Holman - to include provider name rather than learner lad, and now to have 'low' rather than zeros for suppressed values
-Quarter:         Q2 (August to January) 2025
-Snapshot:        6  
+Quarter:         Q3 (August to Apr) 2025
+Snapshot:        10  
 Approx run time: 1-2 mins
 Rows:			62,040
 ***********/
@@ -11,10 +11,12 @@ Rows:			62,040
 --Demographic info fields sex, age group  ethnicity_major and lldd.
 --MT 27/02/2024
 
+SET ANSI_PADDING OFF SET NOCOUNT ON;
+
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 
-SET @CurrentSnapshot =  6 -- **UPDATE** for each quarter
+SET @CurrentSnapshot =  10 -- **UPDATE** for each quarter
 SET @CurrentYear = 202425 -- **UPDATE** for each academic year
 
 --Select latest IFA routes data

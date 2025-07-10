@@ -167,7 +167,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         rename("Provider name" = provider_name) %>%
-        rename_with(~ paste("Number of", firstlow(input$measure)), `number`) %>%
+        rename_with(~ paste(input$measure), `number`) %>%
         collect()
 
       return(prov_selection_table)
@@ -327,7 +327,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               "Delivery" = afcolours::af_colours(n = 4)[4]
             )) +
             # Format the x-axis numbers (using the Y function as we've flipped to horizontal!)
-            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
             # Wrap y-axis labels (set so East of England and longer will wrap onto multiple lines)
             scale_x_discrete(labels = function(x) str_wrap(x, width = 13)) +
             # Custom theme
@@ -378,7 +381,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     output$delivery_region <- renderReactable({
       dfe_reactable(
         delivery_region_table() |>
-          rename_with(~ paste("Number of", firstlow(input$measure)), `number`),
+          rename_with(~ paste(input$measure), `number`),
         on_click = "select",
         selection = "single",
         row_style = list(cursor = "pointer")
@@ -388,7 +391,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     output$home_region <- renderReactable({
       dfe_reactable(
         home_region_table() |>
-          rename_with(~ paste("Number of", firstlow(input$measure)), `number`),
+          rename_with(~ paste(input$measure), `number`),
         on_click = "select",
         selection = "single",
         row_style = list(cursor = "pointer")

@@ -77,7 +77,7 @@ learner_characteristics_ui <- function(id) {
       nav_panel(
         "Charts",
         layout_columns(
-          col_widths = c(3, 3, 3, 3),
+          col_widths = c(6, 6),
           girafeOutput(NS(id, "age_bar_plot")),
           girafeOutput(NS(id, "sex_bar_plot")),
           girafeOutput(NS(id, "lldd_bar_plot")),

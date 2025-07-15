@@ -330,7 +330,10 @@ subject_standards_server <- function(id) {
             coord_flip() +
             xlab("") +
             ylab(input$measure) +
-            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
             scale_x_discrete(
               labels = function(x) str_wrap(x, width = 30),
               drop = FALSE

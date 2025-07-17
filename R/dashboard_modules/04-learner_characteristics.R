@@ -77,7 +77,7 @@ learner_characteristics_ui <- function(id) {
       nav_panel(
         "Charts",
         layout_columns(
-          col_widths = c(3, 3, 3, 3),
+          col_widths = c(6, 6),
           girafeOutput(NS(id, "age_bar_plot")),
           girafeOutput(NS(id, "sex_bar_plot")),
           girafeOutput(NS(id, "lldd_bar_plot")),
@@ -205,7 +205,10 @@ learner_characteristics_server <- function(id) {
             labs(title = "Age") +
             xlab("") +
             ylab("") +
-            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
             scale_x_discrete(
               labels = function(x) str_wrap(x, width = 10),
               limit = rev(chars_age_choices)
@@ -332,7 +335,10 @@ learner_characteristics_server <- function(id) {
             labs(title = "Learner with learning difficulties\nor disabilities (LLDD)") +
             xlab("") +
             ylab("") +
-            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
             scale_x_discrete(
               labels = function(x) str_wrap(x, width = 10),
               limit = rev(chars_lldd_choices)
@@ -406,7 +412,10 @@ learner_characteristics_server <- function(id) {
             labs(title = "Ethnicity") +
             xlab("") +
             ylab("") +
-            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
             scale_x_discrete(limit = rev(if_else(nchar(as.character(chars_ethnicity_choices)) > 10,
               substr(chars_ethnicity_choices, 1, 5), chars_ethnicity_choices
             ))) +

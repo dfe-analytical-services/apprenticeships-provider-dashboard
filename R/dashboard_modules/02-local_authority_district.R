@@ -1,7 +1,11 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
 lad_map_parquet <- arrow::read_parquet("data/lad_map_data_0.parquet") %>%
-  select(year, provider_name, learner_home_lad, delivery_lad, starts, achievements, enrolments)
+  select(year, provider_name, learner_home_lad, delivery_lad, starts, achievements, enrolments) %>%
+  rename(
+    `Learner home LAD` = learner_home_lad,
+    `Delivery LAD` = delivery_lad
+  )
 
 # Read in boundary files
 lad_boundaries_2024 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
@@ -23,10 +27,10 @@ provider_choices <- c("", distinct(lad_map_parquet, provider_name) %>% pull())
 # Providers should be in alphabetical order
 provider_choices <- sort(provider_choices)
 
-delivery_lad_choices <- c("", distinct(lad_map_parquet, delivery_lad) %>% pull())
+delivery_lad_choices <- c("", distinct(lad_map_parquet, `Delivery LAD`) %>% pull())
 delivery_lad_choices <- sort(delivery_lad_choices)
 
-learner_home_lad_choices <- c("", distinct(lad_map_parquet, learner_home_lad) %>% pull())
+learner_home_lad_choices <- c("", distinct(lad_map_parquet, `Learner home LAD`) %>% pull())
 learner_home_lad_choices <- sort(learner_home_lad_choices)
 
 # Main module code ============================================================
@@ -188,12 +192,12 @@ lad_server <- function(id) {
 
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
-        prov_selection_table <- prov_selection_table %>% filter(delivery_lad == input$delivery_lad)
+        prov_selection_table <- prov_selection_table %>% filter(`Delivery LAD` == input$delivery_lad)
       }
 
       # Filter based on learner home LAD if selected
       if (input$learner_home_lad != "") {
-        prov_selection_table <- prov_selection_table %>% filter(learner_home_lad == input$learner_home_lad)
+        prov_selection_table <- prov_selection_table %>% filter(`Learner home LAD` == input$learner_home_lad)
       }
 
       # Summarise and aggregate the filtered table
@@ -203,7 +207,10 @@ lad_server <- function(id) {
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
+
         rename(`Provider (UKPRN)` = provider_name) %>%
+        rename_with(~ paste(input$measure), `Number of apprenticeships`) %>%
+
         collect()
 
       return(prov_selection_table)
@@ -228,21 +235,22 @@ lad_server <- function(id) {
 
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
-        delivery_lad_table <- delivery_lad_table %>% filter(delivery_lad == input$delivery_lad)
+        delivery_lad_table <- delivery_lad_table %>% filter(`Delivery LAD` == input$delivery_lad)
       }
 
       # Filter based on learner home LAD if selected
       if (input$learner_home_lad != "") {
-        delivery_lad_table <- delivery_lad_table %>% filter(learner_home_lad == input$learner_home_lad)
+        delivery_lad_table <- delivery_lad_table %>% filter(`Learner home LAD` == input$learner_home_lad)
       }
 
       delivery_lad_table <- delivery_lad_table %>%
         with_groups(
-          delivery_lad,
+          `Delivery LAD`,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         filter(`Number of apprenticeships` != 0)
+
 
       return(delivery_lad_table)
     })
@@ -258,17 +266,17 @@ lad_server <- function(id) {
 
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
-        learner_home_lad_table <- learner_home_lad_table %>% filter(delivery_lad == input$delivery_lad)
+        learner_home_lad_table <- learner_home_lad_table %>% filter(`Delivery LAD` == input$delivery_lad)
       }
 
       # Filter based on learner home LAD if selected
       if (input$learner_home_lad != "") {
-        learner_home_lad_table <- learner_home_lad_table %>% filter(learner_home_lad == input$learner_home_lad)
+        learner_home_lad_table <- learner_home_lad_table %>% filter(`Learner home LAD` == input$learner_home_lad)
       }
 
       learner_home_lad_table <- learner_home_lad_table %>%
         with_groups(
-          learner_home_lad,
+          `Learner home LAD`,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
@@ -321,14 +329,14 @@ lad_server <- function(id) {
     delivery_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
       boundary_data() %>%
-        right_join(delivery_lad_table(), by = join_by("lad_name" == "delivery_lad")) %>%
+        right_join(delivery_lad_table(), by = join_by("lad_name" == "Delivery LAD")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
 
     learner_home_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
       boundary_data() %>%
-        right_join(learner_home_lad_table(), by = join_by("lad_name" == "learner_home_lad")) %>%
+        right_join(learner_home_lad_table(), by = join_by("lad_name" == "Learner home LAD")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
 

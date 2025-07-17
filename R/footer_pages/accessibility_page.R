@@ -93,7 +93,14 @@ accessibility_page <- function() {
     p("The content listed below is non-accessible for the following reasons.
              We will address these issues to ensure our content is accessible."),
     tags$div(tags$ul(
-      tags$li("") # TODO
+      tags$li("On the Provider Breakdowns page there is an issue with ARIA parent roles in the
+      tables needing specific child roles to perform their intended accessibility functions."),
+      tags$li("Also on the Provider Breakdowns page, when selecting a set of providers from the
+              provider table, those selections get cleared if the chosen measure, provider type,
+              academic year, level or age group are changed, so the providers need to be chosen first."),
+      tags$li("On the Subjects and Standards page, when a standard is selected before subject(s) or level(s),
+              the standards box updates to contain a list of the standards relating to those subject(s) and
+              level(s), rather than a particular one. However, it can be reselected from the reduced list."),
     )),
     h3("Disproportionate burden"),
     p("Not applicable."),

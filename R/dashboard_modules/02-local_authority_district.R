@@ -370,7 +370,7 @@ lad_server <- function(id) {
       content = function(file) {
         if (input$file_type == "CSV (Up to 18.00 MB)" & input$provider == "") {
           data.table::fwrite(map_data(), file)
-        } else if (input$file_type == "CSV (Up to18.00 MB)" & input$provider != "") {
+        } else if (input$file_type == "CSV (Up to 18.00 MB)" & input$provider != "") {
           data.table::fwrite(map_data() %>%
             filter(year %in% input$year) %>%
             filter(provider_name %in% input$provider), file)

@@ -52,7 +52,8 @@ ssa_t1_desc,
 ssa_t2_desc,
 std_fwk_flag,
 provider_type,
-[name] as provider_name,
+--[name] as provider_name,
+[name_with_ukprn] as provider_name,
 learner_home_region,
 CASE WHEN learner_home_region = 'North East' then 1
      WHEN learner_home_region = 'North West' then 2

@@ -83,6 +83,11 @@ The data used in this app is too large in CSV format to be stored in a Git repo.
 
 To update the data you will need to do this manually outside of the app. The `R/data-prep/create_data_files.R` script should be used for this. Follow the instructions in there to run the code against CSVs generated from the SQL queries and this script will then create the .parquet files for use in the app.
 
+#### Location of Databricks CSV file data
+The following three SQL datasets (provider data / apprenticeship demographic and apprenticeship) are replace by this code. This code also drives the Power BI dashboard environment (Apps 38 provider dashboard - Databricks)
+https://adb-5037484389568426.6.azuredatabricks.net/editor/notebooks/3304709417398768?o=5037484389568426#command/3304709417398769
+
+
 #### File sizes
 
 There is a bonus script `R/data-prep/check_file_sizes.R` that can be used to test the maximum potential file download sizes, so that we can then hard code that information into the UI for radio button options changing the file type for end users.

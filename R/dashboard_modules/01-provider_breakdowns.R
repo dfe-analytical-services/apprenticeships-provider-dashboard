@@ -168,7 +168,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         ) %>%
         rename("Provider (UKPRN)" = provider_name) %>%
         rename_with(~ paste(input$measure), `number`) %>%
-
         collect()
 
       return(prov_selection_table)

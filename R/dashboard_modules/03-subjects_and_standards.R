@@ -291,17 +291,19 @@ subject_standards_server <- function(id) {
     # User bar selection ------------------------------------------------------
     # This records what bar has been selected in the chart
     # then passes it into the dropdown as if the user had selected that LAD from the dropdown itself
+
+
+    # Debounced version of the bar selection input
+    debounced_bar_selection <- debounce(reactive(input$subject_area_bar_selected), 150)
+
     observe({
-      selections <- input$subject_area_bar_selected
+      selections <- debounced_bar_selection()
 
-      if (is.null(selections) || length(selections) == 0) {
-        selected_value <- ""
-      } else {
-        selected_value <- selections
+      if (!is.null(selections) && length(selections) > 0) {
+        updateSelectInput(session, "subject", selected = selections)
       }
-
-      updateSelectInput(session, "subject", selected = selected_value)
     })
+
 
     # A selectable list of providers
     output$sas_provider_table <- renderReactable({

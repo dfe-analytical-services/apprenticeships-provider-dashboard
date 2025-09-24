@@ -53,11 +53,15 @@ To update the data in the repo you will need access to the underlying databases.
 
 3. Run `renv::restore()` to install dependencies.
 
+3a. If renv operations doesn't complete does not complete / has errors due to retired libraries Run `renv::record("[library_name]@20.0.0.2")`  e.g. renv::record("arrow@20.0.0.2")
+
+3b. Restart R environment session - Ctrl + Shift + F10
+
 4. Run `shiny::runApp()` to run the app locally.
 
 5. Run `shinytest2::test_app()` to run the tests against the app.
 
-If you run all of that successfully you're cooking with gas!
+If you run all of that successfully you're cooking with gas! Commit changes 
 
 ### Folder structure
 
@@ -100,6 +104,8 @@ The boundary files used in the LAD maps are stored in the `data/boundary_files/`
 Package control is handled using renv. As in the steps above, you will need to run `renv::restore()` if this is your first time using the project.
 
 Whenever you add new packages, make sure to use `renv::snapshot()` to record them in the `renv.lock` file.
+
+Whenever library versions are superseded by newer versions (usually when `renv::restore()` fails) run install.packages({library_name}) then Run `renv::record("[library_name]@[version]")`  e.g. renv::record("arrow@20.0.0.2")
 
 ### Pre-commit hooks
 

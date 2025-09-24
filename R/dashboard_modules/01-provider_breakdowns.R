@@ -23,6 +23,7 @@ prov_breakdowns_ui <- function(id) {
   div(
     # Page header =============================================================
     h1("Provider breakdowns"),
+    p("Select options from the top first, before providers. Selections from the top will reset the providers chosen."),
     # User selection area ===================================================
     column(
       width = 12,
@@ -63,16 +64,17 @@ prov_breakdowns_ui <- function(id) {
         card(reactable::reactableOutput(NS(id, "prov_selection"))),
         ## Tabs on right --------------------------------------------------------
         navset_card_tab(
-          id = "provider_breakdown_tabs",
+          id = "main_col",
           nav_panel(
             "Bar chart",
+            "Select and deselect delivery and learner home regions using the buttons in the table.",
             girafeOutput(NS(id, "regions_bar")),
           ),
           nav_panel(
             "Tables",
             bslib::layout_column_wrap(
               reactable::reactableOutput(NS(id, "delivery_region")),
-              reactable::reactableOutput(NS(id, "home_region"))
+              reactable::reactableOutput(NS(id, "home_region")),
             )
           ),
           nav_panel(
@@ -84,8 +86,8 @@ prov_breakdowns_ui <- function(id) {
                 "This will download data for all providers related to the options selected.",
                 " The XLSX format is designed for use in Microsoft Excel."
               ),
-              choices = c("CSV (Up to 7.83 MB)", "XLSX (Up to 1.96 MB)"),
-              selected = "CSV (Up to 7.83 MB)"
+              choices = c("CSV (Up to 8.48 MB)", "XLSX (Up to 1.96 MB)"),
+              selected = "CSV (Up to 8.48 MB)"
             ),
             downloadButton(
               NS(id, "download_data"),
@@ -164,8 +166,9 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           summarise,
           `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
-        rename("Provider name" = provider_name) %>%
-        rename_with(~ paste("Number of", firstlow(input$measure)), `number`) %>%
+        rename("Provider (UKPRN)" = provider_name) %>%
+        rename_with(~ paste(input$measure), `number`) %>%
+
         collect()
 
       return(prov_selection_table)
@@ -325,7 +328,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               "Delivery" = afcolours::af_colours(n = 4)[4]
             )) +
             # Format the x-axis numbers (using the Y function as we've flipped to horizontal!)
-            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
             # Wrap y-axis labels (set so East of England and longer will wrap onto multiple lines)
             scale_x_discrete(labels = function(x) str_wrap(x, width = 13)) +
             # Custom theme
@@ -342,7 +348,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
               axis.text.y = element_text(size = 10),
               text = element_text(family = dfe_font)
             ),
-        # TODO: break out custom options to function to reuse for dfeshiny
         options = list(
           # Turn off toolbar options (as they're bad for accessibility / confusing for users)
           ggiraph::opts_toolbar(
@@ -377,7 +382,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     output$delivery_region <- renderReactable({
       dfe_reactable(
         delivery_region_table() |>
-          rename_with(~ paste("Number of", firstlow(input$measure)), `number`),
+          rename_with(~ paste(input$measure), `number`),
         on_click = "select",
         selection = "single",
         row_style = list(cursor = "pointer")
@@ -387,7 +392,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     output$home_region <- renderReactable({
       dfe_reactable(
         home_region_table() |>
-          rename_with(~ paste("Number of", firstlow(input$measure)), `number`),
+          rename_with(~ paste(input$measure), `number`),
         on_click = "select",
         selection = "single",
         row_style = list(cursor = "pointer")
@@ -402,7 +407,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$year, "-", input$level, "-", input$age, "-provider_breakdowns")
-        extension <- if (input$file_type == "CSV (Up to 7.83 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 8.48 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -411,7 +416,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 7.83 MB)") {
+        if (input$file_type == "CSV (Up to 8.48 MB)") {
           data.table::fwrite(filtered_raw_data(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

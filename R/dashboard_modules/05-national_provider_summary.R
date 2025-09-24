@@ -56,8 +56,8 @@ nps_ui <- function(id) {
             "This will download all data related to the providers and options selected.",
             " The XLSX format is designed for use in Microsoft Excel."
           ),
-          choices = c("CSV (Up to 6.41 MB)", "XLSX (Up to 2.35 MB)"),
-          selected = "CSV (Up to 6.41 MB)"
+          choices = c("CSV (Up to 6.45 MB)", "XLSX (Up to 2.36 MB)"),
+          selected = "CSV (Up to 6.45 MB)"
         ),
         downloadButton(
           NS(id, "download_data"),
@@ -123,7 +123,7 @@ nps_server <- function(id) {
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$provider, "-", input$year, "-", input$characteristic, "-provider_summary")
-        extension <- if (input$file_type == "CSV (Up to 6.41 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 6.45 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -132,7 +132,7 @@ nps_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 6.41 MB)") {
+        if (input$file_type == "CSV (Up to 6.45 MB)") {
           data.table::fwrite(nps_reactive_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

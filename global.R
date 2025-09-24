@@ -97,4 +97,4 @@ feedback_form_url <- "https://forms.office.com/e/wL1aV83LAn"
 site_primary <- "https://department-for-education.shinyapps.io/apprenticeships-provider-dashboard/"
 
 ## Google Analytics tracking
-google_analytics_key <- "HQTQE5QDNS" # TODO
+google_analytics_key <- "HQTQE5QDNS"

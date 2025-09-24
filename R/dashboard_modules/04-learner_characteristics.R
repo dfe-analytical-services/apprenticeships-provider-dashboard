@@ -77,7 +77,7 @@ learner_characteristics_ui <- function(id) {
       nav_panel(
         "Charts",
         layout_columns(
-          col_widths = c(3, 3, 3, 3),
+          col_widths = c(6, 6),
           girafeOutput(NS(id, "age_bar_plot")),
           girafeOutput(NS(id, "sex_bar_plot")),
           girafeOutput(NS(id, "lldd_bar_plot")),
@@ -100,8 +100,8 @@ learner_characteristics_ui <- function(id) {
           that provider and selections. Selecting Total (all providers) will download
           data for all providers relating to the selected year and measure.
           The XLSX format is designed for use in Microsoft Excel.",
-          choices = c("CSV (Up to 2.14 MB)", "XLSX (Up to 586.74 KB)"),
-          selected = "CSV (Up to 2.14 MB)"
+          choices = c("CSV (Up to 2.36 MB)", "XLSX (Up to 592.86 KB)"),
+          selected = "CSV (Up to 2.36 MB)"
         ),
         # Bit of a hack to force the button not to be full width
         layout_columns(
@@ -205,7 +205,10 @@ learner_characteristics_server <- function(id) {
             labs(title = "Age") +
             xlab("") +
             ylab("") +
-            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
             scale_x_discrete(
               labels = function(x) str_wrap(x, width = 10),
               limit = rev(chars_age_choices)
@@ -332,7 +335,10 @@ learner_characteristics_server <- function(id) {
             labs(title = "Learner with learning difficulties\nor disabilities (LLDD)") +
             xlab("") +
             ylab("") +
-            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
             scale_x_discrete(
               labels = function(x) str_wrap(x, width = 10),
               limit = rev(chars_lldd_choices)
@@ -406,7 +412,10 @@ learner_characteristics_server <- function(id) {
             labs(title = "Ethnicity") +
             xlab("") +
             ylab("") +
-            scale_y_continuous(labels = dfeR::comma_sep) +
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
             scale_x_discrete(limit = rev(if_else(nchar(as.character(chars_ethnicity_choices)) > 10,
               substr(chars_ethnicity_choices, 1, 5), chars_ethnicity_choices
             ))) +
@@ -468,7 +477,7 @@ learner_characteristics_server <- function(id) {
           input$provider, "-", input$year, "-", input$measure, "-",
           input$characteristic_type, "-learner-characteristics-provider-summary"
         )
-        extension <- if (input$file_type == "CSV (Up to 2.14 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 2.36 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -477,13 +486,13 @@ learner_characteristics_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 2.14 MB)" & input$provider != "Total (All providers)") {
+        if (input$file_type == "CSV (Up to 2.36 MB)" & input$provider != "Total (All providers)") {
           data.table::fwrite(chars_reactive_table(), file)
-        } else if (input$file_type == "CSV (Up to 2.14 MB)" & input$provider == "Total (All providers)") {
+        } else if (input$file_type == "CSV (Up to 2.36 MB)" & input$provider == "Total (All providers)") {
           data.table::fwrite(chars_parquet %>%
             filter(year %in% input$year) %>%
             filter(measure %in% input$measure), file)
-        } else if (input$file_type == "XLSX (Up to 586.74 KB)" & input$provider != "Total (All providers)") {
+        } else if (input$file_type == "XLSX (Up to 592.86 KB)" & input$provider != "Total (All providers)") {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
           openxlsx::write.xlsx(chars_reactive_table(), file, colWidths = "Auto")

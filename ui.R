@@ -62,6 +62,7 @@ ui <- function(input, output, session) {
     dfeshiny::cookies_banner_ui(
       name = site_title
     ),
+    skip_to_main(),
 
     ## Header -----------------------------------------------------------------
     dfeshiny::header(
@@ -73,7 +74,8 @@ ui <- function(input, output, session) {
       "gds_phase_banner",
       "Alpha",
       paste0(
-        "This dashboard is being developed, contact fe.officialstatistics@education.gov.uk with any feedback"
+        "This dashboard is being developed, please give any feedback using our ",
+        a(href = feedback_form_url, "feedback form", .noWS = c("after")), "."
       )
     ),
 
@@ -103,20 +105,23 @@ ui <- function(input, output, session) {
             bslib::navset_hidden(
               id = "left_nav",
               nav_panel(
-                "provider_breakdowns",
-                prov_breakdowns_ui(id = "prov_breakdowns")
-              ),
-              nav_panel("local_authority_district", lad_ui(id = "lad")),
-              nav_panel(
-                "subjects_and_standards",
-                subjects_standards_ui(id = "sas")
+                "provider_breakdowns", prov_breakdowns_ui(id = "prov_breakdowns")
               ),
               nav_panel(
-                "learner_characteristics",
-                learner_characteristics_ui(id = "learner_characteristics")
+                "local_authority_district", lad_ui(id = "lad")
               ),
-              nav_panel("national_provider_summary", nps_ui(id = "nps")),
-              nav_panel("user_guide", user_guide())
+              nav_panel(
+                "subjects_and_standards", subjects_standards_ui(id = "sas")
+              ),
+              nav_panel(
+                "learner_characteristics", learner_characteristics_ui(id = "learner_characteristics")
+              ),
+              nav_panel(
+                "national_provider_summary", nps_ui(id = "nps")
+              ),
+              nav_panel(
+                "user_guide", user_guide()
+              )
             )
           )
         ),

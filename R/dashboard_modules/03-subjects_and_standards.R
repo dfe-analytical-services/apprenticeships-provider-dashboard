@@ -30,6 +30,7 @@ subjects_standards_ui <- function(id) {
       style = "min-height: 100%; height: 100%; overflow-y: visible;",
       bslib::layout_column_wrap(
         width = "15rem", # Minimum width for each input box before wrapping
+        heights_equal = "row",
         selectInput(
           inputId = NS(id, "year"),
           label = "Select academic year",

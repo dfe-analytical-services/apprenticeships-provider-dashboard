@@ -87,6 +87,8 @@ To update the data you will need to do this manually outside of the app. The `R/
 The following three SQL datasets (provider data / apprenticeship demographic and apprenticeship) are replace by this code. This code also drives the Power BI dashboard environment (Apps 38 provider dashboard - Databricks)
 https://adb-5037484389568426.6.azuredatabricks.net/editor/notebooks/3304709417398768?o=5037484389568426#command/3304709417398769
 
+Further, the apprenticeship demographic file has to be adapted to include padding out of the data. The revised SQL code can be found here:
+https://adb-5037484389568426.6.azuredatabricks.net/editor/notebooks/1399051160547519?o=5037484389568426#command/6083354069375510
 
 #### File sizes
 

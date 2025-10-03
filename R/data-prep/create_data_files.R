@@ -54,9 +54,15 @@ library(stringr)
 national_provider_summary <- data.table::fread("data/national_provider_summary.csv") %>%
   select(-c(`order_ref`, `order_detailed`)) # unused columns
 
+national_provider_summary <- national_provider_summary %>% rename(`Academic Year`=academic_year,`Provider name`=Provider_name,UKPRN=ukprn,`Learner characteristic`=Learner_Characteristic,`Education and Training`=Education_and_Training,`Tailored Learning`=Tailored_Learning,`Community Learning`=Community_Learning)
+
+
 apps_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
+#apps_demographics <- apps_demographics %>% rename(year=academic_year)
+
 
 apps_data <- data.table::fread("data/apprenticeships_data.csv")
+apps_data <- apps_data %>% rename(year=academic_year,std_fwk_name=fwk_name )
 
 # Create Provider breakdowns data ---------------------------------------------
 # Making a smaller cut from apps_data so less data is loaded into the app

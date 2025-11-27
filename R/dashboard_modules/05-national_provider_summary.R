@@ -56,8 +56,8 @@ nps_ui <- function(id) {
             "This will download all data related to the providers and options selected.",
             " The XLSX format is designed for use in Microsoft Excel."
           ),
-          choices = c("CSV (Up to 6.45 MB)", "XLSX (Up to 2.36 MB)"),
-          selected = "CSV (Up to 6.45 MB)"
+          choices = c("CSV (Up to 6.18 MB)", "XLSX (Up to 2.40 MB)"),
+          selected = "CSV (Up to 6.18 MB)"
         ),
         downloadButton(
           NS(id, "download_data"),
@@ -68,12 +68,13 @@ nps_ui <- function(id) {
       )
     ),
     ## Footer -----------------------------------------------------------------
+
     div(
       class = "well",
       style = "font-size: 1rem; background: #f7f7f7;",
-      "The Index of Multiple deprivation (IMD) is a measure of relative deprivation. The IMD shown here has been
+      ("The Index of Multiple deprivation (IMD) is a measure of relative deprivation. The IMD shown here has been
         split into quintiles, with a value of one indicating the 20% most deprived neighbourhoods and five the 20%
-        least deprived. IMD is derived from the learner postcode recorded on the Individualised Learner Record."
+        least deprived. IMD is derived from the learner postcode recorded on the Individualised Learner Record.")
     )
   )
 }
@@ -123,7 +124,7 @@ nps_server <- function(id) {
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$provider, "-", input$year, "-", input$characteristic, "-provider_summary")
-        extension <- if (input$file_type == "CSV (Up to 6.45 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 6.18 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -132,7 +133,7 @@ nps_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 6.45 MB)") {
+        if (input$file_type == "CSV (Up to 6.18 MB)") {
           data.table::fwrite(nps_reactive_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

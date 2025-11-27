@@ -1,9 +1,9 @@
 /***********
 National Provider Summary for Apprenticeships and Education & Training and community learning
-Updated by:      Jon Holman
+Updated by:      Alison Cooper
 Year:            2025
-Update period:   Q3 August to Apr
-Snapshot:        10 
+Update period:   Q4 August to July
+Snapshot:        14 
 Approx run time: 1-2 mins
 Rows:			 83,656
 ***********/
@@ -16,8 +16,8 @@ DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 DECLARE @CurrentPeriod VARCHAR(25)
 SET @CurrentYear = 202425  -- **UPDATE** for each academic year
-SET @CurrentSnapshot =  10  -- **UPDATE** for each quarter
-SET @CurrentPeriod =  '2024/25 (Aug to Apr)'  -- **UPDATE** for each quarter
+SET @CurrentSnapshot =  14  -- **UPDATE** for each quarter
+SET @CurrentPeriod =  '2024/25'  -- **UPDATE** for each quarter
 
 --Select required fields for latest 3 years
 IF OBJECT_ID('tempdb..#PARTICIPATION') IS NOT NULL DROP TABLE #PARTICIPATION
@@ -90,14 +90,14 @@ SELECT
 substring([year],1,4) + '/' + substring([year],5,22) as [year],
 'TOTAL (ALL PROVIDERS)' as provider_name,
 '' as ukprn,
-lldd as  category,
+lldd COLLATE DATABASE_DEFAULT as  category,
 isnull(sum(apps_total),0) as apps,
 isnull(sum(eandt_total),0)as et,
 isnull(sum(cl_total),0) as cl,
 isnull(sum(tl_total),0) as tl
 INTO #NATIONAL_LLDD
 FROM #PARTICIPATION
-GROUP BY [year], lldd
+GROUP BY [year] , lldd 
 
 IF OBJECT_ID('tempdb..#NATIONAL_DEP') IS NOT NULL DROP TABLE #NATIONAL_DEP
 SELECT
@@ -146,7 +146,7 @@ union all
 select *
 from #NATIONAL_SEX
 union all
-select *
+select order_ref ,[year] COLLATE DATABASE_DEFAULT ,provider_name ,ukprn ,category COLLATE DATABASE_DEFAULT ,apps,et,cl,tl
 from #NATIONAL_LLDD
 union all
 select *
@@ -350,11 +350,11 @@ ORDER BY [year], provider_name
 
 --Join national and provider level data together into one table
 IF OBJECT_ID('tempdb..#ALL_TIDY') IS NOT NULL DROP TABLE #ALL_TIDY
-select *
+select order_ref,order_detailed,[year] COLLATE DATABASE_DEFAULT as [year],provider_name COLLATE DATABASE_DEFAULT as provider_name ,ukprn ,category  ,apps,et,cl,tl
 into #ALL_TIDY
 from #NATIONAL_TIDY_ORDER
 union all
-select *
+select order_ref,order_detailed,[year] COLLATE DATABASE_DEFAULT as [year],provider_name COLLATE DATABASE_DEFAULT as provider_name ,ukprn ,category ,apps,et,cl,tl
 from #PROVIDER_TIDY_ORDER
 
 
@@ -396,3 +396,16 @@ case when [year] <> @CurrentPeriod then 0  else tl   end as 'Tailored Learning',
 case when [year]  = @CurrentPeriod then 0  else cl   end as 'Community Learning' --update for each quarter
 FROM #ALL_FINAL
 ORDER BY [year] desc, order_ref, provider_name, order_detailed
+
+
+
+
+
+
+
+
+
+
+
+
+

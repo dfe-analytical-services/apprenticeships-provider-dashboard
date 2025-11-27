@@ -1,8 +1,8 @@
 /***********
 Demographics Data for Apprenticeships Interactive Tool
-Updated by:      Jon Holman - to include provider name rather than learner lad, and now to have 'low' rather than zeros for suppressed values
-Quarter:         Q3 (August to Apr) 2025
-Snapshot:        10  
+Updated by:      Alison Cooper - to include provider name rather than learner lad, and now to have 'low' rather than zeros for suppressed values
+Quarter:         Q4 (August to July) 2025
+Snapshot:        14  
 Approx run time: 1-2 mins
 Rows:			62,040
 ***********/
@@ -16,7 +16,7 @@ SET ANSI_PADDING OFF SET NOCOUNT ON;
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 
-SET @CurrentSnapshot =  10 -- **UPDATE** for each quarter
+SET @CurrentSnapshot =  14 -- **UPDATE** for each quarter
 SET @CurrentYear = 202425 -- **UPDATE** for each academic year
 
 --Select latest IFA routes data
@@ -166,11 +166,13 @@ coalesce(apps2.starts,'low') AS starts,
 coalesce(apps2.achievements,'low') AS achievements
 from #frame as frame
 
-left join #apps2 as apps2
-
-on frame.[year] = apps2.year and  frame.provider_name = apps2.provider_name and
-frame.age_group = apps2.age_group and frame.sex = apps2.sex and 
-frame.ethnicity_major = apps2.ethnicity_major and frame.lldd = apps2.lldd
+left join #apps2 as apps2 on 
+frame.[year] COLLATE DATABASE_DEFAULT              = apps2.year COLLATE DATABASE_DEFAULT and  
+frame.provider_name COLLATE DATABASE_DEFAULT       = apps2.provider_name COLLATE DATABASE_DEFAULT and
+frame.age_group COLLATE DATABASE_DEFAULT           = apps2.age_group COLLATE DATABASE_DEFAULT and 
+frame.sex COLLATE DATABASE_DEFAULT                 = apps2.sex COLLATE DATABASE_DEFAULT and 
+frame.ethnicity_major COLLATE DATABASE_DEFAULT     = apps2.ethnicity_major COLLATE DATABASE_DEFAULT and 
+frame.lldd COLLATE DATABASE_DEFAULT                = apps2.lldd COLLATE DATABASE_DEFAULT
 
 
 where

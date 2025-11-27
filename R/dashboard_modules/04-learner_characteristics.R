@@ -59,7 +59,7 @@ learner_characteristics_ui <- function(id) {
           inputId = NS(id, "year"),
           label = "Select academic year",
           choices = c(chars_year_choices),
-          selected = "2024/25 (Aug to Jan)"
+          selected = "2024/25"
         ),
         selectInput(
           inputId = NS(id, "measure"),
@@ -207,7 +207,7 @@ learner_characteristics_server <- function(id) {
             ylab("") +
             scale_y_continuous(
               labels = dfeR::comma_sep,
-              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1), n = 4))),
             ) +
             scale_x_discrete(
               labels = function(x) str_wrap(x, width = 10),
@@ -337,7 +337,8 @@ learner_characteristics_server <- function(id) {
             ylab("") +
             scale_y_continuous(
               labels = dfeR::comma_sep,
-              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1), n = 4))),
+              n.breaks = 2
             ) +
             scale_x_discrete(
               labels = function(x) str_wrap(x, width = 10),
@@ -414,7 +415,7 @@ learner_characteristics_server <- function(id) {
             ylab("") +
             scale_y_continuous(
               labels = dfeR::comma_sep,
-              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1), n = 4))),
             ) +
             scale_x_discrete(limit = rev(if_else(nchar(as.character(chars_ethnicity_choices)) > 10,
               substr(chars_ethnicity_choices, 1, 5), chars_ethnicity_choices

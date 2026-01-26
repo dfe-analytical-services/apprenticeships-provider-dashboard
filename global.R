@@ -62,6 +62,9 @@ if (FALSE) {
   # Code linting and styling
   shhh(library(lintr))
   shhh(library(styler))
+
+  # Deployment
+  shhh(library(rsconnect))
 }
 
 # Source R scripts ============================================================

@@ -1,23 +1,25 @@
 /***********
 Demographics Data for Apprenticeships Interactive Tool
 Updated by:      Alison Cooper - to include provider name rather than learner lad, and now to have 'low' rather than zeros for suppressed values
-Quarter:         Q4 (August to July) 2025
-Snapshot:        14  
+Quarter:         Q1 (August to October) 2026
+Snapshot:        4  
 Approx run time: 1-2 mins
-Rows:			62,040
+Rows:			
 ***********/
 
 --Update
 --Demographic info fields sex, age group  ethnicity_major and lldd.
 --MT 27/02/2024
 
+--update 09/12/25 include 4 years - 3 full plus latest
+
 SET ANSI_PADDING OFF SET NOCOUNT ON;
 
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 
-SET @CurrentSnapshot =  14 -- **UPDATE** for each quarter
-SET @CurrentYear = 202425 -- **UPDATE** for each academic year
+SET @CurrentSnapshot =  4 -- **UPDATE** for each quarter
+SET @CurrentYear = 202526 -- **UPDATE** for each academic year
 
 --Select latest IFA routes data
 IF OBJECT_ID('tempdb..#Routes_IFA') IS NOT NULL DROP TABLE #Routes_IFA
@@ -54,10 +56,7 @@ INTO #APPS
 FROM [MA_FEDU_S_DATA].[MST].[vw_Apprenticeship_Start_Ach_IL_EES] a
 LEFT JOIN #Routes_IFA r
 on a.std_fwk_flag = 'Standard' and a.std_fwk_code = r.std_lars_code
-WHERE
-([Snapshot]=14 AND [year] IN (@CurrentYear-202, @CurrentYear-101))
-OR
-([Snapshot]=@CurrentSnapshot AND [year]= @CurrentYear)
+WHERE([Snapshot]=14 AND [year] IN (@CurrentYear-303, @CurrentYear-202, @CurrentYear-101)) OR ([Snapshot]=@CurrentSnapshot AND [year]= @CurrentYear)
 
 
 --Calculate measures and group data, and format year*
@@ -69,15 +68,13 @@ substring([year],1,4) + '/' + substring([year],5,22) as [year],
 coalesce(age_group,'Total') as age_group,
 coalesce(sex,'Total') as sex,
 coalesce(ethnicity_major,'Total') as ethnicity_major,
-coalesce(lldd,'Total') as lldd,
+coalesce(case when lldd = 'LLDD - no' then 'No learning difficulty / disability' when lldd = 'LLDD - yes' then 'With learning difficulty / disability' when lldd =  'LLDD - unknown' then 'LLDD - Unknown' end,'Total') as lldd,
 coalesce(provider_name,'Total (All providers)') as provider_name,
 case when sum(starts) < 5 then 'low' else cast(round(sum(starts), -1) as varchar) end as starts,
 case when sum(achievements) < 5 then 'low' else cast(round(sum(achievements), -1) as varchar) end as achievements
 into #APPS2
 FROM #APPS 
 group by [year],cube(age_group,sex,ethnicity_major,lldd,provider_name) 
-
-
 
 -- Need to stuff the matrix so that for a provider in a year where there are any starts/achievements
 --then need all the categories
@@ -141,11 +138,11 @@ cross join
 
 (select 'Total' as lldd
 union all
-select 'LLDD - no' as lldd
+select 'No learning difficulty / disability' as lldd
 union all
-select 'LLDD - yes' lldd
+select 'With learning difficulty / disability' lldd
 union all
-select 'LLDD - unknown' as lldd) as lldd
+select 'LLDD - Unknown' as lldd) as lldd
 
 )
 
@@ -185,7 +182,7 @@ where
 order by
 provider_name,
 [year] desc,
-case frame.lldd when 'Total' then 1 when 'LLDD - no' then 2 when 'LLDD - yes' then 3 when 'LLDD - unknown' then 4 end,
+case frame.lldd when 'Total' then 1 when 'No learning difficulty / disability' then 2 when 'With learning difficulty / disability' then 3 when 'LLDD - Unknown' then 4 end,
 case frame.ethnicity_major when 'Total' then 1 when 'White' then 2 when 'Black / African / Caribbean / Black British' then 3 
 when 'Asian / Asian British' then 4 when 'Mixed / Multiple ethnic groups' then 5 when 'Other ethnic group' then 6 
 when 'Unknown' then 7 end,

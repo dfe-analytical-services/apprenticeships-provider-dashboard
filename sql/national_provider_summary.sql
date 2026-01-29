@@ -1,13 +1,16 @@
 /***********
 National Provider Summary for Apprenticeships and Education & Training and community learning
 Updated by:      Alison Cooper
-Year:            2025
-Update period:   Q4 August to July
-Snapshot:        14 
+Year:            2026
+Update period:   Q1 August to October
+Snapshot:        4 
 Approx run time: 1-2 mins
-Rows:			 83,656
+Rows:			 
 ***********/
 --** Note for 2024/25 - you will need to update the year in the final table at the end of of this code, as well the year and snapshot immediately below.** MT 19/12/2024
+
+--update 09/12/25 include 4 years - 3 full plus latest
+
 
 --Declare and set year and snapshot
 SET ANSI_PADDING OFF SET NOCOUNT ON;
@@ -15,9 +18,9 @@ SET ANSI_PADDING OFF SET NOCOUNT ON;
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 DECLARE @CurrentPeriod VARCHAR(25)
-SET @CurrentYear = 202425  -- **UPDATE** for each academic year
-SET @CurrentSnapshot =  14  -- **UPDATE** for each quarter
-SET @CurrentPeriod =  '2024/25'  -- **UPDATE** for each quarter
+SET @CurrentYear = 202526  -- **UPDATE** for each academic year
+SET @CurrentSnapshot =  4  -- **UPDATE** for each quarter
+SET @CurrentPeriod =  '2025/26'  -- **UPDATE** for each quarter
 
 --Select required fields for latest 3 years
 IF OBJECT_ID('tempdb..#PARTICIPATION') IS NOT NULL DROP TABLE #PARTICIPATION
@@ -43,7 +46,7 @@ tl_total
 INTO #PARTICIPATION
 FROM [MA_FEDU_S_DATA].[MST].[tDM_Learner_table_EES]
 WHERE
-([Snapshot]=14 AND [year] IN (@CurrentYear-202, @CurrentYear-101)) --final data for previous 2 years
+([Snapshot]=14 AND [year] IN (@CurrentYear-303, @CurrentYear-202, @CurrentYear-101)) --final data for previous 2 years
 OR
 ([Snapshot]=@CurrentSnapshot AND [year]= @CurrentYear) --latest data for latest year
 
@@ -90,7 +93,7 @@ SELECT
 substring([year],1,4) + '/' + substring([year],5,22) as [year],
 'TOTAL (ALL PROVIDERS)' as provider_name,
 '' as ukprn,
-lldd COLLATE DATABASE_DEFAULT as  category,
+case when lldd = 'LLDD - no' then 'LLDD - No learning difficulty / disability' when lldd = 'LLDD - yes' then 'LLDD - With learning difficulty / disability' when lldd =  'LLDD - unknown' then 'LLDD - Unknown' end as  category,
 isnull(sum(apps_total),0) as apps,
 isnull(sum(eandt_total),0)as et,
 isnull(sum(cl_total),0) as cl,
@@ -105,7 +108,7 @@ SELECT
 substring([year],1,4) + '/' + substring([year],5,22) as [year],
 'TOTAL (ALL PROVIDERS)' as provider_name,
 '' as ukprn,
-case when learner_home_depriv = 'Unknown' then 'IMD - unknown' 
+case when learner_home_depriv = 'Unknown' then 'IMD - Unknown' 
      when learner_home_depriv = 'One (most deprived)' then 'IMD - One (most deprived)' 
 	 when learner_home_depriv = 'Two' then 'IMD - Two'
 	 when learner_home_depriv = 'Three' then 'IMD - Three'
@@ -163,18 +166,18 @@ order_ref,
 case when provider_name =  'TOTAL (ALL PROVIDERS)' and ukprn = '' and category = 'Total' then 1
 	 when category = 'Sex - Female' then 2
 	 when category = 'Sex - Male' then 3
-	 when category = 'LLDD - yes' then 4
-	 when category = 'LLDD - no' then 5
-	 when category = 'LLDD - unknown' then 6
+	 when category = 'LLDD - With learning difficulty / disability' then 4
+	 when category = 'LLDD - No learning difficulty / disability' then 5
+	 when category = 'LLDD - Unknown' then 6
 	 when category = 'IMD - One (most deprived)' then 7
 	 when category = 'IMD - Two' then 8
 	 when category = 'IMD - Three' then 9
 	 when category = 'IMD - Four' then 10
 	 when category = 'IMD - Five (least deprived)' then 11
-	 when category = 'IMD - unknown' then 12
+	 when category = 'IMD - Unknown' then 12
 	 when category = 'Ethnicity - White' then 13
 	 when category = 'Ethnic minorities (excluding white minorities)' then 14
-	 when category = 'Ethnicity - unknown' then 15
+	 when category = 'Ethnicity - Unknown' then 15
 end as order_detailed,
 [year],
 provider_name,
@@ -279,13 +282,13 @@ union all
 select [year], provider_name, UKPRN, 'Sex - Male' as category, apps_male, et_male, cl_male, tl_male
 from #PROVIDER
 union all
-select [year], provider_name, UKPRN, 'LLDD - yes' as category, apps_lldd_yes, et_lldd_yes, cl_lldd_yes, tl_lldd_yes
+select [year], provider_name, UKPRN, 'LLDD - With learning difficulty / disability' as category, apps_lldd_yes, et_lldd_yes, cl_lldd_yes, tl_lldd_yes
 from #PROVIDER
 union all
-select [year], provider_name, UKPRN, 'LLDD - no' as category, apps_lldd_no, et_lldd_no, cl_lldd_no, tl_lldd_no
+select [year], provider_name, UKPRN, 'LLDD - No learning difficulty / disability' as category, apps_lldd_no, et_lldd_no, cl_lldd_no, tl_lldd_no
 from #PROVIDER
 union all
-select [year], provider_name, UKPRN, 'LLDD - unknown' as category, apps_lldd_unknown, et_lldd_unknown, cl_lldd_unknown, tl_lldd_unknown
+select [year], provider_name, UKPRN, 'LLDD - Unknown' as category, apps_lldd_unknown, et_lldd_unknown, cl_lldd_unknown, tl_lldd_unknown
 from #PROVIDER
 union all
 select [year], provider_name, UKPRN, 'IMD - One (most deprived)' as category, apps_dep_1, et_dep_1, cl_dep_1, tl_dep_1
@@ -303,7 +306,7 @@ union all
 select [year], provider_name, UKPRN, 'IMD - Five (least deprived)' as category, apps_dep_5, et_dep_5, cl_dep_5, tl_dep_5
 from #PROVIDER
 union all
-select [year], provider_name, UKPRN, 'IMD - unknown' as category, apps_dep_u, et_dep_u, cl_dep_u, tl_dep_u
+select [year], provider_name, UKPRN, 'IMD - Unknown' as category, apps_dep_u, et_dep_u, cl_dep_u, tl_dep_u
 from #PROVIDER
 union all
 select [year], provider_name, UKPRN, 'Ethnicity - White' as category, apps_white, et_white, cl_white, tl_white
@@ -312,7 +315,7 @@ union all
 select [year], provider_name, UKPRN, 'Ethnic minorities (excluding white minorities)' as category_type, apps_ethnic_minorities, et_ethnic_minorities, cl_ethnic_minorities, tl_ethnic_minorities
 from #PROVIDER
 union all
-select [year], provider_name, UKPRN, 'Ethnicity - unknown' as category, apps_ethnic_u, et_ethnic_u, cl_ethnic_u, tl_ethnic_u
+select [year], provider_name, UKPRN, 'Ethnicity - Unknown' as category, apps_ethnic_u, et_ethnic_u, cl_ethnic_u, tl_ethnic_u
 from #PROVIDER
 
 
@@ -323,18 +326,18 @@ SELECT
 case when provider_name <> 'TOTAL (ALL PROVIDERS)' and ukprn <> '' and category = 'Total' then 1
 	 when category = 'Sex - Female' then 2
 	 when category = 'Sex - Male' then 3
-	 when category = 'LLDD - yes' then 4
-	 when category = 'LLDD - no' then 5
-	 when category = 'LLDD - unknown' then 6
+	 when category = 'LLDD - With learning difficulty / disability' then 4
+	 when category = 'LLDD - No learning difficulty / disability' then 5
+	 when category = 'LLDD - Unknown' then 6
 	 when category = 'IMD - One (most deprived)' then 7
 	 when category = 'IMD - Two' then 8
 	 when category = 'IMD - Three' then 9
 	 when category = 'IMD - Four' then 10
 	 when category = 'IMD - Five (least deprived)' then 11
-	 when category = 'IMD - unknown' then 12
+	 when category = 'IMD - Unknown' then 12
 	 when category = 'Ethnicity - White' then 13
 	 when category = 'Ethnic minorities (excluding white minorities)' then 14
-	 when category = 'Ethnicity - unknown' then 15
+	 when category = 'Ethnicity - Unknown' then 15
 end as order_detailed,
 [year],
 provider_name,
@@ -390,10 +393,8 @@ ukprn  As UKPRN,
 category as 'Learner characteristic',
 case when apps in (0,1,2,3,4) then 0 else round(apps,-1) end as Apprenticeships,
 case when et   in (0,1,2,3,4) then 0 else round(et,-1)   end as 'Education and Training',
---case when [year] <> '2024/25 (Aug to Jan)' then 0  else tl   end as 'Tailored Learning', --update for each quarter
---case when [year]  = '2024/25 (Aug to Jan)' then 0  else cl   end as 'Community Learning' --update for each quarter
-case when [year] <> @CurrentPeriod then 0  else tl   end as 'Tailored Learning', --update for each quarter
-case when [year]  = @CurrentPeriod then 0  else cl   end as 'Community Learning' --update for each quarter
+case when concat(cast(substring(cast([year] as varchar(20)),1,4) as int),cast(substring(cast([year] as varchar(20)),6,2) as int)) >= 202425 then tl else 0 end as 'Tailored Learning', --update for each quarter
+case when concat(cast(substring(cast([year] as varchar(20)),1,4) as int),cast(substring(cast([year] as varchar(20)),6,2) as int)) <= 202324 then cl else 0 end as 'Community Learning' --update for each quarter
 FROM #ALL_FINAL
 ORDER BY [year] desc, order_ref, provider_name, order_detailed
 

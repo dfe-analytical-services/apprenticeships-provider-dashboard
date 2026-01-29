@@ -31,6 +31,7 @@ chars_sex_choices <- data_choices(data = chars_parquet_sex, column = "characteri
 chars_parquet_lldd <- chars_parquet %>% filter(characteristic_type ==
   "Learner with learning difficulties or disabilities (LLDD)" & characteristic != "Total")
 chars_lldd_choices <- data_choices(data = chars_parquet_lldd, column = "characteristic")
+chars_lldd_choices <- sort(chars_lldd_choices, decreasing = TRUE)
 
 chars_parquet_ethnicity <- chars_parquet %>% filter(characteristic_type == "Ethnicity" & characteristic != "Total")
 chars_ethnicity_choices <- data_choices(data = chars_parquet_ethnicity, column = "characteristic")
@@ -59,7 +60,7 @@ learner_characteristics_ui <- function(id) {
           inputId = NS(id, "year"),
           label = "Select academic year",
           choices = c(chars_year_choices),
-          selected = "2024/25"
+          selected = chars_year_choices[1]
         ),
         selectInput(
           inputId = NS(id, "measure"),
@@ -100,8 +101,8 @@ learner_characteristics_ui <- function(id) {
           that provider and selections. Selecting Total (all providers) will download
           data for all providers relating to the selected year and measure.
           The XLSX format is designed for use in Microsoft Excel.",
-          choices = c("CSV (Up to 2.36 MB)", "XLSX (Up to 592.86 KB)"),
-          selected = "CSV (Up to 2.36 MB)"
+          choices = c("CSV (Up to 2.44 MB)", "XLSX (Up to 592.89 KB)"),
+          selected = "CSV (Up to 2.44 MB)"
         ),
         # Bit of a hack to force the button not to be full width
         layout_columns(
@@ -153,7 +154,7 @@ learner_characteristics_server <- function(id) {
           "Total",
           "Under 19", "19-24", "25+",
           "Male", "Female",
-          "LLDD - yes", "LLDD - no", "LLDD - unknown",
+          "With learning difficulty / disability", "No learning difficulty / disability", "LLDD - Unknown",
           "White",
           "Black / African / Caribbean / Black British",
           "Asian / Asian British",
@@ -478,7 +479,7 @@ learner_characteristics_server <- function(id) {
           input$provider, "-", input$year, "-", input$measure, "-",
           input$characteristic_type, "-learner-characteristics-provider-summary"
         )
-        extension <- if (input$file_type == "CSV (Up to 2.36 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 2.44 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -487,13 +488,13 @@ learner_characteristics_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 2.36 MB)" & input$provider != "Total (All providers)") {
+        if (input$file_type == "CSV (Up to 2.44 MB)" & input$provider != "Total (All providers)") {
           data.table::fwrite(chars_reactive_table(), file)
-        } else if (input$file_type == "CSV (Up to 2.36 MB)" & input$provider == "Total (All providers)") {
+        } else if (input$file_type == "CSV (Up to 2.44 MB)" & input$provider == "Total (All providers)") {
           data.table::fwrite(chars_parquet %>%
             filter(year %in% input$year) %>%
             filter(measure %in% input$measure), file)
-        } else if (input$file_type == "XLSX (Up to 592.86 KB)" & input$provider != "Total (All providers)") {
+        } else if (input$file_type == "XLSX (Up to 592.89 KB)" & input$provider != "Total (All providers)") {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
           openxlsx::write.xlsx(chars_reactive_table(), file, colWidths = "Auto")

@@ -1,20 +1,22 @@
 /***********
 Data for Apprenticeships Interactive Tool
 Updated by:      Alison Cooper
-Year:            2025
-Quarter:         Q4 (August to July)
-Snapshot:        14  
+Year:            2026
+Quarter:         Q1 (August to October)
+Snapshot:        4  
 Approx run time: 2 mins
-Rows:			1,370,333
+Rows:			
 ***********/
+
+--update 09/12/25 include 4 years - 3 full plus latest
 
 SET ANSI_PADDING OFF SET NOCOUNT ON;
 
 DECLARE @CurrentSnapshot INT
 DECLARE @CurrentYear INT
 
-SET @CurrentSnapshot =  14 -- **UPDATE** for each quarter
-SET @CurrentYear = 202425 -- **UPDATE** for each academic year
+SET @CurrentSnapshot =  4 -- **UPDATE** for each quarter
+SET @CurrentYear = 202526 -- **UPDATE** for each academic year
 
 --Select latest IFA routes data
 IF OBJECT_ID('tempdb..#Routes_IFA') IS NOT NULL DROP TABLE #Routes_IFA
@@ -123,7 +125,7 @@ FROM MA_FEDU_S_DATA.[MST].[vw_Apprenticeship_Start_Ach_IL_EES] a
 LEFT JOIN #Routes_IFA r
 on a.std_fwk_flag = 'Standard' and a.std_fwk_code = r.std_lars_code
 WHERE
-([Snapshot]=14 AND [year] IN (@CurrentYear-202, @CurrentYear-101))
+([Snapshot]=14 AND [year] IN (@CurrentYear-303,@CurrentYear-202, @CurrentYear-101))
 OR
 ([Snapshot]=@CurrentSnapshot AND [year]= @CurrentYear)
 

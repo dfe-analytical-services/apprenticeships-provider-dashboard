@@ -82,8 +82,8 @@ subjects_standards_ui <- function(id) {
             label = h2("Choose download file format"),
             hint_label = "This will download all data related to the providers and options selected.
           The XLSX format is designed for use in Microsoft Excel",
-            choices = c("CSV (Up to 12.04 MB)", "XLSX (Up to 1.89 MB)"),
-            selected = "CSV (Up to 12.04 MB)"
+            choices = c("CSV (Up to 11.83 MB)", "XLSX (Up to 1.95 MB)"),
+            selected = "CSV (Up to 11.83 MB)"
           ),
           # Bit of a hack to force the button not to be full width
           layout_columns(
@@ -448,7 +448,7 @@ subject_standards_server <- function(id) {
           input$year, "-", input$measure, "-", input$subject, "-",
           input$level, input$provider, "-subjects-and-standards"
         )
-        extension <- if (input$file_type == "CSV (Up to 12.04 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 11.83 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -457,7 +457,7 @@ subject_standards_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 12.04 MB)") {
+        if (input$file_type == "CSV (Up to 11.83 MB)") {
           data.table::fwrite(subject_area_data_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

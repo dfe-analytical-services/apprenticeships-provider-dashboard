@@ -23,7 +23,8 @@ prov_breakdowns_ui <- function(id) {
   div(
     # Page header =============================================================
     h1("Provider breakdowns"),
-    p("Select options from the top and the region tables first, before providers. Selections from the top, and the regions will reset the providers chosen."),
+    p("Select options from the top and the region tables first, before providers.
+      Selections from the top, and the regions will reset the providers chosen."),
     # User selection area ===================================================
     column(
       width = 12,

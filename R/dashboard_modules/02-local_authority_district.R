@@ -8,6 +8,8 @@ lad_map_parquet <- arrow::read_parquet("data/lad_map_data_0.parquet") %>%
   )
 
 # Read in boundary files
+lad_boundaries_2025 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
+  rename("lad_name" = LAD24NM)
 lad_boundaries_2024 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
   rename("lad_name" = LAD24NM)
 lad_boundaries_2023 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2023_UK_BUC_V2_8757178717458576320.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
@@ -118,8 +120,8 @@ lad_ui <- function(id) {
               "This will download data for all local authority districts based on the ",
               "year and provider selected. The XLSX format is designed for use in Microsoft Excel."
             ),
-            choices = c("CSV (Up to 18.69 MB)", "XLSX (Up to 6.53 MB)"),
-            selected = "CSV (Up to 18.69 MB)"
+            choices = c("CSV (Up to 18.86 MB)", "XLSX (Up to 6.22 MB)"),
+            selected = "CSV (Up to 18.86 MB)"
           ),
           downloadButton(
             NS(id, "download_data"),
@@ -312,6 +314,7 @@ lad_server <- function(id) {
       # as soon as empty LADs appear, need to update
 
       boundary_list <- list(
+        "2025/26" = lad_boundaries_2024,
         "2024/25" = lad_boundaries_2024,
         "2023/24" = lad_boundaries_2024,
         "2022/23" = lad_boundaries_2023
@@ -365,7 +368,7 @@ lad_server <- function(id) {
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0("lad-", input$year, "-", input$provider)
-        extension <- if (input$file_type == "CSV (Up to 18.69 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 18.86 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -374,13 +377,13 @@ lad_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 18.69 MB)" & input$provider == "") {
+        if (input$file_type == "CSV (Up to 18.86 MB)" & input$provider == "") {
           data.table::fwrite(map_data(), file)
-        } else if (input$file_type == "CSV (Up to 18.69 MB)" & input$provider != "") {
+        } else if (input$file_type == "CSV (Up to 18.86 MB)" & input$provider != "") {
           data.table::fwrite(map_data() %>%
             filter(year %in% input$year) %>%
             filter(provider_name %in% input$provider), file)
-        } else if (input$file_type == "XLSX (Up to 6.53 KB)" & input$provider != "") {
+        } else if (input$file_type == "XLSX (Up to 6.22 KB)" & input$provider != "") {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
           openxlsx::write.xlsx(map_data() %>%

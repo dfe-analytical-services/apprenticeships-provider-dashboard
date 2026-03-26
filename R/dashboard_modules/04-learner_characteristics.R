@@ -101,7 +101,7 @@ learner_characteristics_ui <- function(id) {
           that provider and selections. Selecting Total (all providers) will download
           data for all providers relating to the selected year and measure.
           The XLSX format is designed for use in Microsoft Excel.",
-          choices = c("CSV (Up to 2.44 MB)", "XLSX (Up to 592.89 KB)"),
+          choices = c("CSV (Up to 2.44 MB)", "XLSX (Up to 591.9 KB)"),
           selected = "CSV (Up to 2.44 MB)"
         ),
         # Bit of a hack to force the button not to be full width
@@ -494,7 +494,7 @@ learner_characteristics_server <- function(id) {
           data.table::fwrite(chars_parquet %>%
             filter(year %in% input$year) %>%
             filter(measure %in% input$measure), file)
-        } else if (input$file_type == "XLSX (Up to 592.89 KB)" & input$provider != "Total (All providers)") {
+        } else if (input$file_type == "XLSX (Up to 591.9 KB)" & input$provider != "Total (All providers)") {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
           openxlsx::write.xlsx(chars_reactive_table(), file, colWidths = "Auto")

@@ -299,7 +299,6 @@ learner_characteristics_server <- function(id) {
     })
 
 
-
     output$lldd_bar_plot <- renderGirafe({
       # Message when there are none of the measure at all - blank - only shown for age
       validate(need(nrow(chars_reactive_table()) > 0, ""))
@@ -449,7 +448,6 @@ learner_characteristics_server <- function(id) {
         fonts = list(sans = dfe_font)
       )
     })
-
 
 
     # table

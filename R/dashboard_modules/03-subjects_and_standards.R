@@ -196,8 +196,6 @@ subject_standards_server <- function(id) {
     })
 
 
-
-
     # Get the selections from the provider table ==============================
     selected_providers <- reactive({
       # Filter to only the selected providers and convert to a vector to use for filtering elsewhere
@@ -441,7 +439,6 @@ subject_standards_server <- function(id) {
         )
       )
     })
-
 
 
     # Data download ===========================================================

@@ -300,8 +300,7 @@ dfe_lad_map <- function(data, measure, input_id) {
       values = ~ data[["Number of apprenticeships"]],
       title = firstup(measure)
     ) %>%
-    add_map_reset_button(selectize_input_id = input_id) # add a reset button
-  return(map)
+    add_map_reset_button(selectize_input_id = input_id) # add a reset button return(map)
 }
 
 # Create options lists for use in the dropdowns ===============================

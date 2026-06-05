@@ -15,7 +15,6 @@ get_reactive_text <- function(object_name, app) {
     rvest::read_html() |>
     html_element("div") |>
     html_text()
-
   return(text)
 }
 
@@ -42,7 +41,6 @@ check_plot_rendered <- function(object_name, app) {
   # Give a true if the image exists, a false if not
   return(as.logical(plot_img_length))
 }
-
 # Check that a reactable table is present and return the count of rendered rows of data
 check_reactable_rows <- function(object_name, app) {
   table_html <- app$get_html(paste0("#", object_name))
@@ -58,7 +56,6 @@ check_reactable_rows <- function(object_name, app) {
 
   return(number_of_rendered_rows)
 }
-
 # Check that a rendertable table is present and return the count of rendered rows of data
 check_rendertable_rows <- function(object_name, app) {
   table_html <- app$get_values(output = object_name)[[1]]

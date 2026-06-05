@@ -51,8 +51,8 @@ library(sfarrow)
 library(stringr)
 
 # Read in files saved from SQL scripts ----------------------------------------
-national_provider_summary <- data.table::fread("data/national_provider_summary.csv") %>%
-  select(-c(`order_ref`, `order_detailed`)) # unused columns
+national_provider_summary <- data.table::fread("data/national_provider_summary.csv") # %>%
+## select(-c(`order_ref`, `order_detailed`)) # unused columns
 
 apps_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
 

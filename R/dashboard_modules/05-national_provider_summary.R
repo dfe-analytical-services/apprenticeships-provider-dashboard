@@ -1,6 +1,6 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-nps_parquet <- read_nps("data/national_provider_summary_0.parquet")
+nps_parquet <- arrow::read_parquet("data/national_provider_summary_0.parquet")
 
 # Create static lists of options for dropdowns
 nps_provider_choices <- data_choices(data = nps_parquet, column = "Provider name")
@@ -8,7 +8,6 @@ nps_year_choices <- data_choices(data = nps_parquet, column = "Academic Year")
 nps_characteristic_choices <- data_choices(data = nps_parquet, column = "Learner characteristic")
 
 # Main module code ============================================================
-
 nps_ui <- function(id) {
   div(
     # Tab header ==============================================================
@@ -57,8 +56,8 @@ nps_ui <- function(id) {
             "This will download all data related to the providers and options selected.",
             " The XLSX format is designed for use in Microsoft Excel."
           ),
-          choices = c("CSV (Up to 5.47 MB)", "XLSX (Up to 1.75 MB)"),
-          selected = "CSV (Up to 5.47 MB)"
+          choices = c("CSV (Up to 9.52 MB)", "XLSX (Up to 3.22 MB)"),
+          selected = "CSV (Up to 9.52 MB)"
         ),
         downloadButton(
           NS(id, "download_data"),
@@ -69,12 +68,13 @@ nps_ui <- function(id) {
       )
     ),
     ## Footer -----------------------------------------------------------------
+
     div(
       class = "well",
       style = "font-size: 1rem; background: #f7f7f7;",
-      "The Index of Multiple deprivation (IMD) is a measure of relative deprivation. The IMD shown here has been
+      ("The Index of Multiple deprivation (IMD) is a measure of relative deprivation. The IMD shown here has been
         split into quintiles, with a value of one indicating the 20% most deprived neighbourhoods and five the 20%
-        least deprived. IMD is derived from the learner postcode recorded on the Individualised Learner Record."
+        least deprived. IMD is derived from the learner postcode recorded on the Individualised Learner Record.")
     )
   )
 }
@@ -111,6 +111,11 @@ nps_server <- function(id) {
 
     # Table ===================================================================
     output$nps_table <- renderReactable({
+      # Put in message where there are none of the measure
+      validate(need(
+        nrow(nps_reactive_table()) > 0,
+        paste0("No results for this provider in this year.")
+      ))
       dfe_reactable(nps_reactive_table())
     })
 
@@ -119,7 +124,7 @@ nps_server <- function(id) {
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$provider, "-", input$year, "-", input$characteristic, "-provider_summary")
-        extension <- if (input$file_type == "CSV (Up to 5.47 MB)") {
+        extension <- if (input$file_type == "CSV (Up to 9.52 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -128,7 +133,7 @@ nps_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 5.47 MB)") {
+        if (input$file_type == "CSV (Up to 9.52 MB)") {
           data.table::fwrite(nps_reactive_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate

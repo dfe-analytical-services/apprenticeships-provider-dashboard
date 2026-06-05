@@ -35,7 +35,14 @@ accessibility_page <- function() {
     h2("How accessible this website is"),
     p("We know some parts of this website are not fully accessible:"),
     tags$div(tags$ul(
-      tags$li("list them here") # TODO
+      tags$li("On the Provider Breakdowns page there is an issue with ARIA parent roles in the
+      tables needing specific child roles to perform their intended accessibility functions."),
+      tags$li("Also on the Provider Breakdowns page, when selecting a set of providers from the
+              provider table, those selections get cleared if the chosen measure, provider type,
+              academic year, level or age group are changed, so the providers need to be chosen first."),
+      tags$li("On the Subjects and Standards page, when a standard is selected before subject(s) or level(s),
+              the standards box updates to contain a list of the standards relating to those subject(s) and
+              level(s), rather than a particular one. However, it can be reselected from the reduced list."),
     )),
     h2("Feedback and contact information"),
     p(
@@ -86,7 +93,14 @@ accessibility_page <- function() {
     p("The content listed below is non-accessible for the following reasons.
              We will address these issues to ensure our content is accessible."),
     tags$div(tags$ul(
-      tags$li("list them here") # TODO
+      tags$li("On the Provider Breakdowns page there is an issue with ARIA parent roles in the
+      tables needing specific child roles to perform their intended accessibility functions."),
+      tags$li("Also on the Provider Breakdowns page, when selecting a set of providers from the
+              provider table, those selections get cleared if the chosen measure, provider type,
+              academic year, level or age group are changed, so the providers need to be chosen first."),
+      tags$li("On the Subjects and Standards page, when a standard is selected before subject(s) or level(s),
+              the standards box updates to contain a list of the standards relating to those subject(s) and
+              level(s), rather than a particular one. However, it can be reselected from the reduced list."),
     )),
     h3("Disproportionate burden"),
     p("Not applicable."),
@@ -113,7 +127,7 @@ accessibility_page <- function() {
       tags$li("charts, maps, and tables")
     )),
     p(
-      "This specific website was was last tested on [date] against", # TODO
+      "This specific website was was last tested on 4th July 2025 against",
       a(
         href = "https://www.w3.org/TR/WCAG22/",
         "Accessibility Guidelines WCAG2.2",
@@ -140,7 +154,7 @@ accessibility_page <- function() {
       "."
     ),
     h2("Preparation of this accessibility statement"),
-    p("This statement was prepared on 1st July 2024. It was last reviewed on [date]."), # TODO
+    p("This statement was prepared on 1st July 2024. It was last reviewed on 4th July 2025."),
     p(
       "The template used for this website was last testing in March 2024 against the WCAG 2.2 AA standard.
           This test of a representative sample of pages was carried out by the",

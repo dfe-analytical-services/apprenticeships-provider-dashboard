@@ -56,15 +56,24 @@ ui <- function(input, output, session) {
       publication_name = parent_pub_name,
       publication_link = parent_publication
     ),
+    tags$head(includeHTML(("google-analytics.html"))),
+    shinyjs::useShinyjs(),
+    dfeshiny::dfe_cookies_script(),
+    dfeshiny::cookies_banner_ui(
+      name = site_title
+    ),
+    skip_to_main(),
 
     ## Header -----------------------------------------------------------------
     shinyGovstyle::header(
       main_text = "",
       main_link = "https://www.gov.uk/government/organisations/department-for-education",
+      main_alt_text = "Department for Education's website.",
       secondary_text = "Apprenticeships provider dashboard",
       logo = "images/DfE_logo_landscape.png",
       logo_width = 150,
-      logo_height = 32
+      logo_height = 32,
+      logo_alt_text = "DFE logo"
     ),
 
     ## Beta banner ------------------------------------------------------------
@@ -72,7 +81,8 @@ ui <- function(input, output, session) {
       "gds_phase_banner",
       "Alpha",
       paste0(
-        "This dashboard is being actively developed, contact explore.statistics@education.gov.uk with any feedback"
+        "This dashboard is being developed, please give any feedback using our ",
+        a(href = feedback_form_url, "feedback form", .noWS = c("after")), "."
       )
     ),
 
@@ -89,25 +99,36 @@ ui <- function(input, output, session) {
             col_widths = breakpoints(sm = c(4, 8), md = c(3, 9), lg = c(2, 9)),
             ## Left navigation ------------------------------------------------
             dfe_contents_links(
-              links_list =
-                c(
-                  "Provider breakdowns",
-                  "Local authority district",
-                  "Subjects and standards",
-                  "Learner characteristics",
-                  "National provider summary",
-                  "User guide"
-                )
+              links_list = c(
+                "Provider breakdowns",
+                "Local authority district",
+                "Subjects and standards",
+                "Learner characteristics",
+                "National provider summary",
+                "User guide"
+              )
             ),
             ## Dashboard panels -----------------------------------------------
             bslib::navset_hidden(
               id = "left_nav",
-              nav_panel("provider_breakdowns", prov_breakdowns_ui(id = "prov_breakdowns")),
-              nav_panel("local_authority_district", lad_ui(id = "lad")),
-              nav_panel("subjects_and_standards", subjects_standards_ui(id = "sas")),
-              nav_panel("learner_characteristics", learner_characteristics_ui(id = "learner_characteristics")),
-              nav_panel("national_provider_summary", nps_ui(id = "nps")),
-              nav_panel("user_guide", user_guide())
+              nav_panel(
+                "provider_breakdowns", prov_breakdowns_ui(id = "prov_breakdowns")
+              ),
+              nav_panel(
+                "local_authority_district", lad_ui(id = "lad")
+              ),
+              nav_panel(
+                "subjects_and_standards", subjects_standards_ui(id = "sas")
+              ),
+              nav_panel(
+                "learner_characteristics", learner_characteristics_ui(id = "learner_characteristics")
+              ),
+              nav_panel(
+                "national_provider_summary", nps_ui(id = "nps")
+              ),
+              nav_panel(
+                "user_guide", user_guide()
+              )
             )
           )
         ),
@@ -115,11 +136,18 @@ ui <- function(input, output, session) {
         nav_panel("footnotes", footnotes_page()),
         nav_panel("support", support_page()),
         nav_panel("accessibility_statement", accessibility_page()),
-        nav_panel("cookies", cookies_page())
+        nav_panel("cookies_statement", cookies_page())
       )
     ),
 
     # Footer ==================================================================
-    dfe_footer(links_list = c("Footnotes", "Support", "Accessibility statement", "Cookies"))
+    dfe_footer(
+      links_list = c(
+        "Footnotes",
+        "Support",
+        "Accessibility statement",
+        "Cookies statement"
+      )
+    )
   )
 }

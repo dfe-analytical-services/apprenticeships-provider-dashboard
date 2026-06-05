@@ -1,8 +1,15 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-lad_map_parquet <- read_lad("data/lad_map_data_0.parquet")
+lad_map_parquet <- arrow::read_parquet("data/lad_map_data_0.parquet") %>%
+  select(year, provider_name, learner_home_lad, delivery_lad, starts, achievements, enrolments) %>%
+  rename(
+    `Learner home LAD` = learner_home_lad,
+    `Delivery LAD` = delivery_lad
+  )
 
 # Read in boundary files
+lad_boundaries_2025 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
+  rename("lad_name" = LAD24NM)
 lad_boundaries_2024 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2024_Boundaries_UK_BUC_-3799209068982948111.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
   rename("lad_name" = LAD24NM)
 lad_boundaries_2023 <- sf::st_read("data/boundary_files/Local_Authority_Districts_May_2023_UK_BUC_V2_8757178717458576320.gpkg", quiet = TRUE) %>% # nolint: line-length-linter
@@ -22,10 +29,10 @@ provider_choices <- c("", distinct(lad_map_parquet, provider_name) %>% pull())
 # Providers should be in alphabetical order
 provider_choices <- sort(provider_choices)
 
-delivery_lad_choices <- c("", distinct(lad_map_parquet, delivery_lad) %>% pull())
+delivery_lad_choices <- c("", distinct(lad_map_parquet, `Delivery LAD`) %>% pull())
 delivery_lad_choices <- sort(delivery_lad_choices)
 
-learner_home_lad_choices <- c("", distinct(lad_map_parquet, learner_home_lad) %>% pull())
+learner_home_lad_choices <- c("", distinct(lad_map_parquet, `Learner home LAD`) %>% pull())
 learner_home_lad_choices <- sort(learner_home_lad_choices)
 
 # Main module code ============================================================
@@ -110,11 +117,11 @@ lad_ui <- function(id) {
             inputId = NS(id, "file_type"),
             label = h2("Choose download file format"),
             hint_label = paste0(
-              "This will download data for all providers and local authority districts based on the ",
-              "options selected. The XLSX format is designed for use in Microsoft Excel."
+              "This will download data for all local authority districts based on the ",
+              "year and provider selected. The XLSX format is designed for use in Microsoft Excel."
             ),
-            choices = c("CSV (Up to 18.42 MB)", "XLSX (Up to 5.92 MB)"),
-            selected = "CSV (Up to 18.42 MB)"
+            choices = c("CSV (Up to 19.96 MB)", "XLSX (Up to 6.22 MB)"),
+            selected = "CSV (Up to 19.96 MB)"
           ),
           downloadButton(
             NS(id, "download_data"),
@@ -187,12 +194,12 @@ lad_server <- function(id) {
 
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
-        prov_selection_table <- prov_selection_table %>% filter(delivery_lad == input$delivery_lad)
+        prov_selection_table <- prov_selection_table %>% filter(`Delivery LAD` == input$delivery_lad)
       }
 
       # Filter based on learner home LAD if selected
       if (input$learner_home_lad != "") {
-        prov_selection_table <- prov_selection_table %>% filter(learner_home_lad == input$learner_home_lad)
+        prov_selection_table <- prov_selection_table %>% filter(`Learner home LAD` == input$learner_home_lad)
       }
 
       # Summarise and aggregate the filtered table
@@ -202,6 +209,8 @@ lad_server <- function(id) {
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
+        rename(`Provider (UKPRN)` = provider_name) %>%
+        rename_with(~ paste(input$measure), `Number of apprenticeships`) %>%
         collect()
 
       return(prov_selection_table)
@@ -226,21 +235,22 @@ lad_server <- function(id) {
 
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
-        delivery_lad_table <- delivery_lad_table %>% filter(delivery_lad == input$delivery_lad)
+        delivery_lad_table <- delivery_lad_table %>% filter(`Delivery LAD` == input$delivery_lad)
       }
 
       # Filter based on learner home LAD if selected
       if (input$learner_home_lad != "") {
-        delivery_lad_table <- delivery_lad_table %>% filter(learner_home_lad == input$learner_home_lad)
+        delivery_lad_table <- delivery_lad_table %>% filter(`Learner home LAD` == input$learner_home_lad)
       }
 
       delivery_lad_table <- delivery_lad_table %>%
         with_groups(
-          delivery_lad,
+          `Delivery LAD`,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
         filter(`Number of apprenticeships` != 0)
+
 
       return(delivery_lad_table)
     })
@@ -256,17 +266,17 @@ lad_server <- function(id) {
 
       # Filter based on delivery LAD if selected
       if (input$delivery_lad != "") {
-        learner_home_lad_table <- learner_home_lad_table %>% filter(delivery_lad == input$delivery_lad)
+        learner_home_lad_table <- learner_home_lad_table %>% filter(`Delivery LAD` == input$delivery_lad)
       }
 
       # Filter based on learner home LAD if selected
       if (input$learner_home_lad != "") {
-        learner_home_lad_table <- learner_home_lad_table %>% filter(learner_home_lad == input$learner_home_lad)
+        learner_home_lad_table <- learner_home_lad_table %>% filter(`Learner home LAD` == input$learner_home_lad)
       }
 
       learner_home_lad_table <- learner_home_lad_table %>%
         with_groups(
-          learner_home_lad,
+          `Learner home LAD`,
           summarise,
           `Number of apprenticeships` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) %>%
@@ -296,27 +306,38 @@ lad_server <- function(id) {
     # Reactive data sets used in maps -----------------------------------------
     boundary_data <- reactive({
       # Set the map boundary file based on the year
+      # this would be better not hard coded - values change for the latest year according to qr
+      # have made sure in the code below that the quarter doesn't matter
+      # don't want to further hard code as this will change as boundaries change
+      # want to stay aware of this
+      # lad_boundaries_2024 is OK for Q1 2024/25 - no empty LADs
+      # as soon as empty LADs appear, need to update
+
       boundary_list <- list(
-        "2023/24 (Q3 Aug to Apr)" = lad_boundaries_2024,
-        "2022/23" = lad_boundaries_2023,
-        "2021/22" = lad_boundaries_2022
+        "2025/26" = lad_boundaries_2024,
+        "2024/25" = lad_boundaries_2024,
+        "2023/24" = lad_boundaries_2024,
+        "2022/23" = lad_boundaries_2023
       )
 
       # Choose the boundary based on the year selection from the user
-      return(boundary_list[[input$year]])
+      # think this will sort the hard -coding for the boundary list
+      # will match to the first bit of the string - just the academic year & not qr
+      return(boundary_list[[substring(input$year, 1, 7)]])
     })
+
 
     delivery_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
       boundary_data() %>%
-        right_join(delivery_lad_table(), by = join_by("lad_name" == "delivery_lad")) %>%
+        right_join(delivery_lad_table(), by = join_by("lad_name" == "Delivery LAD")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
 
     learner_home_map_data <- reactive({
       # Join on the boundary to the data in the delivery LAD table
       boundary_data() %>%
-        right_join(learner_home_lad_table(), by = join_by("lad_name" == "learner_home_lad")) %>%
+        right_join(learner_home_lad_table(), by = join_by("lad_name" == "Learner home LAD")) %>%
         sf::st_transform(crs = 4326) # transform coordinates to a system we can use in leaflet maps in the app
     })
 
@@ -342,13 +363,12 @@ lad_server <- function(id) {
     observeEvent(input$learner_home_lad_reset, {
       updateSelectizeInput(session, "learner_home_lad", selected = "")
     })
-
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- paste0("lad-", input$year, "-", input$measure)
-        extension <- if (input$file_type == "CSV (Up to 18.42 MB)") {
+        raw_name <- paste0("lad-", input$year, "-", input$provider)
+        extension <- if (input$file_type == "CSV (Up to 19.96 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -357,12 +377,23 @@ lad_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 18.42 MB)") {
+        if (input$file_type == "CSV (Up to 19.96 MB)" & input$provider == "") {
           data.table::fwrite(map_data(), file)
-        } else {
+        } else if (input$file_type == "CSV (Up to 19.96 MB)" & input$provider != "") {
+          data.table::fwrite(map_data() %>%
+            filter(year %in% input$year) %>%
+            filter(provider_name %in% input$provider), file)
+        } else if (input$file_type == "XLSX (Up to 6.22 KB)" & input$provider != "") {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
-          openxlsx::write.xlsx(map_data(), file, colWidths = "Auto")
+          openxlsx::write.xlsx(map_data() %>%
+            filter(year %in% input$year) %>%
+            filter(provider_name %in% input$provider), file, colWidths = "Auto")
+          on.exit(removeNotification(pop_up), add = TRUE)
+        } else {
+          pop_up <- showNotification("Generating download file", duration = NULL)
+          openxlsx::write.xlsx(map_data() %>%
+            filter(year %in% input$year), file, colWidths = "Auto")
           on.exit(removeNotification(pop_up), add = TRUE)
         }
       }

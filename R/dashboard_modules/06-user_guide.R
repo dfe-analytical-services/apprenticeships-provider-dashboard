@@ -5,7 +5,7 @@ user_guide <- function() {
     p("This interactive tool shows data on apprenticeship starts, enrolments and achievements by providers, for
             the latest three years. Use the navigation filters on each page to switch between starts, enrolments and
             achievements. Further filters are available to select academic year, level, age, subject, provider and
-            geographical breakdowns."),
+            geographical breakdowns. Provider tables can be sorted either alphabetically or by the measure selected."),
     h2("Definitions"),
     h3("Apprenticeships"),
     p("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally

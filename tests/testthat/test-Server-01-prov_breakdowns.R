@@ -14,8 +14,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Read in the data to test against
-source("../../R/read_data.R")
-test_data <- read_prov_breakdowns("../../data/provider_breakdowns_0.parquet")
+test_data <- arrow::read_parquet("../../data/provider_breakdowns_0.parquet")
 
 # Test the server file  =======================================================
 shiny::testServer(prov_breakdowns_server, expr = {

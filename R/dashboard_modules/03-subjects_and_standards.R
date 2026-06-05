@@ -1,12 +1,12 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-sas_parquet <- read_sas("data/subjects_and_standards_0.parquet")
+sas_parquet <- arrow::read_parquet("data/subjects_and_standards_0.parquet")
 
 # Create static lists of options for dropdowns
 sas_year_choices <- sort(data_choices(data = sas_parquet, column = "year"),
   decreasing = TRUE
 )
-sas_subject_choices <- data_choices(data = sas_parquet, column = "ssa_t1_desc")
+sas_subject_choices <- sort(data_choices(data = sas_parquet, column = "ssa_t1_desc"))
 sas_measure_choices <- data_choices(data = sas_parquet, column = "measure")
 sas_level_choices <- data_choices(data = sas_parquet, column = "apps_Level")
 
@@ -82,8 +82,8 @@ subjects_standards_ui <- function(id) {
             label = h2("Choose download file format"),
             hint_label = "This will download all data related to the providers and options selected.
           The XLSX format is designed for use in Microsoft Excel",
-            choices = c("CSV (Up to 13.18 MB)", "XLSX (Up to 2.12 MB)"),
-            selected = "CSV (Up to 13.18 MB)"
+            choices = c("CSV (Up to 12.01 MB)", "XLSX (Up to 1.97 MB)"),
+            selected = "CSV (Up to 12.01 MB)"
           ),
           # Bit of a hack to force the button not to be full width
           layout_columns(
@@ -106,52 +106,52 @@ subject_standards_server <- function(id) {
     # Drop downs ==============================================================
     # Initial selections
     # Calculate the standards available based on level/subject selection
+
     sas_std_choices <- reactive({
-      # if both empty - all standards
-      if (any(is.null(input$level), input$level == "") & any(is.null(input$subject), input$subject == "")) {
+      level <- (input$level)
+      subject <- (input$subject)
+      # Use isolate() to prevent reactivity from level and subject inputs
+      standard <- isolate(input$standard)
+
+      # If standard is selected , return only that
+      if (!is.null(standard) && standard != "") {
+        sas_standard_table %>%
+          filter(std_fwk_name %in% standard) %>%
+          pull(std_fwk_name) %>%
+          unique()
+        # if level and subject are empty, show all standards
+      } else if (any(is.null(level), level == "") & any(is.null(subject), subject == "")) {
         sas_standard_table %>%
           pull(std_fwk_name) %>%
           unique()
-      } else
-      # if level is empty and subject isn't then get list for that subject
-      if (any(is.null(input$level), input$level == "")) {
+        # if level is empty and subject filled, filter on subject
+      } else if (any(is.null(level), level == "")) {
         sas_standard_table %>%
-          filter(ssa_t1_desc %in% input$subject) %>%
+          filter(ssa_t1_desc %in% subject) %>%
           pull(std_fwk_name) %>%
           unique()
-      } else
-      # if subject is empty and level isn't then get list for that level
-      if (any(is.null(input$subject), input$subject == "")) {
+        # if level is filled and subject is empty, filter on level
+      } else if (any(is.null(subject), subject == "")) {
         sas_standard_table %>%
-          filter(apps_Level %in% input$level) %>%
+          filter(apps_Level %in% level) %>%
           pull(std_fwk_name) %>%
           unique()
-        # if both populated then get list based on both
+        # fi both level and subject are filled, filter on both
       } else {
         sas_standard_table %>%
-          filter(apps_Level %in% input$level) %>%
-          filter(ssa_t1_desc %in% input$subject) %>%
+          filter(apps_Level %in% level, ssa_t1_desc %in% subject) %>%
           pull(std_fwk_name) %>%
           unique()
       }
     })
 
-    # Ensure the level is based on a selection in the standard dropdown
-    # if there is one
+    # Ensure the standard is based on a selection
     observeEvent(input$standard, {
-      relevant_level <- sas_standard_table %>%
-        filter(std_fwk_name %in% input$standard) %>%
-        pull(apps_Level)
-      updateSelectizeInput(session, "level", selected = relevant_level)
-    })
-
-    # Ensure the subject is based on a selection in the standard dropdown
-    # if there is one
-    observeEvent(input$standard, {
-      relevant_subject <- sas_standard_table %>%
-        filter(std_fwk_name %in% input$standard) %>%
-        pull(ssa_t1_desc)
-      updateSelectizeInput(session, "subject", selected = relevant_subject)
+      relevant_data <- sas_standard_table %>%
+        filter(std_fwk_name %in% input$standard)
+      updateSelectizeInput(session, "standard", selected = relevant_data %>% pull(std_fwk_name))
+      updateSelectizeInput(session, "level", selected = relevant_data %>% pull(apps_Level))
+      updateSelectizeInput(session, "subject", selected = relevant_data %>% pull(ssa_t1_desc))
     })
 
     # This dropdown needs to watch (observe) and update when bar(s)
@@ -179,16 +179,22 @@ subject_standards_server <- function(id) {
     })
 
     # This dropdown needs to watch (observe) and update when a level
-    # or subject area is selected
+    #   # or subject area is selected
+
+    # if only one standard in list - been selected / only one in level/subject then select that
+
     observe({
+      choices <- sas_std_choices()
+
       updateSelectizeInput(
         session = session,
         inputId = "standard",
         label = "Search for standard",
-        choices = sas_std_choices(),
-        server = TRUE
+        choices = choices,
+        selected = if (length(choices) == 1) choices[1] else NULL
       )
     })
+
 
     # Get the selections from the provider table ==============================
     selected_providers <- reactive({
@@ -198,7 +204,7 @@ subject_standards_server <- function(id) {
 
     # Reactive data ===========================================================
     # Filter subject area data set based on inputs on this page. This reactive
-    # feeds the tables and chart.
+    # feeds the table.
     filtered_raw_data_table <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
@@ -214,16 +220,14 @@ subject_standards_server <- function(id) {
       }
       return(data)
     })
-
+    # Filter subject area data separately. Don't want same filters.
     filtered_raw_data_chart <- reactive({
       data <- sas_parquet %>%
         filter(measure == input$measure, year == input$year)
-
+      # Only want this filtered by level, otherwise the bar chart disappears when
+      # a subject is selected, if filtered by them
       if (!(is.null(input$level))) {
         data <- data %>% filter(apps_Level %in% input$level)
-      }
-      if (!(is.null(input$standard))) {
-        data <- data %>% filter(std_fwk_name %in% input$standard)
       }
       return(data)
     })
@@ -285,17 +289,25 @@ subject_standards_server <- function(id) {
     # User bar selection ------------------------------------------------------
     # This records what bar has been selected in the chart
     # then passes it into the dropdown as if the user had selected that LAD from the dropdown itself
-    observe({
-      selections <- input$subject_area_bar_selected
 
+
+    # Debounced version of the bar selection input
+    debounced_bar_selection <- debounce(reactive(input$subject_area_bar_selected), 150)
+
+
+    observe({
+      selections <- debounced_bar_selection()
+
+      # If nothing selected → clear the dropdown
       if (is.null(selections) || length(selections) == 0) {
-        selected_value <- ""
-      } else {
-        selected_value <- selections
+        updateSelectInput(session, "subject", selected = character(0))
+        return()
       }
 
-      updateSelectizeInput(session, "subject", selected = selected_value)
+      # If bars were selected → update normally
+      updateSelectInput(session, "subject", selected = selections)
     })
+
 
     # A selectable list of providers
     output$sas_provider_table <- renderReactable({
@@ -317,7 +329,12 @@ subject_standards_server <- function(id) {
 
     # Create an interactive chart showing the numbers broken down by subject
     # area
-    output$subject_area_bar <- renderGirafe(
+    output$subject_area_bar <- renderGirafe({
+      # empty message if there are no rows for that provider
+      validate(need(
+        nrow(subject_area_data_chart()) > 0, ""
+      ))
+
       girafe(
         ggobj =
           subject_area_data_chart() %>%
@@ -327,9 +344,16 @@ subject_standards_server <- function(id) {
             ) %>%
             ggplot(
               aes(
-                x = reorder(ssa_t1_desc, values),
+                x = reorder(as.factor(ssa_t1_desc), values),
                 y = values,
-                tooltip = paste0(ssa_t1_desc, ": ", dfeR::comma_sep(values), " ", input$measure),
+                tooltip = paste0(
+                  ssa_t1_desc, ": ", dfeR::comma_sep(values), " ",
+                  # puts the selected levels into the tooltip
+                  if_else(!(is.na(input$level[1])), gsub(".{14}$", "", input$level[1]), ""),
+                  if_else(!(is.na(input$level[2])), gsub(".{14}$", "", paste("&", input$level[2])), ""),
+                  if_else(!(is.na(input$level[3])), gsub(".{14}$", "", paste("&", input$level[3])), ""),
+                  firstlow(input$measure)
+                ),
                 data_id = ssa_t1_desc
               )
             ) +
@@ -338,7 +362,10 @@ subject_standards_server <- function(id) {
             xlab("") +
             ylab(input$measure) +
             scale_y_continuous(labels = dfeR::comma_sep) +
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 30)) +
+            scale_x_discrete(
+              labels = function(x) str_wrap(x, width = 30),
+              drop = FALSE
+            ) +
             ggplot2::theme_minimal() +
             ggplot2::theme(
               legend.position = "top",
@@ -346,9 +373,10 @@ subject_standards_server <- function(id) {
               panel.grid = element_blank(),
               panel.grid.minor = element_blank(),
               panel.grid.major.x = element_blank(),
-              axis.title.x = element_text(family = "Arial", size = 10, face = "bold", margin = margin(t = 10)),
-              axis.text.x = element_text(family = "Arial", size = 10),
-              axis.text.y = element_text(family = "Arial", size = 10)
+              axis.title.x = element_text(size = 10, face = "bold", margin = margin(t = 10)),
+              axis.text.x = element_text(size = 10),
+              axis.text.y = element_text(size = 10),
+              text = element_text(family = dfe_font)
             ),
         options = list(
           # Set styling for bars on hover and when selected
@@ -365,23 +393,16 @@ subject_standards_server <- function(id) {
             hidden = c("lasso_select", "lasso_deselect")
           )
         ),
-        fonts = list(sans = "Arial")
+        fonts = list(sans = dfe_font)
       )
-    )
+    })
 
     # Expandable table of subject areas.
-    # TODO
-    # Think need to update based upon what is in the subject dropdown
-    # as can be updated by the bar chart
-
     output$sas_subject_area_table <- renderReactable({
       # Put in message where there are none of the measure
+      # can be blank as message in provider table
       validate(need(
-        nrow(subject_area_data_table()) > 0,
-        paste0(
-          "No ", firstlow(input$measure),
-          " for these selections."
-        )
+        nrow(subject_area_data_table()) > 0, ""
       ))
 
       subject_data <- subject_area_data_table() %>%
@@ -420,13 +441,17 @@ subject_standards_server <- function(id) {
     })
 
 
-
     # Data download ===========================================================
+
+    # Get provider name for file name
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- paste0(input$year, "-", input$level, "-", input$provider, "-subjects-and-standards")
-        extension <- if (input$file_type == "CSV (Up to 13.18 MB)") {
+        raw_name <- paste0(
+          input$year, "-", input$measure, "-", input$subject, "-",
+          input$level, input$provider, "-subjects-and-standards"
+        )
+        extension <- if (input$file_type == "CSV (Up to 12.01 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -435,12 +460,12 @@ subject_standards_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 13.18 MB)") {
-          data.table::fwrite(subject_area_data(), file)
+        if (input$file_type == "CSV (Up to 12.01 MB)") {
+          data.table::fwrite(subject_area_data_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
-          openxlsx::write.xlsx(subject_area_data(), file, colWidths = "Auto")
+          openxlsx::write.xlsx(subject_area_data_table(), file, colWidths = "Auto")
           on.exit(removeNotification(pop_up), add = TRUE)
         }
       }

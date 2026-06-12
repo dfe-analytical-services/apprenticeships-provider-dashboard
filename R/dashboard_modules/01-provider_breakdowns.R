@@ -35,7 +35,7 @@ prov_breakdowns_ui <- function(id) {
       div(
         class = "well",
         bslib::layout_column_wrap(
-          width = "15rem", # Minimum width for each input box before wrapping
+          width = "23rem", # Minimum width for each input box before wrapping
           selectInput(
             inputId = NS(id, "measure"),
             label = "Select measure",
@@ -77,7 +77,6 @@ prov_breakdowns_ui <- function(id) {
           id = "main_col",
           nav_panel(
             "Bar chart",
-            "Select and deselect delivery and learner home regions using the buttons in the table.",
             girafeOutput(NS(id, "regions_bar")),
           ),
           nav_panel(

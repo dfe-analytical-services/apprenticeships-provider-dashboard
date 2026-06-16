@@ -471,18 +471,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         row_style = list(cursor = "pointer")
       )
     })
-
-
-    # TODO get this working, to update the delivery region table with the region dropdown
-    observe({
-      if (grepl("Delivery$", input$region)) {
-        delivery_region_selected <- case_when(sub(": .*", "", input$region) == "North East" ~ 1)
-        updateReactable("delivery_region", select = delivery_region_selected)
-        print(delivery_region_selected)
-      }
-    })
-
-
+    
     output$home_region <- renderReactable({
       dfe_reactable(
         home_region_table() |>
@@ -493,6 +482,62 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       )
     })
 
+   
+       
+       # if no region selected in table, input is 'All regions"
+       observe({
+         # Check selected rows in both tables
+         delivery_selected <- getReactableState("delivery_region", "selected")
+         learner_selected  <- getReactableState("learner_home_region", "selected")
+         
+         # If nothing selected in either
+         if (length(delivery_selected) == 0 && length(learner_selected) == 0) {
+           updateSelectInput(session, "region", selected = "All regions")
+         }
+       })
+       
+       observe({
+         req(input$region)
+         
+         region_name <- trimws(sub(": .*", "", input$region))
+         
+         # Reset case
+         if (input$region == "All regions") {
+           updateReactable("delivery_region", selected = NULL)
+           updateReactable("home_region", selected = NULL)
+           return()
+         }
+         
+         # DELIVERY
+         if (grepl("Delivery$", input$region)) {
+           
+           selected_row <- which(
+             tolower(trimws(delivery_region_table()[["Delivery region"]])) ==
+               tolower(region_name)
+           )
+           
+           if (length(selected_row) > 0) {
+             updateReactable("delivery_region", selected = selected_row)
+             updateReactable("home_region", selected = NULL)
+           }
+         }
+         
+         # LEARNER HOME
+         else if (grepl("Learner home$", input$region)) {
+           
+           selected_row <- which(
+             tolower(trimws(home_region_table()[["Learner home region"]])) ==
+               tolower(region_name)
+           )
+           
+           if (length(selected_row) > 0) {
+             updateReactable("home_region", selected = selected_row)
+             updateReactable("delivery_region", selected = NULL)
+           }
+         }
+       })
+       
+       
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       # This currently just downloads the filtered raw data, which doesn't react to any

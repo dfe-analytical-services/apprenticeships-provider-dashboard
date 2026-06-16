@@ -482,8 +482,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       )
     })
 
-
-
     # if no region selected in table, input is 'All regions"
     observe({
       # Check selected rows in both tables

@@ -212,16 +212,16 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       delivery_region_table <- filtered_raw_data()
 
       # Filter down provider list there is something selected from the providers
-      #   if (length(selected_providers() != 0)) {
-      #     delivery_region_table <- delivery_region_table %>%
-      #     filter(provider_name %in% selected_providers())
-      #  }
+      if (length(selected_providers() != 0)) {
+        delivery_region_table <- delivery_region_table %>%
+          filter(provider_name %in% selected_providers())
+      }
 
-      # # Filter to learner home region selection if it exists
-      #  if (length(selected_learner_home_region()) == 1) {
-      #    delivery_region_table <- delivery_region_table %>%
-      #    filter(learner_home_region == selected_learner_home_region())
-      #  }
+      # Filter to learner home region selection if it exists
+      # if (length(selected_learner_home_region()) == 1) {
+      #  delivery_region_table <- delivery_region_table %>%
+      # filter(learner_home_region == selected_learner_home_region())
+      # }
 
       # Filter from the regions dropdown
       if (input$region != "") {
@@ -269,7 +269,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       home_region_table <- filtered_raw_data()
 
       # Filter down provider list there is something selected from the providers
-      if (length(selected_providers() != 0)) {
+      if (length(selected_providers() > 0)) {
         home_region_table <- home_region_table %>% filter(provider_name %in% selected_providers())
       }
 

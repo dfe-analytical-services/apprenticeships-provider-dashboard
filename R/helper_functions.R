@@ -131,13 +131,12 @@ dfe_footer <- function(links_list) {
 
 # dfe reactable ===============================================================
 dfe_reactable <- function(
-  data,
-  on_click = NULL,
-  selection = NULL,
-  row_style = NULL,
-  searchable = FALSE,
-  default_page_size = 10
-) {
+    data,
+    on_click = NULL,
+    selection = NULL,
+    row_style = NULL,
+    searchable = FALSE,
+    default_page_size = 10) {
   reactable(
     data,
 

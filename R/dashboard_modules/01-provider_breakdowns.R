@@ -29,7 +29,7 @@ prov_breakdowns_ui <- function(id) {
   div(
     # Page header =============================================================
     h1("Provider breakdowns"),
-    p("Select options from the top and the region tables first, before providers.
+    p("Select options from the top and the regions first, before providers.
       Selections from the top, and the regions will reset the providers chosen."),
     # User selection area ===================================================
     column(
@@ -368,12 +368,10 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     # This observes the selected bar in the bar chart and updates the dropdown
     # for region
     observe({
-      print(input$regions_bar_selected)
-
       selection <- input$regions_bar_selected
 
       if (is.null(selection) || length(selection) == 0) {
-        selected_value <- ""
+        selected_value <- "All regions"
       } else {
         selected_value <- selection
       }
@@ -418,7 +416,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             # Wrap y-axis labels (set so East of England and longer will wrap onto multiple lines)
             scale_x_discrete(labels = function(x) str_wrap(x, width = 13)) +
             # Custom theme
-            # TODO: extract list of this to reuse in dfeshiny
             ggplot2::theme_minimal() +
             ggplot2::theme(
               legend.position = "top",
@@ -482,11 +479,11 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       )
     })
 
-    # if no region selected in table, input is 'All regions"
+    # if no region selected in table, and nothing selected in  input is 'All regions"
     observe({
       # Check selected rows in both tables
       delivery_selected <- getReactableState("delivery_region", "selected")
-      learner_selected <- getReactableState("learner_home_region", "selected")
+      learner_selected <- getReactableState("home_region", "selected")
 
       # If nothing selected in either
       if (length(delivery_selected) == 0 && length(learner_selected) == 0) {
@@ -494,11 +491,11 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       }
     })
 
+
+    # if a region is selected in the dropdown, feed into tables
     observe({
-      req(input$region)
-
       region_name <- trimws(sub(": .*", "", input$region))
-
+      print(region_name)
       # Reset case
       if (input$region == "All regions") {
         updateReactable("delivery_region", selected = NULL)
@@ -512,6 +509,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           tolower(trimws(delivery_region_table()[["Delivery region"]])) ==
             tolower(region_name)
         )
+        print(selected_row)
 
         if (length(selected_row) > 0) {
           updateReactable("delivery_region", selected = selected_row)

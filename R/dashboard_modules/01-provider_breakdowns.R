@@ -495,11 +495,11 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     # if a region is selected in the dropdown, feed into tables
     observe({
       region_name <- trimws(sub(": .*", "", input$region))
-      print(region_name)
+      cat("dropdown:", input$region, "\n")
       # Reset case
       if (input$region == "All regions") {
-        updateReactable("delivery_region", selected = NULL)
-        updateReactable("home_region", selected = NULL)
+        updateReactable("delivery_region", selected = integer(0))
+        updateReactable("home_region", selected = integer(0))
         return()
       }
 
@@ -513,7 +513,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
         if (length(selected_row) > 0) {
           updateReactable("delivery_region", selected = selected_row)
-          updateReactable("home_region", selected = NULL)
+          updateReactable("home_region", selected = integer(0))
         }
       }
 
@@ -526,7 +526,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
         if (length(selected_row) > 0) {
           updateReactable("home_region", selected = selected_row)
-          updateReactable("delivery_region", selected = NULL)
+          updateReactable("delivery_region", selected = integer(0))
         }
       }
     })

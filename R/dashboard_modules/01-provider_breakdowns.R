@@ -79,6 +79,7 @@ prov_breakdowns_ui <- function(id) {
           id = "main_col",
           nav_panel(
             "Bar chart",
+            "Select and deselect delivery and learner home regions using the options above or buttons in the table.",
             girafeOutput(NS(id, "regions_bar")),
           ),
           nav_panel(
@@ -365,19 +366,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       return(regions_bar_data)
     })
 
-    # This observes the selected bar in the bar chart and updates the dropdown
-    # for region
-    observe({
-      selection <- input$regions_bar_selected
 
-      if (is.null(selection) || length(selection) == 0) {
-        selected_value <- "All regions"
-      } else {
-        selected_value <- selection
-      }
-
-      updateSelectizeInput(session, "region", selected = selected_value)
-    })
 
     # Bar chart output object =================================================
     output$regions_bar <- renderGirafe(
@@ -441,6 +430,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           ggiraph::opts_selection(
             type = "single",
             selected = input$region,
+            only_shiny = FALSE,
             css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
           )
         ),
@@ -491,11 +481,28 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       }
     })
 
+    # This observes the selected bar in the bar chart and updates the dropdown
+    # for region
+    observe({
+      selection <- input$regions_bar_selected
+      print(paste0("bar: ", input$regions_bar_selected))
 
+      if (is.null(selection) || length(selection) == 0) {
+        selected_value <- "All regions"
+      } else {
+        selected_value <- selection
+      }
+
+      updateSelectizeInput(
+        session = session,
+        inputId = "region",
+        selected = selected_value
+      )
+    })
     # if a region is selected in the dropdown, feed into tables
     observe({
       region_name <- trimws(sub(": .*", "", input$region))
-      cat("dropdown:", input$region, "\n")
+
       # Reset case
       if (input$region == "All regions") {
         updateReactable("delivery_region", selected = integer(0))
@@ -523,7 +530,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           tolower(trimws(home_region_table()[["Learner home region"]])) ==
             tolower(region_name)
         )
-
+        print(selected_row)
         if (length(selected_row) > 0) {
           updateReactable("home_region", selected = selected_row)
           updateReactable("delivery_region", selected = integer(0))

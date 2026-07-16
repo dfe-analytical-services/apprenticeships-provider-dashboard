@@ -24,7 +24,10 @@ test_that("Prov breakdowns page loads", {
 
 test_that("Make a provider selection", {
   # Select top provider
-  app$set_inputs(`prov_breakdowns-prov_selection__reactable__selected` = 1, allow_no_input_binding_ = TRUE)
+  app$set_inputs(
+    `prov_breakdowns-prov_selection__reactable__selected` = 1,
+    allow_no_input_binding_ = TRUE
+  )
 
   app$wait_for_idle(50)
 
@@ -41,7 +44,10 @@ test_that("Make a provider selection", {
 
 test_that("Make a delivery region selection", {
   # Select second region row
-  app$set_inputs(`prov_breakdowns-delivery_region__reactable__selected` = 2, allow_no_input_binding_ = TRUE)
+  app$set_inputs(
+    `prov_breakdowns-delivery_region__reactable__selected` = 2,
+    allow_no_input_binding_ = TRUE
+  )
 
   app$wait_for_idle(50)
 
@@ -58,7 +64,10 @@ test_that("Make a delivery region selection", {
 
 test_that("Make a learner home region selection", {
   # Select fifth region row
-  app$set_inputs(`prov_breakdowns-learner_home_region__reactable__selected` = 5, allow_no_input_binding_ = TRUE)
+  app$set_inputs(
+    `prov_breakdowns-learner_home_region__reactable__selected` = 5,
+    allow_no_input_binding_ = TRUE
+  )
 
   app$wait_for_idle(50)
 
@@ -78,7 +87,10 @@ test_that("Can download data", {
   app$wait_for_idle(50)
   download_info <- app$get_download("prov_breakdowns-download_data")
   app$wait_for_idle(50)
-  expect_equal(basename(download_info), "2023_24(q3augtoapr)-alllevels-allagegroups-provider_breakdowns.csv")
+  expect_equal(
+    basename(download_info),
+    "2023_24(q3augtoapr)-alllevels-allagegroups-provider_breakdowns.csv"
+  )
 })
 
 test_that("Can change all dropdowms and tables still render", {
@@ -107,7 +119,10 @@ test_that("Can download data after changing dropdowns", {
   app$wait_for_idle(50)
   download_info <- app$get_download("prov_breakdowns-download_data")
   app$wait_for_idle(50)
-  expect_equal(basename(download_info), "2022_23-higherapprenticeship-under19-provider_breakdowns.csv")
+  expect_equal(
+    basename(download_info),
+    "2022_23-higherapprenticeship-under19-provider_breakdowns.csv"
+  )
 })
 
 test_that("File type radio button changes to XLSX download", {
@@ -119,5 +134,8 @@ test_that("File type radio button changes to XLSX download", {
   app$wait_for_idle(50)
   download_info <- app$get_download("prov_breakdowns-download_data")
   app$wait_for_idle(50)
-  expect_equal(basename(download_info), "2022_23-higherapprenticeship-under19-provider_breakdowns.xlsx")
+  expect_equal(
+    basename(download_info),
+    "2022_23-higherapprenticeship-under19-provider_breakdowns.xlsx"
+  )
 })

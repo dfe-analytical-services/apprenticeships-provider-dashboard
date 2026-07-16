@@ -3,10 +3,14 @@
 sas_parquet <- arrow::read_parquet("data/subjects_and_standards_0.parquet")
 
 # Create static lists of options for dropdowns
-sas_year_choices <- sort(data_choices(data = sas_parquet, column = "year"),
+sas_year_choices <- sort(
+  data_choices(data = sas_parquet, column = "year"),
   decreasing = TRUE
 )
-sas_subject_choices <- sort(data_choices(data = sas_parquet, column = "ssa_t1_desc"))
+sas_subject_choices <- sort(data_choices(
+  data = sas_parquet,
+  column = "ssa_t1_desc"
+))
 sas_measure_choices <- data_choices(data = sas_parquet, column = "measure")
 sas_level_choices <- data_choices(data = sas_parquet, column = "apps_Level")
 
@@ -121,7 +125,9 @@ subject_standards_server <- function(id) {
           pull(std_fwk_name) |>
           unique()
         # if level and subject are empty, show all standards
-      } else if (any(is.null(level), level == "") & any(is.null(subject), subject == "")) {
+      } else if (
+        any(is.null(level), level == "") & any(is.null(subject), subject == "")
+      ) {
         sas_standard_table |>
           pull(std_fwk_name) |>
           unique()
@@ -150,9 +156,21 @@ subject_standards_server <- function(id) {
     observeEvent(input$standard, {
       relevant_data <- sas_standard_table |>
         filter(std_fwk_name %in% input$standard)
-      updateSelectizeInput(session, "standard", selected = relevant_data |> pull(std_fwk_name))
-      updateSelectizeInput(session, "level", selected = relevant_data |> pull(apps_Level))
-      updateSelectizeInput(session, "subject", selected = relevant_data |> pull(ssa_t1_desc))
+      updateSelectizeInput(
+        session,
+        "standard",
+        selected = relevant_data |> pull(std_fwk_name)
+      )
+      updateSelectizeInput(
+        session,
+        "level",
+        selected = relevant_data |> pull(apps_Level)
+      )
+      updateSelectizeInput(
+        session,
+        "subject",
+        selected = relevant_data |> pull(ssa_t1_desc)
+      )
     })
 
     # This dropdown needs to watch (observe) and update when bar(s)
@@ -196,11 +214,16 @@ subject_standards_server <- function(id) {
       )
     })
 
-
     # Get the selections from the provider table ==============================
     selected_providers <- reactive({
       # Filter to only the selected providers and convert to a vector to use for filtering elsewhere
-      unlist(provider_selection_table()[getReactableState("sas_provider_table", "selected"), 1], use.names = FALSE)
+      unlist(
+        provider_selection_table()[
+          getReactableState("sas_provider_table", "selected"),
+          1
+        ],
+        use.names = FALSE
+      )
     })
 
     # Reactive data ===========================================================
@@ -274,7 +297,8 @@ subject_standards_server <- function(id) {
     # Create dynamic title for the provider table
     reactive_table_title <- reactive({
       paste(
-        input$measure, "for providers across",
+        input$measure,
+        "for providers across",
         ifelse(
           length(input$subject) != 0,
           paste0(input$subject, collapse = " / "),
@@ -291,10 +315,11 @@ subject_standards_server <- function(id) {
     # This records what bar has been selected in the chart
     # then passes it into the dropdown as if the user had selected that LAD from the dropdown itself
 
-
     # Debounced version of the bar selection input
-    debounced_bar_selection <- debounce(reactive(input$subject_area_bar_selected), 150)
-
+    debounced_bar_selection <- debounce(
+      reactive(input$subject_area_bar_selected),
+      150
+    )
 
     observe({
       selections <- debounced_bar_selection()
@@ -308,7 +333,6 @@ subject_standards_server <- function(id) {
       # If bars were selected → update normally
       updateSelectInput(session, "subject", selected = selections)
     })
-
 
     # A selectable list of providers
     output$sas_provider_table <- renderReactable({
@@ -333,52 +357,75 @@ subject_standards_server <- function(id) {
     output$subject_area_bar <- renderGirafe({
       # empty message if there are no rows for that provider
       validate(need(
-        nrow(subject_area_data_chart()) > 0, ""
+        nrow(subject_area_data_chart()) > 0,
+        ""
       ))
 
       girafe(
-        ggobj =
-          subject_area_data_chart() |>
-            summarise( # nolint: indentation_linter
-              values = sum(values),
-              .by = c("ssa_t1_desc")
-            ) |>
-            ggplot(
-              aes(
-                x = reorder(as.factor(ssa_t1_desc), values),
-                y = values,
-                tooltip = paste0(
-                  ssa_t1_desc, ": ", dfeR::comma_sep(values), " ",
-                  # puts the selected levels into the tooltip
-                  if_else(!(is.na(input$level[1])), gsub(".{14}$", "", input$level[1]), ""),
-                  if_else(!(is.na(input$level[2])), gsub(".{14}$", "", paste("&", input$level[2])), ""),
-                  if_else(!(is.na(input$level[3])), gsub(".{14}$", "", paste("&", input$level[3])), ""),
-                  firstlow(input$measure)
+        ggobj = subject_area_data_chart() |>
+          summarise(
+            # nolint: indentation_linter
+            values = sum(values),
+            .by = c("ssa_t1_desc")
+          ) |>
+          ggplot(
+            aes(
+              x = reorder(as.factor(ssa_t1_desc), values),
+              y = values,
+              tooltip = paste0(
+                ssa_t1_desc,
+                ": ",
+                dfeR::comma_sep(values),
+                " ",
+                # puts the selected levels into the tooltip
+                if_else(
+                  !(is.na(input$level[1])),
+                  gsub(".{14}$", "", input$level[1]),
+                  ""
                 ),
-                data_id = ssa_t1_desc
-              )
-            ) +
-            geom_col_interactive(fill = afcolours::af_colours(n = 4)[1], position = position_dodge(width = 4.9)) +
-            coord_flip() +
-            xlab("") +
-            ylab(input$measure) +
-            scale_y_continuous(labels = dfeR::comma_sep) +
-            scale_x_discrete(
-              labels = function(x) str_wrap(x, width = 30),
-              drop = FALSE
-            ) +
-            ggplot2::theme_minimal() +
-            ggplot2::theme(
-              legend.position = "top",
-              legend.title = element_blank(),
-              panel.grid = element_blank(),
-              panel.grid.minor = element_blank(),
-              panel.grid.major.x = element_blank(),
-              axis.title.x = element_text(size = 10, face = "bold", margin = margin(t = 10)),
-              axis.text.x = element_text(size = 10),
-              axis.text.y = element_text(size = 10),
-              text = element_text(family = dfe_font)
+                if_else(
+                  !(is.na(input$level[2])),
+                  gsub(".{14}$", "", paste("&", input$level[2])),
+                  ""
+                ),
+                if_else(
+                  !(is.na(input$level[3])),
+                  gsub(".{14}$", "", paste("&", input$level[3])),
+                  ""
+                ),
+                firstlow(input$measure)
+              ),
+              data_id = ssa_t1_desc
+            )
+          ) +
+          geom_col_interactive(
+            fill = afcolours::af_colours(n = 4)[1],
+            position = position_dodge(width = 4.9)
+          ) +
+          coord_flip() +
+          xlab("") +
+          ylab(input$measure) +
+          scale_y_continuous(labels = dfeR::comma_sep) +
+          scale_x_discrete(
+            labels = function(x) str_wrap(x, width = 30),
+            drop = FALSE
+          ) +
+          ggplot2::theme_minimal() +
+          ggplot2::theme(
+            legend.position = "top",
+            legend.title = element_blank(),
+            panel.grid = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major.x = element_blank(),
+            axis.title.x = element_text(
+              size = 10,
+              face = "bold",
+              margin = margin(t = 10)
             ),
+            axis.text.x = element_text(size = 10),
+            axis.text.y = element_text(size = 10),
+            text = element_text(family = dfe_font)
+          ),
         options = list(
           # Set styling for bars on hover and when selected
           ggiraph::opts_hover(
@@ -403,7 +450,8 @@ subject_standards_server <- function(id) {
       # Put in message where there are none of the measure
       # can be blank as message in provider table
       validate(need(
-        nrow(subject_area_data_table()) > 0, ""
+        nrow(subject_area_data_table()) > 0,
+        ""
       ))
 
       subject_data <- subject_area_data_table() |>
@@ -441,7 +489,6 @@ subject_standards_server <- function(id) {
       )
     })
 
-
     # Data download ===========================================================
 
     # Get provider name for file name
@@ -449,8 +496,15 @@ subject_standards_server <- function(id) {
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(
-          input$year, "-", input$measure, "-", input$subject, "-",
-          input$level, input$provider, "-subjects-and-standards"
+          input$year,
+          "-",
+          input$measure,
+          "-",
+          input$subject,
+          "-",
+          input$level,
+          input$provider,
+          "-subjects-and-standards"
         )
         extension <- if (input$file_type == "CSV (Up to 12.01 MB)") {
           ".csv"
@@ -465,8 +519,15 @@ subject_standards_server <- function(id) {
           data.table::fwrite(subject_area_data_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate
-          pop_up <- showNotification("Generating download file", duration = NULL)
-          openxlsx::write.xlsx(subject_area_data_table(), file, colWidths = "Auto")
+          pop_up <- showNotification(
+            "Generating download file",
+            duration = NULL
+          )
+          openxlsx::write.xlsx(
+            subject_area_data_table(),
+            file,
+            colWidths = "Auto"
+          )
           on.exit(removeNotification(pop_up), add = TRUE)
         }
       }

@@ -21,7 +21,10 @@ test_that("NPS: Page loads", {
   app$wait_for_idle(50)
   download_info <- app$get_download("nps-download_data")
   app$wait_for_idle(50)
-  expect_equal(basename(download_info), "allproviders-allyears-allcharacteristics-provider_summary.csv")
+  expect_equal(
+    basename(download_info),
+    "allproviders-allyears-allcharacteristics-provider_summary.csv"
+  )
 
   # Go back to main tab
   app$set_inputs(provider_table_tabs = "Table")
@@ -43,7 +46,10 @@ test_that("NPS: Can change all the dropdowns", {
   app$wait_for_idle(50)
   download_info <- app$get_download("nps-download_data")
   app$wait_for_idle(50)
-  expect_equal(basename(download_info), "darlingtoncollege-2021_22-sex-male-provider_summary.csv")
+  expect_equal(
+    basename(download_info),
+    "darlingtoncollege-2021_22-sex-male-provider_summary.csv"
+  )
 
   # Go back to main tab
   app$set_inputs(provider_table_tabs = "Table")
@@ -58,5 +64,8 @@ test_that("File type radio button changes to XLSX download", {
   app$wait_for_idle(50)
   download_info <- app$get_download("nps-download_data")
   app$wait_for_idle(50)
-  expect_equal(basename(download_info), "darlingtoncollege-2021_22-sex-male-provider_summary.xlsx")
+  expect_equal(
+    basename(download_info),
+    "darlingtoncollege-2021_22-sex-male-provider_summary.xlsx"
+  )
 })

@@ -5,6 +5,7 @@ on:
       - main
       - development
       - eesp/add_ga_token
+      - package-updates/shinyGovstyle-versioning
   pull_request:
     branches:
       - main

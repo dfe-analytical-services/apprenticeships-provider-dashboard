@@ -80,7 +80,8 @@ ui <- function(input, output, session) {
       "Alpha",
       paste0(
         "This dashboard is being developed, please give any feedback using our ",
-        a(href = feedback_form_url, "feedback form", .noWS = c("after")), "."
+        a(href = feedback_form_url, "feedback form", .noWS = c("after")),
+        "."
       )
     ),
 
@@ -110,22 +111,28 @@ ui <- function(input, output, session) {
             bslib::navset_hidden(
               id = "left_nav",
               nav_panel(
-                "provider_breakdowns", prov_breakdowns_ui(id = "prov_breakdowns")
+                "provider_breakdowns",
+                prov_breakdowns_ui(id = "prov_breakdowns")
               ),
               nav_panel(
-                "local_authority_district", lad_ui(id = "lad")
+                "local_authority_district",
+                lad_ui(id = "lad")
               ),
               nav_panel(
-                "subjects_and_standards", subjects_standards_ui(id = "sas")
+                "subjects_and_standards",
+                subjects_standards_ui(id = "sas")
               ),
               nav_panel(
-                "learner_characteristics", learner_characteristics_ui(id = "learner_characteristics")
+                "learner_characteristics",
+                learner_characteristics_ui(id = "learner_characteristics")
               ),
               nav_panel(
-                "national_provider_summary", nps_ui(id = "nps")
+                "national_provider_summary",
+                nps_ui(id = "nps")
               ),
               nav_panel(
-                "user_guide", user_guide()
+                "user_guide",
+                user_guide()
               )
             )
           )

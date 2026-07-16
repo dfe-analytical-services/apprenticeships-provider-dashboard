@@ -3,9 +3,15 @@
 nps_parquet <- arrow::read_parquet("data/national_provider_summary_0.parquet")
 
 # Create static lists of options for dropdowns
-nps_provider_choices <- data_choices(data = nps_parquet, column = "Provider name")
+nps_provider_choices <- data_choices(
+  data = nps_parquet,
+  column = "Provider name"
+)
 nps_year_choices <- data_choices(data = nps_parquet, column = "Academic Year")
-nps_characteristic_choices <- data_choices(data = nps_parquet, column = "Learner characteristic")
+nps_characteristic_choices <- data_choices(
+  data = nps_parquet,
+  column = "Learner characteristic"
+)
 
 # Main module code ============================================================
 nps_ui <- function(id) {
@@ -96,13 +102,15 @@ nps_server <- function(id) {
       nps_filtered <- nps_parquet
 
       if (input$provider != "All providers") {
-        nps_filtered <- nps_filtered |> filter(`Provider name` == input$provider)
+        nps_filtered <- nps_filtered |>
+          filter(`Provider name` == input$provider)
       }
       if (input$year != "All years") {
         nps_filtered <- nps_filtered |> filter(`Academic Year` == input$year)
       }
       if (input$characteristic != "All characteristics") {
-        nps_filtered <- nps_filtered |> filter(`Learner characteristic` == input$characteristic)
+        nps_filtered <- nps_filtered |>
+          filter(`Learner characteristic` == input$characteristic)
       }
 
       # Pull the lazy loaded and now filtered data into memory
@@ -123,7 +131,14 @@ nps_server <- function(id) {
     output$download_data <- downloadHandler(
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- paste0(input$provider, "-", input$year, "-", input$characteristic, "-provider_summary")
+        raw_name <- paste0(
+          input$provider,
+          "-",
+          input$year,
+          "-",
+          input$characteristic,
+          "-provider_summary"
+        )
         extension <- if (input$file_type == "CSV (Up to 9.52 MB)") {
           ".csv"
         } else {
@@ -137,7 +152,10 @@ nps_server <- function(id) {
           data.table::fwrite(nps_reactive_table(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate
-          pop_up <- showNotification("Generating download file", duration = NULL)
+          pop_up <- showNotification(
+            "Generating download file",
+            duration = NULL
+          )
           openxlsx::write.xlsx(nps_reactive_table(), file, colWidths = "Auto")
           on.exit(removeNotification(pop_up), add = TRUE)
         }

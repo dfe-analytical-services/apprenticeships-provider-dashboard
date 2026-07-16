@@ -53,10 +53,14 @@ test_that("A single provider can be selected", {
 })
 
 test_that("Multiple providers can be selected", {
-  app$set_inputs(`sas-provider` = c(
-    "Nottingham College", "Tyne Coast College", "Coventry College",
-    "The Fernandes And Rosario Consulting Limited"
-  ))
+  app$set_inputs(
+    `sas-provider` = c(
+      "Nottingham College",
+      "Tyne Coast College",
+      "Coventry College",
+      "The Fernandes And Rosario Consulting Limited"
+    )
+  )
 
   app$wait_for_idle(50)
 

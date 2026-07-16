@@ -4,10 +4,14 @@ support_page <- function() {
     col_widths = c(-2, 8, -2),
 
     # Add in back link
-    actionLink(class = "govuk-back-link", style = "margin: 0", "support_to_dashboard", "Back to dashboard"),
+    actionLink(
+      class = "govuk-back-link",
+      style = "margin: 0",
+      "support_to_dashboard",
+      "Back to dashboard"
+    ),
 
     # Main text content -------------------------------------------------------
-
 
     support_panel(
       team_email = "fe.officialstatistics@education.gov.uk",

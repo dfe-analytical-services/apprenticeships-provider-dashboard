@@ -51,7 +51,9 @@ library(sfarrow)
 library(stringr)
 
 # Read in files saved from SQL scripts ----------------------------------------
-national_provider_summary <- data.table::fread("data/national_provider_summary.csv")
+national_provider_summary <- data.table::fread(
+  "data/national_provider_summary.csv"
+)
 
 apps_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
 
@@ -61,8 +63,13 @@ apps_data <- data.table::fread("data/apprenticeships_data.csv")
 # Making a smaller cut from apps_data so less data is loaded into the app
 provider_breakdowns <- apps_data |>
   group_by(
-    year, provider_name, provider_type, apps_Level,
-    age_group, delivery_region, learner_home_region
+    year,
+    provider_name,
+    provider_type,
+    apps_Level,
+    age_group,
+    delivery_region,
+    learner_home_region
   ) |>
   summarise(
     starts = sum(starts, na.rm = TRUE),
@@ -80,8 +87,14 @@ subjects_and_standards <- apps_data |>
     enrolments = sum(enrolments),
     achievements = sum(achievements),
     .by = c(
-      "year", "apps_Level", "std_fwk_name", "ssa_t1_desc",
-      "ssa_t2_desc", "std_fwk_flag", "provider_type", "provider_name"
+      "year",
+      "apps_Level",
+      "std_fwk_name",
+      "ssa_t1_desc",
+      "ssa_t2_desc",
+      "std_fwk_flag",
+      "provider_type",
+      "provider_name"
     )
   ) |>
   pivot_longer(
@@ -122,12 +135,24 @@ apps_chars <- apps_demographics |>
 # Each section is worked out separately
 
 chars_total_lldd <- apps_chars |>
-  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") |>
+  filter(
+    lldd == "Total" &
+      sex == "Total" &
+      age_group == "Total" &
+      ethnicity_major == "Total"
+  ) |>
   mutate(
     characteristic_type = "Learner with learning difficulties or disabilities (LLDD)",
     characteristic = "Total"
   ) |>
-  select(year, provider_name, characteristic_type, characteristic, measure, count)
+  select(
+    year,
+    provider_name,
+    characteristic_type,
+    characteristic,
+    measure,
+    count
+  )
 
 chars_lldd <- apps_chars |>
   filter(lldd != "Total") |>
@@ -135,15 +160,34 @@ chars_lldd <- apps_chars |>
     characteristic_type = "Learner with learning difficulties or disabilities (LLDD)",
     characteristic = lldd
   ) |>
-  select(year, provider_name, characteristic_type, characteristic, measure, count)
+  select(
+    year,
+    provider_name,
+    characteristic_type,
+    characteristic,
+    measure,
+    count
+  )
 
 chars_total_sex <- apps_chars |>
-  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") |>
+  filter(
+    lldd == "Total" &
+      sex == "Total" &
+      age_group == "Total" &
+      ethnicity_major == "Total"
+  ) |>
   mutate(
     characteristic_type = "Sex",
     characteristic = sex
   ) |>
-  select(year, provider_name, characteristic_type, characteristic, measure, count)
+  select(
+    year,
+    provider_name,
+    characteristic_type,
+    characteristic,
+    measure,
+    count
+  )
 
 chars_sex <- apps_chars |>
   filter(sex != "Total") |>
@@ -151,15 +195,34 @@ chars_sex <- apps_chars |>
     characteristic_type = "Sex",
     characteristic = sex
   ) |>
-  select(year, provider_name, characteristic_type, characteristic, measure, count)
+  select(
+    year,
+    provider_name,
+    characteristic_type,
+    characteristic,
+    measure,
+    count
+  )
 
 chars_total_age <- apps_chars |>
-  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") |>
+  filter(
+    lldd == "Total" &
+      sex == "Total" &
+      age_group == "Total" &
+      ethnicity_major == "Total"
+  ) |>
   mutate(
     characteristic_type = "Age",
     characteristic = age_group
   ) |>
-  select(year, provider_name, characteristic_type, characteristic, measure, count)
+  select(
+    year,
+    provider_name,
+    characteristic_type,
+    characteristic,
+    measure,
+    count
+  )
 
 chars_age <- apps_chars |>
   filter(age_group != "Total") |>
@@ -167,15 +230,34 @@ chars_age <- apps_chars |>
     characteristic_type = "Age",
     characteristic = age_group
   ) |>
-  select(year, provider_name, characteristic_type, characteristic, measure, count)
+  select(
+    year,
+    provider_name,
+    characteristic_type,
+    characteristic,
+    measure,
+    count
+  )
 
 chars_total_ethnicity <- apps_chars |>
-  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") |>
+  filter(
+    lldd == "Total" &
+      sex == "Total" &
+      age_group == "Total" &
+      ethnicity_major == "Total"
+  ) |>
   mutate(
     characteristic_type = "Ethnicity",
     characteristic = ethnicity_major
   ) |>
-  select(year, provider_name, characteristic_type, characteristic, measure, count)
+  select(
+    year,
+    provider_name,
+    characteristic_type,
+    characteristic,
+    measure,
+    count
+  )
 
 chars_ethnicity <- apps_chars |>
   filter(ethnicity_major != "Total") |>
@@ -183,39 +265,60 @@ chars_ethnicity <- apps_chars |>
     characteristic_type = "Ethnicity",
     characteristic = ethnicity_major
   ) |>
-  select(year, provider_name, characteristic_type, characteristic, measure, count)
+  select(
+    year,
+    provider_name,
+    characteristic_type,
+    characteristic,
+    measure,
+    count
+  )
 
 # Put all the bits of file together for the final version
 apps_chars <-
   rbind(
-    chars_total_age, chars_age,
-    chars_total_sex, chars_sex,
-    chars_total_lldd, chars_lldd,
-    chars_total_ethnicity, chars_ethnicity
+    chars_total_age,
+    chars_age,
+    chars_total_sex,
+    chars_sex,
+    chars_total_lldd,
+    chars_lldd,
+    chars_total_ethnicity,
+    chars_ethnicity
   )
 
 # Write out parquet files -----------------------------------------------------
-arrow::write_dataset(provider_breakdowns, "data/",
+arrow::write_dataset(
+  provider_breakdowns,
+  "data/",
   format = "parquet",
   basename_template = "provider_breakdowns_{i}.parquet"
 )
 
-arrow::write_dataset(lad_map_data, "data/",
+arrow::write_dataset(
+  lad_map_data,
+  "data/",
   format = "parquet",
   basename_template = "lad_map_data_{i}.parquet"
 )
 
-arrow::write_dataset(subjects_and_standards, "data/",
+arrow::write_dataset(
+  subjects_and_standards,
+  "data/",
   format = "parquet",
   basename_template = "subjects_and_standards_{i}.parquet"
 )
 
-arrow::write_dataset(apps_chars, "data/",
+arrow::write_dataset(
+  apps_chars,
+  "data/",
   format = "parquet",
   basename_template = "apprenticeships_demographics_{i}.parquet"
 )
 
-arrow::write_dataset(national_provider_summary, "data/",
+arrow::write_dataset(
+  national_provider_summary,
+  "data/",
   format = "parquet",
   basename_template = "national_provider_summary_{i}.parquet"
 )

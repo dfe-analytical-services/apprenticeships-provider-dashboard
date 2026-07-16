@@ -1,40 +1,26 @@
 # Load data ===================================================================
 # Functions used here are created in the R/read_data.R file
-prov_breakdowns_parquet <- arrow::read_parquet(
-  "data/provider_breakdowns_0.parquet"
-)
+prov_breakdowns_parquet <- arrow::read_parquet("data/provider_breakdowns_0.parquet")
 
 # Create static lists of options for dropdowns
 apps_measure_choices <- c("Starts", "Enrolments", "Achievements")
-apps_prov_type_choices <- data_choices(
-  data = prov_breakdowns_parquet,
-  column = "provider_type"
-)
-apps_year_choices <- sort(
-  data_choices(data = prov_breakdowns_parquet, column = "year"),
+apps_prov_type_choices <- data_choices(data = prov_breakdowns_parquet, column = "provider_type")
+apps_year_choices <- sort(data_choices(data = prov_breakdowns_parquet, column = "year"),
   decreasing = TRUE
 )
-apps_level_choices <- data_choices(
-  data = prov_breakdowns_parquet,
-  column = "apps_Level"
-)
-apps_age_choices <- data_choices(
-  data = prov_breakdowns_parquet,
-  column = "age_group"
-)
+apps_level_choices <- data_choices(data = prov_breakdowns_parquet, column = "apps_Level")
+apps_age_choices <- data_choices(data = prov_breakdowns_parquet, column = "age_group")
 
 # Create static list of regions to set the order for the region tables and use in the user selections
 regions <- c(
-  "North East",
-  "North West",
-  "Yorkshire and The Humber",
-  "East Midlands",
-  "West Midlands",
-  "East of England",
-  "London",
-  "South East",
-  "South West",
-  "Outside of England and unknown"
+  "North East", "North West", "Yorkshire and The Humber", "East Midlands", "West Midlands", "East of England",
+  "London", "South East", "South West", "Outside of England and unknown"
+)
+
+# Create a list of the region options to use in the dropdown list
+regions_dropdown_choices <- c(
+  paste0(regions, ": Delivery"),
+  paste0(regions, ": Learner home")
 )
 
 # Main module code ============================================================
@@ -43,17 +29,15 @@ prov_breakdowns_ui <- function(id) {
   div(
     # Page header =============================================================
     h1("Provider breakdowns"),
-    p(
-      "Select options from the top and the region tables first, before providers.
-      Selections from the top, and the regions will reset the providers chosen."
-    ),
+    p("Select options from the top and the regions first, before providers.
+      Selections from the top, and the regions will reset the providers chosen."),
     # User selection area ===================================================
     column(
       width = 12,
       div(
         class = "well",
         bslib::layout_column_wrap(
-          width = "15rem", # Minimum width for each input box before wrapping
+          width = "23rem", # Minimum width for each input box before wrapping
           selectInput(
             inputId = NS(id, "measure"),
             label = "Select measure",
@@ -78,6 +62,11 @@ prov_breakdowns_ui <- function(id) {
             inputId = NS(id, "age"),
             label = "Select age group",
             choices = c("All age groups", apps_age_choices)
+          ),
+          selectInput(
+            inputId = NS(id, "region"),
+            label = "Select region",
+            choices = c("All regions", regions_dropdown_choices)
           )
         )
       ),
@@ -90,7 +79,7 @@ prov_breakdowns_ui <- function(id) {
           id = "main_col",
           nav_panel(
             "Bar chart",
-            "Select and deselect delivery and learner home regions using the buttons in the table.",
+            "Select and deselect delivery and learner home regions using the options above or buttons in the tables.",
             girafeOutput(NS(id, "regions_bar")),
           ),
           nav_panel(
@@ -109,8 +98,8 @@ prov_breakdowns_ui <- function(id) {
                 "This will download data for all providers related to the options selected.",
                 " The XLSX format is designed for use in Microsoft Excel."
               ),
-              choices = c("CSV (Up to 8.39 MB)", "XLSX (Up to 1.96 MB)"),
-              selected = "CSV (Up to 8.39 MB)"
+              choices = c("CSV (Up to 8.34 MB)", "XLSX (Up to 1.96 MB)"),
+              selected = "CSV (Up to 8.34 MB)"
             ),
             downloadButton(
               NS(id, "download_data"),
@@ -125,8 +114,7 @@ prov_breakdowns_ui <- function(id) {
   )
 }
 
-prov_breakdowns_server <- function(id) {
-  # nolint: cyclocomp_linter
+prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
   shiny::moduleServer(id, function(input, output, session) {
     # Main data ===============================================================
     # Main data set for use in charts / tables / download
@@ -137,12 +125,10 @@ prov_breakdowns_server <- function(id) {
 
       # Only filtering these if needed, by default we want all returned
       if (input$prov_type != "All provider types") {
-        filtered_raw_data <- filtered_raw_data |>
-          filter(provider_type %in% input$prov_type)
+        filtered_raw_data <- filtered_raw_data |> filter(provider_type %in% input$prov_type)
       }
       if (input$level != "All levels") {
-        filtered_raw_data <- filtered_raw_data |>
-          filter(apps_Level %in% input$level)
+        filtered_raw_data <- filtered_raw_data |> filter(apps_Level %in% input$level)
       }
       if (input$age != "All age groups") {
         filtered_raw_data <- filtered_raw_data |> filter(age_group == input$age)
@@ -157,41 +143,55 @@ prov_breakdowns_server <- function(id) {
     # Provider table selections -----------------------------------------------
     selected_providers <- reactive({
       # Filter to only the selected providers and convert to a vector to use for filtering elsewhere
-      unlist(
-        prov_selection_table()[
-          getReactableState("prov_selection", "selected"),
-          1
-        ],
-        use.names = FALSE
-      )
+      unlist(prov_selection_table()[getReactableState("prov_selection", "selected"), 1], use.names = FALSE)
     })
 
     # Region table selections -------------------------------------------------
-    selected_learner_home_region <- reactive({
+    # Make the region dropdown update when a table is selected
+    observe({
       # Filter to only the selected region using the vector at the top of the script
-      return(regions[getReactableState("home_region", "selected")])
+      # Work out if home or delivery region is selected from a table and update the dropdown
+      if (length(regions[getReactableState("home_region", "selected")]) != 0) {
+        selected_region <- paste0(regions[getReactableState("home_region", "selected")], ": Learner home")
+
+        updateSelectizeInput(
+          session = session,
+          inputId = "region",
+          selected = selected_region
+        )
+      }
     })
 
-    selected_delivery_region <- reactive({
-      # Filter to only the selected region using the vector at the top of the script
-      return(regions[getReactableState("delivery_region", "selected")])
+    observe({
+      if (length(regions[getReactableState("delivery_region", "selected")]) != 0) {
+        selected_region <- paste0(regions[getReactableState("delivery_region", "selected")], ": Delivery")
+
+        updateSelectizeInput(
+          session = session,
+          inputId = "region",
+          selected = selected_region
+        )
+      }
     })
+
+    # TODO: Make sure the reactable state in the region tables matches the dropdown selection
+
 
     # Table reactive data =====================================================
     ## Provider data ----------------------------------------------------------
     prov_selection_table <- reactive({
       prov_selection_table <- filtered_raw_data()
 
-      # Filter to learner home region selection if it exists
-      if (length(selected_learner_home_region()) == 1) {
-        prov_selection_table <- prov_selection_table |>
-          filter(learner_home_region == selected_learner_home_region())
-      }
-
-      # Filter to delivery region selection if it exists
-      if (length(selected_delivery_region()) == 1) {
-        prov_selection_table <- prov_selection_table |>
-          filter(delivery_region == selected_delivery_region())
+      # Filter from the regions dropdown
+      if (input$region != "All regions") {
+        # Check if the region is a delivery or learner home and then filter by it
+        if (grepl(": Delivery$", input$region)) {
+          prov_selection_table <- prov_selection_table |>
+            filter(delivery_region == sub(": .*", "", input$region))
+        } else {
+          prov_selection_table <- prov_selection_table |>
+            filter(learner_home_region == sub(": .*", "", input$region))
+        }
       }
 
       prov_selection_table <- prov_selection_table |>
@@ -207,12 +207,7 @@ prov_breakdowns_server <- function(id) {
       return(prov_selection_table)
     }) |>
       # Set the dependent variables that will trigger this table to update
-      bindEvent(
-        firstlow(input$measure),
-        filtered_raw_data(),
-        selected_learner_home_region(),
-        selected_delivery_region()
-      )
+      bindEvent(firstlow(input$measure), filtered_raw_data(), input$region)
 
     ## Delivery region data ---------------------------------------------------
     delivery_region_table <- reactive({
@@ -220,15 +215,17 @@ prov_breakdowns_server <- function(id) {
       delivery_region_table <- filtered_raw_data()
 
       # Filter down provider list there is something selected from the providers
-      if (length(selected_providers() != 0)) {
+      if (length(selected_providers()) != 0) {
         delivery_region_table <- delivery_region_table |>
           filter(provider_name %in% selected_providers())
       }
 
-      # Filter to learner home region selection if it exists
-      if (length(selected_learner_home_region()) == 1) {
-        delivery_region_table <- delivery_region_table |>
-          filter(learner_home_region == selected_learner_home_region())
+      # Filter from the regions dropdown
+      if (input$region != "") {
+        if (grepl(": Learner home$", input$region)) {
+          delivery_region_table <- delivery_region_table |>
+            filter(learner_home_region == sub(": .*", "", input$region))
+        }
       }
 
       delivery_region_table <- delivery_region_table |>
@@ -251,11 +248,7 @@ prov_breakdowns_server <- function(id) {
 
       return(delivery_region_table)
     }) |>
-      bindEvent(
-        firstlow(input$measure),
-        filtered_raw_data(),
-        selected_providers()
-      )
+      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers(), input$region)
 
     ## Home region data -------------------------------------------------------
     home_region_table <- reactive({
@@ -263,15 +256,17 @@ prov_breakdowns_server <- function(id) {
       home_region_table <- filtered_raw_data()
 
       # Filter down provider list there is something selected from the providers
-      if (length(selected_providers() != 0)) {
-        home_region_table <- home_region_table |>
-          filter(provider_name %in% selected_providers())
+      if (length(selected_providers()) > 0) {
+        home_region_table <- home_region_table |> filter(provider_name %in% selected_providers())
       }
 
-      # Filter to delivery region selection if it exists
-      if (length(selected_delivery_region()) == 1) {
-        home_region_table <- home_region_table |>
-          filter(delivery_region == selected_delivery_region())
+      # Filter from the regions dropdown
+      if (input$region != "All regions") {
+        # Check if the region is a delivery and then filter by it
+        if (grepl(": Delivery$", input$region)) {
+          home_region_table <- home_region_table |>
+            filter(delivery_region == sub(": .*", "", input$region))
+        }
       }
 
       home_region_table <- home_region_table |>
@@ -294,11 +289,7 @@ prov_breakdowns_server <- function(id) {
 
       return(home_region_table)
     }) |>
-      bindEvent(
-        firstlow(input$measure),
-        filtered_raw_data(),
-        selected_providers()
-      )
+      bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers(), input$region)
 
     # Bar chart data ----------------------------------------------------------
     regions_bar_data <- reactive({
@@ -323,96 +314,87 @@ prov_breakdowns_server <- function(id) {
         )
 
       # Force the ordering of the regions
-      regions_bar_data$Region <- forcats::fct_rev(factor(
-        regions_bar_data$Region,
-        levels = regions
-      ))
+      regions_bar_data$Region <- forcats::fct_rev(factor(regions_bar_data$Region, levels = regions))
 
       # Create a unique column used for the hover on each bar
-      regions_bar_data$data_id <- paste(
-        regions_bar_data$Region,
-        regions_bar_data$type,
-        sep = "_"
+      regions_bar_data$data_id <- paste(regions_bar_data$Region, regions_bar_data$type, sep = ": ")
+
+
+      # make all other delivery regions 0 except the one selected
+      regions_bar_data$count <- case_when(
+        input$region != "All regions" &
+          input$region != "" &
+          regions_bar_data$type == "Delivery" &
+          substring(input$region, nchar(input$region) - 7) == "Delivery" &
+          regions_bar_data$Region != sub(": .*", "", input$region) &
+          regions_bar_data$data_id != input$region ~ 0,
+        .default = regions_bar_data$count
+      )
+
+      # and the same when it's a learner home region selected
+      regions_bar_data$count <- case_when(
+        input$region != "All regions" &
+          input$region != "" &
+          regions_bar_data$type == "Learner home" &
+          substring(input$region, nchar(input$region) - 11) == "Learner home" &
+          regions_bar_data$Region != sub(": .*", "", input$region) &
+          regions_bar_data$data_id != input$region ~ 0,
+        .default = regions_bar_data$count
       )
 
       return(regions_bar_data)
     })
 
-    # Bar chart output object =================================================
-    # Get the selected region and return in a form that matches the id's used in the chart
-    # This is then used to show which region is currently selected from the tables
-    selected_region <- reactive({
-      # We know only one of the two can be selected in the tables at once so we can cheat a bit with our logic here
-      # Filter to delivery region selection if it exists
-      if (length(selected_delivery_region()) == 1) {
-        return(paste0(selected_delivery_region(), "_Delivery"))
-      } else {
-        # Filter to learner home region selection if it exists, if it doesn't then it returns _Leaner home
-        # which won't match an id in the chart and will act as if nothing is selected
-        return(paste0(selected_learner_home_region(), "_Learner home"))
-      }
-    })
 
+    # Bar chart output object =================================================
     output$regions_bar <- renderGirafe(
       girafe(
-        ggobj = regions_bar_data() |>
-          ggplot(
-            aes(
-              fill = type,
-              x = Region,
-              y = count,
-              tooltip = paste(
-                lapply(count, dfeR::pretty_num),
-                firstlow(input$measure),
-                "<br>",
-                type,
-                "in",
-                Region
-              ),
-              data_id = data_id
-            )
-          ) +
-          # Make it an interactive, clustered, bar
-          geom_bar_interactive(position = "dodge", stat = "identity") +
-          # Make it horizontal
-          coord_flip() +
-          # Axis labels
-          xlab("") +
-          ylab(input$measure) +
-          # Set the colours
-          scale_fill_manual(
-            values = c(
+        ggobj =
+          regions_bar_data() |>
+            ggplot(
+              aes(
+                fill = type,
+                x = Region,
+                y = count,
+                tooltip = paste(
+                  lapply(count, dfeR::pretty_num), firstlow(input$measure), "<br>",
+                  type, "in", Region
+                ),
+                data_id = data_id
+              )
+            ) +
+            # Make it an interactive, clustered, bar
+            geom_bar_interactive(position = "dodge", stat = "identity") +
+            # Make it horizontal
+            coord_flip() +
+            # Axis labels
+            xlab("") +
+            ylab(input$measure) +
+            # Set the colours
+            scale_fill_manual(values = c(
               "Learner home" = afcolours::af_colours(n = 4)[1],
               "Delivery" = afcolours::af_colours(n = 4)[4]
-            )
-          ) +
-          # Format the x-axis numbers (using the Y function as we've flipped to horizontal!)
-          scale_y_continuous(
-            labels = dfeR::comma_sep,
-            breaks = function(x) {
-              unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
-            }
-          ) +
-          # Wrap y-axis labels (set so East of England and longer will wrap onto multiple lines)
-          scale_x_discrete(labels = function(x) str_wrap(x, width = 13)) +
-          # Custom theme
-          # TODO: extract list of this to reuse in dfeshiny
-          ggplot2::theme_minimal() +
-          ggplot2::theme(
-            legend.position = "top",
-            legend.title = element_blank(),
-            panel.grid = element_blank(),
-            panel.grid.minor = element_blank(),
-            panel.grid.major.x = element_blank(),
-            axis.title.x = element_text(
-              size = 10,
-              face = "bold",
-              margin = margin(t = 10)
+            )) +
+            # Format the x-axis numbers (using the Y function as we've flipped to horizontal!)
+            scale_y_continuous(
+              labels = dfeR::comma_sep,
+              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+            ) +
+            # Wrap y-axis labels (set so East of England and longer will wrap onto multiple lines)
+            scale_x_discrete(labels = function(x) str_wrap(x, width = 13)) +
+            # Custom theme
+            ggplot2::theme_minimal() +
+            ggplot2::theme(
+              legend.position = "top",
+              legend.title = element_blank(),
+              panel.grid = element_blank(),
+              panel.grid.minor = element_blank(),
+              panel.grid.major.x = element_blank(),
+              axis.title.x = element_text(size = 10, face = "bold", margin = margin(t = 10)),
+              axis.text.x = element_text(size = 10),
+              axis.text.y = element_text(size = 10),
+              text = element_text(family = dfe_font)
             ),
-            axis.text.x = element_text(size = 10),
-            axis.text.y = element_text(size = 10),
-            text = element_text(family = dfe_font)
-          ),
         options = list(
           # Turn off toolbar options (as they're bad for accessibility / confusing for users)
           ggiraph::opts_toolbar(
@@ -425,7 +407,8 @@ prov_breakdowns_server <- function(id) {
           ),
           ggiraph::opts_selection(
             type = "single",
-            selected = selected_region(),
+            selected = input$region,
+            only_shiny = FALSE,
             css = "cursor:pointer;stroke:black;stroke-width:2px;fill:#ffdd00;"
           )
         ),
@@ -464,6 +447,74 @@ prov_breakdowns_server <- function(id) {
       )
     })
 
+    # if no region selected in table, and nothing selected in  input is 'All regions"
+    observe({
+      # Check selected rows in both tables
+      delivery_selected <- getReactableState("delivery_region", "selected")
+      learner_selected <- getReactableState("home_region", "selected")
+
+      # If nothing selected in either
+      if (length(delivery_selected) == 0 && length(learner_selected) == 0) {
+        updateSelectInput(session, "region", selected = "All regions")
+      }
+    })
+
+    # This observes the selected bar in the bar chart and updates the dropdown
+    # for region
+    observe({
+      selection <- input$regions_bar_selected
+      print(paste0("bar: ", input$regions_bar_selected))
+
+      if (is.null(selection) || length(selection) == 0) {
+        selected_value <- "All regions"
+      } else {
+        selected_value <- selection
+      }
+
+      updateSelectizeInput(
+        session = session,
+        inputId = "region",
+        selected = selected_value
+      )
+    })
+    # if a region is selected in the dropdown, feed into tables
+    observe({
+      region_name <- trimws(sub(": .*", "", input$region))
+
+      # Reset case
+      if (input$region == "All regions") {
+        updateReactable("delivery_region", selected = integer(0))
+        updateReactable("home_region", selected = integer(0))
+        return()
+      }
+
+      # DELIVERY
+      if (grepl("Delivery$", input$region)) {
+        selected_row <- which(
+          tolower(trimws(delivery_region_table()[["Delivery region"]])) ==
+            tolower(region_name)
+        )
+        print(selected_row)
+
+        if (length(selected_row) > 0) {
+          updateReactable("delivery_region", selected = selected_row)
+          updateReactable("home_region", selected = integer(0))
+        }
+        # LEARNER HOME
+      } else if (grepl("Learner home$", input$region)) {
+        selected_row <- which(
+          tolower(trimws(home_region_table()[["Learner home region"]])) ==
+            tolower(region_name)
+        )
+        print(selected_row)
+        if (length(selected_row) > 0) {
+          updateReactable("home_region", selected = selected_row)
+          updateReactable("delivery_region", selected = integer(0))
+        }
+      }
+    })
+
+
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       # This currently just downloads the filtered raw data, which doesn't react to any
@@ -471,15 +522,8 @@ prov_breakdowns_server <- function(id) {
 
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
-        raw_name <- paste0(
-          input$year,
-          "-",
-          input$level,
-          "-",
-          input$age,
-          "-provider_breakdowns"
-        )
-        extension <- if (input$file_type == "CSV (Up to 8.39 MB)") {
+        raw_name <- paste0(input$year, "-", input$level, "-", input$age, "-provider_breakdowns")
+        extension <- if (input$file_type == "CSV (Up to 8.34 MB)") {
           ".csv"
         } else {
           ".xlsx"
@@ -488,14 +532,11 @@ prov_breakdowns_server <- function(id) {
       },
       ## Generate downloaded file ---------------------------------------------
       content = function(file) {
-        if (input$file_type == "CSV (Up to 8.39 MB)") {
+        if (input$file_type == "CSV (Up to 8.34 MB)") {
           data.table::fwrite(filtered_raw_data(), file)
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate
-          pop_up <- showNotification(
-            "Generating download file",
-            duration = NULL
-          )
+          pop_up <- showNotification("Generating download file", duration = NULL)
           openxlsx::write.xlsx(filtered_raw_data(), file, colWidths = "Auto")
           on.exit(removeNotification(pop_up), add = TRUE)
         }

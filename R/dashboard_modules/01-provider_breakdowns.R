@@ -109,18 +109,18 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     # Main data set for use in charts / tables / download
     # This reads in the raw data and applies the filters from the dropdowns
     filtered_raw_data <- reactive({
-      filtered_raw_data <- prov_breakdowns_parquet %>%
+      filtered_raw_data <- prov_breakdowns_parquet |>
         filter(year == input$year)
 
       # Only filtering these if needed, by default we want all returned
       if (input$prov_type != "All provider types") {
-        filtered_raw_data <- filtered_raw_data %>% filter(provider_type %in% input$prov_type)
+        filtered_raw_data <- filtered_raw_data |> filter(provider_type %in% input$prov_type)
       }
       if (input$level != "All levels") {
-        filtered_raw_data <- filtered_raw_data %>% filter(apps_Level %in% input$level)
+        filtered_raw_data <- filtered_raw_data |> filter(apps_Level %in% input$level)
       }
       if (input$age != "All age groups") {
-        filtered_raw_data <- filtered_raw_data %>% filter(age_group == input$age)
+        filtered_raw_data <- filtered_raw_data |> filter(age_group == input$age)
       }
 
       return(filtered_raw_data)
@@ -153,26 +153,26 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
       # Filter to learner home region selection if it exists
       if (length(selected_learner_home_region()) == 1) {
-        prov_selection_table <- prov_selection_table %>% filter(learner_home_region == selected_learner_home_region())
+        prov_selection_table <- prov_selection_table |> filter(learner_home_region == selected_learner_home_region())
       }
 
       # Filter to delivery region selection if it exists
       if (length(selected_delivery_region()) == 1) {
-        prov_selection_table <- prov_selection_table %>% filter(delivery_region == selected_delivery_region())
+        prov_selection_table <- prov_selection_table |> filter(delivery_region == selected_delivery_region())
       }
 
-      prov_selection_table <- prov_selection_table %>%
+      prov_selection_table <- prov_selection_table |>
         with_groups(
           "provider_name",
           summarise,
           `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
-        ) %>%
-        rename("Provider (UKPRN)" = provider_name) %>%
-        rename_with(~ paste(input$measure), `number`) %>%
+        ) |>
+        rename("Provider (UKPRN)" = provider_name) |>
+        rename_with(~ paste(input$measure), `number`) |>
         collect()
 
       return(prov_selection_table)
-    }) %>%
+    }) |>
       # Set the dependent variables that will trigger this table to update
       bindEvent(
         firstlow(input$measure), filtered_raw_data(), selected_learner_home_region(),
@@ -186,34 +186,34 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
       # Filter down provider list there is something selected from the providers
       if (length(selected_providers() != 0)) {
-        delivery_region_table <- delivery_region_table %>% filter(provider_name %in% selected_providers())
+        delivery_region_table <- delivery_region_table |> filter(provider_name %in% selected_providers())
       }
 
       # Filter to learner home region selection if it exists
       if (length(selected_learner_home_region()) == 1) {
-        delivery_region_table <- delivery_region_table %>% filter(learner_home_region == selected_learner_home_region())
+        delivery_region_table <- delivery_region_table |> filter(learner_home_region == selected_learner_home_region())
       }
 
-      delivery_region_table <- delivery_region_table %>%
+      delivery_region_table <- delivery_region_table |>
         with_groups(
           "delivery_region",
           summarise,
           `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
-        ) %>%
+        ) |>
         rename("Delivery region" = delivery_region)
 
       # Make sure all regions have a row even if 0
       # Regions vector defined at top of this script
-      delivery_region_table <- tibble(`Delivery region` = regions) %>%
-        left_join(delivery_region_table, by = "Delivery region") %>%
+      delivery_region_table <- tibble(`Delivery region` = regions) |>
+        left_join(delivery_region_table, by = "Delivery region") |>
         mutate(across(
           number,
           ~ replace_na(., 0)
-        )) %>%
+        )) |>
         collect()
 
       return(delivery_region_table)
-    }) %>%
+    }) |>
       bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers())
 
     ## Home region data -------------------------------------------------------
@@ -223,34 +223,34 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
 
       # Filter down provider list there is something selected from the providers
       if (length(selected_providers() != 0)) {
-        home_region_table <- home_region_table %>% filter(provider_name %in% selected_providers())
+        home_region_table <- home_region_table |> filter(provider_name %in% selected_providers())
       }
 
       # Filter to delivery region selection if it exists
       if (length(selected_delivery_region()) == 1) {
-        home_region_table <- home_region_table %>% filter(delivery_region == selected_delivery_region())
+        home_region_table <- home_region_table |> filter(delivery_region == selected_delivery_region())
       }
 
-      home_region_table <- home_region_table %>%
+      home_region_table <- home_region_table |>
         with_groups(
           "learner_home_region",
           summarise,
           `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
-        ) %>%
+        ) |>
         rename("Learner home region" = learner_home_region)
 
       # Make sure all regions have a row even if 0
       # Regions vector defined at top of this script
-      home_region_table <- tibble(`Learner home region` = regions) %>%
-        left_join(home_region_table, by = "Learner home region") %>%
+      home_region_table <- tibble(`Learner home region` = regions) |>
+        left_join(home_region_table, by = "Learner home region") |>
         mutate(across(
           number,
           ~ replace_na(., 0)
-        )) %>%
+        )) |>
         collect()
 
       return(home_region_table)
-    }) %>%
+    }) |>
       bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers())
 
     # Bar chart data ----------------------------------------------------------
@@ -302,7 +302,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     output$regions_bar <- renderGirafe(
       girafe(
         ggobj =
-          regions_bar_data() %>%
+          regions_bar_data() |>
             ggplot(
               aes(
                 fill = type,

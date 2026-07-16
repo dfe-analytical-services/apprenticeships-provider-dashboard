@@ -26,7 +26,7 @@ shiny::testServer(nps_server, expr = {
     characteristic = "All characteristics"
   )
 
-  expect_equal(nps_reactive_table(), test_data %>% collect())
+  expect_equal(nps_reactive_table(), test_data |> collect())
 
   # 2. Check the reactive data is being filtered as expected ------------------
   # Change to a different dropdown selection
@@ -39,12 +39,12 @@ shiny::testServer(nps_server, expr = {
   # 3. Compare the reactive table with a hardcoded filter
   expect_equal(
     nps_reactive_table(),
-    test_data %>%
+    test_data |>
       filter(
         `Provider name` == "DARLINGTON COLLEGE",
         `Academic Year` == "2021/22",
         `Learner characteristic` == "Sex - Male"
-      ) %>%
+      ) |>
       collect()
   )
 })

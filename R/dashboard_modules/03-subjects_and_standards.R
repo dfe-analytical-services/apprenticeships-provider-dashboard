@@ -115,43 +115,43 @@ subject_standards_server <- function(id) {
 
       # If standard is selected , return only that
       if (!is.null(standard) && standard != "") {
-        sas_standard_table %>%
-          filter(std_fwk_name %in% standard) %>%
-          pull(std_fwk_name) %>%
+        sas_standard_table |>
+          filter(std_fwk_name %in% standard) |>
+          pull(std_fwk_name) |>
           unique()
         # if level and subject are empty, show all standards
       } else if (any(is.null(level), level == "") & any(is.null(subject), subject == "")) {
-        sas_standard_table %>%
-          pull(std_fwk_name) %>%
+        sas_standard_table |>
+          pull(std_fwk_name) |>
           unique()
         # if level is empty and subject filled, filter on subject
       } else if (any(is.null(level), level == "")) {
-        sas_standard_table %>%
-          filter(ssa_t1_desc %in% subject) %>%
-          pull(std_fwk_name) %>%
+        sas_standard_table |>
+          filter(ssa_t1_desc %in% subject) |>
+          pull(std_fwk_name) |>
           unique()
         # if level is filled and subject is empty, filter on level
       } else if (any(is.null(subject), subject == "")) {
-        sas_standard_table %>%
-          filter(apps_Level %in% level) %>%
-          pull(std_fwk_name) %>%
+        sas_standard_table |>
+          filter(apps_Level %in% level) |>
+          pull(std_fwk_name) |>
           unique()
         # fi both level and subject are filled, filter on both
       } else {
-        sas_standard_table %>%
-          filter(apps_Level %in% level, ssa_t1_desc %in% subject) %>%
-          pull(std_fwk_name) %>%
+        sas_standard_table |>
+          filter(apps_Level %in% level, ssa_t1_desc %in% subject) |>
+          pull(std_fwk_name) |>
           unique()
       }
     })
 
     # Ensure the standard is based on a selection
     observeEvent(input$standard, {
-      relevant_data <- sas_standard_table %>%
+      relevant_data <- sas_standard_table |>
         filter(std_fwk_name %in% input$standard)
-      updateSelectizeInput(session, "standard", selected = relevant_data %>% pull(std_fwk_name))
-      updateSelectizeInput(session, "level", selected = relevant_data %>% pull(apps_Level))
-      updateSelectizeInput(session, "subject", selected = relevant_data %>% pull(ssa_t1_desc))
+      updateSelectizeInput(session, "standard", selected = relevant_data |> pull(std_fwk_name))
+      updateSelectizeInput(session, "level", selected = relevant_data |> pull(apps_Level))
+      updateSelectizeInput(session, "subject", selected = relevant_data |> pull(ssa_t1_desc))
     })
 
     # This dropdown needs to watch (observe) and update when bar(s)
@@ -206,28 +206,28 @@ subject_standards_server <- function(id) {
     # Filter subject area data set based on inputs on this page. This reactive
     # feeds the table.
     filtered_raw_data_table <- reactive({
-      data <- sas_parquet %>%
+      data <- sas_parquet |>
         filter(measure == input$measure, year == input$year)
 
       if (!(is.null(input$level))) {
-        data <- data %>% filter(apps_Level %in% input$level)
+        data <- data |> filter(apps_Level %in% input$level)
       }
       if (!(is.null(input$subject))) {
-        data <- data %>% filter(ssa_t1_desc %in% input$subject)
+        data <- data |> filter(ssa_t1_desc %in% input$subject)
       }
       if (!(is.null(input$standard))) {
-        data <- data %>% filter(std_fwk_name %in% input$standard)
+        data <- data |> filter(std_fwk_name %in% input$standard)
       }
       return(data)
     })
     # Filter subject area data separately. Don't want same filters.
     filtered_raw_data_chart <- reactive({
-      data <- sas_parquet %>%
+      data <- sas_parquet |>
         filter(measure == input$measure, year == input$year)
       # Only want this filtered by level, otherwise the bar chart disappears when
       # a subject is selected, if filtered by them
       if (!(is.null(input$level))) {
-        data <- data %>% filter(apps_Level %in% input$level)
+        data <- data |> filter(apps_Level %in% input$level)
       }
       return(data)
     })
@@ -237,13 +237,13 @@ subject_standards_server <- function(id) {
       provider_data <- filtered_raw_data_table()
 
       # Run a quick aggregate of numbers by provider name.
-      provider_data <- provider_data %>%
+      provider_data <- provider_data |>
         summarise(
           values = sum(values),
           .by = c("provider_name")
-        ) %>%
-        arrange(-values) %>%
-        filter(values > 0) %>%
+        ) |>
+        arrange(-values) |>
+        filter(values > 0) |>
         rename(
           `Provider name` = provider_name,
           !!quo_name(input$measure) := values
@@ -255,7 +255,7 @@ subject_standards_server <- function(id) {
     subject_area_data_table <- reactive({
       data <- filtered_raw_data_table()
       if (length(selected_providers() != 0)) {
-        data <- data %>% filter(provider_name %in% selected_providers())
+        data <- data |> filter(provider_name %in% selected_providers())
       }
       return(data)
     })
@@ -265,7 +265,7 @@ subject_standards_server <- function(id) {
     subject_area_data_chart <- reactive({
       data <- filtered_raw_data_chart()
       if (length(selected_providers() != 0)) {
-        data <- data %>% filter(provider_name %in% selected_providers())
+        data <- data |> filter(provider_name %in% selected_providers())
       }
       return(data)
     })
@@ -337,11 +337,11 @@ subject_standards_server <- function(id) {
 
       girafe(
         ggobj =
-          subject_area_data_chart() %>%
+          subject_area_data_chart() |>
             summarise( # nolint: indentation_linter
               values = sum(values),
               .by = c("ssa_t1_desc")
-            ) %>%
+            ) |>
             ggplot(
               aes(
                 x = reorder(as.factor(ssa_t1_desc), values),
@@ -405,24 +405,24 @@ subject_standards_server <- function(id) {
         nrow(subject_area_data_table()) > 0, ""
       ))
 
-      subject_data <- subject_area_data_table() %>%
+      subject_data <- subject_area_data_table() |>
         summarise(
           values = sum(values),
           .by = c("ssa_t1_desc", "ssa_t2_desc", "apps_Level", "std_fwk_name")
         )
       if (!is.null(input$subject)) {
-        subject_data <- subject_data %>%
+        subject_data <- subject_data |>
           filter(ssa_t1_desc %in% input$subject)
       }
 
       reactable(
-        subject_data %>%
+        subject_data |>
           rename(
             `Subject area` = ssa_t1_desc,
             `Subject area (tier 2)` = ssa_t2_desc,
             `Level` = apps_Level,
             `Standard` = std_fwk_name,
-          ) %>%
+          ) |>
           arrange(-values),
         highlight = TRUE,
         borderless = TRUE,

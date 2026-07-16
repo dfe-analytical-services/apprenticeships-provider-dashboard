@@ -220,12 +220,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           filter(provider_name %in% selected_providers())
       }
 
-      # Filter to learner home region selection if it exists
-      # if (length(selected_learner_home_region()) == 1) {
-      #  delivery_region_table <- delivery_region_table |>
-      # filter(learner_home_region == selected_learner_home_region())
-      # }
-
       # Filter from the regions dropdown
       if (input$region != "") {
         if (grepl(": Learner home$", input$region)) {
@@ -233,16 +227,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             filter(learner_home_region == sub(": .*", "", input$region))
         }
       }
-
-
-      # select from dropdown
-      #  if (input$region != "") {
-      # if (grepl(": Delivery$", input$region)) {
-      # delivery_region_table <- delivery_region_table |>
-      # (delivery_region == sub(": .*", "", input$region))
-      # }
-      # }
-
 
       delivery_region_table <- delivery_region_table |>
         with_groups(
@@ -275,11 +259,6 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       if (length(selected_providers()) > 0) {
         home_region_table <- home_region_table |> filter(provider_name %in% selected_providers())
       }
-
-      # # Filter to delivery region selection if it exists
-      #   if (length(selected : Delivery_region()) == 1) {
-      #     home_region_table <- home_region_table |> filter(delivery_region == selected : Delivery_region())
-      #   }
 
       # Filter from the regions dropdown
       if (input$region != "All regions") {
@@ -521,10 +500,8 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           updateReactable("delivery_region", selected = selected_row)
           updateReactable("home_region", selected = integer(0))
         }
-      }
-
-      # LEARNER HOME
-      else if (grepl("Learner home$", input$region)) {
+        # LEARNER HOME
+      } else if (grepl("Learner home$", input$region)) {
         selected_row <- which(
           tolower(trimws(home_region_table()[["Learner home region"]])) ==
             tolower(region_name)

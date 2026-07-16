@@ -15,7 +15,6 @@ get_reactive_text <- function(object_name, app) {
     rvest::read_html() |>
     html_element("div") |>
     html_text()
-  return(text)
 }
 
 # Check a ggiraph plot has rendered content

@@ -26,7 +26,7 @@ ui <- function(input, output, session) {
     tags$head(HTML(paste0("<title>", site_title, "</title>"))), # set in global.R
     tags$head(tags$link(rel = "shortcut icon", href = "dfefavicon.png")),
     # Add meta description for search engines
-    metathis::meta() %>%
+    metathis::meta() |>
       meta_general(
         application_name = "Apprenticeships provider dashboard",
         description = "Interactive tool for exploring apprenticeships provider data",
@@ -65,8 +65,13 @@ ui <- function(input, output, session) {
     skip_to_main(),
 
     ## Header -----------------------------------------------------------------
-    dfeshiny::header(
-      header = "Apprenticeships provider dashboard"
+    shinyGovstyle::header(
+      org_name = "",
+      service_name = "Apprenticeships provider dashboard",
+      logo = "images/DfE_logo_landscape.png",
+      logo_width = 150,
+      logo_height = 32,
+      logo_alt_text = "DFE logo"
     ),
 
     ## Beta banner ------------------------------------------------------------

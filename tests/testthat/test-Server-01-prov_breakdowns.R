@@ -29,7 +29,7 @@ shiny::testServer(prov_breakdowns_server, expr = {
 
   expect_equal(
     filtered_raw_data(),
-    test_data %>% filter(year == "2021/22") %>% collect()
+    test_data |> filter(year == "2021/22") |> collect()
   )
 
   # 2. Check the reactive data is being filtered as expected ------------------
@@ -44,13 +44,13 @@ shiny::testServer(prov_breakdowns_server, expr = {
   # 3. Compare the reactive table with a hardcoded filter against the test data
   expect_equal(
     filtered_raw_data(),
-    test_data %>%
+    test_data |>
       filter(
         provider_type == "Private Sector Public Funded",
         year == "2022/23",
         apps_Level == "Higher Apprenticeship",
         age_group == "Under 19"
-      ) %>%
+      ) |>
       collect()
   )
 })

@@ -131,12 +131,13 @@ dfe_footer <- function(links_list) {
 
 # dfe reactable ===============================================================
 dfe_reactable <- function(
-    data,
-    on_click = NULL,
-    selection = NULL,
-    row_style = NULL,
-    searchable = FALSE,
-    default_page_size = 10) {
+  data,
+  on_click = NULL,
+  selection = NULL,
+  row_style = NULL,
+  searchable = FALSE,
+  default_page_size = 10
+) {
   reactable(
     data,
 
@@ -204,7 +205,7 @@ firstlow <- function(x) {
 #
 # Note that if you're working inside a module, you will need to wrap the inputId in the NS function
 add_map_reset_button <- function(leaf, selectize_input_id = NULL) {
-  leaf %>%
+  leaf |>
     # Add a button into the map
     addEasyButton(
       easyButton(
@@ -226,7 +227,7 @@ add_map_reset_button <- function(leaf, selectize_input_id = NULL) {
           )
         )
       )
-    ) %>%
+    ) |>
     # When the map loads, grab its initial centre point values
     htmlwidgets::onRender(
       JS(
@@ -261,7 +262,7 @@ dfe_lad_map <- function(data, measure, input_id) {
     lapply(data$`Number of apprenticeships`, dfeR::pretty_num),
     " ",
     measure
-  ) %>%
+  ) |>
     lapply(htmltools::HTML)
 
   # Create the map
@@ -269,9 +270,9 @@ dfe_lad_map <- function(data, measure, input_id) {
     data,
     # Take off annoying scrolling, personal preference
     options = leafletOptions(scrollWheelZoom = FALSE)
-  ) %>%
+  ) |>
     # Set the basemap (this is a good neutral one)
-    addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+    addProviderTiles(providers$CartoDB.PositronNoLabels) |>
     # Add the shaded regions
     addPolygons(
       color = "black",
@@ -292,21 +293,21 @@ dfe_lad_map <- function(data, measure, input_id) {
         bringToFront = TRUE
       ),
       layerId = ~lad_name # this is what value is returned when a user clicks on a polygon
-    ) %>%
+    ) |>
     # Add a legend to the map
     addLegend(
       "topright",
       pal = pal_fun,
       values = ~ data[["Number of apprenticeships"]],
       title = firstup(measure)
-    ) %>%
+    ) |>
     add_map_reset_button(selectize_input_id = input_id) # add a reset button return(map)
 }
 
 # Create options lists for use in the dropdowns ===============================
 data_choices <- function(data, column) {
-  data %>%
-    distinct(!!sym(column)) %>% # adding the !!sym() to convert string to column name
-    collect() %>%
+  data |>
+    distinct(!!sym(column)) |> # adding the !!sym() to convert string to column name
+    collect() |>
     pull()
 }

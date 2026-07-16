@@ -96,17 +96,17 @@ nps_server <- function(id) {
       nps_filtered <- nps_parquet
 
       if (input$provider != "All providers") {
-        nps_filtered <- nps_filtered %>% filter(`Provider name` == input$provider)
+        nps_filtered <- nps_filtered |> filter(`Provider name` == input$provider)
       }
       if (input$year != "All years") {
-        nps_filtered <- nps_filtered %>% filter(`Academic Year` == input$year)
+        nps_filtered <- nps_filtered |> filter(`Academic Year` == input$year)
       }
       if (input$characteristic != "All characteristics") {
-        nps_filtered <- nps_filtered %>% filter(`Learner characteristic` == input$characteristic)
+        nps_filtered <- nps_filtered |> filter(`Learner characteristic` == input$characteristic)
       }
 
       # Pull the lazy loaded and now filtered data into memory
-      nps_filtered %>% collect()
+      nps_filtered |> collect()
     })
 
     # Table ===================================================================

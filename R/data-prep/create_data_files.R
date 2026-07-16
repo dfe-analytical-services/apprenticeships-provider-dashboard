@@ -51,8 +51,7 @@ library(sfarrow)
 library(stringr)
 
 # Read in files saved from SQL scripts ----------------------------------------
-national_provider_summary <- data.table::fread("data/national_provider_summary.csv") # %>%
-## select(-c(`order_ref`, `order_detailed`)) # unused columns
+national_provider_summary <- data.table::fread("data/national_provider_summary.csv")
 
 apps_demographics <- data.table::fread("data/apprenticeships_demographics.csv")
 
@@ -60,17 +59,17 @@ apps_data <- data.table::fread("data/apprenticeships_data.csv")
 
 # Create Provider breakdowns data ---------------------------------------------
 # Making a smaller cut from apps_data so less data is loaded into the app
-provider_breakdowns <- apps_data %>%
+provider_breakdowns <- apps_data |>
   group_by(
     year, provider_name, provider_type, apps_Level,
     age_group, delivery_region, learner_home_region
-  ) %>%
+  ) |>
   summarise(
     starts = sum(starts, na.rm = TRUE),
     enrolments = sum(enrolments, na.rm = TRUE),
     achievements = sum(achievements, na.rm = TRUE)
-  ) %>%
-  ungroup() %>%
+  ) |>
+  ungroup() |>
   as.data.frame()
 
 # Create subjects and standards data ------------------------------------------
@@ -97,93 +96,93 @@ subjects_and_standards <- apps_data |>
 
 # Create LAD map data ---------------------------------------------------------
 # Preparing the data now so that less processing is needed in the app
-lad_map_data <- apps_data %>%
-  group_by(year, provider_name, learner_home_lad, delivery_lad) %>%
+lad_map_data <- apps_data |>
+  group_by(year, provider_name, learner_home_lad, delivery_lad) |>
   summarise(
     starts = sum(starts, na.rm = TRUE),
     enrolments = sum(enrolments, na.rm = TRUE),
     achievements = sum(achievements, na.rm = TRUE)
-  ) %>%
-  ungroup() %>%
+  ) |>
+  ungroup() |>
   as.data.frame()
 
 # Create demographics/characteristics data ------------------------------------
 # Preparing the data now so that less processing is needed in the app
 
-apps_chars <- apps_demographics %>%
+apps_chars <- apps_demographics |>
   # Default for input is to select rows within a column so put into long format
   pivot_longer(
     cols = -c(year, age_group, sex, ethnicity_major, lldd, provider_name),
     names_to = "measure",
     values_to = "count"
-  ) %>%
+  ) |>
   mutate(measure = firstup(measure))
 
 # This pivots it longer still and puts in the totals for the table
 # Each section is worked out separately
 
-chars_total_lldd <- apps_chars %>%
-  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
+chars_total_lldd <- apps_chars |>
+  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") |>
   mutate(
     characteristic_type = "Learner with learning difficulties or disabilities (LLDD)",
     characteristic = "Total"
-  ) %>%
+  ) |>
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
-chars_lldd <- apps_chars %>%
-  filter(lldd != "Total") %>%
+chars_lldd <- apps_chars |>
+  filter(lldd != "Total") |>
   mutate(
     characteristic_type = "Learner with learning difficulties or disabilities (LLDD)",
     characteristic = lldd
-  ) %>%
+  ) |>
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
-chars_total_sex <- apps_chars %>%
-  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
+chars_total_sex <- apps_chars |>
+  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") |>
   mutate(
     characteristic_type = "Sex",
     characteristic = sex
-  ) %>%
+  ) |>
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
-chars_sex <- apps_chars %>%
-  filter(sex != "Total") %>%
+chars_sex <- apps_chars |>
+  filter(sex != "Total") |>
   mutate(
     characteristic_type = "Sex",
     characteristic = sex
-  ) %>%
+  ) |>
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
-chars_total_age <- apps_chars %>%
-  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
+chars_total_age <- apps_chars |>
+  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") |>
   mutate(
     characteristic_type = "Age",
     characteristic = age_group
-  ) %>%
+  ) |>
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
-chars_age <- apps_chars %>%
-  filter(age_group != "Total") %>%
+chars_age <- apps_chars |>
+  filter(age_group != "Total") |>
   mutate(
     characteristic_type = "Age",
     characteristic = age_group
-  ) %>%
+  ) |>
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
-chars_total_ethnicity <- apps_chars %>%
-  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") %>%
+chars_total_ethnicity <- apps_chars |>
+  filter(lldd == "Total" & sex == "Total" & age_group == "Total" & ethnicity_major == "Total") |>
   mutate(
     characteristic_type = "Ethnicity",
     characteristic = ethnicity_major
-  ) %>%
+  ) |>
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
-chars_ethnicity <- apps_chars %>%
-  filter(ethnicity_major != "Total") %>%
+chars_ethnicity <- apps_chars |>
+  filter(ethnicity_major != "Total") |>
   mutate(
     characteristic_type = "Ethnicity",
     characteristic = ethnicity_major
-  ) %>%
+  ) |>
   select(year, provider_name, characteristic_type, characteristic, measure, count)
 
 # Put all the bits of file together for the final version

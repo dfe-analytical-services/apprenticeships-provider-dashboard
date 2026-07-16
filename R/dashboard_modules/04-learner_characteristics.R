@@ -9,7 +9,7 @@ chars_year_choices <- sort(data_choices(data = chars_parquet, column = "year"),
 
 chars_measure_choices <- data_choices(data = chars_parquet, column = "measure")
 # for providers need to remove total first so can put at the beginning
-chars_parquet_no_total <- chars_parquet %>%
+chars_parquet_no_total <- chars_parquet |>
   filter(provider_name != "Total (All providers)")
 chars_provider_choices <- sort(data_choices(
   data = chars_parquet_no_total,
@@ -17,23 +17,23 @@ chars_provider_choices <- sort(data_choices(
 ))
 
 # for characteristic need to remove total first so can put at the beginning
-characteristics_no_total <- chars_parquet %>%
+characteristics_no_total <- chars_parquet |>
   filter(characteristic != "Total")
 chars_choices <- (data_choices(data = characteristics_no_total, column = "characteristic_type"))
 
 # create lists for ordering the bar charts
-chars_parquet_age <- chars_parquet %>% filter(characteristic_type == "Age" & characteristic != "Total")
+chars_parquet_age <- chars_parquet |> filter(characteristic_type == "Age" & characteristic != "Total")
 chars_age_choices <- data_choices(data = chars_parquet_age, column = "characteristic")
 
-chars_parquet_sex <- chars_parquet %>% filter(characteristic_type == "Sex" & characteristic != "Total")
+chars_parquet_sex <- chars_parquet |> filter(characteristic_type == "Sex" & characteristic != "Total")
 chars_sex_choices <- data_choices(data = chars_parquet_sex, column = "characteristic")
 
-chars_parquet_lldd <- chars_parquet %>% filter(characteristic_type ==
+chars_parquet_lldd <- chars_parquet |> filter(characteristic_type ==
   "Learner with learning difficulties or disabilities (LLDD)" & characteristic != "Total")
 chars_lldd_choices <- data_choices(data = chars_parquet_lldd, column = "characteristic")
 chars_lldd_choices <- sort(chars_lldd_choices, decreasing = TRUE)
 
-chars_parquet_ethnicity <- chars_parquet %>% filter(characteristic_type == "Ethnicity" & characteristic != "Total")
+chars_parquet_ethnicity <- chars_parquet |> filter(characteristic_type == "Ethnicity" & characteristic != "Total")
 chars_ethnicity_choices <- data_choices(data = chars_parquet_ethnicity, column = "characteristic")
 
 # Main module code ============================================================
@@ -136,9 +136,9 @@ learner_characteristics_server <- function(id) {
     # Reactive data set =======================================================
     chars_reactive_table <- reactive({
       chars_filtered <- chars_parquet
-      chars_filtered <- chars_filtered %>% filter(provider_name == input$provider)
-      chars_filtered <- chars_filtered %>% filter(year == input$year)
-      chars_filtered <- chars_filtered %>% filter(measure == input$measure)
+      chars_filtered <- chars_filtered |> filter(provider_name == input$provider)
+      chars_filtered <- chars_filtered |> filter(year == input$year)
+      chars_filtered <- chars_filtered |> filter(measure == input$measure)
 
       # and sort into the right order
 
@@ -170,7 +170,7 @@ learner_characteristics_server <- function(id) {
       ), ]
 
       # Pull the lazy loaded and now filtered data into memory
-      chars_filtered %>% collect()
+      chars_filtered |> collect()
     })
 
     # plot
@@ -188,10 +188,10 @@ learner_characteristics_server <- function(id) {
 
       girafe(
         ggobj =
-          chars_reactive_table() %>%
-            filter(characteristic_type == "Age" & characteristic != "Total") %>%
+          chars_reactive_table() |>
+            filter(characteristic_type == "Age" & characteristic != "Total") |>
             # need data in all categories else columns expand if missing data
-            mutate(count = ifelse(count == "low", "0", count)) %>%
+            mutate(count = ifelse(count == "low", "0", count)) |>
             ggplot(aes(
               x = characteristic,
               y = as.numeric(count),
@@ -257,10 +257,10 @@ learner_characteristics_server <- function(id) {
 
       girafe(
         ggobj =
-          chars_reactive_table() %>%
-            filter(characteristic_type == "Sex" & characteristic != "Total") %>%
+          chars_reactive_table() |>
+            filter(characteristic_type == "Sex" & characteristic != "Total") |>
             # need data in all categories else columns expand if missing data
-            mutate(count = ifelse(count == "low", "0", count)) %>%
+            mutate(count = ifelse(count == "low", "0", count)) |>
             ggplot(aes(x = "", y = as.numeric(count), fill = characteristic)) +
             geom_col_interactive(aes(
               tooltip = paste0(characteristic, ": ", dfeR::comma_sep(as.numeric(count)), " ", firstlow(input$measure)),
@@ -299,7 +299,6 @@ learner_characteristics_server <- function(id) {
     })
 
 
-
     output$lldd_bar_plot <- renderGirafe({
       # Message when there are none of the measure at all - blank - only shown for age
       validate(need(nrow(chars_reactive_table()) > 0, ""))
@@ -314,11 +313,11 @@ learner_characteristics_server <- function(id) {
 
       girafe(
         ggobj =
-          chars_reactive_table() %>%
+          chars_reactive_table() |>
             filter(characteristic_type == "Learner with learning difficulties or disabilities (LLDD)" &
-              characteristic != "Total") %>%
+              characteristic != "Total") |>
             # need data in all categories else columns expand if missing data
-            mutate(count = ifelse(count == "low", "0", count)) %>%
+            mutate(count = ifelse(count == "low", "0", count)) |>
             ggplot(aes(
               x = characteristic,
               y = as.numeric(count),
@@ -388,15 +387,15 @@ learner_characteristics_server <- function(id) {
 
       girafe(
         ggobj =
-          chars_reactive_table() %>%
-            filter(characteristic_type == "Ethnicity" & characteristic != "Total") %>%
+          chars_reactive_table() |>
+            filter(characteristic_type == "Ethnicity" & characteristic != "Total") |>
             # need data in all categories else columns expand if missing data
-            mutate(count = ifelse(count == "low", "0", count)) %>%
+            mutate(count = ifelse(count == "low", "0", count)) |>
             # shorten name of category to fit better
             mutate(characteristic = if_else(nchar(as.character(characteristic)) > 10,
               substr(characteristic, 1, 5),
               characteristic
-            )) %>%
+            )) |>
             ggplot(aes(
               x = characteristic,
               y = as.numeric(count),
@@ -451,14 +450,13 @@ learner_characteristics_server <- function(id) {
     })
 
 
-
     # table
 
     output$chars_table <- renderTable({
       # Message when there are none of the measure at all
       validate(need(nrow(chars_reactive_table()) > 0, paste0("No ", firstlow(input$measure), " for these selections.")))
 
-      chars_reactive_table_tidied <- chars_reactive_table() %>%
+      chars_reactive_table_tidied <- chars_reactive_table() |>
         mutate(count = if_else(count != "low", as.character(dfeR::comma_sep(as.numeric(count))), count))
 
       colnames(chars_reactive_table_tidied) <-
@@ -491,8 +489,8 @@ learner_characteristics_server <- function(id) {
         if (input$file_type == "CSV (Up to 2.44 MB)" & input$provider != "Total (All providers)") {
           data.table::fwrite(chars_reactive_table(), file)
         } else if (input$file_type == "CSV (Up to 2.44 MB)" & input$provider == "Total (All providers)") {
-          data.table::fwrite(chars_parquet %>%
-            filter(year %in% input$year) %>%
+          data.table::fwrite(chars_parquet |>
+            filter(year %in% input$year) |>
             filter(measure %in% input$measure), file)
         } else if (input$file_type == "XLSX (Up to 591.9 KB)" & input$provider != "Total (All providers)") {
           # Added a basic pop up notification as the Excel file can take time to generate
@@ -502,8 +500,8 @@ learner_characteristics_server <- function(id) {
         } else {
           # Added a basic pop up notification as the Excel file can take time to generate
           pop_up <- showNotification("Generating download file", duration = NULL)
-          openxlsx::write.xlsx(chars_parquet %>%
-            filter(year %in% input$year) %>%
+          openxlsx::write.xlsx(chars_parquet |>
+            filter(year %in% input$year) |>
             filter(measure %in% input$measure), file, colWidths = "Auto")
           on.exit(removeNotification(pop_up), add = TRUE)
         }

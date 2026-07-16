@@ -63,12 +63,6 @@ if (!is.null(prov_breakdowns_parquet)) {
 }
 
 
-
-
-
-
-
-
 # 2. LAD data
 if (!is.null(lad_map_parquet)) {
   # Doing this filtered by each year to work out the maximum as otherwise we'd get ~ 3x the actual max size
@@ -145,13 +139,6 @@ if (!is.null(lad_map_parquet)) {
   file.remove("data/test.xlsx")
   file.remove("data/test.csv")
 }
-
-
-
-
-
-
-
 
 
 # 3. Subjects and standards data
@@ -234,9 +221,6 @@ if (!is.null(sas_parquet)) {
 }
 
 
-
-
-
 # 4. Demographics data
 if (!is.null(chars_parquet)) {
   # Doing this filtered by each year to work out the maximum as otherwise we'd get ~ 3x the actual max size
@@ -304,11 +288,6 @@ if (!is.null(chars_parquet)) {
   file.remove("data/chars_full.xlsx")
   file.remove("data/chars_full.csv")
 }
-
-
-
-
-
 
 
 # 5. NPS data

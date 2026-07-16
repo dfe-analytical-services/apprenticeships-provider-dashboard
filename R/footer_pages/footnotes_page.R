@@ -32,7 +32,6 @@ if (substr(footnote_most_recent_yr_mth, 10, 19) == "") {
 footnote_most_recent_year <- substr(footnote_most_recent_yr_mth, 1, 7)
 
 
-
 footnotes_page <- function() {
   # Set up column layout to center it -----------------------------------------
   layout_columns(

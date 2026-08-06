@@ -73,6 +73,16 @@ label {
     box-shadow: none;
 }
 
+/* Remove excess space under dropdown area */
+.well .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.well .bslib-grid {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 /* second dropdown options */
 .selectize-input {
   font-family: "Helvetica Neue", "Arial", sans-serif;

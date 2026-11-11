@@ -455,8 +455,17 @@ lad_server <- function(id) {
         nrow(delivery_lad_table()) > 0,
         paste0("No ", input$measure, " for these selections.")
       ))
-
-      dfe_lad_map(delivery_map_data(), input$measure, NS(id, "delivery_lad"))
+      dfe_lad_map(
+        delivery_map_data(),
+        input$measure,
+        NS(id, "delivery_lad")
+      ) %>%
+        addTiles(
+          urlTemplate = paste0(
+            "https://basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png?key=",
+            Sys.getenv("CARTO_API_TOKEN")
+          )
+        )
     })
 
     output$learner_home_lad_map <- renderLeaflet({
@@ -464,12 +473,17 @@ lad_server <- function(id) {
         nrow(learner_home_lad_table()) > 0,
         paste0("No ", input$measure, " for these selections.")
       ))
-
       dfe_lad_map(
         learner_home_map_data(),
         input$measure,
         NS(id, "learner_home_lad")
-      )
+      ) %>%
+        addTiles(
+          urlTemplate = paste0(
+            "https://basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png?key=",
+            Sys.getenv("CARTO_API_TOKEN")
+          )
+        )
     })
 
     # Watch for the reset buttons and clear selection if pressed

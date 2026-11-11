@@ -16,5 +16,6 @@ jobs:
     with:
       parameter_file: deploy-parameters.yaml
     secrets:
+      CARTO_API_TOKEN: ${{ secrets.CARTO_API_TOKEN }}
       SHINYAPPS_SECRET: ${{ secrets.SHINYAPPS_SECRET }}
       SHINYAPPS_TOKEN: ${{ secrets.SHINYAPPS_TOKEN }}

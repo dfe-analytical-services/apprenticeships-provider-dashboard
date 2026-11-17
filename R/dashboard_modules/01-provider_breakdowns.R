@@ -465,6 +465,8 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       selection <- input$regions_bar_selected
       print(paste0("bar: ", input$regions_bar_selected))
 
+      req(input$regions_bar_selected)
+
       if (is.null(selection) || length(selection) == 0) {
         selected_value <- "All regions"
       } else {
@@ -480,6 +482,8 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     # if a region is selected in the dropdown, feed into tables
     observe({
       region_name <- trimws(sub(": .*", "", input$region))
+
+      req(input$region)
 
       # Reset case
       if (input$region == "All regions") {

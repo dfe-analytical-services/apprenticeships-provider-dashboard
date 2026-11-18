@@ -467,9 +467,9 @@ lad_server <- function(id) {
             "https://basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png?key=",
             Sys.getenv("CARTO_API_TOKEN")
           )
-        )        
+        )
     })
-    
+
     output$learner_home_lad_map <- renderLeaflet({
       validate(need(
         nrow(learner_home_lad_table()) > 0,
@@ -486,7 +486,7 @@ lad_server <- function(id) {
             Sys.getenv("CARTO_API_TOKEN")
           )
         )
-     })
+    })
 
     # Watch for the reset buttons and clear selection if pressed
     observeEvent(input$delivery_lad_reset, {

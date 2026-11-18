@@ -428,21 +428,20 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     })
 
     output$delivery_region <- renderReactable({
-      
       message("START delivery_region render")
       message("measure: ", input$measure)
-      
+
       x <- delivery_region_table()
-      
+
       message("delivery_region_table returned")
       print(dim(x))
       print(names(x))
-      
+
       x <- x |>
         rename_with(~ paste(input$measure), `number`)
-      
+
       message("calling dfe_reactable")
-      
+
       dfe_reactable(
         x,
         on_click = "select",

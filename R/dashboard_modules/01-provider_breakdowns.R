@@ -6,7 +6,7 @@ prov_breakdowns_parquet <- arrow::read_parquet("data/provider_breakdowns_0.parqu
 apps_measure_choices <- c("Starts", "Enrolments", "Achievements")
 apps_prov_type_choices <- data_choices(data = prov_breakdowns_parquet, column = "provider_type")
 apps_year_choices <- sort(data_choices(data = prov_breakdowns_parquet, column = "year"),
-  decreasing = TRUE
+                          decreasing = TRUE
 )
 apps_level_choices <- data_choices(data = prov_breakdowns_parquet, column = "apps_Level")
 apps_age_choices <- data_choices(data = prov_breakdowns_parquet, column = "age_group")
@@ -122,7 +122,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     filtered_raw_data <- reactive({
       filtered_raw_data <- prov_breakdowns_parquet |>
         filter(year == input$year)
-
+      
       # Only filtering these if needed, by default we want all returned
       if (input$prov_type != "All provider types") {
         filtered_raw_data <- filtered_raw_data |> filter(provider_type %in% input$prov_type)
@@ -133,19 +133,19 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       if (input$age != "All age groups") {
         filtered_raw_data <- filtered_raw_data |> filter(age_group == input$age)
       }
-
+      
       return(filtered_raw_data)
     })
-
+    
     # User selections =========================================================
     # Here we get the user selections from the tables to then use to filter the table reactive data sets
-
+    
     # Provider table selections -----------------------------------------------
     selected_providers <- reactive({
       # Filter to only the selected providers and convert to a vector to use for filtering elsewhere
       unlist(prov_selection_table()[getReactableState("prov_selection", "selected"), 1], use.names = FALSE)
     })
-
+    
     # Region table selections -------------------------------------------------
     # Make the region dropdown update when a table is selected
     observe({
@@ -153,7 +153,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
       # Work out if home or delivery region is selected from a table and update the dropdown
       if (length(regions[getReactableState("home_region", "selected")]) != 0) {
         selected_region <- paste0(regions[getReactableState("home_region", "selected")], ": Learner home")
-
+        
         updateSelectizeInput(
           session = session,
           inputId = "region",
@@ -161,11 +161,11 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         )
       }
     })
-
+    
     observe({
       if (length(regions[getReactableState("delivery_region", "selected")]) != 0) {
         selected_region <- paste0(regions[getReactableState("delivery_region", "selected")], ": Delivery")
-
+        
         updateSelectizeInput(
           session = session,
           inputId = "region",
@@ -173,15 +173,15 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         )
       }
     })
-
+    
     # TODO: Make sure the reactable state in the region tables matches the dropdown selection
-
-
+    
+    
     # Table reactive data =====================================================
     ## Provider data ----------------------------------------------------------
     prov_selection_table <- reactive({
       prov_selection_table <- filtered_raw_data()
-
+      
       # Filter from the regions dropdown
       if (input$region != "All regions") {
         # Check if the region is a delivery or learner home and then filter by it
@@ -193,7 +193,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             filter(learner_home_region == sub(": .*", "", input$region))
         }
       }
-
+      
       prov_selection_table <- prov_selection_table |>
         with_groups(
           "provider_name",
@@ -203,23 +203,23 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         rename("Provider (UKPRN)" = provider_name) |>
         rename_with(~ paste(input$measure), `number`) |>
         collect()
-
+      
       return(prov_selection_table)
     }) |>
       # Set the dependent variables that will trigger this table to update
       bindEvent(firstlow(input$measure), filtered_raw_data(), input$region)
-
+    
     ## Delivery region data ---------------------------------------------------
     delivery_region_table <- reactive({
       # Start with the filtered data
       delivery_region_table <- filtered_raw_data()
-
+      
       # Filter down provider list there is something selected from the providers
       if (length(selected_providers()) != 0) {
         delivery_region_table <- delivery_region_table |>
           filter(provider_name %in% selected_providers())
       }
-
+      
       # Filter from the regions dropdown
       if (input$region != "") {
         if (grepl(": Learner home$", input$region)) {
@@ -227,7 +227,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             filter(learner_home_region == sub(": .*", "", input$region))
         }
       }
-
+      
       delivery_region_table <- delivery_region_table |>
         with_groups(
           "delivery_region",
@@ -235,7 +235,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) |>
         rename("Delivery region" = delivery_region)
-
+      
       # Make sure all regions have a row even if 0
       # Regions vector defined at top of this script
       delivery_region_table <- tibble(`Delivery region` = regions) |>
@@ -245,21 +245,21 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           ~ replace_na(., 0)
         )) |>
         collect()
-
+      
       return(delivery_region_table)
     }) |>
       bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers(), input$region)
-
+    
     ## Home region data -------------------------------------------------------
     home_region_table <- reactive({
       # Start with the filtered data
       home_region_table <- filtered_raw_data()
-
+      
       # Filter down provider list there is something selected from the providers
       if (length(selected_providers()) > 0) {
         home_region_table <- home_region_table |> filter(provider_name %in% selected_providers())
       }
-
+      
       # Filter from the regions dropdown
       if (input$region != "All regions") {
         # Check if the region is a delivery and then filter by it
@@ -268,7 +268,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             filter(delivery_region == sub(": .*", "", input$region))
         }
       }
-
+      
       home_region_table <- home_region_table |>
         with_groups(
           "learner_home_region",
@@ -276,7 +276,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           `number` = sum(!!sym(firstlow(input$measure)), na.rm = TRUE)
         ) |>
         rename("Learner home region" = learner_home_region)
-
+      
       # Make sure all regions have a row even if 0
       # Regions vector defined at top of this script
       home_region_table <- tibble(`Learner home region` = regions) |>
@@ -286,11 +286,11 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           ~ replace_na(., 0)
         )) |>
         collect()
-
+      
       return(home_region_table)
     }) |>
       bindEvent(firstlow(input$measure), filtered_raw_data(), selected_providers(), input$region)
-
+    
     # Bar chart data ----------------------------------------------------------
     regions_bar_data <- reactive({
       learner_home <- home_region_table() |>
@@ -298,13 +298,13 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           "Region" = `Learner home region`,
           "Learner home" = number
         )
-
+      
       delivery <- delivery_region_table() |>
         rename(
           "Region" = `Delivery region`,
           "Delivery" = number
         )
-
+      
       # Pivot the data so there's 3 columns, region, delivery / learner as a filter, and count
       regions_bar_data <- left_join(learner_home, delivery, by = "Region") |>
         tidyr::pivot_longer(
@@ -312,14 +312,14 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           names_to = "type",
           values_to = "count"
         )
-
+      
       # Force the ordering of the regions
       regions_bar_data$Region <- forcats::fct_rev(factor(regions_bar_data$Region, levels = regions))
-
+      
       # Create a unique column used for the hover on each bar
       regions_bar_data$data_id <- paste(regions_bar_data$Region, regions_bar_data$type, sep = ": ")
-
-
+      
+      
       # make all other delivery regions 0 except the one selected
       regions_bar_data$count <- case_when(
         input$region != "All regions" &
@@ -330,7 +330,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           regions_bar_data$data_id != input$region ~ 0,
         .default = regions_bar_data$count
       )
-
+      
       # and the same when it's a learner home region selected
       regions_bar_data$count <- case_when(
         input$region != "All regions" &
@@ -341,60 +341,60 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           regions_bar_data$data_id != input$region ~ 0,
         .default = regions_bar_data$count
       )
-
+      
       return(regions_bar_data)
     })
-
-
+    
+    
     # Bar chart output object =================================================
     output$regions_bar <- renderGirafe(
       girafe(
         ggobj =
           regions_bar_data() |>
-            ggplot(
-              aes(
-                fill = type,
-                x = Region,
-                y = count,
-                tooltip = paste(
-                  lapply(count, dfeR::pretty_num), firstlow(input$measure), "<br>",
-                  type, "in", Region
-                ),
-                data_id = data_id
-              )
-            ) +
-            # Make it an interactive, clustered, bar
-            geom_bar_interactive(position = "dodge", stat = "identity") +
-            # Make it horizontal
-            coord_flip() +
-            # Axis labels
-            xlab("") +
-            ylab(input$measure) +
-            # Set the colours
-            scale_fill_manual(values = c(
-              "Learner home" = afcolours::af_colours(n = 4)[1],
-              "Delivery" = afcolours::af_colours(n = 4)[4]
-            )) +
-            # Format the x-axis numbers (using the Y function as we've flipped to horizontal!)
-            scale_y_continuous(
-              labels = dfeR::comma_sep,
-              breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
-            ) +
-            # Wrap y-axis labels (set so East of England and longer will wrap onto multiple lines)
-            scale_x_discrete(labels = function(x) str_wrap(x, width = 13)) +
-            # Custom theme
-            ggplot2::theme_minimal() +
-            ggplot2::theme(
-              legend.position = "top",
-              legend.title = element_blank(),
-              panel.grid = element_blank(),
-              panel.grid.minor = element_blank(),
-              panel.grid.major.x = element_blank(),
-              axis.title.x = element_text(size = 10, face = "bold", margin = margin(t = 10)),
-              axis.text.x = element_text(size = 10),
-              axis.text.y = element_text(size = 10),
-              text = element_text(family = dfe_font)
-            ),
+          ggplot(
+            aes(
+              fill = type,
+              x = Region,
+              y = count,
+              tooltip = paste(
+                lapply(count, dfeR::pretty_num), firstlow(input$measure), "<br>",
+                type, "in", Region
+              ),
+              data_id = data_id
+            )
+          ) +
+          # Make it an interactive, clustered, bar
+          geom_bar_interactive(position = "dodge", stat = "identity") +
+          # Make it horizontal
+          coord_flip() +
+          # Axis labels
+          xlab("") +
+          ylab(input$measure) +
+          # Set the colours
+          scale_fill_manual(values = c(
+            "Learner home" = afcolours::af_colours(n = 4)[1],
+            "Delivery" = afcolours::af_colours(n = 4)[4]
+          )) +
+          # Format the x-axis numbers (using the Y function as we've flipped to horizontal!)
+          scale_y_continuous(
+            labels = dfeR::comma_sep,
+            breaks = function(x) unique(floor(pretty(seq(min(x), (max(x) + 1) * 1.1))))
+          ) +
+          # Wrap y-axis labels (set so East of England and longer will wrap onto multiple lines)
+          scale_x_discrete(labels = function(x) str_wrap(x, width = 13)) +
+          # Custom theme
+          ggplot2::theme_minimal() +
+          ggplot2::theme(
+            legend.position = "top",
+            legend.title = element_blank(),
+            panel.grid = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.grid.major.x = element_blank(),
+            axis.title.x = element_text(size = 10, face = "bold", margin = margin(t = 10)),
+            axis.text.x = element_text(size = 10),
+            axis.text.y = element_text(size = 10),
+            text = element_text(family = dfe_font)
+          ),
         options = list(
           # Turn off toolbar options (as they're bad for accessibility / confusing for users)
           ggiraph::opts_toolbar(
@@ -415,7 +415,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         fonts = list(sans = dfe_font)
       )
     )
-
+    
     # Table output objects ====================================================
     output$prov_selection <- renderReactable({
       dfe_reactable(
@@ -426,7 +426,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         searchable = TRUE
       )
     })
-
+    
     output$delivery_region <- renderReactable({
       dfe_reactable(
         delivery_region_table() |>
@@ -436,7 +436,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         row_style = list(cursor = "pointer")
       )
     })
-
+    
     output$home_region <- renderReactable({
       dfe_reactable(
         home_region_table() |>
@@ -446,33 +446,31 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         row_style = list(cursor = "pointer")
       )
     })
-
+    
     # if no region selected in table, and nothing selected in  input is 'All regions"
     observe({
       # Check selected rows in both tables
       delivery_selected <- getReactableState("delivery_region", "selected")
       learner_selected <- getReactableState("home_region", "selected")
-
+      
       # If nothing selected in either
       if (length(delivery_selected) == 0 && length(learner_selected) == 0) {
         updateSelectInput(session, "region", selected = "All regions")
       }
     })
-
+    
     # This observes the selected bar in the bar chart and updates the dropdown
     # for region
     observe({
       selection <- input$regions_bar_selected
       print(paste0("bar: ", input$regions_bar_selected))
-
-      req(input$regions_bar_selected)
-
+      
       if (is.null(selection) || length(selection) == 0) {
         selected_value <- "All regions"
       } else {
         selected_value <- selection
       }
-
+      
       updateSelectizeInput(
         session = session,
         inputId = "region",
@@ -482,16 +480,14 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     # if a region is selected in the dropdown, feed into tables
     observe({
       region_name <- trimws(sub(": .*", "", input$region))
-
-      req(input$region)
-
+      
       # Reset case
       if (input$region == "All regions") {
         updateReactable("delivery_region", selected = integer(0))
         updateReactable("home_region", selected = integer(0))
         return()
       }
-
+      
       # DELIVERY
       if (grepl("Delivery$", input$region)) {
         selected_row <- which(
@@ -499,7 +495,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
             tolower(region_name)
         )
         print(selected_row)
-
+        
         if (length(selected_row) > 0) {
           updateReactable("delivery_region", selected = selected_row)
           updateReactable("home_region", selected = integer(0))
@@ -517,13 +513,13 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         }
       }
     })
-
-
+    
+    
     # Data download ===========================================================
     output$download_data <- downloadHandler(
       # This currently just downloads the filtered raw data, which doesn't react to any
       # selections made from the tables made by users
-
+      
       ## Set filename ---------------------------------------------------------
       filename = function(name) {
         raw_name <- paste0(input$year, "-", input$level, "-", input$age, "-provider_breakdowns")

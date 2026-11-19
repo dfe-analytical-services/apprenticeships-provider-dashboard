@@ -428,15 +428,30 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     })
 
     output$delivery_region <- renderReactable({
-      dfe_reactable(
-        delivery_region_table() |>
-          rename_with(~ paste(input$measure), `number`),
-        on_click = "select",
-        selection = "single",
-        row_style = list(cursor = "pointer")
+      message("DELIVERY REGION: render started")
+      message("measure = ", paste(input$measure, collapse = ", "))
+
+      tryCatch(
+        {
+          table_data <- delivery_region_table()
+
+          message("rows = ", nrow(table_data))
+          message("columns = ", paste(names(table_data), collapse = ", "))
+
+          dfe_reactable(
+            delivery_region_table() |>
+              rename_with(~ paste(input$measure), `number`),
+            on_click = "select",
+            selection = "single",
+            row_style = list(cursor = "pointer")
+          )
+        },
+        error = function(e) {
+          message("DELIVERY REGION ERROR: ", conditionMessage(e))
+          stop(e)
+        }
       )
     })
-
     output$home_region <- renderReactable({
       dfe_reactable(
         home_region_table() |>

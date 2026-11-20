@@ -22,14 +22,14 @@ shiny::testServer(prov_breakdowns_server, expr = {
   # Give the inputs expected on initial load
   session$setInputs(
     prov_type = "All provider types",
-    year = "2021/22",
+    year = "2022/23",
     level = "All levels",
     age = "All age groups"
   )
 
   expect_equal(
     filtered_raw_data(),
-    test_data |> filter(year == "2021/22") |> collect()
+    test_data |> filter(year == "2022/23") |> collect()
   )
 
   # 2. Check the reactive data is being filtered as expected ------------------

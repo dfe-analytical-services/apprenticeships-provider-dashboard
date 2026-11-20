@@ -2,13 +2,14 @@
 app <- AppDriver$new(
   name = "provider_breakdowns",
   expect_values_screenshot_args = FALSE,
+  timeout = 10000,
   load_timeout = 120 * 1000, # set to 30seconds, default is 15
 )
 
 # Navigate to page we're testing
 app$click("provider_breakdowns")
 
-app$wait_for_idle(200)
+app$wait_for_idle(400)
 
 # Then run tests against it ===================================================
 test_that("Prov breakdowns page loads", {
@@ -49,7 +50,7 @@ test_that("Make a delivery region selection", {
     `prov_breakdowns-delivery_region__reactable__selected` = 2,
     allow_no_input_binding_ = TRUE
   )
-
+  print(app$get_logs())
   app$wait_for_idle(50)
 
   # Test the tables render with at least one row of data
@@ -66,7 +67,7 @@ test_that("Make a delivery region selection", {
 test_that("Make a learner home region selection", {
   # Select fifth region row
   app$set_inputs(
-    `prov_breakdowns-learner_home_region__reactable__selected` = 5,
+    `prov_breakdowns-home_region__reactable__selected` = 5,
     allow_no_input_binding_ = TRUE
   )
 
@@ -90,11 +91,11 @@ test_that("Can download data", {
   app$wait_for_idle(50)
   expect_equal(
     basename(download_info),
-    "2023_24(q3augtoapr)-alllevels-allagegroups-provider_breakdowns.csv"
+    "2025_26(augtoapr)-alllevels-allagegroups-provider_breakdowns.csv"
   )
 })
 
-test_that("Can change all dropdowms and tables still render", {
+test_that("Can change all dropdowns and tables still render", {
   app$set_inputs(`prov_breakdowns-measure` = "enrolments")
   app$set_inputs(`prov_breakdowns-prov_type` = "Private Sector Public Funded")
   app$set_inputs(`prov_breakdowns-year` = "2022/23")
@@ -131,7 +132,7 @@ test_that("File type radio button changes to XLSX download", {
   app$set_inputs(provider_breakdown_tabs = "Download data")
 
   # Change to XLSX download and test it works
-  app$set_inputs(`prov_breakdowns-file_type` = "XLSX (Up to X MB)")
+  app$set_inputs(`prov_breakdowns-file_type` = "XLSX (Up to 1.96 MB)")
   app$wait_for_idle(50)
   download_info <- app$get_download("prov_breakdowns-download_data")
   app$wait_for_idle(50)

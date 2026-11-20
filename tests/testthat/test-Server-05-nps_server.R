@@ -34,7 +34,7 @@ shiny::testServer(nps_server, expr = {
   # Change to a different dropdown selection
   session$setInputs(
     provider = "DARLINGTON COLLEGE",
-    year = "2021/22",
+    year = "2022/23",
     characteristic = "Sex - Male"
   )
 
@@ -44,7 +44,7 @@ shiny::testServer(nps_server, expr = {
     test_data |>
       filter(
         `Provider name` == "DARLINGTON COLLEGE",
-        `Academic Year` == "2021/22",
+        `Academic Year` == "2022/23",
         `Learner characteristic` == "Sex - Male"
       ) |>
       collect()

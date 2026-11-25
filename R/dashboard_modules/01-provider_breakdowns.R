@@ -514,6 +514,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     })
     # if a region is selected in the dropdown, feed into tables
     observe({
+      req(input$region)
       region_name <- trimws(sub(": .*", "", input$region))
 
       # Reset case

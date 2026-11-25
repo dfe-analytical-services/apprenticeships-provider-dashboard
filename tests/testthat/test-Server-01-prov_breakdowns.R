@@ -17,9 +17,8 @@
 test_data <- arrow::read_parquet("../../data/provider_breakdowns_0.parquet")
 
 # Test the server file  =======================================================
+
 shiny::testServer(prov_breakdowns_server, expr = {
-  # 1. Check the reactive data is not being pre-filtered at first -------------
-  # Give the inputs expected on initial load
   session$setInputs(
     prov_type = "All provider types",
     year = "2022/23",
@@ -27,13 +26,15 @@ shiny::testServer(prov_breakdowns_server, expr = {
     age = "All age groups"
   )
 
+  session$flushReact()
+
   expect_equal(
     filtered_raw_data(),
-    test_data |> filter(year == "2022/23") |> collect()
+    test_data |>
+      filter(year == "2022/23") |>
+      collect()
   )
 
-  # 2. Check the reactive data is being filtered as expected ------------------
-  # Change to a different dropdown selection
   session$setInputs(
     prov_type = "Private Sector Public Funded",
     year = "2022/23",
@@ -41,7 +42,8 @@ shiny::testServer(prov_breakdowns_server, expr = {
     age = "Under 19"
   )
 
-  # 3. Compare the reactive table with a hardcoded filter against the test data
+  session$flushReact()
+
   expect_equal(
     filtered_raw_data(),
     test_data |>

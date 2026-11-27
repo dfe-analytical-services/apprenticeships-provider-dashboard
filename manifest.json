@@ -6713,7 +6713,7 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "3c2b1a6902553b592ec2d0f874aafcba"
+      "checksum": "eaa488317d39ab2abbe9e66579de3093"
     },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "5440c06defa56655317cb4284b4ff22a"
@@ -6804,42 +6804,6 @@
     },
     "server.R": {
       "checksum": "d5ff9698cb47b193efff0412e4a41f70"
-    },
-    "tests/testthat.R": {
-      "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
-    },
-    "tests/testthat/notrun-test-UI-01-prov_breakdowns.R": {
-      "checksum": "414d8b17a3f665ab6abe8fa486632ef7"
-    },
-    "tests/testthat/notrun-test-UI-02-local_authority_district.R": {
-      "checksum": "5cceac8ac55ac9765b90377caf65969f"
-    },
-    "tests/testthat/notrun-test-UI-03-subjects_and_standards.R": {
-      "checksum": "7483046b3dfe9daa4b9d493ad1c36fc6"
-    },
-    "tests/testthat/notrun-test-UI-05-national_provider_summary.R": {
-      "checksum": "8124e8d67a50ada45350e47e6df57765"
-    },
-    "tests/testthat/setup-shinytest2.R": {
-      "checksum": "2ebb0fa45c25036420cbe60e911ad395"
-    },
-    "tests/testthat/test-Function-01-dfe_reactable.R": {
-      "checksum": "f475d5b60fbf1352d2fad7a04ab30551"
-    },
-    "tests/testthat/test-Server-01-prov_breakdowns.R": {
-      "checksum": "a5ff89ed63eb9148910fc408881484e7"
-    },
-    "tests/testthat/test-Server-02-local_authority_district.R": {
-      "checksum": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "tests/testthat/test-Server-05-nps_server.R": {
-      "checksum": "52ab7e4c02daa8312d839d1f45946a66"
-    },
-    "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "e5e7248d22a4e7070eb1e64fedb81241"
-    },
-    "tests/testthat/test-UI-01-prov_breakdowns.R": {
-      "checksum": "e2c044139cf3f1dc919218695147bed6"
     },
     "ui.R": {
       "checksum": "0c41a50c19910c9c75041e2e89b8a1a7"

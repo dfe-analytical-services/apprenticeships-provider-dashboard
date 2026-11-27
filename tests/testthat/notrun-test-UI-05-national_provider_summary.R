@@ -33,7 +33,7 @@ test_that("NPS: Page loads", {
 test_that("NPS: Can change all the dropdowns", {
   app$set_inputs(
     `nps-provider` = "DARLINGTON COLLEGE",
-    `nps-year` = "2021/22",
+    `nps-year` = "2022/23",
     `nps-characteristic` = "Sex - Male"
   )
 
@@ -48,7 +48,7 @@ test_that("NPS: Can change all the dropdowns", {
   app$wait_for_idle(50)
   expect_equal(
     basename(download_info),
-    "darlingtoncollege-2021_22-sex-male-provider_summary.csv"
+    "darlingtoncollege-2022_23-sex-male-provider_summary.csv"
   )
 
   # Go back to main tab
@@ -66,6 +66,6 @@ test_that("File type radio button changes to XLSX download", {
   app$wait_for_idle(50)
   expect_equal(
     basename(download_info),
-    "darlingtoncollege-2021_22-sex-male-provider_summary.xlsx"
+    "darlingtoncollege-2022_23-sex-male-provider_summary.xlsx"
   )
 })

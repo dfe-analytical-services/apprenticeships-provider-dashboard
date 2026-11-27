@@ -20,7 +20,8 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ui <- function(input, output, session) {
-  page_fluid(
+  gov_page(
+    width = "full",
     # Metadata for app ========================================================
     tags$html(lang = "en"),
     tags$head(HTML(paste0("<title>", site_title, "</title>"))), # set in global.R

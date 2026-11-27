@@ -436,6 +436,11 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         row_style = list(cursor = "pointer")
       )
     })
+    outputOptions(
+      output,
+      "delivery_region",
+      suspendWhenHidden = FALSE
+    )
 
     output$home_region <- renderReactable({
       dfe_reactable(
@@ -446,16 +451,46 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
         row_style = list(cursor = "pointer")
       )
     })
+    outputOptions(
+      output,
+      "home_region",
+      suspendWhenHidden = FALSE
+    )
 
     # if no region selected in table, and nothing selected in  input is 'All regions"
     observe({
-      # Check selected rows in both tables
-      delivery_selected <- getReactableState("delivery_region", "selected")
-      learner_selected <- getReactableState("home_region", "selected")
+      delivery_selected <- getReactableState(
+        "delivery_region",
+        "selected"
+      )
 
-      # If nothing selected in either
-      if (length(delivery_selected) == 0 && length(learner_selected) == 0) {
-        updateSelectInput(session, "region", selected = "All regions")
+      home_selected <- getReactableState(
+        "home_region",
+        "selected"
+      )
+
+      if (length(delivery_selected) > 0) {
+        selected_region <- paste0(
+          regions[delivery_selected],
+          ": Delivery"
+        )
+
+        updateSelectizeInput(
+          session = session,
+          inputId = "region",
+          selected = selected_region
+        )
+      } else if (length(home_selected) > 0) {
+        selected_region <- paste0(
+          regions[home_selected],
+          ": Learner home"
+        )
+
+        updateSelectizeInput(
+          session = session,
+          inputId = "region",
+          selected = selected_region
+        )
       }
     })
 
@@ -479,6 +514,7 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
     })
     # if a region is selected in the dropdown, feed into tables
     observe({
+      req(input$region)
       region_name <- trimws(sub(": .*", "", input$region))
 
       # Reset case
@@ -541,6 +577,11 @@ prov_breakdowns_server <- function(id) { # nolint: cyclocomp_linter
           on.exit(removeNotification(pop_up), add = TRUE)
         }
       }
+    )
+    outputOptions(
+      output,
+      "download_data",
+      suspendWhenHidden = FALSE
     )
   })
 }

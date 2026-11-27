@@ -64,6 +64,7 @@ if (FALSE) {
   shhh(library(styler))
 
   shhh(library(rsconnect))
+  shhh(library(chromote))
 }
 
 # Source R scripts ============================================================

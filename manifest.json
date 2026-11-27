@@ -6713,7 +6713,7 @@
       "checksum": "76d9460d133ec78032a3d9e1999e8677"
     },
     ".Rprofile": {
-      "checksum": "c8acb769e05441f7f8c1b17e9dfb73cd"
+      "checksum": "d89e4062b3b010426177af7077897bc5"
     },
     "data/apprenticeships_demographics_0.parquet": {
       "checksum": "5440c06defa56655317cb4284b4ff22a"
@@ -6758,10 +6758,10 @@
       "checksum": "0d474e35ec63c89eec5838348cd8d3c0"
     },
     "R/dashboard_modules/01-provider_breakdowns.R": {
-      "checksum": "f127c3df55f43de697806461d8a21720"
+      "checksum": "2629a23d95afaf637bc5973869c80577"
     },
     "R/dashboard_modules/02-local_authority_district.R": {
-      "checksum": "c64fab25bbd741fe29b409db31cf7774"
+      "checksum": "b5b063f6c89a2b07ad60b0f783028590"
     },
     "R/dashboard_modules/03-subjects_and_standards.R": {
       "checksum": "3005bd3f5a970575f36ca74777fa15f3"
@@ -6805,44 +6805,8 @@
     "server.R": {
       "checksum": "d5ff9698cb47b193efff0412e4a41f70"
     },
-    "tests/testthat.R": {
-      "checksum": "12e9b09de5275bdc13bde6ae5a82f8b1"
-    },
-    "tests/testthat/notrun-test-UI-01-prov_breakdowns.R": {
-      "checksum": "414d8b17a3f665ab6abe8fa486632ef7"
-    },
-    "tests/testthat/notrun-test-UI-02-local_authority_district.R": {
-      "checksum": "5cceac8ac55ac9765b90377caf65969f"
-    },
-    "tests/testthat/notrun-test-UI-03-subjects_and_standards.R": {
-      "checksum": "7483046b3dfe9daa4b9d493ad1c36fc6"
-    },
-    "tests/testthat/notrun-test-UI-05-national_provider_summary.R": {
-      "checksum": "eaf8e01f993797da750974d5971f26ae"
-    },
-    "tests/testthat/setup-shinytest2.R": {
-      "checksum": "2ebb0fa45c25036420cbe60e911ad395"
-    },
-    "tests/testthat/test-Function-01-dfe_reactable.R": {
-      "checksum": "f475d5b60fbf1352d2fad7a04ab30551"
-    },
-    "tests/testthat/test-Server-01-prov_breakdowns.R": {
-      "checksum": "a5ff89ed63eb9148910fc408881484e7"
-    },
-    "tests/testthat/test-Server-02-local_authority_district.R": {
-      "checksum": "d41d8cd98f00b204e9800998ecf8427e"
-    },
-    "tests/testthat/test-Server-05-nps_server.R": {
-      "checksum": "cdcf4c0f8e1ba444f416b5fa0609bd82"
-    },
-    "tests/testthat/test-UI-00-basic_load_navigation.R": {
-      "checksum": "e5e7248d22a4e7070eb1e64fedb81241"
-    },
-    "tests/testthat/test-UI-01-prov_breakdowns.R": {
-      "checksum": "32f1bed9ac426f79d50c6675774c1209"
-    },
     "ui.R": {
-      "checksum": "d3b6c8c22cf02766b1a309b9d4f17509"
+      "checksum": "0c41a50c19910c9c75041e2e89b8a1a7"
     },
     "www/cookie-consent.js": {
       "checksum": "dd507a9ad0d33b3b3f97546ffc357f23"
